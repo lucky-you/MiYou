@@ -40,13 +40,13 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvForgetPassword:
-//                startActivity(ForgetPasswordActivity.class);
+                startActivity(ForgetPasswordActivity.class);
                 break;
             case R.id.tvGetVerificationCode:
                 startActivity(BindPhoneActivity.class);
                 break;
             case R.id.tvLogin:
-                startActivity(ForgetPasswordActivity.class);
+//                startActivity(ForgetPasswordActivity.class);
                 break;
             case R.id.tvOneClickLogin:
                 startActivity(EditNickNameActivity.class);
