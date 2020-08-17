@@ -1,8 +1,10 @@
-package com.zhowin.miyou;
+package com.zhowin.miyou.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.zhowin.miyou.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -34,18 +34,6 @@ public class GlideUtils {
     }
 
 
-
-    public static void loadUserLevelPhoto(Context context, String url, ImageView imageView) {
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.mipmap.level_1)
-                .error(R.mipmap.level_1)
-                .dontAnimate()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
-        Glide.with(context).load(url)
-                .apply(options)
-                .into(imageView);
-    }
-
     /**
      * 加载用户图像
      */
