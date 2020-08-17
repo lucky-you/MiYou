@@ -1,7 +1,6 @@
 package com.zhowin.miyou.login;
 
 
-
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityForgetPasswordBinding;
