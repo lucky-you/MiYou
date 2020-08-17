@@ -1,0 +1,3 @@
+rootProject.name='MiYou'
+include ':app'
+include ':base_library'
