@@ -9,6 +9,9 @@ import com.zhowin.base_library.utils.BarUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
 
+/**
+ * 登录
+ */
 public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
 

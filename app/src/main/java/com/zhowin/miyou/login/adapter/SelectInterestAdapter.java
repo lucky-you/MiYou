@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zhowin.miyou.R;
 import com.zhowin.miyou.login.model.LabelList;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class SelectInterestAdapter extends BaseQuickAdapter<LabelList, BaseViewHolder> {
     public SelectInterestAdapter(@Nullable List<LabelList> data) {
-        super(data);
+        super(R.layout.include_select_interst_item_view, data);
     }
 
     @Override
