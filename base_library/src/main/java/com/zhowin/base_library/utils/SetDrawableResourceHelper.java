@@ -28,5 +28,13 @@ public class SetDrawableResourceHelper {
         rtvTag.setCompoundDrawables(null, null, drawableRed, null);
     }
 
+    public static void setBottomDrawable(Context mContext, TextView rtvTag, boolean isCheck, int checkDrawableId, int unCheckDrawableId) {
+        Drawable drawableRed;
+        drawableRed = mContext.getResources().getDrawable(isCheck ? checkDrawableId : unCheckDrawableId);
+        drawableRed.setBounds(0, 0, drawableRed.getMinimumWidth(), drawableRed.getMinimumHeight());
+        rtvTag.setCompoundDrawablePadding(SizeUtils.dp2px(6));
+        rtvTag.setCompoundDrawables(null, null, null, drawableRed);
+    }
+
 
 }

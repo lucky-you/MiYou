@@ -80,13 +80,10 @@ public class TitleView extends RelativeLayout {
         mRightLl = findViewById(R.id.ll_right);
         mRightImage = findViewById(R.id.ritht_iv);
         mBack.setVisibility(showBack ? VISIBLE : GONE);
-
         imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-
         mTitle.setText(title);
         mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleSize);
         mTitle.setTextColor(titleColor);
-
         mBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +91,6 @@ public class TitleView extends RelativeLayout {
                 ((Activity) context).finish();
             }
         });
-
         setMargins(mLeftText, leftMargin, 0, 0, 0);
         mLeftText.setOnClickListener(new OnClickListener() {
             @Override
@@ -103,25 +99,20 @@ public class TitleView extends RelativeLayout {
                 ((Activity) context).finish();
             }
         });
-
         if (ivRightSrc != null) {
             mRightImage.setImageDrawable(ivRightSrc);
         }
-
         if (rightText != null) {
             mRightText.setText(rightText);
             mRightText.setTextColor(mRightTextColor);
         }
-
         if (leftText != null) {
             mLeftText.setText(leftText);
             mLeftText.setTextColor(mLeftTextColor);
         }
-
         if (ivLeftSrc != null) {
             mBack.setImageDrawable(ivLeftSrc);
         }
-
         if (showBack) {
             setMargins(mLeftText, -30, 0, 0, 0);
         }
