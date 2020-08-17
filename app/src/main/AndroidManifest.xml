@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.ForgetPasswordActivity"></activity>
+        <activity android:name=".login.activity.EditNickNameActivity"></activity>
+        <activity android:name=".login.activity.BindPhoneActivity" />
+        <activity android:name=".login.activity.ForgetPasswordActivity" />
 
         <meta-data
             android:name="design_width_in_dp"
@@ -38,7 +40,7 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".login.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

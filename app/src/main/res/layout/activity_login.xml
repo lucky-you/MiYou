@@ -10,6 +10,7 @@
         android:background="#9A80FA"
         android:orientation="vertical">
 
+
         <com.zhowin.base_library.view.TitleView
             android:id="@+id/titleView"
             android:layout_width="match_parent"
@@ -17,7 +18,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:mBackgroundColor="@color/transparent" />
+            app:mBackgroundColor="@color/transparent"
+            app:mTitle="登录"
+            app:mTitleColor="@color/white" />
 
 
         <LinearLayout
@@ -107,6 +110,7 @@
 
 
                     <TextView
+                        android:id="@+id/tvGetVerificationCode"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -200,17 +204,16 @@
             </LinearLayout>
 
 
-            <com.zhowin.library.radius.RadiusTextView
+            <TextView
                 android:id="@+id/tvLogin"
                 style="@style/RelativeLayoutWidth44DpStyle"
                 android:layout_height="42dp"
                 android:layout_gravity="center"
+                android:background="@drawable/shape_theme_button_bg"
                 android:gravity="center"
                 android:text="登录"
                 android:textColor="@color/color_white"
-                android:textSize="13sp"
-                app:rv_backgroundColor="@color/color_8c86fa"
-                app:rv_radiusHalfHeightEnable="true" />
+                android:textSize="13sp" />
 
 
             <TextView

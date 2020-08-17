@@ -18,6 +18,6 @@ public class RefreshLayout extends SwipeRefreshLayout {
 
     public RefreshLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setColorSchemeResources(R.color.color_yellow, R.color.color_yellow, R.color.color_yellow);
+        setColorSchemeResources(R.color.color_8c86fa, R.color.color_8c86fa, R.color.color_8c86fa);
     }
 }

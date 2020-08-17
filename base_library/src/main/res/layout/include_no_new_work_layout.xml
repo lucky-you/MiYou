@@ -7,13 +7,12 @@
     android:orientation="vertical">
 
 
-    <com.zhowin.library.radius.RadiusLinearLayout
+    <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
-        app:rv_backgroundColor="@color/white"
-        app:rv_radius="6dp">
+        android:background="@drawable/shape_center_dialog_bg"
+        android:orientation="vertical">
 
 
         <TextView
@@ -26,10 +25,7 @@
             android:textColor="@color/color_333"
             android:textSize="16sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.7dp"
-            android:background="@color/color_f5f5f5" />
+        <View style="@style/DivideLineStyle" />
 
         <TextView
             android:id="@+id/tvDuration"
@@ -37,13 +33,13 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@color/color_yellow"
+            android:background="@color/color_8c86fa"
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
-    </com.zhowin.library.radius.RadiusLinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

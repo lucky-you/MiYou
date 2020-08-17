@@ -1,4 +1,4 @@
-package com.zhowin.miyou.login;
+package com.zhowin.miyou.login.activity;
 
 
 import com.zhowin.base_library.base.BaseBindActivity;

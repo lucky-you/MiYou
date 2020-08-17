@@ -10,11 +10,10 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-
         <com.zhowin.base_library.view.TitleView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mTitle="忘记密码" />
+            app:mTitle="绑定手机号" />
 
 
         <LinearLayout
@@ -43,8 +42,7 @@
                 android:gravity="center_vertical"
                 android:hint="请输入您手机号码"
                 android:textColor="@color/color_333"
-                android:textColorHint="@color/color_999"
-                android:textSize="15sp" />
+                android:textColorHint="@color/color_999" />
 
 
         </LinearLayout>
@@ -80,8 +78,7 @@
                 android:gravity="center_vertical"
                 android:hint="请输入验证码"
                 android:textColor="@color/color_333"
-                android:textColorHint="@color/color_999"
-                android:textSize="15sp" />
+                android:textColorHint="@color/color_999" />
 
 
             <TextView
@@ -102,51 +99,12 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="30dp">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="新密码"
-                android:textColor="@color/color_ff656565" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="8"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="请输入新密码"
-                android:inputType="textPassword"
-                android:textColor="@color/color_333"
-                android:textColorHint="@color/color_999"
-                android:textSize="15sp" />
-
-
-        </LinearLayout>
-
-        <View
-            style="@style/DivideLineStyle"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" />
-
-
         <TextView
             android:id="@+id/tvDetermine"
             android:layout_width="260dp"
             android:layout_height="49dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="100dp"
             android:background="@drawable/shape_theme_button_bg"
             android:gravity="center"
             android:text="确定"
