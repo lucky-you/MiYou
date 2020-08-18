@@ -114,6 +114,7 @@
 
 
                 <EditText
+                    android:id="@+id/editMobileNumber"
                     style="@style/RelativeLayoutWidth44DpStyle"
                     android:layout_gravity="center"
                     android:background="@null"

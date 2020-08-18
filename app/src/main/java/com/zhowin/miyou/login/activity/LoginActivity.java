@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.base_library.utils.SetDrawableResourceHelper;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
@@ -63,6 +64,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
             case R.id.tvGetVerificationCode:
                 break;
             case R.id.tvLogin:
+                clickLogin();
                 break;
             case R.id.tvOneClickLogin:
                 startActivity(EditNickNameActivity.class);
@@ -77,6 +79,14 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
             case R.id.ivQQLogin:
                 break;
         }
+    }
+
+    private void clickLogin() {
+        String phoneNumber = mBinding.editMobileNumber.getText().toString().trim();
+        if (!PhoneUtils.checkPhone(phoneNumber, true)) {
+            return;
+        }
+
     }
 
 
