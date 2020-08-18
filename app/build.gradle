@@ -4,6 +4,14 @@ android {
     compileSdkVersion 29
     buildToolsVersion "30.0.1"
 
+
+
+    //开发环境
+    def API_DEVELOP_HOST = "\"https://miyue.zhowin.com\""
+
+    //正式环境
+    def API_RELEASE_HOST = "\"https://api.qinmi.cn\""
+
     defaultConfig {
         applicationId "com.zhowin.miyou"
         minSdkVersion 19
@@ -13,11 +21,34 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    signingConfigs {
+        release {
+            keyAlias 'app'
+            keyPassword '110120119'
+            storeFile file('../appKey.keystore')
+            storePassword '110120119'
+        }
+    }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("boolean", "IS_LOG", "false")
+            buildConfigField("String", "API_HOST", API_RELEASE_HOST)
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("boolean", "IS_LOG", "true")
+            buildConfigField("String", "API_HOST", API_DEVELOP_HOST)
         }
     }
     dataBinding {

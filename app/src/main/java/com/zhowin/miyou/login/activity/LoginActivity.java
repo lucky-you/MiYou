@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
-import com.zhowin.base_library.utils.BarUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
 
