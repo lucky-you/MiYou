@@ -1,6 +1,7 @@
 package com.zhowin.miyou.login.activity;
 
 
+import android.graphics.Typeface;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -64,13 +65,20 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> implem
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rbPhoneLogin:
+                mBinding.llPhoneLayout.setVisibility(View.VISIBLE);
+                mBinding.llPasswordLayout.setVisibility(View.GONE);
                 break;
             case R.id.rbPasswordLogin:
+                mBinding.llPhoneLayout.setVisibility(View.GONE);
+                mBinding.llPasswordLayout.setVisibility(View.VISIBLE);
                 break;
         }
     }
 
     private void setBottomStatusUi(boolean isSelect, RadioButton radioButton) {
+        radioButton.setTypeface(radioButton.isChecked() ? Typeface.defaultFromStyle(Typeface.BOLD) : Typeface.defaultFromStyle(Typeface.NORMAL));
+        radioButton.setTextColor(radioButton.isChecked() ? getBaseColor(R.color.color_333) : getBaseColor(R.color.color_666));
+        radioButton.setTextSize(radioButton.isChecked() ? 23 : 16);
 
 //        SetDrawableResourceHelper.setBottomDrawable(mContext,radioButton, isSelect, 0, 0);
 

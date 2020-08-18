@@ -24,8 +24,9 @@
 
 
         <LinearLayout
+            android:id="@+id/llPhoneOrPasswordLoginLayout"
             android:layout_width="280dp"
-            android:layout_height="300dp"
+            android:layout_height="310dp"
             android:background="@drawable/shape_center_hit_message_bg"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,8 +48,10 @@
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:button="@null"
+                    android:checked="true"
                     android:gravity="center"
                     android:text="短信登录"
+                    android:textColor="@color/login_button_text_color"
                     android:textSize="14sp" />
 
                 <RadioButton
@@ -60,6 +63,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="账号密码登录"
+                    android:textColor="@color/login_button_text_color"
                     android:textSize="14sp" />
 
             </RadioGroup>
@@ -70,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="30dp"
                 android:orientation="vertical"
                 android:visibility="visible">
 
@@ -157,6 +161,7 @@
 
                 <LinearLayout
                     style="@style/RelativeLayoutWidth44DpStyle"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
 
@@ -235,6 +240,7 @@
             style="@style/TextViewStyleOf14Sp"
             android:layout_marginBottom="40dp"
             android:text="登录即表示同意用户协议"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
