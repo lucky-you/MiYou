@@ -30,10 +30,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:text="选择正确的生辰日期，会受到来自朋友们的祝福哟"
             android:textColor="@color/color_ff656565"
             android:textSize="12sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <LinearLayout
@@ -48,9 +49,9 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="100dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -92,20 +93,18 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="120dp"
+                    android:layout_marginTop="100dp"
                     android:layout_marginBottom="30dp"
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <EditText
+                    <TextView
+                        android:id="@+id/tvSelectBirthday"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@null"
                         android:gravity="center"
-                        android:hint="1998.06.15"
                         android:textColor="@color/color_333"
-                        android:textColorHint="@color/color_999"
                         android:textSize="16sp" />
 
                     <View style="@style/DivideLineStyle" />
@@ -120,9 +119,10 @@
                 style="@style/RecycleViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="120dp"
-                android:layout_marginRight="30dp" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginRight="16dp"
+                android:visibility="gone" />
 
 
         </LinearLayout>

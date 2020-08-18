@@ -9,7 +9,14 @@ public class LabelList {
     private int labelId;
     private String labelTitle;
     private int labelResources;
+    private boolean  isSelect;
 
+    public LabelList() {
+    }
+
+    public LabelList(String labelTitle) {
+        this.labelTitle = labelTitle;
+    }
 
     public int getLabelId() {
         return labelId;
@@ -33,5 +40,13 @@ public class LabelList {
 
     public void setLabelResources(int labelResources) {
         this.labelResources = labelResources;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 }

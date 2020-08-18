@@ -1,5 +1,7 @@
 package com.zhowin.miyou.login.adapter;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -21,5 +23,20 @@ public class SelectInterestAdapter extends BaseQuickAdapter<LabelList, BaseViewH
     @Override
     protected void convert(@NonNull BaseViewHolder helper, LabelList item) {
 
+        helper.setText(R.id.tvLabelTitle, item.getLabelTitle())
+                .setBackgroundRes(R.id.tvLabelTitle, item.isSelect() ? R.drawable.shape_theme_button_bg : R.drawable.shape_grey_button_bg)
+                .setTextColor(R.id.tvLabelTitle, item.isSelect() ? getItemColor(R.color.white) : getItemColor(R.color.color_666))
+                .getView(R.id.tvLabelTitle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item.setSelect(!item.isSelect());
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+
+    private int getItemColor(int color) {
+        return mContext.getResources().getColor(color);
     }
 }

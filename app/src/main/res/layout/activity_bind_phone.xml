@@ -42,7 +42,8 @@
                 android:gravity="center_vertical"
                 android:hint="请输入您手机号码"
                 android:textColor="@color/color_333"
-                android:textColorHint="@color/color_999" />
+                android:textColorHint="@color/color_999"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -78,7 +79,8 @@
                 android:gravity="center_vertical"
                 android:hint="请输入验证码"
                 android:textColor="@color/color_333"
-                android:textColorHint="@color/color_999" />
+                android:textColorHint="@color/color_999"
+                android:textSize="14sp" />
 
 
             <TextView
