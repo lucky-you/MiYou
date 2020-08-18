@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#9A80FA"
+        android:background="@mipmap/login_bg"
         android:orientation="vertical">
 
 
@@ -19,15 +19,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:mBackgroundColor="@color/transparent"
+            app:mLeftSrc="@mipmap/back_white_icon"
             app:mTitle="登录"
             app:mTitleColor="@color/white" />
 
 
         <LinearLayout
             android:id="@+id/llPhoneOrPasswordLoginLayout"
-            android:layout_width="280dp"
-            android:layout_height="310dp"
-            android:background="@drawable/shape_center_hit_message_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/login_white_bg"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -214,7 +215,7 @@
                 style="@style/RelativeLayoutWidth44DpStyle"
                 android:layout_height="42dp"
                 android:layout_gravity="center"
-                android:background="@drawable/shape_theme_button_bg"
+                android:background="@mipmap/login_sure_btn"
                 android:gravity="center"
                 android:text="登录"
                 android:textColor="@color/color_white"
@@ -233,6 +234,14 @@
                 android:textSize="13sp" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivLoginLeftTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/login_zs"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/llPhoneOrPasswordLoginLayout" />
 
 
         <TextView

@@ -7,11 +7,12 @@
 
     <ImageView
         android:id="@+id/back"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:padding="15dp"
-        android:src="@mipmap/ic_back_black" />
+        android:layout_marginLeft="6dp"
+        android:padding="10dp"
+        android:src="@mipmap/back_black_icon" />
 
     <TextView
         android:id="@+id/left_tv"
@@ -31,8 +32,7 @@
         android:maxWidth="200dp"
         android:singleLine="true"
         android:textColor="@color/black"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textSize="17sp" />
 
 
     <LinearLayout

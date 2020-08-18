@@ -31,7 +31,8 @@
                 android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:text="手机"
-                android:textColor="@color/color_ff656565" />
+                android:textColor="@color/color_ff656565"
+                android:textSize="14sp" />
 
             <EditText
                 android:layout_width="0dp"
@@ -68,7 +69,8 @@
                 android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:text="验证码"
-                android:textColor="@color/color_ff656565" />
+                android:textColor="@color/color_ff656565"
+                android:textSize="14sp" />
 
             <EditText
                 android:layout_width="0dp"
@@ -103,11 +105,11 @@
 
         <TextView
             android:id="@+id/tvDetermine"
-            android:layout_width="260dp"
-            android:layout_height="49dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
-            android:background="@drawable/shape_theme_button_bg"
+            android:background="@mipmap/login_sure_btn"
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/white"

@@ -114,6 +114,42 @@
             </RelativeLayout>
 
 
+            <RadioGroup
+                android:id="@+id/rgUserGenderLayout"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="120dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+
+                <RadioButton
+                    android:id="@+id/rbManOfGender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_user_man_icon"
+                    android:button="@null" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:id="@+id/rbWomanOfGender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_user_woman_icon"
+                    android:button="@null" />
+
+
+            </RadioGroup>
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/selectItemRecyclerView"
                 style="@style/RecycleViewStyle"
@@ -130,12 +166,12 @@
 
         <TextView
             android:id="@+id/tvNextStep"
-            android:layout_width="260dp"
-            android:layout_height="42dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="60dp"
-            android:background="@drawable/shape_theme_button_bg"
+            android:background="@mipmap/login_sure_btn"
             android:gravity="center"
             android:text="下一步"
             android:textColor="@color/white"

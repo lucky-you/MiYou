@@ -3,6 +3,7 @@ package com.zhowin.miyou.login.activity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -25,7 +26,7 @@ import java.util.TimeZone;
 /**
  * 设置昵称
  */
-public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameBinding> {
+public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameBinding> implements RadioGroup.OnCheckedChangeListener {
 
 
     public static final int LAYOUT_TYPE_NICKNAME = 1; //昵称
@@ -48,6 +49,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
 
     @Override
     public void initData() {
+        mBinding.rgUserGenderLayout.setOnCheckedChangeListener(this::onCheckedChanged);
 
     }
 
@@ -101,8 +103,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
                 mBinding.tvContent.setVisibility(View.VISIBLE);
                 mBinding.tvContent.setText("只有一次选择性别的机会，我们会根据选择推荐你喜欢的内容,性别选择后不可更改");
                 mBinding.llNickNameLayout.setVisibility(View.GONE);
-                mBinding.rlBirthdayLayout.setVisibility(View.GONE);
-                mBinding.selectItemRecyclerView.setVisibility(View.VISIBLE);
+                mBinding.rgUserGenderLayout.setVisibility(View.VISIBLE);
                 break;
 
             case LAYOUT_TYPE_BIRTHDAY:
@@ -110,6 +111,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
                 mBinding.tvContent.setVisibility(View.VISIBLE);
                 mBinding.tvContent.setText("选择正确的生辰日期，会受到来自朋友们的祝福哟");
                 mBinding.llNickNameLayout.setVisibility(View.GONE);
+                mBinding.rgUserGenderLayout.setVisibility(View.GONE);
                 mBinding.rlBirthdayLayout.setVisibility(View.VISIBLE);
                 setUserBirthday(ZodiacUtil.getCurrentDate());
                 showBirthdayDialog();
@@ -121,6 +123,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
                 mBinding.tvContent.setText("头像可选择下面你喜欢的，也可以自定义上传哟");
                 mBinding.llNickNameLayout.setVisibility(View.GONE);
                 mBinding.rlBirthdayLayout.setVisibility(View.GONE);
+                mBinding.rgUserGenderLayout.setVisibility(View.GONE);
                 mBinding.selectItemRecyclerView.setVisibility(View.VISIBLE);
                 List<LabelList> UserLists = getUserAvatarList();
                 SelectUserAvatarAdapter userAvatarAdapterAdapter = new SelectUserAvatarAdapter(UserLists);
@@ -135,6 +138,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
                 mBinding.tvContent.setText("兴趣标签选择后也是不可更改的，选择最符合你的三种标签吧");
                 mBinding.llNickNameLayout.setVisibility(View.GONE);
                 mBinding.rlBirthdayLayout.setVisibility(View.GONE);
+                mBinding.rgUserGenderLayout.setVisibility(View.GONE);
                 mBinding.selectItemRecyclerView.setVisibility(View.VISIBLE);
                 List<LabelList> labelLists = getInterestList();
                 SelectInterestAdapter selectInterestAdapter = new SelectInterestAdapter(labelLists);
@@ -176,7 +180,6 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
     }
 
     private List<LabelList> getInterestList() {
-
         List<LabelList> interestList = new ArrayList<>();
         interestList.add(new LabelList("英雄联盟"));
         interestList.add(new LabelList("王者荣耀"));
@@ -188,5 +191,15 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
         interestList.add(new LabelList("王者荣耀"));
         interestList.add(new LabelList("王者荣耀"));
         return interestList;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.rbManOfGender:
+                break;
+            case R.id.rbWomanOfGender:
+                break;
+        }
     }
 }
