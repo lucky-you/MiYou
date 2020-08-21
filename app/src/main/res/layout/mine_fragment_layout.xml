@@ -1,11 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="216dp"
+                android:background="@drawable/shape_mine_bg">
+
+                <ImageView
+                    android:id="@+id/ivSetting"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@mipmap/ic_def_image"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivUserAvatar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@mipmap/ic_default_hp"
+                    app:civ_border_color="@color/color_ccc"
+                    app:civ_border_width="1dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivSetting" />
+
+                <TextView
+                    android:id="@+id/tvUserNickName"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toRightOf="@id/ivUserAvatar"
+                    app:layout_constraintTop_toTopOf="@id/ivUserAvatar" />
+
+                <TextView
+                    android:id="@+id/tvMUNumber"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:text="觅U号:85201657"
+                    android:textColor="@color/color_white"
+                    app:layout_constraintLeft_toRightOf="@id/ivUserAvatar"
+                    app:layout_constraintTop_toBottomOf="@id/tvUserNickName" />
+
+                <ImageView
+                    android:id="@+id/ivUserSex"
+                    android:layout_width="32dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@mipmap/ic_def_image"
+                    app:layout_constraintBottom_toBottomOf="@id/tvMUNumber"
+                    app:layout_constraintLeft_toRightOf="@id/tvMUNumber"
+                    app:layout_constraintTop_toTopOf="@id/tvMUNumber" />
+
+                <ImageView
+                    android:id="@+id/ivUserLevel"
+                    android:layout_width="32dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@mipmap/ic_def_image"
+                    app:layout_constraintBottom_toBottomOf="@id/ivUserSex"
+                    app:layout_constraintLeft_toRightOf="@id/ivUserSex"
+                    app:layout_constraintTop_toTopOf="@id/ivUserSex" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivUserAvatar">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="关注"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvAttentionNumber"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:text="25"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="粉丝"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvFansNumber"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:text="1.2W"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="访客"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvVisitorNumber"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:text="71"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="-30dp"
+                android:layout_marginRight="30dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="1dp"
+                app:cardMaxElevation="1dp"
+                app:cardPreventCornerOverlap="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/llWalletLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/ic_def_image" />
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center"
+                            android:text="钱包"
+                            android:textColor="@color/color_333" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llKnighthoodLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/ic_def_image" />
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center"
+                            android:text="爵位"
+                            android:textColor="@color/color_333" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llVipLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/ic_def_image" />
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center"
+                            android:text="VIP"
+                            android:textColor="@color/color_333" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mineRecyclerView"
+                style="@style/RecycleViewStyle"
+                android:layout_marginTop="12dp" />
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
 
 </layout>
