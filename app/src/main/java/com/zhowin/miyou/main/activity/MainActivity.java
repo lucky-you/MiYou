@@ -32,7 +32,6 @@ public class MainActivity extends BaseLibActivity implements OnTabSelectListener
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
-    private List<Fragment> mFragments = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -47,14 +46,20 @@ public class MainActivity extends BaseLibActivity implements OnTabSelectListener
 
     @Override
     public void initData() {
+        List<Fragment> mFragments = new ArrayList<>();
+
         for (int i = 0; i < mTitles.length; i++) {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnSelectIds[i]));
         }
         mFragments.add(new RecommendFragment());
         mFragments.add(new MessageFragment());
         mFragments.add(new MineFragment());
-        noScrollViewPager.setAdapter(new HomePageAdapter(getSupportFragmentManager(), mFragments, mTitles));
+
+        HomePageAdapter homePageAdapter = new HomePageAdapter(getSupportFragmentManager(), mFragments, mTitles);
+        noScrollViewPager.setAdapter(homePageAdapter);
+
         commonTabLayout.setTabData(mTabEntities);
+
         commonTabLayout.setOnTabSelectListener(this);
     }
 

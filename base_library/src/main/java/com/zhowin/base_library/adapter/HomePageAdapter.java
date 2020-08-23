@@ -33,7 +33,6 @@ public class HomePageAdapter extends FragmentStatePagerAdapter {
         return mTitles[position];
     }
 
-    @NonNull
     @Override
     public Fragment getItem(int position) {
         return mFragments.get(position);
