@@ -14,6 +14,7 @@ import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.base_library.utils.SetDrawableResourceHelper;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
+import com.zhowin.miyou.main.activity.MainActivity;
 
 /**
  * 登录
@@ -64,7 +65,8 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
             case R.id.tvGetVerificationCode:
                 break;
             case R.id.tvLogin:
-                clickLogin();
+//                clickLogin();
+                startActivity(MainActivity.class);
                 break;
             case R.id.tvOneClickLogin:
                 startActivity(EditNickNameActivity.class);

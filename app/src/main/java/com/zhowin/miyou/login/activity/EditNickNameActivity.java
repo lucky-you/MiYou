@@ -1,7 +1,6 @@
 package com.zhowin.miyou.login.activity;
 
 
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -16,12 +15,9 @@ import com.zhowin.miyou.databinding.ActivityEditNickNameBinding;
 import com.zhowin.miyou.login.adapter.SelectInterestAdapter;
 import com.zhowin.miyou.login.adapter.SelectUserAvatarAdapter;
 import com.zhowin.miyou.login.model.LabelList;
-import com.zhowin.miyou.main.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * 设置昵称

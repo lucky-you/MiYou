@@ -3,9 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".main.MainActivity">
+    android:layout_height="match_parent">
 
+    <com.zhowin.base_library.view.NoScrollViewPager
+        android:id="@+id/noScrollViewPager"
+        style="@style/RecycleViewStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/commonTabLayout"
+        android:layout_width="292dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/shape_home_bottom_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:tl_indicator_height="0dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="@color/color_333"
+        app:tl_textUnselectColor="@color/color_999" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
