@@ -24,4 +24,6 @@ public class MessageFragment extends BaseBindFragment<MessageFragmentLayoutBindi
     public void initData() {
 
     }
+
+
 }

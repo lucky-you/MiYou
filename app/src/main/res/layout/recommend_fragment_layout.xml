@@ -63,7 +63,7 @@
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="116dp"
-                        android:layout_margin="10dp" />
+                        android:layout_margin="16dp" />
 
 
                     <RelativeLayout
@@ -77,7 +77,7 @@
                         <TextView
                             style="@style/TextViewStyleOf14Sp"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="100dp"
+                            android:layout_marginLeft="84dp"
                             android:singleLine="true"
                             android:text="通告打造稳定绿色的主播平台啊主播..."
                             android:textColor="@color/color_333" />

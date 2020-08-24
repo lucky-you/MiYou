@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.zhowin.base_library.view.NoScrollViewPager
-        android:id="@+id/noScrollViewPager"
-        style="@style/RecycleViewStyle"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:id="@+id/flContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 
-    <com.flyco.tablayout.CommonTabLayout
-        android:id="@+id/commonTabLayout"
-        android:layout_width="292dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/shape_home_bottom_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:tl_indicator_height="0dp"
-        app:tl_tab_space_equal="true"
-        app:tl_textSelectColor="@color/color_333"
-        app:tl_textUnselectColor="@color/color_999" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.flyco.tablayout.CommonTabLayout
+            android:id="@+id/commonTabLayout"
+            android:layout_width="292dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_home_bottom_bg"
+            app:tl_indicator_height="0dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="@color/color_333"
+            app:tl_textUnselectColor="@color/color_999" />
+
+    </FrameLayout>
+
+
+</LinearLayout>

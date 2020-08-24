@@ -63,8 +63,8 @@
             android:drawableLeft="@drawable/home_search_icon"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
+            android:hint="搜索好友"
             android:paddingLeft="8dp"
-            android:text="搜索好友"
             android:textColor="@color/color_999"
             android:textSize="13sp" />
 
@@ -95,7 +95,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginTop="5dp"
-                        android:src="@drawable/message_red_icon" />
+                        android:src="@drawable/message_red_icon"
+                        android:visibility="gone" />
 
 
                 </FrameLayout>
@@ -167,7 +168,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginTop="5dp"
-                        android:src="@drawable/message_red_icon" />
+                        android:src="@drawable/message_red_icon"
+                        android:visibility="gone" />
 
 
                 </FrameLayout>

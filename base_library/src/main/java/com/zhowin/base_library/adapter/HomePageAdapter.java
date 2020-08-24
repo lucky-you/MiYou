@@ -9,18 +9,27 @@ import java.util.List;
 
 public class HomePageAdapter extends FragmentStatePagerAdapter {
 
-
     private List<Fragment> mFragments;
-    private String[] mTitles;
+    public String[] titles;
+    public List<String> titleList;
 
-    public HomePageAdapter(@NonNull FragmentManager fm) {
-        super(fm);
-    }
 
-    public HomePageAdapter(@NonNull FragmentManager fm, List<Fragment> mFragments, String[] mTitles) {
+    public HomePageAdapter(FragmentManager fm, List<Fragment> mFragments, List<String> titleList) {
         super(fm);
         this.mFragments = mFragments;
-        this.mTitles = mTitles;
+        this.titleList = titleList;
+    }
+
+    public HomePageAdapter(FragmentManager fm, List<Fragment> mFragments, String[] titles) {
+        super(fm);
+        this.mFragments = mFragments;
+        this.titles = titles;
+
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return mFragments.get(position);
     }
 
     @Override
@@ -30,11 +39,10 @@ public class HomePageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles[position];
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        return mFragments.get(position);
+        if (titles != null) {
+            return titles[position];
+        } else {
+            return titleList.get(position);
+        }
     }
 }

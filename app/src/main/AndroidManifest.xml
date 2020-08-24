@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.activity.EditNickNameActivity"></activity>
+        <activity android:name=".mine.activity.MyWalletActivity"></activity>
+        <activity android:name=".login.activity.EditNickNameActivity" />
         <activity android:name=".login.activity.BindPhoneActivity" />
         <activity android:name=".login.activity.ForgetPasswordActivity" />
 

@@ -10,6 +10,7 @@ import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.MineFragmentLayoutBinding;
 import com.zhowin.miyou.login.activity.LoginActivity;
+import com.zhowin.miyou.mine.activity.MyWalletActivity;
 import com.zhowin.miyou.mine.adapter.MineIconListAdapter;
 import com.zhowin.miyou.mine.model.MineIconList;
 
@@ -56,6 +57,7 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llWalletLayout:
+                startActivity(MyWalletActivity.class);
                 break;
             case R.id.llKnighthoodLayout:
                 break;

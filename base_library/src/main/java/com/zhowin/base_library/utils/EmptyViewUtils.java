@@ -10,6 +10,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.R;
 import com.zhowin.base_library.view.EmptyView;
 
+import java.util.ArrayList;
+
 /**
  * Created by : Z_B on 2017/12/21.
  * Effect : 加载空布局的帮助类
@@ -29,6 +31,7 @@ public class EmptyViewUtils {
 
 
     public static View bindEmptyView(Context mContext, BaseQuickAdapter adapter, int imgIds, String emptyString, boolean isEmpty) {
+        adapter.setNewData(new ArrayList());
         View emptyView = adapter.getEmptyView();
         if (emptyView == null) {
             emptyView = new EmptyView(mContext);
