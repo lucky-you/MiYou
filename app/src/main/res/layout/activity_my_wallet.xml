@@ -64,7 +64,7 @@
                 android:id="@+id/tvRecharge"
                 android:layout_width="74dp"
                 android:layout_height="34dp"
-                android:background="@drawable/login_sure_btn"
+                android:background="@mipmap/login_sure_btn"
                 android:gravity="center"
                 android:text="充值"
                 android:textColor="@color/white"
