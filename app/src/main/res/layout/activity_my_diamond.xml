@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:orientation="vertical">
+
+
+        <com.zhowin.base_library.view.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mRightText="明细"
+            app:mRightTextColor="@color/color_333"
+            app:mTitle="我得钻石" />
+
+        <View style="@style/DivideLineStyle" />
+
+
+        <androidx.core.widget.NestedScrollView style="@style/RecycleViewStyle">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout style="@style/RelativeLayoutWidth44DpStyle">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/ic_def_image" />
+
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:text="钻石余额"
+                        android:textColor="@color/color_333"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvDiamondNumber"
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:text="1342"
+                        android:textColor="@color/color_4C9CFF"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <View
+                    style="@style/DivideLineStyle"
+                    android:layout_height="10dp" />
+
+
+                <LinearLayout style="@style/RelativeLayoutWidth44DpStyle">
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="充值钻石"
+                        android:textColor="@color/color_333"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:text="（充值金额无法提现,1元=10钻石）" />
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rechargeRecyclerView"
+                    style="@style/RecycleViewStyle"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" />
+
+                <EditText
+                    android:id="@+id/editRechargeMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/shape_recharge_money_not_choose_bg"
+                    android:hint="请输入充值金额（元）"
+                    android:inputType="number"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/color_333"
+                    android:textColorHint="@color/color_999"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/color_f5f5f5"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:text="充值方式"
+                    android:textColor="@color/color_333"
+                    android:textSize="16sp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/transparent"
+                        android:button="@null"
+                        android:paddingLeft="16dp"
+                        android:text="支付宝"
+                        android:textColor="@color/color_333" />
+
+                    <View style="@style/DivideLineStyle" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/transparent"
+                        android:button="@null"
+                        android:paddingLeft="16dp"
+                        android:text="微信支付"
+                        android:textColor="@color/color_333" />
+
+                </RadioGroup>
+
+                <View style="@style/DivideLineStyle" />
+
+
+                <TextView
+                    android:layout_width="260dp"
+                    android:layout_height="49dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:background="@mipmap/login_sure_btn"
+                    android:gravity="center"
+                    android:text="确认支付（30元）"
+                    android:textColor="@color/color_white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="充值咨询"
+                    android:textColor="@color/color_4C9CFF"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
+</layout>
+

@@ -74,6 +74,64 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="116dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/color_8E9DFD">
+
+
+            <ImageView
+                android:id="@+id/ivExchange"
+                android:layout_width="22dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:src="@mipmap/ic_def_image"
+                app:layout_constraintBottom_toTopOf="@id/tvExchangeNumber"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvCharmValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="魅力值"
+                android:textColor="@color/color_ff656565"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@id/tvExchangeNumber"
+                app:layout_constraintLeft_toRightOf="@id/ivExchange"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvExchangeNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="23096"
+                android:textColor="@color/color_333"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivExchange" />
+
+
+            <TextView
+                android:id="@+id/tvExchange"
+                android:layout_width="74dp"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:text="兑换"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </LinearLayout>
 
