@@ -23,6 +23,7 @@ public class MainActivity extends BaseLibActivity implements OnTabSelectListener
     private CommonTabLayout commonTabLayout;
 
     private String[] mTitles = {"房间", "消息", "我的"};
+    private List<Fragment> mFragments = new ArrayList<>();
 
     private int[] mIconSelectIds = {
             R.drawable.bottom_home_click_icon, R.drawable.bottom_message_click_icon, R.drawable.bottom_mine_click_icon};
@@ -46,7 +47,7 @@ public class MainActivity extends BaseLibActivity implements OnTabSelectListener
 
     @Override
     public void initData() {
-        List<Fragment> mFragments = new ArrayList<>();
+
 
         for (int i = 0; i < mTitles.length; i++) {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnSelectIds[i]));
