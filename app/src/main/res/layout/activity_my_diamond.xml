@@ -33,6 +33,7 @@
                 <LinearLayout style="@style/RelativeLayoutWidth44DpStyle">
 
                     <ImageView
+                        android:id="@+id/ivDiamondImage"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_gravity="center_vertical"
@@ -40,6 +41,7 @@
 
 
                     <TextView
+                        android:id="@+id/tvDiamondText"
                         style="@style/TextViewStyleOf14Sp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="8dp"
@@ -66,6 +68,7 @@
                 <LinearLayout style="@style/RelativeLayoutWidth44DpStyle">
 
                     <TextView
+                        android:id="@+id/tvRechargeLeft"
                         style="@style/TextViewStyleOf14Sp"
                         android:layout_gravity="center_vertical"
                         android:text="充值钻石"
@@ -73,6 +76,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tvRechargeLeHitMessage"
                         style="@style/TextViewStyleOf14Sp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
@@ -101,50 +105,60 @@
                     android:textColorHint="@color/color_999"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/color_f5f5f5"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="16dp"
-                    android:text="充值方式"
-                    android:textColor="@color/color_333"
-                    android:textSize="16sp" />
 
-                <RadioGroup
+                <LinearLayout
+                    android:id="@+id/llRechargeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
-                    <RadioButton
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/transparent"
-                        android:button="@null"
+                        android:background="@color/color_f5f5f5"
+                        android:gravity="center_vertical"
                         android:paddingLeft="16dp"
-                        android:text="支付宝"
-                        android:textColor="@color/color_333" />
+                        android:text="充值方式"
+                        android:textColor="@color/color_333"
+                        android:textSize="16sp" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/transparent"
+                            android:button="@null"
+                            android:paddingLeft="16dp"
+                            android:text="支付宝"
+                            android:textColor="@color/color_333" />
+
+                        <View style="@style/DivideLineStyle" />
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/transparent"
+                            android:button="@null"
+                            android:paddingLeft="16dp"
+                            android:text="微信支付"
+                            android:textColor="@color/color_333" />
+
+                    </RadioGroup>
 
                     <View style="@style/DivideLineStyle" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/transparent"
-                        android:button="@null"
-                        android:paddingLeft="16dp"
-                        android:text="微信支付"
-                        android:textColor="@color/color_333" />
-
-                </RadioGroup>
-
-                <View style="@style/DivideLineStyle" />
+                </LinearLayout>
 
 
                 <TextView
+                    android:id="@+id/tvConfirmPayment"
                     android:layout_width="260dp"
                     android:layout_height="49dp"
                     android:layout_gravity="center_horizontal"
@@ -158,6 +172,7 @@
 
 
                 <TextView
+                    android:id="@+id/tvRechargeConsultation"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"

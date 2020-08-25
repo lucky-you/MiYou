@@ -1,12 +1,15 @@
 package com.zhowin.miyou.mine.activity;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityMyDiamondBinding;
 import com.zhowin.miyou.mine.adapter.RechargeListAdapter;
@@ -16,10 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 我的钻石
+ * 我的钻石 和 我的魅力值
  */
 public class MyDiamondActivity extends BaseBindActivity<ActivityMyDiamondBinding> implements BaseQuickAdapter.OnItemClickListener {
 
+
+    private int classType;
+
+    public static void start(Context context, int type) {
+        Intent intent = new Intent(context, MyDiamondActivity.class);
+        intent.putExtra(ConstantValue.TYPE, type);
+        context.startActivity(intent);
+
+    }
 
     private RechargeListAdapter rechargeLIstAdapter;
 
@@ -31,13 +43,29 @@ public class MyDiamondActivity extends BaseBindActivity<ActivityMyDiamondBinding
 
     @Override
     public void initView() {
-
+        classType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
+        mBinding.titleView.setTitle(1 == classType ? "我的钻石" : "我的魅力值");
+        mBinding.tvDiamondText.setText(1 == classType ? "钻石余额" : "魅力值");
+        mBinding.tvRechargeLeHitMessage.setText(1 == classType ? "（充值金额无法提现,1元=10钻石）" : "（1魅力值=1钻石）");
+        mBinding.editRechargeMoney.setHint(1 == classType ? "请输入充值金额（元）" : "请输入兑换魅力值(1~100000之间）");
+        mBinding.llRechargeLayout.setVisibility(1 == classType ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void initData() {
 
         setRecyclerViewData();
+    }
+
+
+    @Override
+    public void initListener() {
+        mBinding.titleView.getRightTextView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MasonryDetailsActivity.start(mContext, classType);
+            }
+        });
     }
 
     private void setRecyclerViewData() {

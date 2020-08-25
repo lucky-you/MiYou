@@ -32,9 +32,10 @@ public class MyWalletActivity extends BaseBindActivity<ActivityMyWalletBinding> 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvRecharge:
-                startActivity(MyDiamondActivity.class);
+                MyDiamondActivity.start(mContext, 1);
                 break;
             case R.id.tvExchange:
+                MyDiamondActivity.start(mContext, 2);
                 break;
 
         }
