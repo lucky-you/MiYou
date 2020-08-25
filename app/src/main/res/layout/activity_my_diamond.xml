@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             app:mRightText="明细"
             app:mRightTextColor="@color/color_333"
-            app:mTitle="我得钻石" />
+            app:mTitle="我的钻石" />
 
         <View style="@style/DivideLineStyle" />
 

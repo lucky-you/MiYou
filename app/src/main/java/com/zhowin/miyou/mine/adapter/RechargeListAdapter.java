@@ -29,10 +29,17 @@ public class RechargeListAdapter extends BaseQuickAdapter<RechargeList, BaseView
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, RechargeList item) {
-        helper.setBackgroundRes(R.id.llItemRootLayout, currentPosition == helper.getAdapterPosition() ? R.drawable.shape_recharge_money_choosed_bg :
-                R.drawable.shape_recharge_money_not_choose_bg)
+        helper
+                .setBackgroundRes(R.id.llItemRootLayout, currentPosition == helper.getAdapterPosition() ? R.drawable.shape_recharge_money_choosed_bg :
+                        R.drawable.shape_recharge_money_not_choose_bg)
+                .setTextColor(R.id.tvTopDiamond, currentPosition == helper.getAdapterPosition() ? getBaseColor(R.color.color_4C9CFF) : getBaseColor(R.color.color_666))
+                .setTextColor(R.id.tvBottomMoney, currentPosition == helper.getAdapterPosition() ? getBaseColor(R.color.color_4C9CFF) : getBaseColor(R.color.color_333))
                 .setText(R.id.tvTopDiamond, item.getTopTitle() + "钻石")
                 .setText(R.id.tvBottomMoney, "¥" + item.getBottomTitle());
 
+    }
+
+    private int getBaseColor(int color) {
+        return mContext.getResources().getColor(color);
     }
 }
