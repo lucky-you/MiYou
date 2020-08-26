@@ -14,8 +14,10 @@ import com.zhowin.miyou.databinding.IncludeMasonryListFragmentBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 充值明细
+ */
 public class MasonryListFragment extends BaseBindFragment<IncludeMasonryListFragmentBinding> {
-
 
     private String[] titles;
     private List<Fragment> mFragments = new ArrayList<>();

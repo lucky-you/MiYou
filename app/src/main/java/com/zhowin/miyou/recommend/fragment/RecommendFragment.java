@@ -1,5 +1,7 @@
 package com.zhowin.miyou.recommend.fragment;
 
+import android.view.View;
+
 import androidx.fragment.app.Fragment;
 
 import com.zhowin.base_library.adapter.HomePageAdapter;
@@ -8,6 +10,7 @@ import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.RecommendFragmentLayoutBinding;
 import com.zhowin.miyou.main.banner.BannerHelperUtils;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.recommend.activity.UserListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,6 @@ import java.util.List;
 public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutBinding> {
 
 
-
     @Override
     public int getLayoutId() {
         return R.layout.recommend_fragment_layout;
@@ -26,15 +28,13 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
 
     @Override
     public void initView() {
-
+        setOnClick(R.id.ivUserList);
     }
 
     @Override
     public void initData() {
-
         String[] mTitles = {"热门", "女神", "男神", "娱乐", "FM"};
         List<Fragment> mFragments = new ArrayList<>();
-
         for (int i = 0; i < mTitles.length; i++) {
             mFragments.add(RecommendListFragment.newInstance(i));
         }
@@ -53,5 +53,14 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
         bannerLists.add(new BannerList("https://img.zcool.cn/community/01639a56fb62ff6ac725794891960d.jpg"));
         bannerLists.add(new BannerList("https://img.zcool.cn/community/01270156fb62fd6ac72579485aa893.jpg"));
         BannerHelperUtils.showHomeFragmentBanner(mContext, mBinding.banner, bannerLists);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ivUserList:
+                startActivity(UserListActivity.class);
+                break;
+        }
     }
 }

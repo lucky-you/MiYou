@@ -13,6 +13,7 @@
             android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:mRightImage="@drawable/wallet_notice_icon"
             app:mTitle="我的钱包" />
 
 
@@ -22,7 +23,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="16dp"
-            android:background="@color/color_8E9DFD">
+            android:background="@drawable/wallet_bg">
 
 
             <ImageView
@@ -30,7 +31,7 @@
                 android:layout_width="22dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="16dp"
-                android:src="@mipmap/ic_def_image"
+                android:src="@drawable/wallet_diamond_icon"
                 app:layout_constraintBottom_toTopOf="@id/tvRechargeNumber"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,8 +63,10 @@
 
             <TextView
                 android:id="@+id/tvRecharge"
-                android:layout_width="74dp"
-                android:layout_height="34dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/wallet_recharge_btn"
                 android:gravity="center"
                 android:text="充值"
                 android:textColor="@color/white"
@@ -80,7 +83,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="16dp"
-            android:background="@color/color_8E9DFD">
+            android:background="@drawable/wallet_bg">
 
 
             <ImageView
@@ -88,7 +91,7 @@
                 android:layout_width="22dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="16dp"
-                android:src="@mipmap/ic_def_image"
+                android:src="@drawable/wallet_heart_icon"
                 app:layout_constraintBottom_toTopOf="@id/tvExchangeNumber"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -120,8 +123,10 @@
 
             <TextView
                 android:id="@+id/tvExchange"
-                android:layout_width="74dp"
-                android:layout_height="34dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/wallet_recharge_btn"
                 android:gravity="center"
                 android:text="兑换"
                 android:textColor="@color/white"

@@ -46,11 +46,13 @@ public class MasonryDetailsActivity extends BaseBindActivity<ActivityMasonryDeta
         String[] mTitle = {"收入明细", "支出明细"};
         List<Fragment> mFragment = new ArrayList<>();
         for (int i = 0; i < mTitle.length; i++) {
-            switch (classType){
+            switch (classType) {
                 case 1: //钻石
+                    mBinding.titleView.setTitle("钻石明细");
                     mFragment.add(MasonryListFragment.newInstance(i));
                     break;
                 case 2://魅力值
+                    mBinding.titleView.setTitle("魅力值明细");
                     mFragment.add(MasonryDetailsFragment.newInstance(2, i));
                     break;
             }

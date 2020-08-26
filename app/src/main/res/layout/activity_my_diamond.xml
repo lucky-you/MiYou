@@ -34,10 +34,10 @@
 
                     <ImageView
                         android:id="@+id/ivDiamondImage"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_def_image" />
+                        android:src="@drawable/wallet_diamond_icon" />
 
 
                     <TextView
@@ -131,10 +131,12 @@
 
                         <RadioButton
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="54dp"
                             android:layout_gravity="center_vertical"
                             android:background="@color/transparent"
                             android:button="@null"
+                            android:drawableLeft="@drawable/wallet_zfb_icon"
+                            android:drawablePadding="8dp"
                             android:paddingLeft="16dp"
                             android:text="支付宝"
                             android:textColor="@color/color_333" />
@@ -143,10 +145,12 @@
 
                         <RadioButton
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="54dp"
                             android:layout_gravity="center_vertical"
                             android:background="@color/transparent"
                             android:button="@null"
+                            android:drawableLeft="@drawable/wallet_wx_icon"
+                            android:drawablePadding="8dp"
                             android:paddingLeft="16dp"
                             android:text="微信支付"
                             android:textColor="@color/color_333" />
@@ -159,11 +163,11 @@
 
                 <TextView
                     android:id="@+id/tvConfirmPayment"
-                    android:layout_width="260dp"
-                    android:layout_height="49dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
-                    android:background="@mipmap/login_sure_btn"
+                    android:background="@drawable/wallet_payment_btn"
                     android:gravity="center"
                     android:text="确认支付（30元）"
                     android:textColor="@color/color_white"

@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <com.zhowin.base_library.view.TitleView
+            android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:mTitle="钻石明细" />
@@ -27,8 +28,8 @@
             app:tl_indicator_width="30dp"
             app:tl_tab_space_equal="true"
             app:tl_textSelectColor="@color/color_4C9CFF"
-            app:tl_textsize="16sp"
-            app:tl_textUnselectColor="@color/color_666" />
+            app:tl_textUnselectColor="@color/color_666"
+            app:tl_textsize="16sp" />
 
         <View
             style="@style/DivideLineStyle"

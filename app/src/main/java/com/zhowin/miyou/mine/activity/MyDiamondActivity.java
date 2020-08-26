@@ -46,9 +46,12 @@ public class MyDiamondActivity extends BaseBindActivity<ActivityMyDiamondBinding
         classType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
         mBinding.titleView.setTitle(1 == classType ? "我的钻石" : "我的魅力值");
         mBinding.tvDiamondText.setText(1 == classType ? "钻石余额" : "魅力值");
+        mBinding.ivDiamondImage.setImageResource(1 == classType ? R.drawable.wallet_diamond_icon : R.drawable.wallet_heart_icon);
         mBinding.tvRechargeLeHitMessage.setText(1 == classType ? "（充值金额无法提现,1元=10钻石）" : "（1魅力值=1钻石）");
         mBinding.editRechargeMoney.setHint(1 == classType ? "请输入充值金额（元）" : "请输入兑换魅力值(1~100000之间）");
         mBinding.llRechargeLayout.setVisibility(1 == classType ? View.VISIBLE : View.GONE);
+        mBinding.tvConfirmPayment.setText(1 == classType ? "确认支付（30元）" : "确认兑换（1000魅力值）");
+        mBinding.tvRechargeConsultation.setText(1==classType?"充值咨询":"兑换咨询");
     }
 
     @Override
