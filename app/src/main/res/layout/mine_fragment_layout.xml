@@ -9,6 +9,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <View
@@ -83,16 +85,19 @@
                     app:layout_constraintLeft_toRightOf="@id/tvMUNumber"
                     app:layout_constraintTop_toTopOf="@id/tvMUNumber" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/ivUserLevel"
-                    android:layout_width="32dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="6dp"
-                    android:src="@mipmap/ic_def_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/shape_user_level_bg"
+                    android:gravity="center"
+                    android:text="V11"
+                    android:textColor="@color/color_white"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="@id/tvUserSex"
                     app:layout_constraintLeft_toRightOf="@id/tvUserSex"
                     app:layout_constraintTop_toTopOf="@id/tvUserSex" />
-
 
                 <LinearLayout
                     android:layout_width="match_parent"

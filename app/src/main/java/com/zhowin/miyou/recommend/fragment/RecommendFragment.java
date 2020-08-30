@@ -3,7 +3,9 @@ package com.zhowin.miyou.recommend.fragment;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.zhowin.base_library.adapter.HomePageAdapter;
 import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.miyou.R;
@@ -62,5 +64,25 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
                 startActivity(UserListActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public void initListener() {
+        mBinding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mBinding.refreshLayout.setRefreshing(false);
+            }
+        });
+        mBinding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.BaseOnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                if (i >= 0) {
+                    mBinding.refreshLayout.setEnabled(true);
+                } else {
+                    mBinding.refreshLayout.setEnabled(false);
+                }
+            }
+        });
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
@@ -57,294 +56,218 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/transparent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
-
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/transparent">
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shape_white_10dp_bg"
-                        app:layout_constraintBottom_toBottomOf="@id/llNumberOneLayout"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent">
-
-                        <LinearLayout
-                            android:id="@+id/llNumberTwoLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="14dp"
-                            android:orientation="vertical"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent">
-
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:background="@drawable/list_ribang2_box">
-
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@mipmap/ic_default_hp" />
-
-                            </FrameLayout>
-
-                            <TextView
-                                style="@style/TextViewStyleOf14Sp"
-                                android:layout_gravity="center"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLength="5"
-                                android:singleLine="true"
-                                android:text="小喵喵喵喵"
-                                android:textColor="@color/color_333"
-                                android:textSize="15sp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="6dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginStart="10dp"
-                                    android:background="@drawable/shape_user_level_bg"
-                                    android:gravity="center"
-                                    android:text="V11"
-                                    android:textColor="@color/color_white"
-                                    android:textSize="11sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginStart="10dp"
-                                    android:background="@drawable/shape_user_level_bg"
-                                    android:gravity="center"
-                                    android:text="爵位"
-                                    android:textColor="@color/color_white"
-                                    android:textSize="11sp" />
-                            </LinearLayout>
-
-                            <TextView
-                                style="@style/TextViewStyleOf14Sp"
-                                android:layout_gravity="center"
-                                android:layout_margin="8dp"
-                                android:text="魅力值254w"
-                                android:textColor="@color/color_666"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/llNumberThreeLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="14dp"
-                            android:orientation="vertical"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintRight_toRightOf="parent">
-
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:background="@drawable/list_ribang3_box">
-
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
-                                    android:layout_gravity="center"
-                                    android:src="@mipmap/ic_default_hp" />
-
-                            </FrameLayout>
-
-                            <TextView
-                                style="@style/TextViewStyleOf14Sp"
-                                android:layout_gravity="center"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxLength="5"
-                                android:singleLine="true"
-                                android:text="小喵喵喵喵"
-                                android:textColor="@color/color_333"
-                                android:textSize="15sp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="6dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginStart="10dp"
-                                    android:background="@drawable/shape_user_level_bg"
-                                    android:gravity="center"
-                                    android:text="V11"
-                                    android:textColor="@color/color_white"
-                                    android:textSize="11sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginStart="10dp"
-                                    android:background="@drawable/shape_user_level_bg"
-                                    android:gravity="center"
-                                    android:text="爵位"
-                                    android:textColor="@color/color_white"
-                                    android:textSize="11sp" />
-                            </LinearLayout>
-
-                            <TextView
-                                style="@style/TextViewStyleOf14Sp"
-                                android:layout_gravity="center"
-                                android:layout_margin="8dp"
-                                android:text="魅力值254w"
-                                android:textColor="@color/color_666"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginTop="16dp">
 
 
                     <LinearLayout
-                        android:id="@+id/llNumberOneLayout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_nummber_one_white_bg"
-                        android:orientation="vertical"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/shape_white_10dp_bg"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/list_ribang1_box">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="62dp"
-                                android:layout_height="62dp"
-                                android:layout_gravity="center"
-                                android:src="@mipmap/ic_default_hp" />
-
-                        </FrameLayout>
-
-                        <TextView
-                            style="@style/TextViewStyleOf14Sp"
-                            android:layout_gravity="center_horizontal"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:maxLength="5"
-                            android:singleLine="true"
-                            android:text="小喵喵喵喵"
-                            android:textColor="@color/color_333"
-                            android:textSize="15sp" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="6dp">
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                            <TextView
+                            <FrameLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="10dp"
-                                android:background="@drawable/shape_user_level_bg"
-                                android:gravity="center"
-                                android:text="V11"
-                                android:textColor="@color/color_white"
-                                android:textSize="11sp" />
+                                android:background="@drawable/list_szzx1_box">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="62dp"
+                                    android:layout_height="62dp"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/ic_default_hp" />
+
+                            </FrameLayout>
 
                             <TextView
+                                style="@style/TextViewStyleOf14Sp"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLength="5"
+                                android:singleLine="true"
+                                android:text="小喵喵喵喵"
+                                android:textColor="@color/color_333"
+                                android:textSize="15sp" />
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="10dp"
-                                android:background="@drawable/shape_user_level_bg"
-                                android:gravity="center"
-                                android:text="爵位"
-                                android:textColor="@color/color_white"
-                                android:textSize="11sp" />
+                                android:layout_margin="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/shape_user_level_bg"
+                                    android:gravity="center"
+                                    android:text="V11"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/shape_user_level_bg"
+                                    android:gravity="center"
+                                    android:text="爵位"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
-                        <TextView
-                            style="@style/TextViewStyleOf14Sp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_margin="8dp"
-                            android:text="魅力值254w"
-                            android:textColor="@color/color_666"
-                            android:textSize="12sp" />
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.5" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/list_szzx1_box">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="62dp"
+                                    android:layout_height="62dp"
+                                    android:layout_gravity="center"
+                                    android:src="@mipmap/ic_default_hp" />
+
+                            </FrameLayout>
+
+                            <TextView
+                                style="@style/TextViewStyleOf14Sp"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLength="5"
+                                android:singleLine="true"
+                                android:text="小喵喵喵喵"
+                                android:textColor="@color/color_333"
+                                android:textSize="15sp" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="6dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/shape_user_level_bg"
+                                    android:gravity="center"
+                                    android:text="V11"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/shape_user_level_bg"
+                                    android:gravity="center"
+                                    android:text="爵位"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/ivLeftDivideLine"
+                    <TextView
+                        android:id="@+id/tvWeekTopStartText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="26dp"
-                        android:src="@drawable/list2_decorate"
-                        app:layout_constraintRight_toLeftOf="@id/llNumberOneLayout"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/ivRightDivideLine"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="26dp"
-                        android:src="@drawable/list_decorate"
-                        app:layout_constraintLeft_toRightOf="@+id/llNumberOneLayout"
+                        android:background="@drawable/list_szzx_bg"
+                        android:gravity="center"
+                        android:text="上周周星TOP1"
+                        android:textColor="@color/color_13A1FB"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="270dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/shape_white_10dp_bg">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        style="@style/RecycleViewStyle" />
-                </FrameLayout>
+                    android:background="@drawable/shape_white_10dp_bg"
+                    android:orientation="vertical">
 
 
+                    <com.flyco.tablayout.CommonTabLayout
+                        android:id="@+id/commonTabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        app:tl_iconGravity="LEFT"
+                        app:tl_iconHeight="20dp"
+                        app:tl_iconMargin="5dp"
+                        app:tl_iconWidth="18dp"
+                        app:tl_indicator_color="@color/color_85A2FD"
+                        app:tl_indicator_corner_radius="2dp"
+                        app:tl_indicator_height="4dp"
+                        app:tl_indicator_margin_bottom="4dp"
+                        app:tl_indicator_width="20dp"
+                        app:tl_tab_space_equal="true"
+                        app:tl_textSelectColor="@color/color_333"
+                        app:tl_textUnselectColor="@color/color_666" />
+
+                    <FrameLayout
+                        android:id="@+id/flWeekStarFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        android:layout_margin="6dp"
+                        android:background="@color/color_white" />
+
+
+                </LinearLayout>
             </LinearLayout>
+
 
         </com.zhowin.base_library.view.RefreshLayout>
 
 
     </LinearLayout>
+
 </layout>

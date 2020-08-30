@@ -11,11 +11,11 @@ import com.zhowin.miyou.recommend.model.UserList;
 import java.util.List;
 
 /**
- * 日榜列表
+ * 日榜
  */
-public class UserListAdapter extends BaseQuickAdapter<UserList, BaseViewHolder> {
-    public UserListAdapter(@Nullable List<UserList> data) {
-        super(R.layout.include_today_user_list_item_view, data);
+public class TodayListAdapter extends BaseQuickAdapter<UserList, BaseViewHolder> {
+    public TodayListAdapter(@Nullable List<UserList> data) {
+        super(R.layout.include_today_list_item_view,  data);
     }
 
     @Override

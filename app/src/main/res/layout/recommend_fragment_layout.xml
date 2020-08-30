@@ -2,115 +2,120 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.zhowin.base_library.view.RefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="wrap_content">
 
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            app:elevation="0dp">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:elevation="0dp">
 
-                <LinearLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="44dp">
-
-                        <TextView
-                            android:layout_width="300dp"
-                            android:layout_height="32dp"
-                            android:layout_marginLeft="16dp"
-                            android:background="@drawable/shape_recommend_top_search"
-                            android:drawableLeft="@drawable/home_search_icon"
-                            android:drawablePadding="8dp"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="8dp"
-                            android:text="搜索ID/昵称关键字"
-                            android:textColor="@color/color_999"
-                            android:textSize="13sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <ImageView
-                            android:id="@+id/ivUserList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/home_trophy_icon"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <com.youth.banner.Banner
-                        android:id="@+id/banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="116dp"
-                        android:layout_margin="16dp" />
-
-
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/home_notice_bg">
+                        android:orientation="vertical">
 
-                        <TextView
-                            style="@style/TextViewStyleOf14Sp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="84dp"
-                            android:singleLine="true"
-                            android:text="通告打造稳定绿色的主播平台啊主播..."
-                            android:textColor="@color/color_333" />
-                    </RelativeLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp">
 
-
-                </LinearLayout>
-
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-            <com.flyco.tablayout.SlidingTabLayout
-                android:id="@+id/slidingTabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                app:tl_indicator_color="@color/color_4C9CFF"
-                app:tl_indicator_corner_radius="2dp"
-                app:tl_indicator_height="4dp"
-                app:tl_indicator_margin_bottom="4dp"
-                app:tl_indicator_width="20dp"
-                app:tl_tab_space_equal="true"
-                app:tl_textSelectColor="@color/color_4C9CFF"
-                app:tl_textUnselectColor="@color/color_666"
-                app:tl_textsize="17sp" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <com.zhowin.base_library.view.NoScrollViewPager
-            android:id="@+id/noScrollViewPager"
-            style="@style/RecycleViewStyle"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                            <TextView
+                                android:layout_width="300dp"
+                                android:layout_height="32dp"
+                                android:layout_marginLeft="16dp"
+                                android:background="@drawable/shape_recommend_top_search"
+                                android:drawableLeft="@drawable/home_search_icon"
+                                android:drawablePadding="8dp"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="8dp"
+                                android:text="搜索ID/昵称关键字"
+                                android:textColor="@color/color_999"
+                                android:textSize="13sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
 
+                            <ImageView
+                                android:id="@+id/ivUserList"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/home_trophy_icon"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.youth.banner.Banner
+                            android:id="@+id/banner"
+                            android:layout_width="match_parent"
+                            android:layout_height="116dp"
+                            android:layout_margin="16dp" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/home_notice_bg">
+
+                            <TextView
+                                style="@style/TextViewStyleOf14Sp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="84dp"
+                                android:singleLine="true"
+                                android:text="通告打造稳定绿色的主播平台啊主播..."
+                                android:textColor="@color/color_333" />
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/slidingTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    app:tl_indicator_color="@color/color_4C9CFF"
+                    app:tl_indicator_corner_radius="2dp"
+                    app:tl_indicator_height="4dp"
+                    app:tl_indicator_margin_bottom="4dp"
+                    app:tl_indicator_width="20dp"
+                    app:tl_tab_space_equal="true"
+                    app:tl_textSelectColor="@color/color_4C9CFF"
+                    app:tl_textUnselectColor="@color/color_666"
+                    app:tl_textsize="17sp" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <com.zhowin.base_library.view.NoScrollViewPager
+                android:id="@+id/noScrollViewPager"
+                style="@style/RecycleViewStyle"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </com.zhowin.base_library.view.RefreshLayout>
 </layout>

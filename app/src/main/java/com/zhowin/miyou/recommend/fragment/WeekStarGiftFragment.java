@@ -3,38 +3,38 @@ package com.zhowin.miyou.recommend.fragment;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
-import com.zhowin.miyou.databinding.IncludeTodayUserListFragmentBinding;
-import com.zhowin.miyou.recommend.adapter.UserListAdapter;
+import com.zhowin.miyou.databinding.IncludeWeekStartGiftFragmentBinding;
+import com.zhowin.miyou.recommend.adapter.WeekStarGiftAdapter;
 import com.zhowin.miyou.recommend.model.UserList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 日榜
+ * 周星榜 礼物
  */
-public class TodayListFragment extends BaseBindFragment<IncludeTodayUserListFragmentBinding> {
+public class WeekStarGiftFragment extends BaseBindFragment<IncludeWeekStartGiftFragmentBinding> {
 
 
-    private UserListAdapter userListAdapter;
+    private WeekStarGiftAdapter weekStarGiftAdapter;
 
 
-    public static TodayListFragment newInstance(int index) {
-        TodayListFragment fragment = new TodayListFragment();
+    public static WeekStarGiftFragment newInstance(int index) {
+        WeekStarGiftFragment fragment = new WeekStarGiftFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ConstantValue.INDEX, index);
         fragment.setArguments(bundle);
         return fragment;
     }
 
+
     @Override
     public int getLayoutId() {
-        return R.layout.include_today_user_list_fragment;
+        return R.layout.include_week_start_gift_fragment;
     }
 
     @Override
@@ -48,19 +48,13 @@ public class TodayListFragment extends BaseBindFragment<IncludeTodayUserListFrag
         for (int i = 0; i < 10; i++) {
             userLists.add(new UserList());
         }
-        userListAdapter = new UserListAdapter(userLists);
+        weekStarGiftAdapter = new WeekStarGiftAdapter(userLists);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.recyclerView.setAdapter(userListAdapter);
-
+        mBinding.recyclerView.setAdapter(weekStarGiftAdapter);
     }
 
     @Override
-    public void initListener() {
-        mBinding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mBinding.refreshLayout.setRefreshing(false);
-            }
-        });
+    public void initImmersionBar() {
+
     }
 }

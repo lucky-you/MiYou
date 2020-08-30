@@ -27,7 +27,7 @@ public class GlideUtils {
                 .placeholder(R.mipmap.ic_def_image)
                 .error(R.mipmap.ic_def_image)
                 .dontAnimate()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
         Glide.with(context).load(url)
                 .apply(options)
                 .into(imageView);
@@ -41,7 +41,7 @@ public class GlideUtils {
         RequestOptions options = new RequestOptions()
                 .placeholder(R.mipmap.ic_default_hp)
                 .error(R.mipmap.ic_default_hp)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
         Glide.with(context)
                 .load(photoUrl)
                 .apply(options)
@@ -65,7 +65,7 @@ public class GlideUtils {
     public static void loadUrlWithDefault(Context context, String url, int res, ImageView imageView) {
         RequestOptions options = new RequestOptions()
                 .error(res)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
         Glide.with(context).load(url)
                 .thumbnail(0.1f)
                 .apply(options)
