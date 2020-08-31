@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_margin="8dp"
+    android:background="@color/white">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civUserHeadPhoto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_default_hp"
+        app:civ_border_color="@color/color_8E9DFD"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvUserNickName"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLength="6"
+        android:text="小喵喵小喵小猫"
+        android:textColor="@color/color_333"
+        app:layout_constraintLeft_toRightOf="@id/civUserHeadPhoto"
+        app:layout_constraintTop_toTopOf="@+id/civUserHeadPhoto" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:text="刚刚"
+        android:textColor="@color/color_666"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/tvUserNickName"
+        app:layout_constraintTop_toBottomOf="@id/tvUserNickName" />
+
+    <TextView
+        android:id="@+id/tvUserLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/girl_box"
+        android:drawableLeft="@drawable/girl_icon"
+        android:drawablePadding="2dp"
+        android:gravity="center"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:text="22"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvUserNickName"
+        app:layout_constraintLeft_toRightOf="@id/tvUserNickName" />
+
+
+    <TextView
+        android:id="@+id/tvRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_fllow_box"
+        android:gravity="center"
+        android:text="移除"
+        android:textColor="@color/color_white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+
+        style="@style/DivideLineStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.zhowin.base_library.view.TitleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mTitle="隐私设置" />
+
+        <View
+            style="@style/DivideLineStyle"
+            android:layout_height="10dp"
+            android:background="@color/color_fafafa" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/RelativeLayoutWidth44DpStyle"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:gravity="center_vertical"
+                android:text="定位服务"
+                android:textColor="@color/color_333"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/message_switch2_box"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            style="@style/DivideLineStyle"
+            android:layout_height="10dp"
+            android:background="@color/color_fafafa" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/RelativeLayoutWidth44DpStyle"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tvStealthLeft"
+                style="@style/TextViewStyleOf14Sp"
+                android:gravity="center_vertical"
+                android:text="进入房间隐身"
+                android:textColor="@color/color_333"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_marginStart="6dp"
+                android:gravity="center_vertical"
+                android:text="(VIP20级及以上才可开启)"
+                android:textColor="@color/color_666"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/tvStealthLeft"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/message_switch1_box"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            style="@style/DivideLineStyle"
+            android:layout_height="10dp"
+            android:background="@color/color_fafafa" />
+
+    </LinearLayout>
+
+
+</layout>
