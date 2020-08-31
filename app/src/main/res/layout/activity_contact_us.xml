@@ -45,8 +45,6 @@
 
                 <TextView
                     style="@style/TextViewStyleOf14Sp"
-                    android:layout_width="29dp"
-                    android:layout_height="7dp"
                     android:gravity="center_vertical"
                     android:text="@string/app_name"
                     android:textColor="@color/color_343434"
@@ -125,10 +123,8 @@
 
                 <TextView
                     style="@style/TextViewStyleOf14Sp"
-                    android:layout_width="29dp"
-                    android:layout_height="17dp"
                     android:gravity="center_vertical"
-                    android:text="www.miyou.com"
+                    android:text="http://fadfafa.com"
                     android:textColor="@color/color_343434"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -154,7 +150,7 @@
                 <TextView
                     style="@style/TextViewStyleOf14Sp"
                     android:gravity="center_vertical"
-                    android:text="wx12364546"
+                    android:text="http://fadfafa.com"
                     android:textColor="@color/color_343434"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"

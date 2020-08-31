@@ -12,6 +12,7 @@ import com.zhowin.miyou.databinding.MineFragmentLayoutBinding;
 import com.zhowin.miyou.login.activity.LoginActivity;
 import com.zhowin.miyou.mine.activity.MyWalletActivity;
 import com.zhowin.miyou.mine.activity.SettingActivity;
+import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.adapter.MineIconListAdapter;
 import com.zhowin.miyou.mine.model.MineIconList;
 
@@ -27,7 +28,7 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
     private final Class<?>[] mClasses = {
             LoginActivity.class,
             LoginActivity.class,
-            LoginActivity.class,
+            VerifiedActivity.class,
             LoginActivity.class,
             LoginActivity.class,
             LoginActivity.class,
@@ -44,7 +45,7 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
 
     @Override
     public void initView() {
-        setOnClick(R.id.ivSetting,R.id.llWalletLayout, R.id.llKnighthoodLayout, R.id.llVipLayout);
+        setOnClick(R.id.ivSetting, R.id.llWalletLayout, R.id.llKnighthoodLayout, R.id.llVipLayout);
         mBinding.mineRecyclerView.setNestedScrollingEnabled(false);
         mBinding.mineRecyclerView.setFocusable(false);
 

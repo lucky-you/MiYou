@@ -20,7 +20,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mine.activity.ContactUsActivity"></activity>
+        <activity android:name=".mine.activity.VerifiedActivity"></activity>
+        <activity android:name=".mine.activity.PermanentLogoutActivity" />
+        <activity android:name=".mine.activity.SetPasswordActivity" />
+        <activity android:name=".mine.activity.ChangeMobilePhoneActivity" />
+        <activity android:name=".mine.activity.LogoutAccountActivity" />
+        <activity android:name=".mine.activity.ContactUsActivity" />
         <activity android:name=".mine.activity.BlackListActivity" />
         <activity android:name=".mine.activity.PrivacySettingActivity" />
         <activity android:name=".mine.activity.AccountSecurityActivity" />

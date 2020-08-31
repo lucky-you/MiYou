@@ -1,8 +1,12 @@
 package com.zhowin.miyou.mine.activity;
 
+import android.app.Dialog;
 import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.callback.OnCenterHitMessageListener;
+import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.view.CenterHitMessageDialog;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivitySettingBinding;
 
@@ -57,7 +61,22 @@ public class SettingActivity extends BaseBindActivity<ActivitySettingBinding> {
             case R.id.clAboutUs:
                 break;
             case R.id.tvOutLogin:
+                showOutLoginDialog();
                 break;
         }
+    }
+
+    private void showOutLoginDialog() {
+        String title = "确定要退出吗?";
+        new CenterHitMessageDialog(mContext, title, new OnCenterHitMessageListener() {
+            @Override
+            public void onNegativeClick(Dialog dialog) {
+
+            }
+
+            @Override
+            public void onPositiveClick(Dialog dialog) {
+            }
+        }).show();
     }
 }
