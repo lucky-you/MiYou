@@ -75,7 +75,7 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
 
     private void setMineIconList() {
         List<MineIconList> mineIconList = new ArrayList<>();
-        mineIconList.add(new MineIconList(R.drawable.mine_team_icon, "公告"));
+        mineIconList.add(new MineIconList(R.drawable.mine_team_icon, "公会"));
         mineIconList.add(new MineIconList(R.drawable.mine_room_icon, "我的房间"));
         mineIconList.add(new MineIconList(R.drawable.mine_authen_icon, "实名认证"));
         mineIconList.add(new MineIconList(R.drawable.mine_shop_icon, "商城"));
