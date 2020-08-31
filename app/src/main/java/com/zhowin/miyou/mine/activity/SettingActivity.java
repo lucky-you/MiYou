@@ -42,6 +42,7 @@ public class SettingActivity extends BaseBindActivity<ActivitySettingBinding> {
             case R.id.clCommunityNorms:
                 break;
             case R.id.clContactUs:
+                startActivity(ContactUsActivity.class);
                 break;
             case R.id.clBlackList:
                 startActivity(BlackListActivity.class);

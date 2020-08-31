@@ -4,16 +4,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.databinding.ActivityContactUsBinding;
 
 /**
- * 联系周末
+ * 联系我们
  */
-public class ContactUsActivity extends AppCompatActivity {
+public class ContactUsActivity extends BaseBindActivity<ActivityContactUsBinding> {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_us);
+    public int getLayoutId() {
+        return R.layout.activity_contact_us;
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 }
