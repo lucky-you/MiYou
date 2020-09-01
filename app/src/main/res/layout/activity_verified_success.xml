@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.zhowin.base_library.view.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mTitle="认证成功" />
+
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:src="@mipmap/ic_def_image" />
+
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="认证失败"
+            android:textColor="@color/color_333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvVerifiedAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/wallet_payment_btn"
+            android:gravity="center"
+            android:text="请重新认证"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="30dp"
+            android:text="真实姓名：**明"
+            android:textColor="@color/color_333"
+            android:textSize="15sp" />
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
+            android:text="身份证号：4*******87"
+            android:textColor="@color/color_333"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+</layout>

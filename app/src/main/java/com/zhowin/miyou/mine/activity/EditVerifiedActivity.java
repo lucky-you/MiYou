@@ -1,8 +1,7 @@
 package com.zhowin.miyou.mine.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
@@ -26,5 +25,15 @@ public class EditVerifiedActivity extends BaseBindActivity<ActivityEditVerifiedB
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void initListener() {
+        mBinding.tvSubmitVerified.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VerifiedSuccessActivity.start(mContext, 1);
+            }
+        });
     }
 }

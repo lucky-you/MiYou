@@ -20,7 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mine.activity.EditVerifiedActivity"></activity>
+        <activity android:name=".mine.activity.MyRoomActivity"></activity>
+        <activity android:name=".mine.activity.AttentionAndFansActivity" />
+        <activity android:name=".mine.activity.VerifiedSuccessActivity" />
+        <activity android:name=".mine.activity.EditVerifiedActivity" />
         <activity android:name=".mine.activity.VerifiedActivity" />
         <activity android:name=".mine.activity.PermanentLogoutActivity" />
         <activity android:name=".mine.activity.SetPasswordActivity" />

@@ -10,6 +10,8 @@ import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.MineFragmentLayoutBinding;
 import com.zhowin.miyou.login.activity.LoginActivity;
+import com.zhowin.miyou.mine.activity.AttentionAndFansActivity;
+import com.zhowin.miyou.mine.activity.MyRoomActivity;
 import com.zhowin.miyou.mine.activity.MyWalletActivity;
 import com.zhowin.miyou.mine.activity.SettingActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
@@ -19,6 +21,8 @@ import com.zhowin.miyou.mine.model.MineIconList;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.jvm.internal.Ref;
+
 /**
  * 我的
  */
@@ -27,7 +31,7 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
 
     private final Class<?>[] mClasses = {
             LoginActivity.class,
-            LoginActivity.class,
+            MyRoomActivity.class,
             VerifiedActivity.class,
             LoginActivity.class,
             LoginActivity.class,
@@ -45,7 +49,9 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
 
     @Override
     public void initView() {
-        setOnClick(R.id.ivSetting, R.id.llWalletLayout, R.id.llKnighthoodLayout, R.id.llVipLayout);
+        setOnClick(R.id.ivSetting,
+                R.id.llAttentionLayout, R.id.llFansLayout, R.id.llVisitorsLayout,
+                R.id.llWalletLayout, R.id.llKnighthoodLayout, R.id.llVipLayout);
         mBinding.mineRecyclerView.setNestedScrollingEnabled(false);
         mBinding.mineRecyclerView.setFocusable(false);
 
@@ -62,6 +68,15 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
         switch (v.getId()) {
             case R.id.ivSetting:
                 startActivity(SettingActivity.class);
+                break;
+            case R.id.llAttentionLayout:
+                AttentionAndFansActivity.start(mContext, 1);
+                break;
+            case R.id.llFansLayout:
+                AttentionAndFansActivity.start(mContext, 2);
+                break;
+            case R.id.llVisitorsLayout:
+                AttentionAndFansActivity.start(mContext, 3);
                 break;
             case R.id.llWalletLayout:
                 startActivity(MyWalletActivity.class);

@@ -110,6 +110,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/llAttentionLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -137,6 +138,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llFansLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -164,6 +166,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llVisitorsLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
