@@ -13,7 +13,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                style="@style/RecycleViewStyle" />
+                style="@style/RecycleViewStyle"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
         </com.zhowin.base_library.view.RefreshLayout>
 
     </LinearLayout>
