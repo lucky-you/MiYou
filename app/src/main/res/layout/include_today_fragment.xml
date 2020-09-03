@@ -72,7 +72,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_white_10dp_bg"
+                        android:background="@drawable/shape_white_color_10dp_bg"
                         app:layout_constraintBottom_toBottomOf="@id/llNumberOneLayout"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent">
@@ -333,7 +333,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="270dp"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/shape_white_10dp_bg">
+                    android:background="@drawable/shape_white_color_10dp_bg">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"

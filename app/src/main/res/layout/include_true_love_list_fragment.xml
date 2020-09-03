@@ -18,7 +18,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_white_10dp_bg">
+                android:background="@drawable/shape_white_color_10dp_bg">
 
                 <LinearLayout
                     android:id="@+id/llLeftUserLayout"
@@ -221,7 +221,7 @@
                 android:id="@+id/recyclerView"
                 style="@style/RecycleViewStyle"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/shape_white_10dp_bg" />
+                android:background="@drawable/shape_white_color_10dp_bg" />
 
         </LinearLayout>
 

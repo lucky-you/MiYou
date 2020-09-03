@@ -12,7 +12,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             style="@style/RecycleViewStyle"
-            android:background="@drawable/shape_white_10dp_bg" />
+            android:background="@drawable/shape_white_color_10dp_bg" />
 
     </com.zhowin.base_library.view.RefreshLayout>
 

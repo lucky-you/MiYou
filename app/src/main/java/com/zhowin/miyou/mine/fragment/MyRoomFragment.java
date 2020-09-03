@@ -1,6 +1,7 @@
 package com.zhowin.miyou.mine.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -11,7 +12,10 @@ import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.IncludeMyRoomFragmentBinding;
+import com.zhowin.miyou.mine.activity.CreateRoomActivity;
+import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
+import com.zhowin.miyou.mine.dialog.UserVerifiedDialog;
 import com.zhowin.miyou.recommend.adapter.RecommendListAdapter;
 
 import java.util.ArrayList;
@@ -44,6 +48,8 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
     @Override
     public void initView() {
         fragmentIndex = getArguments().getInt(ConstantValue.INDEX);
+        mBinding.tvCreateRoom.setVisibility(0 == fragmentIndex ? View.VISIBLE : View.GONE);
+        setOnClick(R.id.tvCreateRoom);
     }
 
     @Override
@@ -67,5 +73,26 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
                 mBinding.refreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tvCreateRoom:
+                showCreateRoomDialog();
+                break;
+        }
+    }
+
+    private void showCreateRoomDialog() {
+        UserVerifiedDialog userVerifiedDialog = new UserVerifiedDialog(mContext);
+        userVerifiedDialog.show();
+        userVerifiedDialog.setOnVerifiedButtonClickListener(new UserVerifiedDialog.OnVerifiedButtonClickListener() {
+            @Override
+            public void onGoToVerified() {
+                startActivity(CreateRoomActivity.class);
+            }
+        });
+
     }
 }

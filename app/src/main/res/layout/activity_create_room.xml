@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <com.zhowin.base_library.view.TitleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mTitle="创建房间" />
+
+        <com.zhowin.base_library.view.NoNestedScrollview style="@style/RecycleViewStyle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="16dp">
+
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/rvRoomBackground"
+                        android:layout_width="108dp"
+                        android:layout_height="108dp"
+                        android:src="@color/color_fff8f8f8"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:riv_corner_radius="12dp" />
+
+                    <EditText
+                        android:id="@+id/editRoomName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入房间名称"
+                        android:textColor="@color/color_343434"
+                        android:textColorHint="@color/color_9A9A9A"
+                        android:textSize="17sp"
+                        app:layout_constraintLeft_toRightOf="@id/rvRoomBackground"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/rvRoomBackground" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/shape_room_type_tag_bg"
+                        android:gravity="center"
+                        android:text="娱乐房"
+                        android:textColor="@color/color_4C9CFF"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@id/rvRoomBackground"
+                        app:layout_constraintLeft_toRightOf="@id/rvRoomBackground" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:drawableLeft="@drawable/shape_vertical_2dp_tag_bg"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="房间玩法介绍"
+                    android:textColor="@color/color_343434"
+                    android:textSize="17sp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_grey_color_12dp_bg">
+
+
+                    <EditText
+                        android:id="@+id/editRoomDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请介绍下您的房间"
+                        android:padding="10dp"
+                        android:textColor="@color/color_343434"
+                        android:textColorHint="@color/color_9A9A9A"
+                        android:textSize="15sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/tvTextDescNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:gravity="center"
+                        android:text="0/200"
+                        android:textColor="@color/color_9A9A9A"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:drawableLeft="@drawable/shape_vertical_2dp_tag_bg"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="房间背景"
+                    android:textColor="@color/color_343434"
+                    android:textSize="17sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/roomBgRecyclerView"
+                    style="@style/RecycleViewStyle"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp">
+
+                    <TextView
+                        android:id="@+id/tvRoomIdLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:drawableLeft="@drawable/shape_vertical_2dp_tag_bg"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="房间ID"
+                        android:textColor="@color/color_343434"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:gravity="center_vertical"
+                        android:text="(随机)"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tvRoomIdLeft"
+                        app:layout_constraintLeft_toRightOf="@id/tvRoomIdLeft" />
+
+                    <TextView
+                        android:id="@+id/tvRoomIdCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="center"
+                        android:text="3572"
+                        android:textColor="@color/color_343434"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/ivRefreshRoomID"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/ivRefreshRoomID"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/ic_def_image"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:id="@+id/tvCreateRoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/wallet_payment_btn"
+                    android:gravity="center"
+                    android:text="创建房间"
+                    android:textColor="@color/color_white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+        </com.zhowin.base_library.view.NoNestedScrollview>
+
+    </LinearLayout>
+
+</layout>
