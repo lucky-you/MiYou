@@ -4,6 +4,7 @@ package com.zhowin.miyou.recommend.activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
@@ -39,5 +40,13 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void initImmersionBar() {
+        ImmersionBar.with(this)
+                .titleBar(mBinding.clTopView, false)
+                .transparentBar()
+                .init();
     }
 }

@@ -23,7 +23,7 @@
             android:layout_width="292dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:background="@drawable/shape_home_bottom_bg"
+            android:background="@drawable/shape_home_activity_bottom_bg"
             app:tl_indicator_height="0dp"
             app:tl_tab_space_equal="true"
             app:tl_textSelectColor="@color/color_333"

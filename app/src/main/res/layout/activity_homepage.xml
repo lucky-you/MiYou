@@ -10,13 +10,222 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical">
 
-            <ImageView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clTopView"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:background="@color/color_8E9DFD" />
+                android:background="@color/color_45BCFD">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:padding="8dp"
+                    android:src="@mipmap/back_white_icon"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@mipmap/ic_def_image"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="26dp"
+                    android:background="@drawable/shape_live_broadcast_bg"
+                    android:gravity="center"
+                    android:text="直播中"
+                    android:textColor="@color/color_white"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-10dp"
+                android:background="@drawable/shape_home_page_bottom_bg"
+                android:orientation="vertical">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="-30dp"
+                    android:src="@mipmap/ic_def_image" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="名字是啥不重要"
+                    android:textColor="@color/color_343434"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="离线  10关注 • 18粉丝"
+                    android:textColor="@color/color_9A9A9A"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvUserSex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/girl_box"
+                        android:drawableLeft="@drawable/girl_icon"
+                        android:drawablePadding="2dp"
+                        android:gravity="center"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="22"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_def_image" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_def_image" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:text="个人资料"
+                    android:textColor="@color/color_343434"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="ID号:146553224" />
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="签名:喜欢我就点点关注吧~" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="16dp">
+
+                    <TextView
+                        android:id="@+id/tvInterestText"
+                        style="@style/TextViewStyleOf14Sp"
+                        android:text="兴趣:"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.internal.FlowLayout
+                        android:id="@+id/flInterestTagsLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:itemSpacing="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/tvInterestText"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:lineSpacing="4dp" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+
+                    style="@style/RecycleViewStyle" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="16dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_out_login_bg"
+                        android:gravity="center"
+                        android:text="已关注"
+                        android:textColor="@color/color_4C9CFF"
+                        android:textSize="17sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.5" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_out_login_bg"
+                        android:gravity="center"
+                        android:text="聊天"
+                        android:textColor="@color/color_4C9CFF"
+                        android:textSize="17sp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
         </LinearLayout>
