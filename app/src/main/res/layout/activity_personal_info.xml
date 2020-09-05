@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.zhowin.base_library.view.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mRightText="保存"
+            app:mRightTextColor="@color/color_343434"
+            app:mTitle="个人资料" />
+
+        <View style="@style/DivideLineStyle" />
+
+        <com.zhowin.base_library.view.NoNestedScrollview
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:text="头像"
+                    android:textColor="@color/color_343434"
+                    android:textSize="16sp" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@mipmap/ic_def_image"
+                    app:riv_corner_radius="5dp" />
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:text="背景墙(0/3)"
+                    android:textColor="@color/color_343434"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/backGroundRecyclerView"
+                    style="@style/RecycleViewStyle"
+                    android:layout_marginLeft="16dp" />
+
+                <View
+                    style="@style/DivideLineStyle"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:divider="@drawable/shape_divide_line_bg"
+                    app:dividerPadding="14dp"
+                    app:showDividers="middle">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        style="@style/RelativeLayoutWidth44DpStyle"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="昵称"
+                            android:textColor="@color/color_343434"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:hint="请输入昵称"
+                            android:textColor="@color/color_343434"
+                            android:textColorHint="@color/color_9A9A9A"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        style="@style/RelativeLayoutWidth44DpStyle"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="性别"
+                            android:textColor="@color/color_343434"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:text="男"
+                            android:textColor="@color/color_343434"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clSelectAgeLayout"
+                        style="@style/RelativeLayoutWidth44DpStyle"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="年龄"
+                            android:textColor="@color/color_343434"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:id="@+id/tvAgeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:drawableRight="@mipmap/ic_arrow_right"
+                            android:drawablePadding="6dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_343434"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        style="@style/RelativeLayoutWidth44DpStyle"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvSignatureText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:gravity="center_vertical"
+                            android:text="个性签名"
+                            android:textColor="@color/color_343434"
+                            android:textSize="16sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <EditText
+                            android:id="@+id/editSignature"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:hint="喜欢我就点点关注吧"
+                            android:paddingBottom="6dp"
+                            android:textColor="@color/color_343434"
+                            android:textColorHint="@color/color_666"
+                            android:textSize="15sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvSignatureText" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </LinearLayout>
+
+        </com.zhowin.base_library.view.NoNestedScrollview>
+    </LinearLayout>
+</layout>

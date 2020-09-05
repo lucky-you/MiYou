@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".recommend.activity.HomepageActivity"></activity>
+        <activity android:name=".mine.activity.YouthModeActivity"></activity>
+        <activity android:name=".mine.activity.PersonalInfoActivity" />
+        <activity android:name=".recommend.activity.HomepageActivity" />
         <activity android:name=".mine.activity.CreateRoomActivity" />
         <activity android:name=".mine.activity.MyRoomActivity" />
         <activity android:name=".mine.activity.AttentionAndFansActivity" />

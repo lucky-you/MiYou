@@ -15,6 +15,7 @@ import com.zhowin.miyou.mine.activity.MyRoomActivity;
 import com.zhowin.miyou.mine.activity.MyWalletActivity;
 import com.zhowin.miyou.mine.activity.SettingActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
+import com.zhowin.miyou.mine.activity.YouthModeActivity;
 import com.zhowin.miyou.mine.adapter.MineIconListAdapter;
 import com.zhowin.miyou.mine.model.MineIconList;
 import com.zhowin.miyou.recommend.activity.HomepageActivity;
@@ -39,7 +40,7 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
             LoginActivity.class,
             LoginActivity.class,
             LoginActivity.class,
-            LoginActivity.class
+            YouthModeActivity.class
     };
 
 
