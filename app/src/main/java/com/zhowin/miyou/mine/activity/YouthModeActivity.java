@@ -1,8 +1,6 @@
 package com.zhowin.miyou.mine.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
+import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
@@ -21,11 +19,21 @@ public class YouthModeActivity extends BaseBindActivity<ActivityYouthModeBinding
 
     @Override
     public void initView() {
-
+        setOnClick(R.id.tvTurnOnYouthMode);
     }
 
     @Override
     public void initData() {
 
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tvTurnOnYouthMode:
+                startActivity(YouthModeSetPasswordActivity.class);
+                break;
+        }
     }
 }

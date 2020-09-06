@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityHomepageBinding;
@@ -48,7 +49,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         isMine = getIntent().getBooleanExtra(ConstantValue.TYPE, false);
         userId = getIntent().getIntExtra(ConstantValue.TYPE, -1);
 
-        setOnClick(R.id.ivEditPersonal);
+        setOnClick(R.id.ivBackReturn,R.id.ivEditPersonal);
         mBinding.llBottomAttentionLayout.setVisibility(isMine ? View.GONE : View.VISIBLE);
     }
 
@@ -73,6 +74,9 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ivBackReturn:
+                ActivityManager.getAppInstance().finishActivity();
+                break;
             case R.id.ivEditPersonal:
                 startActivity(PersonalInfoActivity.class);
                 break;

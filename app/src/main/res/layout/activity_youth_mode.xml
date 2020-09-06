@@ -14,6 +14,85 @@
             app:mTitle="青少年模式" />
 
         <View style="@style/DivideLineStyle" />
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="66dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_def_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="未开启"
+            android:textColor="@color/color_333"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="青少年模式中，map将无法充值，打赏，且每天晚上22时至6时期间无法使用觅U"
+                android:textColor="@color/color_333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text=" 开启青少年模式，需先设置独立密码，如果忘记密码可通过申诉重置密码"
+                android:textColor="@color/color_333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="青少年模式是觅U为促进青少年健康成长做出一次尝试，我们对核心功能进行了优化，未来也将继续优化更多功能"
+                android:textColor="@color/color_333"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvTurnOnYouthMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/shape_out_login_bg"
+            android:gravity="center"
+            android:text="开启青少年模式"
+            android:textColor="@color/color_4AACFE"
+            android:textSize="17sp" />
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="修改密码" />
+
+
     </LinearLayout>
 
 </layout>

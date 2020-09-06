@@ -13,6 +13,7 @@ import com.zhowin.miyou.login.activity.LoginActivity;
 import com.zhowin.miyou.mine.activity.AttentionAndFansActivity;
 import com.zhowin.miyou.mine.activity.MyRoomActivity;
 import com.zhowin.miyou.mine.activity.MyWalletActivity;
+import com.zhowin.miyou.mine.activity.PersonalizedDressActivity;
 import com.zhowin.miyou.mine.activity.SettingActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.activity.YouthModeActivity;
@@ -22,8 +23,6 @@ import com.zhowin.miyou.recommend.activity.HomepageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import kotlin.jvm.internal.Ref;
 
 /**
  * 我的
@@ -36,7 +35,7 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
             MyRoomActivity.class,
             VerifiedActivity.class,
             LoginActivity.class,
-            LoginActivity.class,
+            PersonalizedDressActivity.class,
             LoginActivity.class,
             LoginActivity.class,
             LoginActivity.class,
