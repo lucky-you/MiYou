@@ -32,6 +32,8 @@ public interface ConstantValue {
     String SIGN_KEY = "sign";
     String SP_TOKEN = "token";
     String USER_INFO = "userInfo";
+    String QI_NIU_INFO="qi_niu_info";
+    String QI_NIU_TOKEN="qi_niu_token";
     String START_LIVE = "start_live";
     String MONEY = "money";
     String YEAE = "year";

@@ -5,10 +5,13 @@ import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.callback.OnCenterHitMessageListener;
+import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.view.CenterHitMessageDialog;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivitySettingBinding;
+import com.zhowin.miyou.login.activity.LoginActivity;
+import com.zhowin.miyou.main.activity.MainActivity;
 
 /**
  * 设置
@@ -76,6 +79,9 @@ public class SettingActivity extends BaseBindActivity<ActivitySettingBinding> {
 
             @Override
             public void onPositiveClick(Dialog dialog) {
+                UserInfo.setUserInfo(new UserInfo());
+                ActivityManager.getAppInstance().finishActivity(MainActivity.class);
+                startActivity(LoginActivity.class);
             }
         }).show();
     }

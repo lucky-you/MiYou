@@ -6,17 +6,23 @@ package com.zhowin.miyou.login.model;
  */
 public class LabelList {
 
+
+    /**
+     * labelId : 4
+     * labelName : 熬夜大师
+     * labelKey : WAKEFUL
+     * enable : 1
+     * sort : 4
+     * createTime : null
+     */
+
     private int labelId;
-    private String labelTitle;
-    private int labelResources;
-    private boolean  isSelect;
-
-    public LabelList() {
-    }
-
-    public LabelList(String labelTitle) {
-        this.labelTitle = labelTitle;
-    }
+    private String labelName;
+    private String labelKey;
+    private int enable;
+    private int sort;
+    private int createTime;
+    private boolean isSelect;
 
     public int getLabelId() {
         return labelId;
@@ -26,20 +32,44 @@ public class LabelList {
         this.labelId = labelId;
     }
 
-    public String getLabelTitle() {
-        return labelTitle;
+    public String getLabelName() {
+        return labelName;
     }
 
-    public void setLabelTitle(String labelTitle) {
-        this.labelTitle = labelTitle;
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
     }
 
-    public int getLabelResources() {
-        return labelResources;
+    public String getLabelKey() {
+        return labelKey;
     }
 
-    public void setLabelResources(int labelResources) {
-        this.labelResources = labelResources;
+    public void setLabelKey(String labelKey) {
+        this.labelKey = labelKey;
+    }
+
+    public int getEnable() {
+        return enable;
+    }
+
+    public void setEnable(int enable) {
+        this.enable = enable;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public int getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(int createTime) {
+        this.createTime = createTime;
     }
 
     public boolean isSelect() {

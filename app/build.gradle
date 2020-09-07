@@ -6,10 +6,10 @@ android {
 
 
     //开发环境
-    def API_DEVELOP_HOST = "\"https://miyue.zhowin.com\""
+    def API_DEVELOP_HOST = "\"http://47.110.139.24:8081\""
 
     //正式环境
-    def API_RELEASE_HOST = "\"https://api.qinmi.cn\""
+    def API_RELEASE_HOST = "\"http://47.110.139.24:8081\""
 
     defaultConfig {
         applicationId "com.zhowin.miyou"
@@ -79,8 +79,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
     implementation project(path: ':base_library')
-
     implementation 'com.sunfusheng:MarqueeView:1.4.0'
+
 }

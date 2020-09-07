@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.SPUtils;
 
+import java.util.List;
+
 /**
  * author Z_B
  * date :2020/5/14 8:59
@@ -15,48 +17,47 @@ public class UserInfo {
 
 
     /**
-     * id : 25
-     * nickname : 周小川
-     * mobile : 13677197786
-     * avatar :
-     * level : 0
-     * gender : 2
-     * birthday : null
-     * bio : 以“武汉，每天不一样”为主题的武汉城市形象宣传片，2015年9月20日登上美国纽约时报广场“中国屏”
-     * money : 0
-     * score : 0
-     * logintime : 1596093719
-     * token :
-     * invitationCode : null
-     * pid : null
-     * expiretime : 1598608717
-     * expiresIn : 2592000
-     * expertIdentity : null
-     * levelText : 普通用户
-     * levelLogo :
-     * cmoney : 0
+     * accountNonExpired : true
+     * accountNonLocked : true
+     * authorities : [{"authority":"UNDEFINED"}]
+     * completed : false
+     * credentialsNonExpired : true
+     * enabled : true
+     * loginType : sms
+     * token : eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiIyZmE4OWIwYi1kNDk2LTRkN2UtYWI5Yi02OGUwYzY5MTZkYzMiLCJzdWIiOiIxMjcwOTU2NCIsImV4cCI6MTU5OTQ1NTIyOSwidXNlcmlkIjoxMSwiY3JlYXRlZCI6MTU5OTQ0NDQyOTc1NywiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlVOREVGSU5FRCJ9XX0.7zodyLMI5EABvfNUfs08UzouKqephkohVgm7cYv4pvwrDgib14nZeDytm859zgu6Vdjcf8ln4Sor6VdNKgmzng
+     * userId : 11
+     * username : 12709564
      */
 
-    private int id;
-    private String nickname;
-    private String mobile;
-    private String avatar;
-    private int level;
-    private int gender;
-    private String birthday;
-    private String bio;
-    private double money;
-    private int score;
-    private int logintime;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean completed;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+    private String loginType;
     private String token;
-    private String invitationCode;
-    private String pid;
-    private int expiretime;
-    private int expiresIn;
-    private String levelText;
-    private String levelLogo;
-    private double cmoney;
-    private String imToken;
+    private int userId;
+    private String username;
+    private List<AuthoritiesBean> authorities;
+    /**
+     * avatar : 周小川
+     * gender : 女
+     * birthday : 2000-09-18
+     * profilePictureKey : http://qfah2px93.hn-bkt.clouddn.com/image.profilePicture.default.1.jpg
+     * backgroundPictureKeys :
+     * constellation : 处女座
+     * status : 好好学习，天天向上
+     * labels : 4
+     */
+
+    private String avatar;
+    private String gender;
+    private String birthday;
+    private String profilePictureKey;
+    private String backgroundPictureKeys;
+    private String constellation;
+    private String status;
+    private String labels;
 
     public static void setUserInfo(UserInfo data) {
         Gson gson = new Gson();
@@ -93,28 +94,84 @@ public class UserInfo {
         return (String) SPUtils.get(ConstantValue.SP_TOKEN, "");
     }
 
-    public int getId() {
-        return id;
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
     }
 
-    public String getNickname() {
-        return nickname;
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
     }
 
-    public String getMobile() {
-        return mobile;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(String loginType) {
+        this.loginType = loginType;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<AuthoritiesBean> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<AuthoritiesBean> authorities) {
+        this.authorities = authorities;
     }
 
     public String getAvatar() {
@@ -125,19 +182,11 @@ public class UserInfo {
         this.avatar = avatar;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -149,107 +198,60 @@ public class UserInfo {
         this.birthday = birthday;
     }
 
-    public String getBio() {
-        return bio;
+    public String getProfilePictureKey() {
+        return profilePictureKey;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setProfilePictureKey(String profilePictureKey) {
+        this.profilePictureKey = profilePictureKey;
     }
 
-    public double getMoney() {
-        return money;
+    public String getBackgroundPictureKeys() {
+        return backgroundPictureKeys;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    public void setBackgroundPictureKeys(String backgroundPictureKeys) {
+        this.backgroundPictureKeys = backgroundPictureKeys;
     }
 
-    public int getScore() {
-        return score;
+    public String getConstellation() {
+        return constellation;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setConstellation(String constellation) {
+        this.constellation = constellation;
     }
 
-    public int getLogintime() {
-        return logintime;
+    public String getStatus() {
+        return status;
     }
 
-    public void setLogintime(int logintime) {
-        this.logintime = logintime;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getToken() {
-        return token;
+    public String getLabels() {
+        return labels;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setLabels(String labels) {
+        this.labels = labels;
     }
 
-    public String getInvitationCode() {
-        return invitationCode;
-    }
 
-    public void setInvitationCode(String invitationCode) {
-        this.invitationCode = invitationCode;
-    }
+    public static class AuthoritiesBean {
+        /**
+         * authority : UNDEFINED
+         */
 
-    public String getPid() {
-        return pid;
-    }
+        private String authority;
 
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
+        public String getAuthority() {
+            return authority;
+        }
 
-    public int getExpiretime() {
-        return expiretime;
-    }
-
-    public void setExpiretime(int expiretime) {
-        this.expiretime = expiretime;
-    }
-
-    public int getExpiresIn() {
-        return expiresIn;
-    }
-
-    public void setExpiresIn(int expiresIn) {
-        this.expiresIn = expiresIn;
-    }
-
-    public String getLevelText() {
-        return levelText;
-    }
-
-    public void setLevelText(String levelText) {
-        this.levelText = levelText;
-    }
-
-    public String getLevelLogo() {
-        return levelLogo;
-    }
-
-    public void setLevelLogo(String levelLogo) {
-        this.levelLogo = levelLogo;
-    }
-
-    public double getCmoney() {
-        return cmoney;
-    }
-
-    public void setCmoney(int cmoney) {
-        this.cmoney = cmoney;
-    }
-
-    public String getImToken() {
-        return imToken;
-    }
-
-    public void setImToken(String imToken) {
-        this.imToken = imToken;
+        public void setAuthority(String authority) {
+            this.authority = authority;
+        }
     }
 }

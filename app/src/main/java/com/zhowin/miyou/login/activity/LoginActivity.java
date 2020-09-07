@@ -1,20 +1,34 @@
 package com.zhowin.miyou.login.activity;
 
 
-import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.model.UserInfo;
+import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.PhoneUtils;
-import com.zhowin.base_library.utils.SetDrawableResourceHelper;
+import com.zhowin.base_library.utils.SplitUtils;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
-import com.zhowin.miyou.main.activity.MainActivity;
+import com.zhowin.miyou.http.HttpRequest;
+import com.zhowin.miyou.login.model.DefaultImageList;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 
 /**
  * 登录
@@ -23,6 +37,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
 
     private boolean isShowPassword;
+    private Disposable mdDisposable;
 
     @Override
     public int getLayoutId() {
@@ -63,32 +78,76 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 startActivity(ForgetPasswordActivity.class);
                 break;
             case R.id.tvGetVerificationCode:
+                clickLoginOrGetCode(false);
                 break;
             case R.id.tvLogin:
-//                clickLogin();
-                startActivity(MainActivity.class);
+                clickLoginOrGetCode(true);
                 break;
             case R.id.tvOneClickLogin:
-                startActivity(EditNickNameActivity.class);
+
                 break;
             case R.id.ivPasswordClose:
                 isShowPassword = !isShowPassword;
                 setShowPassword();
                 break;
             case R.id.ivWeChatLogin:
-                startActivity(BindPhoneActivity.class);
+//                startActivity(BindPhoneActivity.class);
                 break;
             case R.id.ivQQLogin:
+                startActivity(EditNickNameActivity.class);
                 break;
         }
     }
 
-    private void clickLogin() {
+
+    private void clickLoginOrGetCode(boolean isgLogin) {
         String phoneNumber = mBinding.editMobileNumber.getText().toString().trim();
         if (!PhoneUtils.checkPhone(phoneNumber, true)) {
             return;
         }
+        if (!isgLogin) {
+            getVerificationCode(phoneNumber);
+            countdownTime();
+        } else {
+            String captchaCode = mBinding.editVerificationCode.getText().toString().trim();
+            if (TextUtils.isEmpty(captchaCode)) {
+                ToastUtils.showToast("请输入验证码");
+                return;
+            }
+            showLoadDialog();
+            HttpRequest.mobileVerificationCodeLogin(this, phoneNumber, captchaCode, new HttpCallBack<UserInfo>() {
+                @Override
+                public void onSuccess(UserInfo userInfo) {
+                    dismissLoadDialog();
+                    if (userInfo != null) {
+                        UserInfo.setUserInfo(userInfo);
+                    }
+                    startActivity(EditNickNameActivity.class);
+//                    ActivityManager.getAppInstance().finishActivity();
+                }
 
+                @Override
+                public void onFail(int errorCode, String errorMsg) {
+                    dismissLoadDialog();
+
+                }
+            });
+        }
+    }
+
+    private void getVerificationCode(String phoneNumber) {
+        showLoadDialog();
+        HttpRequest.getVerificationCode(this, phoneNumber, new HttpCallBack<Object>() {
+            @Override
+            public void onSuccess(Object o) {
+                dismissLoadDialog();
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+            }
+        });
     }
 
 
@@ -108,10 +167,8 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
         if (isClickSMSLoginLayout) {
             mBinding.tvSMSLogin.setTextColor(getBaseColor(R.color.color_333));
             mBinding.ivSMSBottomView.setVisibility(View.VISIBLE);
-
             mBinding.tvPasswordLogin.setTextColor(getBaseColor(R.color.color_666));
             mBinding.ivPasswordBottomView.setVisibility(View.GONE);
-
             mBinding.llPhoneLayout.setVisibility(View.VISIBLE);
             mBinding.llPasswordLayout.setVisibility(View.GONE);
             mBinding.tvForgetPassword.setVisibility(View.INVISIBLE);
@@ -119,10 +176,8 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
         } else {
             mBinding.tvPasswordLogin.setTextColor(getBaseColor(R.color.color_333));
             mBinding.ivPasswordBottomView.setVisibility(View.VISIBLE);
-
             mBinding.tvSMSLogin.setTextColor(getBaseColor(R.color.color_666));
             mBinding.ivSMSBottomView.setVisibility(View.GONE);
-
             mBinding.llPhoneLayout.setVisibility(View.GONE);
             mBinding.llPasswordLayout.setVisibility(View.VISIBLE);
             mBinding.tvForgetPassword.setVisibility(View.VISIBLE);
@@ -130,4 +185,40 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
         }
     }
 
+    /**
+     * 倒计时
+     */
+    private void countdownTime() {
+        final int count = 60;//倒计时60秒
+        mdDisposable = Flowable.intervalRange(0, count, 0, 1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        mBinding.tvGetVerificationCode.setEnabled(false);
+                        int countdownNumber = (int) (count - aLong);
+                        String showText = countdownNumber + "s";
+//                        SpannableString colorNumberText = SplitUtils.getTextColor(showText, 0, String.valueOf(countdownNumber).length(), getBaseColor(R.color.color_8c86fa));
+                        mBinding.tvGetVerificationCode.setText(showText);
+                    }
+                })
+                .doOnComplete(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        //倒计时完毕置为可点击状态
+                        mBinding.tvGetVerificationCode.setEnabled(true);
+                        mBinding.tvGetVerificationCode.setText("再次获取");
+                    }
+                })
+                .subscribe();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        if (mdDisposable != null) {
+            mdDisposable.dispose();
+        }
+        super.onDestroy();
+    }
 }

@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="对了,你的昵称是?"
+            android:text="Hi，你的性别是?"
             android:textColor="@color/color_333"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -31,44 +31,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:text="选择正确的生辰日期，会受到来自朋友们的祝福哟"
+            android:text="只有一次选择性别的机会，我们会根据选择推荐你喜欢的内容,性别选择后不可更改"
             android:textColor="@color/color_ff656565"
             android:textSize="12sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="@color/white"
             android:orientation="vertical">
 
-
-            <LinearLayout
-                android:id="@+id/llNickNameLayout"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="100dp"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:hint="2-10个字符，支持中英文"
-                    android:textColor="@color/color_333"
-                    android:textColorHint="@color/color_999"
-                    android:textSize="16sp" />
-
-                <View
-                    style="@style/DivideLineStyle"
-                    android:layout_marginTop="16dp" />
-
-            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rlBirthdayLayout"
@@ -113,21 +88,21 @@
 
             </RelativeLayout>
 
-
             <RadioGroup
                 android:id="@+id/rgUserGenderLayout"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="120dp"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
 
                 <RadioButton
                     android:id="@+id/rbManOfGender"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/select_user_man_icon"
                     android:button="@null" />
@@ -136,12 +111,14 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_gravity="center"
+                    android:layout_margin="10dp"
                     android:layout_weight="1" />
 
                 <RadioButton
                     android:id="@+id/rbWomanOfGender"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/select_user_woman_icon"
                     android:button="@null" />
@@ -149,6 +126,34 @@
 
             </RadioGroup>
 
+            <LinearLayout
+                android:id="@+id/llNickNameLayout"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="100dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/editNickName"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="2-10个字符，支持中英文"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:textColor="@color/color_333"
+                    android:textColorHint="@color/color_999"
+                    android:textSize="16sp" />
+
+                <View
+                    style="@style/DivideLineStyle"
+                    android:layout_marginTop="16dp" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/selectItemRecyclerView"

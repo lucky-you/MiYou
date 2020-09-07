@@ -84,12 +84,11 @@ public class RetrofitFactory {
                     request.body().writeTo(buffer);
                     Charset charset = Charset.forName("UTF-8");
                     MediaType contentType = request.body().contentType();
-
                     if (contentType != null) {
                         charset = contentType.charset(charset);
                     }
                     String params = buffer.readString(charset);
-                    System.out.println("request 请求参数:  " + params+"    token:"+request.header("token"));
+                    System.out.println("request 请求参数:  " + params + "\n Authorization:" + request.header("Authorization"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

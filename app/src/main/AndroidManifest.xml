@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mine.activity.PersonalizedDressActivity"></activity>
+        <activity android:name=".main.activity.GuidePageActivity" />
+
+        <activity android:name=".mine.activity.PersonalizedDressActivity" />
         <activity android:name=".mine.activity.YouthModeSetPasswordActivity" />
         <activity android:name=".mine.activity.YouthModeActivity" />
         <activity android:name=".mine.activity.PersonalInfoActivity" />
@@ -64,7 +66,7 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
-        <activity android:name=".login.activity.LoginActivity">
+        <activity android:name=".main.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,6 +75,9 @@
         </activity>
         <activity
             android:name=".main.activity.MainActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".login.activity.LoginActivity"
             android:launchMode="singleTask" />
     </application>
 

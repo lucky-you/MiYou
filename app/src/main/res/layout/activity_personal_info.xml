@@ -39,6 +39,7 @@
                     android:textSize="16sp" />
 
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/civUserHeadPhoto"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="16dp"

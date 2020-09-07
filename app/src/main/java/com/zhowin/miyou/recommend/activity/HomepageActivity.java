@@ -49,7 +49,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         isMine = getIntent().getBooleanExtra(ConstantValue.TYPE, false);
         userId = getIntent().getIntExtra(ConstantValue.TYPE, -1);
 
-        setOnClick(R.id.ivBackReturn,R.id.ivEditPersonal);
+        setOnClick(R.id.ivBackReturn, R.id.ivEditPersonal);
         mBinding.llBottomAttentionLayout.setVisibility(isMine ? View.GONE : View.VISIBLE);
     }
 
@@ -78,7 +78,8 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
                 ActivityManager.getAppInstance().finishActivity();
                 break;
             case R.id.ivEditPersonal:
-                startActivity(PersonalInfoActivity.class);
+                if (isMine)
+                    startActivity(PersonalInfoActivity.class);
                 break;
         }
     }
