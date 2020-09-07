@@ -1,27 +1,22 @@
 package com.zhowin.miyou.login.activity;
 
 
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
-import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.PhoneUtils;
-import com.zhowin.base_library.utils.SplitUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
 import com.zhowin.miyou.http.HttpRequest;
-import com.zhowin.miyou.login.model.DefaultImageList;
+import com.zhowin.miyou.main.activity.MainActivity;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
@@ -91,10 +86,10 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 setShowPassword();
                 break;
             case R.id.ivWeChatLogin:
-//                startActivity(BindPhoneActivity.class);
+                startActivity(BindPhoneActivity.class);
                 break;
             case R.id.ivQQLogin:
-                startActivity(EditNickNameActivity.class);
+                startActivity(MainActivity.class);
                 break;
         }
     }

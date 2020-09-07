@@ -48,7 +48,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
     public void initView() {
         isMine = getIntent().getBooleanExtra(ConstantValue.TYPE, false);
         userId = getIntent().getIntExtra(ConstantValue.TYPE, -1);
-
+        mBinding.homePageRecyclerView.setFocusable(false);
         setOnClick(R.id.ivBackReturn, R.id.ivEditPersonal);
         mBinding.llBottomAttentionLayout.setVisibility(isMine ? View.GONE : View.VISIBLE);
     }

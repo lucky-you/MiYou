@@ -22,6 +22,8 @@ import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.permission.AndPermissionListener;
 import com.zhowin.base_library.permission.AndPermissionUtils;
+import com.zhowin.base_library.pickerview.OnSelectTimeClickListener;
+import com.zhowin.base_library.pickerview.PickerViewTimeUtils;
 import com.zhowin.base_library.pictureSelect.GlideEngine;
 import com.zhowin.base_library.pictureSelect.PictureSelectorUtils;
 import com.zhowin.base_library.qiniu.QiNiuYunBean;
@@ -32,7 +34,6 @@ import com.zhowin.base_library.widget.FullyGridLayoutManager;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityPersonalInfoBinding;
 import com.zhowin.miyou.http.HttpRequest;
-import com.zhowin.miyou.login.activity.EditNickNameActivity;
 import com.zhowin.miyou.main.activity.MainActivity;
 
 import java.util.ArrayList;
@@ -60,8 +61,11 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
 
     @Override
     public void initView() {
-        setOnClick(R.id.civUserHeadPhoto);
-        getQiNiuToken();
+        setOnClick(R.id.civUserHeadPhoto, R.id.clSelectAgeLayout);
+
+        qiNiuToken = QiNiuYunBean.getQiNiuToken();
+        if (TextUtils.isEmpty(qiNiuToken))
+            getQiNiuToken();
     }
 
     @Override
@@ -131,7 +135,22 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
                     PictureSelectorUtils.selectImageOfOne(mContext, 888, false);
                 }
                 break;
+
+            case R.id.clSelectAgeLayout:
+                showSelectAgeDialog();
+                break;
         }
+    }
+
+    private void showSelectAgeDialog() {
+
+        PickerViewTimeUtils.selectTimePickerView(mContext, new OnSelectTimeClickListener() {
+            @Override
+            public void onDateTime(String dateTime) {
+                mBinding.tvAgeText.setText(dateTime);
+            }
+        });
+
     }
 
     private void requestPermission(@PermissionDef String... permissions) {

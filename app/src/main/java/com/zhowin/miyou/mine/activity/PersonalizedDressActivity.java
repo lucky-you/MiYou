@@ -4,6 +4,7 @@ import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.adapter.HomePageAdapter;
 import com.zhowin.base_library.base.BaseBindActivity;
@@ -43,6 +44,7 @@ public class PersonalizedDressActivity extends BaseBindActivity<ActivityPersonal
         mBinding.noScrollViewPager.setScroll(true);
         mBinding.slidingTabLayout.setViewPager(mBinding.noScrollViewPager);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -52,11 +54,26 @@ public class PersonalizedDressActivity extends BaseBindActivity<ActivityPersonal
 
         }
     }
+
     @Override
     public void initImmersionBar() {
         ImmersionBar.with(this)
                 .titleBar(mBinding.clTopView, false)
                 .transparentBar()
                 .init();
+    }
+
+    @Override
+    public void initListener() {
+        mBinding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.BaseOnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                if (i >= 0) {
+//                    mBinding.refreshLayout.setEnabled(true);
+                } else {
+//                    mBinding.refreshLayout.setEnabled(false);
+                }
+            }
+        });
     }
 }

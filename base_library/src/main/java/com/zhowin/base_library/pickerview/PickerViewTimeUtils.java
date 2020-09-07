@@ -39,7 +39,7 @@ public class PickerViewTimeUtils {
             @Override
             public void onTimeSelect(Date date, View v) {
                 if (onSelectTimeClickListener != null) {
-                    onSelectTimeClickListener.onDateTime(getDateTime(date));
+                    onSelectTimeClickListener.onDateTime(getDateTimeOfNoSecond(date));
                 }
             }
         })
@@ -147,10 +147,6 @@ public class PickerViewTimeUtils {
         return format.format(date);
     }
 
-    private static String getDateTimeNoMonth(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy");
-        return format.format(date);
-    }
 
     private static String getDateTimeOfNoSecond(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
