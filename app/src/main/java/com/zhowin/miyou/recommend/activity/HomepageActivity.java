@@ -36,7 +36,6 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
 
     private boolean isMine;
     private int userId;
-
     private HomePagerAdapter homePagerAdapter;
 
     public static void start(Context context, boolean isMine, int userId) {
@@ -57,6 +56,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         userId = getIntent().getIntExtra(ConstantValue.ID, -1);
         mBinding.homePageRecyclerView.setFocusable(false);
         setOnClick(R.id.ivBackReturn, R.id.ivEditPersonal);
+        mBinding.ivEditPersonal.setImageResource(isMine ? R.drawable.personal_add_icon : R.drawable.personal_more_icon);
         mBinding.llBottomAttentionLayout.setVisibility(isMine ? View.GONE : View.VISIBLE);
     }
 

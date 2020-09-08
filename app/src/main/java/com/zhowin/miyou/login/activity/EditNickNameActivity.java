@@ -123,6 +123,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
                     submitUserInfo.setAvatar(nickName);
                     layoutType = LAYOUT_TYPE_INTEREST;
                     changeUiFromLayoutType(layoutType);
+                    KeyboardUtils.hideSoftInput(mContext);
                     break;
                 case LAYOUT_TYPE_INTEREST:
                     if (labelSize > 3) {

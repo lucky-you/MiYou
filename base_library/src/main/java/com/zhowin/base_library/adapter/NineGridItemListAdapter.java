@@ -72,7 +72,7 @@ public class NineGridItemListAdapter extends RecyclerView.Adapter<NineGridItemLi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         if (getItemViewType(position) == TYPE_CAMERA) {
-            viewHolder.ivSelectImage.setImageResource(R.mipmap.publish_add);
+            viewHolder.ivSelectImage.setImageResource(R.mipmap.data_update_pic);
             viewHolder.ivSelectImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -11,6 +11,7 @@ import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.KeyboardUtils;
 import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
@@ -78,6 +79,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 break;
             case R.id.tvLogin:
                 clickLoginOrGetCode(true);
+                KeyboardUtils.hideSoftInput(mContext);
                 break;
             case R.id.tvOneClickLogin:
 

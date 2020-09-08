@@ -28,7 +28,7 @@
             android:id="@+id/llPhoneOrPasswordLoginLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="160dp"
             android:background="@mipmap/login_white_bg"
             android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -289,7 +289,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="40dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -326,7 +326,7 @@
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:orientation="horizontal">
 
 
@@ -358,6 +358,7 @@
             <TextView
                 android:id="@+id/tvUserAgreement"
                 style="@style/TextViewStyleOf14Sp"
+                android:layout_marginTop="8dp"
                 android:text="登录即表示同意用户协议"
                 android:textColor="@color/white" />
         </LinearLayout>
