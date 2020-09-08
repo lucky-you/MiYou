@@ -9,10 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.ConstantValue;
+import com.zhowin.base_library.utils.GlideUtils;
+import com.zhowin.base_library.utils.SetDrawableHelper;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityHomepageBinding;
+import com.zhowin.miyou.http.HttpRequest;
+import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.PersonalInfoActivity;
 import com.zhowin.miyou.recommend.adapter.HomePagerAdapter;
 import com.zhowin.miyou.recommend.model.HomePageCategoryList;
@@ -47,7 +54,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
     @Override
     public void initView() {
         isMine = getIntent().getBooleanExtra(ConstantValue.TYPE, false);
-        userId = getIntent().getIntExtra(ConstantValue.TYPE, -1);
+        userId = getIntent().getIntExtra(ConstantValue.ID, -1);
         mBinding.homePageRecyclerView.setFocusable(false);
         setOnClick(R.id.ivBackReturn, R.id.ivEditPersonal);
         mBinding.llBottomAttentionLayout.setVisibility(isMine ? View.GONE : View.VISIBLE);
@@ -58,9 +65,14 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         setAdapterData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserInfoMessage();
+
+    }
 
     private void setAdapterData() {
-
         List<HomePageCategoryList> homePageCategoryLists = new ArrayList<>();
         homePageCategoryLists.add(new HomePageCategoryList("收到的礼物", Arrays.asList("告白气球", "告白气球", "告白气球", "告白气球", "告白气球")));
         homePageCategoryLists.add(new HomePageCategoryList("头像框", Arrays.asList("熊熊框", "熊熊框", "熊熊框", "熊熊框", "熊熊框")));
@@ -68,6 +80,42 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         homePagerAdapter = new HomePagerAdapter(homePageCategoryLists);
         mBinding.homePageRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.homePageRecyclerView.setAdapter(homePagerAdapter);
+    }
+
+
+    private void getUserInfoMessage() {
+        showLoadDialog();
+        HttpRequest.getOtherUserInfoMessage(this, userId, new HttpCallBack<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo userInfo) {
+                dismissLoadDialog();
+                if (userInfo != null) {
+                    setDataToViews(userInfo);
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+
+            }
+        });
+    }
+
+    private void setDataToViews(UserInfo userInfo) {
+        GlideUtils.loadUserPhotoForLogin(mContext, userInfo.getProfilePictureKey(), mBinding.civUserHeadPhoto);
+        mBinding.tvUserNickName.setText(userInfo.getAvatar());
+        mBinding.tvUserMuNumber.setText("ID号:" + userInfo.getUsername());
+        mBinding.tvUserSex.setText(String.valueOf(userInfo.getAge()));
+        mBinding.tvUserSex.setBackgroundResource(GenderHelper.getSexBackground(userInfo.getGender()));
+        int drawable = GenderHelper.getSexDrawable(userInfo.getGender());
+        SetDrawableHelper.setLeftDrawable(mContext, mBinding.tvUserSex, true, 2, drawable, drawable);
+        mBinding.tvUserSignText.setText("签名：" + userInfo.getStatus());
+        String onLineStatus = "离线  " + userInfo.getFollowNum() + "关注" + "  •  " + userInfo.getFansNum() + "粉丝";
+        mBinding.tvUserOnlineStatus.setText(onLineStatus);
+
+
     }
 
 

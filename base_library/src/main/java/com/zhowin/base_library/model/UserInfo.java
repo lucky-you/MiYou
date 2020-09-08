@@ -17,47 +17,50 @@ public class UserInfo {
 
 
     /**
-     * accountNonExpired : true
-     * accountNonLocked : true
-     * authorities : [{"authority":"UNDEFINED"}]
-     * completed : false
-     * credentialsNonExpired : true
-     * enabled : true
-     * loginType : sms
-     * token : eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiIyZmE4OWIwYi1kNDk2LTRkN2UtYWI5Yi02OGUwYzY5MTZkYzMiLCJzdWIiOiIxMjcwOTU2NCIsImV4cCI6MTU5OTQ1NTIyOSwidXNlcmlkIjoxMSwiY3JlYXRlZCI6MTU5OTQ0NDQyOTc1NywiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlVOREVGSU5FRCJ9XX0.7zodyLMI5EABvfNUfs08UzouKqephkohVgm7cYv4pvwrDgib14nZeDytm859zgu6Vdjcf8ln4Sor6VdNKgmzng
+     * age : 19
+     * avatar : 周小川
+     * backgroundPictureKeys : ["http://qfah2px93.hn-bkt.clouddn.com//image.backgroundPicture.default.default.jpg"]
+     * birthday : 2000-09-18
+     * cars : [{"carId":"1","carName":"兰博基尼","number":0,"pictureKey":"image.backgroundPicture.default.default.jpg"}]
+     * completed : true
+     * constellation : 处女座
+     * decorations : [{"id":"2","name":"兔耳朵","number":0,"pictureKey":"image.backgroundPicture.default.default.jpg"}]
+     * fansNum : 0
+     * followNum : 0
+     * gender : 女
+     * gifts : [{"giftId":"0","giftName":"高跟鞋","number":"0"}]
+     * newFans : 0
+     * newVisitor : 0
+     * profilePictureKey : http://qfah2px93.hn-bkt.clouddn.com/image.profilePicture.default.1.jpg
+     * status : 好好学习，天天向上
+     * token : eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJlZTc1OGU0YS0zZGJiLTQ3ZjUtYWE5NS1lNGQxMzJmMTFlZjUiLCJzdWIiOiIxMjcwOTU2NCIsImV4cCI6MTU5OTU2NDIwNSwidXNlcmlkIjoxMSwiY3JlYXRlZCI6MTU5OTUyODIwNTU2MywiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IkNPTU1PTiJ9LHsiYXV0aG9yaXR5IjoiVU5ERUZJTkVEIn1dfQ.d5asAtF59hgrfQwLbn2WWkN6BxHu9gTQ34S_PK5rEaRWArbrArhEe8AnU1CvaZD1Ozzb5OiQYyzesdgoYwAl0w
+     * undefinedPwd : 1
      * userId : 11
      * username : 12709564
+     * visitNum : 0
      */
 
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
+    private int age;
+    private String avatar;
+    private String birthday;
     private boolean completed;
-    private boolean credentialsNonExpired;
-    private boolean enabled;
-    private String loginType;
+    private String constellation;
+    private int fansNum;
+    private int followNum;
+    private String gender;
+    private int newFans;
+    private int newVisitor;
+    private String profilePictureKey;
+    private String status;
     private String token;
+    private int undefinedPwd;
     private int userId;
     private String username;
-    private List<AuthoritiesBean> authorities;
-    /**
-     * avatar : 周小川
-     * gender : 女
-     * birthday : 2000-09-18
-     * profilePictureKey : http://qfah2px93.hn-bkt.clouddn.com/image.profilePicture.default.1.jpg
-     * backgroundPictureKeys :
-     * constellation : 处女座
-     * status : 好好学习，天天向上
-     * labels : 4
-     */
-
-    private String avatar;
-    private String gender;
-    private String birthday;
-    private String profilePictureKey;
-    private String backgroundPictureKeys;
-    private String constellation;
-    private String status;
-    private String labels;
+    private int visitNum;
+    private List<String> backgroundPictureKeys;
+    private List<CarsBean> cars;
+    private List<DecorationsBean> decorations;
+    private List<GiftsBean> gifts;
 
     public static void setUserInfo(UserInfo data) {
         Gson gson = new Gson();
@@ -94,20 +97,28 @@ public class UserInfo {
         return (String) SPUtils.get(ConstantValue.SP_TOKEN, "");
     }
 
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
+    public int getAge() {
+        return age;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public boolean isCompleted() {
@@ -118,28 +129,68 @@ public class UserInfo {
         this.completed = completed;
     }
 
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
+    public String getConstellation() {
+        return constellation;
     }
 
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
+    public void setConstellation(String constellation) {
+        this.constellation = constellation;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public int getFansNum() {
+        return fansNum;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setFansNum(int fansNum) {
+        this.fansNum = fansNum;
     }
 
-    public String getLoginType() {
-        return loginType;
+    public int getFollowNum() {
+        return followNum;
     }
 
-    public void setLoginType(String loginType) {
-        this.loginType = loginType;
+    public void setFollowNum(int followNum) {
+        this.followNum = followNum;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getNewFans() {
+        return newFans;
+    }
+
+    public void setNewFans(int newFans) {
+        this.newFans = newFans;
+    }
+
+    public int getNewVisitor() {
+        return newVisitor;
+    }
+
+    public void setNewVisitor(int newVisitor) {
+        this.newVisitor = newVisitor;
+    }
+
+    public String getProfilePictureKey() {
+        return profilePictureKey;
+    }
+
+    public void setProfilePictureKey(String profilePictureKey) {
+        this.profilePictureKey = profilePictureKey;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getToken() {
@@ -148,6 +199,14 @@ public class UserInfo {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getUndefinedPwd() {
+        return undefinedPwd;
+    }
+
+    public void setUndefinedPwd(int undefinedPwd) {
+        this.undefinedPwd = undefinedPwd;
     }
 
     public int getUserId() {
@@ -166,92 +225,172 @@ public class UserInfo {
         this.username = username;
     }
 
-    public List<AuthoritiesBean> getAuthorities() {
-        return authorities;
+    public int getVisitNum() {
+        return visitNum;
     }
 
-    public void setAuthorities(List<AuthoritiesBean> authorities) {
-        this.authorities = authorities;
+    public void setVisitNum(int visitNum) {
+        this.visitNum = visitNum;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getProfilePictureKey() {
-        return profilePictureKey;
-    }
-
-    public void setProfilePictureKey(String profilePictureKey) {
-        this.profilePictureKey = profilePictureKey;
-    }
-
-    public String getBackgroundPictureKeys() {
+    public List<String> getBackgroundPictureKeys() {
         return backgroundPictureKeys;
     }
 
-    public void setBackgroundPictureKeys(String backgroundPictureKeys) {
+    public void setBackgroundPictureKeys(List<String> backgroundPictureKeys) {
         this.backgroundPictureKeys = backgroundPictureKeys;
     }
 
-    public String getConstellation() {
-        return constellation;
+    public List<CarsBean> getCars() {
+        return cars;
     }
 
-    public void setConstellation(String constellation) {
-        this.constellation = constellation;
+    public void setCars(List<CarsBean> cars) {
+        this.cars = cars;
     }
 
-    public String getStatus() {
-        return status;
+    public List<DecorationsBean> getDecorations() {
+        return decorations;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDecorations(List<DecorationsBean> decorations) {
+        this.decorations = decorations;
     }
 
-    public String getLabels() {
-        return labels;
+    public List<GiftsBean> getGifts() {
+        return gifts;
     }
 
-    public void setLabels(String labels) {
-        this.labels = labels;
+    public void setGifts(List<GiftsBean> gifts) {
+        this.gifts = gifts;
     }
 
 
-    public static class AuthoritiesBean {
+    public static class CarsBean {
         /**
-         * authority : UNDEFINED
+         * carId : 1
+         * carName : 兰博基尼
+         * number : 0
+         * pictureKey : image.backgroundPicture.default.default.jpg
          */
 
-        private String authority;
+        private String carId;
+        private String carName;
+        private int number;
+        private String pictureKey;
 
-        public String getAuthority() {
-            return authority;
+        public String getCarId() {
+            return carId;
         }
 
-        public void setAuthority(String authority) {
-            this.authority = authority;
+        public void setCarId(String carId) {
+            this.carId = carId;
+        }
+
+        public String getCarName() {
+            return carName;
+        }
+
+        public void setCarName(String carName) {
+            this.carName = carName;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+
+        public String getPictureKey() {
+            return pictureKey;
+        }
+
+        public void setPictureKey(String pictureKey) {
+            this.pictureKey = pictureKey;
+        }
+    }
+
+    public static class DecorationsBean {
+        /**
+         * id : 2
+         * name : 兔耳朵
+         * number : 0
+         * pictureKey : image.backgroundPicture.default.default.jpg
+         */
+
+        private String id;
+        private String name;
+        private int number;
+        private String pictureKey;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+
+        public String getPictureKey() {
+            return pictureKey;
+        }
+
+        public void setPictureKey(String pictureKey) {
+            this.pictureKey = pictureKey;
+        }
+    }
+
+    public static class GiftsBean {
+        /**
+         * giftId : 0
+         * giftName : 高跟鞋
+         * number : 0
+         */
+
+        private String giftId;
+        private String giftName;
+        private String number;
+
+        public String getGiftId() {
+            return giftId;
+        }
+
+        public void setGiftId(String giftId) {
+            this.giftId = giftId;
+        }
+
+        public String getGiftName() {
+            return giftName;
+        }
+
+        public void setGiftName(String giftName) {
+            this.giftName = giftName;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+
+        public void setNumber(String number) {
+            this.number = number;
         }
     }
 }

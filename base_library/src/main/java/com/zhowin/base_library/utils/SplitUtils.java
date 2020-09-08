@@ -26,14 +26,27 @@ public class SplitUtils {
         return Arrays.asList(arr).contains(targetValue);
     }
 
+    public static String getStringTextId(List<String> stringList) {
+        String returnStringTxt = "";
+        StringBuffer stringBuffer = new StringBuffer();
+        for (String item : stringList) {
+            stringBuffer.append(item + ",");
+        }
+        if (stringBuffer != null && stringBuffer.length() > 0) {
+            returnStringTxt = stringBuffer.substring(0, stringBuffer.length() - 1);
+        }
+        return returnStringTxt;
+    }
+
 
     /**
      * 分割字符串
+     *
      * @param text 需要分割的字符串
      * @param type 根据什么类分割
      * @return 返回的数组
      */
-    public static List<String> spiltCode(String text,String type) {
+    public static List<String> spiltCode(String text, String type) {
         List<String> list = new ArrayList<String>();
         StringTokenizer st = new StringTokenizer(text, type);
         while (st.hasMoreTokens()) {
@@ -42,7 +55,7 @@ public class SplitUtils {
         return list;
     }
 
-    public static List<Integer> spiltIdOfData(String text,String type) {
+    public static List<Integer> spiltIdOfData(String text, String type) {
         List<Integer> list = new ArrayList<Integer>();
         StringTokenizer st = new StringTokenizer(text, type);
         while (st.hasMoreTokens()) {

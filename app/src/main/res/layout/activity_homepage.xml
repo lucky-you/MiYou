@@ -84,6 +84,7 @@
 
 
                 <TextView
+                    android:id="@+id/tvUserNickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -95,11 +96,12 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvUserOnlineStatus"
                     style="@style/TextViewStyleOf14Sp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="离线  10关注 • 18粉丝"
+                    android:text="离线  0关注 • 0粉丝"
                     android:textColor="@color/color_9A9A9A"
                     android:textSize="12sp" />
 
@@ -156,16 +158,18 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvUserMuNumber"
                     style="@style/TextViewStyleOf14Sp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
                     android:text="ID号:146553224" />
 
                 <TextView
+                    android:id="@+id/tvUserSignText"
                     style="@style/TextViewStyleOf14Sp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
-                    android:text="签名:喜欢我就点点关注吧~" />
+                    android:text="签名:" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

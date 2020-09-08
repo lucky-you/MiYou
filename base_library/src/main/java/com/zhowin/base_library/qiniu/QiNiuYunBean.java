@@ -13,15 +13,14 @@ public class QiNiuYunBean {
 
 
     /**
-     * uploadurl : https://upload-z0.qiniup.com
-     * cdnurl : https://qiniu.mwc.mowan.cn/
-     * token : be_BUN1Aq8y_MFDQby-sbnx2LwLTiXPBbkXmiej6:mI343NEM2ug0B_OrXIU2d_A9bhk=:eyJzY29wZSI6Im10YmlrZSIsImRlYWRsaW5lIjoxNTk2Njg3MzAyfQ==
+     * token : H7CC2KfaoBnDnzbpzzzvf7zjvawC9B9X1ZKZKHtS:bHoUTycrxXOTJoBn-tkSY8kLWIA=:eyJzY29wZSI6ImFudC12b2ljZSIsImRlYWRsaW5lIjoxNTk5NTMxODQ5fQ==
+     * prefix : null
+     * address : http://qfah2px93.hn-bkt.clouddn.com/
      */
 
-    private String uploadurl;
-    private String cdnurl;
     private String token;
-
+    private String prefix;
+    private String address;
 
     public static void setQiNiuInfo(QiNiuYunBean data) {
         String userInfo = GsonUtils.toJson(data);
@@ -56,28 +55,27 @@ public class QiNiuYunBean {
         return (String) SPUtils.get(ConstantValue.QI_NIU_TOKEN, "");
     }
 
-
-    public String getUploadurl() {
-        return uploadurl;
-    }
-
-    public void setUploadurl(String uploadurl) {
-        this.uploadurl = uploadurl;
-    }
-
-    public String getCdnurl() {
-        return cdnurl;
-    }
-
-    public void setCdnurl(String cdnurl) {
-        this.cdnurl = cdnurl;
-    }
-
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -32,8 +32,8 @@ public class SelectUserAvatarAdapter extends BaseQuickAdapter<DefaultImageList, 
     }
 
     private OnUserAvatarClickListener onUserAvatarClickListener;
-    private int currentPosition;
 
+    private int currentPosition;
 
     public void setOnUserAvatarClickListener(OnUserAvatarClickListener onUserAvatarClickListener) {
         this.onUserAvatarClickListener = onUserAvatarClickListener;
@@ -66,12 +66,12 @@ public class SelectUserAvatarAdapter extends BaseQuickAdapter<DefaultImageList, 
                     }
                     item.setSelect(!item.isSelect());
                     if (onUserAvatarClickListener != null) {
-                        onUserAvatarClickListener.onAvatarClick(item.isAlbumAdd(), item.isSelect(), item.getPictureKey());
+                        onUserAvatarClickListener.onAvatarClick(false, item.isSelect(), item.getPictureKey());
                     }
                     notifyDataSetChanged();
                 } else {
                     if (onUserAvatarClickListener != null) {
-                        onUserAvatarClickListener.onAvatarClick(item.isAlbumAdd(), item.isSelect(), item.getPictureKey());
+                        onUserAvatarClickListener.onAvatarClick(true, item.isSelect(), item.getPictureKey());
                     }
                 }
             }

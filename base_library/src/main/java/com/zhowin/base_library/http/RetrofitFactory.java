@@ -71,7 +71,6 @@ public class RetrofitFactory {
     }
 
     public class LogInterceptor implements Interceptor {
-        private String TAG = "xy";
 
         @Override
         public Response intercept(Chain chain) throws IOException {
@@ -88,15 +87,13 @@ public class RetrofitFactory {
                         charset = contentType.charset(charset);
                     }
                     String params = buffer.readString(charset);
-                    System.out.println("request 请求参数:  " + params + "\n Authorization:" + request.header("Authorization"));
+                    System.out.println("request参数: " + params + "\n Authorization:" + request.header("Authorization"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             System.out.println("request  url:" + request.url().toString());
-            long t1 = System.nanoTime();
             Response response = chain.proceed(chain.request());
-            long t2 = System.nanoTime();
             MediaType mediaType = response.body().contentType();
             String content = response.body().string();
             System.out.println("request  response:" + content);

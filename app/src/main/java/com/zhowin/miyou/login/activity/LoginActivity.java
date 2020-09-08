@@ -10,6 +10,7 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
+import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
@@ -116,15 +117,19 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                     dismissLoadDialog();
                     if (userInfo != null) {
                         UserInfo.setUserInfo(userInfo);
+                        if (userInfo.isCompleted()) {
+                            startActivity(MainActivity.class);
+                        } else {
+                            startActivity(EditNickNameActivity.class);
+                        }
                     }
-                    startActivity(EditNickNameActivity.class);
-//                    ActivityManager.getAppInstance().finishActivity();
+                    ActivityManager.getAppInstance().finishActivity();
                 }
 
                 @Override
                 public void onFail(int errorCode, String errorMsg) {
+                    ToastUtils.showToast(errorMsg);
                     dismissLoadDialog();
-
                 }
             });
         }

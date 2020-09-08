@@ -82,6 +82,7 @@ public class SettingActivity extends BaseBindActivity<ActivitySettingBinding> {
                 UserInfo.setUserInfo(new UserInfo());
                 ActivityManager.getAppInstance().finishActivity(MainActivity.class);
                 startActivity(LoginActivity.class);
+//                ActivityManager.getAppInstance().finishActivity();
             }
         }).show();
     }

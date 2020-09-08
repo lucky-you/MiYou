@@ -34,7 +34,7 @@ public class HttpRequest {
      * 获取用户信息
      */
     public static void getUserInfoMessage(LifecycleOwner activity, final HttpCallBack<UserInfo> callBack) {
-        apiRequest.getUserInfoMessage(UserInfo.getUserToken())
+        apiRequest.getUserInfoMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
                 .subscribe(new ApiObserver<UserInfo>() {
@@ -94,7 +94,7 @@ public class HttpRequest {
     }
 
     /**
-     * 获取用户信息
+     * 手机号 +验证码 登录
      */
     public static void mobileVerificationCodeLogin(LifecycleOwner activity, String mobile, String semCode, final HttpCallBack<UserInfo> callBack) {
         apiRequest.mobileVerificationCodeLogin(mobile, semCode)
@@ -157,11 +157,10 @@ public class HttpRequest {
     }
 
     /**
-     * 提交用户信息 / 修改用户信息
+     * 提交用户信息
      */
-    public static void submitUserInfoMessage(LifecycleOwner activity, boolean isChangeUserINfo, HashMap<String, Object> map, final HttpCallBack<UserInfo> callBack) {
-        String requestUrl = isChangeUserINfo ? ApiRequest.UPDATE_USER_INFO_MESSAGE_URL : ApiRequest.SUBMIT_USER_INFO_MESSAGE_URL;
-        apiRequest.submitUserInfoMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), requestUrl, map)
+    public static void submitUserInfoMessage(LifecycleOwner activity, HashMap<String, Object> map, final HttpCallBack<UserInfo> callBack) {
+        apiRequest.submitUserInfoMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), map)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
                 .subscribe(new ApiObserver<UserInfo>() {
@@ -177,5 +176,48 @@ public class HttpRequest {
                     }
                 });
     }
+
+    /**
+     * 修改用户信息
+     */
+    public static void changeUserInfoMessage(LifecycleOwner activity, HashMap<String, Object> map, final HttpCallBack<Object> callBack) {
+        apiRequest.changeUserInfoMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), map)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取别人的主页信息,传自己id 时，就是获取自己的数据
+     */
+    public static void getOtherUserInfoMessage(LifecycleOwner activity, int userId, final HttpCallBack<UserInfo> callBack) {
+        apiRequest.getOtherInfoMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), userId)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<UserInfo>() {
+
+                    @Override
+                    public void onSuccess(UserInfo demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
 
 }

@@ -26,6 +26,7 @@ import com.zhowin.base_library.pictureSelect.PictureSelectorUtils;
 import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.base_library.qiniu.QinIuUpLoadListener;
 import com.zhowin.base_library.qiniu.QinIuUtils;
+import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.utils.ZodiacUtil;
 import com.zhowin.miyou.R;
@@ -65,9 +66,11 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
     private List<LabelList> labelLists = new ArrayList<>();
     private SelectInterestAdapter selectInterestAdapter;
 
-    private String qiNiuToken, gender, labels, profilePictureKey;
+    private String qiNiuToken, qiNiuCdnUrl, gender, labels, profilePictureKey;
     private int labelSize;
     private SubmitUserInfo submitUserInfo = new SubmitUserInfo();
+
+    private boolean isUploadHeadUrl; //是否使用了自定义头像
 
     @Override
     public int getLayoutId() {
@@ -145,7 +148,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
         map.put("labels", submitUserInfo.getLabels());
         map.put("profilePictureKey", submitUserInfo.getProfilePictureKey());
         showLoadDialog();
-        HttpRequest.submitUserInfoMessage(this, false, map, new HttpCallBack<UserInfo>() {
+        HttpRequest.submitUserInfoMessage(this, map, new HttpCallBack<UserInfo>() {
             @Override
             public void onSuccess(UserInfo userInfo) {
                 dismissLoadDialog();
@@ -153,7 +156,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
                     UserInfo.setUserInfo(userInfo);
                 }
                 startActivity(MainActivity.class);
-//                ActivityManager.getAppInstance().finishActivity();
+                ActivityManager.getAppInstance().finishActivity();
             }
 
             @Override
@@ -279,6 +282,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
                 if (qiNiuYunBean != null) {
                     QiNiuYunBean.setQiNiuInfo(qiNiuYunBean);
                     qiNiuToken = qiNiuYunBean.getToken();
+                    qiNiuCdnUrl = qiNiuYunBean.getAddress();
                     Log.e("xy", "qiNiuToken:" + qiNiuToken);
                 }
             }
@@ -323,7 +327,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermission(Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE);
             } else {
-                PictureSelectorUtils.selectImageOfOne(mContext, 888, false);
+                PictureSelectorUtils.selectImageOfOne(mContext, 555, false);
             }
         }
     }
@@ -333,7 +337,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
         AndPermissionUtils.requestPermission(mContext, new AndPermissionListener() {
             @Override
             public void PermissionSuccess(List<String> permissions) {
-                PictureSelectorUtils.selectImageOfOne(mContext, 888, false);
+                PictureSelectorUtils.selectImageOfOne(mContext, 555, false);
             }
 
             @Override
@@ -347,7 +351,7 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case 888:
+            case 555:
                 //上传七牛云
                 List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
                 if (selectList.isEmpty()) return;
@@ -357,15 +361,32 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
         }
     }
 
+    /**
+     * 上传的七牛云
+     */
     private void qinIuUpLoad(String ImageUrl) {
         if (TextUtils.isEmpty(qiNiuToken)) {
-            ToastUtils.showToast("上传获取token失败");
+            ToastUtils.showToast("获取token失败");
             return;
         }
         QinIuUtils.qinIuUpLoad(ImageUrl, qiNiuToken, new QinIuUpLoadListener() {
             @Override
             public void upLoadSuccess(String path) {
-                profilePictureKey = "/" + path;
+                profilePictureKey = path;
+                String uploadUrl = qiNiuCdnUrl + path;
+                if (!TextUtils.isEmpty(uploadUrl) && !defaultImageList.isEmpty()) {
+                    for (DefaultImageList itemInfo : defaultImageList) {
+                        if (itemInfo.isAlbumAdd()) {
+                            itemInfo.setPictureKey(uploadUrl);
+                            itemInfo.setSelect(true);
+                        } else {
+                            itemInfo.setSelect(false);
+                        }
+                        itemInfo.setAlbumAdd(false);
+                    }
+                    isUploadHeadUrl = true;
+                    userAvatarAdapterAdapter.setNewData(defaultImageList);
+                }
             }
 
             @Override
@@ -374,5 +395,4 @@ public class EditNickNameActivity extends BaseBindActivity<ActivityEditNickNameB
             }
         });
     }
-
 }

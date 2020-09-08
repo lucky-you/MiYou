@@ -7,14 +7,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindFragment;
+import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.model.UserInfo;
+import com.zhowin.base_library.utils.GlideUtils;
+import com.zhowin.base_library.utils.SetDrawableHelper;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.MineFragmentLayoutBinding;
-import com.zhowin.miyou.login.activity.LoginActivity;
+import com.zhowin.miyou.http.HttpRequest;
+import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.AttentionAndFansActivity;
+import com.zhowin.miyou.mine.activity.HelpOrFeedbackActivity;
 import com.zhowin.miyou.mine.activity.MyRoomActivity;
 import com.zhowin.miyou.mine.activity.MyWalletActivity;
+import com.zhowin.miyou.mine.activity.OnlineServiceActivity;
 import com.zhowin.miyou.mine.activity.PersonalizedDressActivity;
 import com.zhowin.miyou.mine.activity.SettingActivity;
+import com.zhowin.miyou.mine.activity.ShopMallActivity;
+import com.zhowin.miyou.mine.activity.SignInDrawActivity;
+import com.zhowin.miyou.mine.activity.UnionActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.activity.YouthModeActivity;
 import com.zhowin.miyou.mine.adapter.MineIconListAdapter;
@@ -31,14 +41,14 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
 
 
     private final Class<?>[] mClasses = {
-            LoginActivity.class,
+            UnionActivity.class,
             MyRoomActivity.class,
             VerifiedActivity.class,
-            LoginActivity.class,
+            ShopMallActivity.class,
             PersonalizedDressActivity.class,
-            LoginActivity.class,
-            LoginActivity.class,
-            LoginActivity.class,
+            SignInDrawActivity.class,
+            OnlineServiceActivity.class,
+            HelpOrFeedbackActivity.class,
             YouthModeActivity.class
     };
 
@@ -65,13 +75,19 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getUserInfoMessage();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivSetting:
                 startActivity(SettingActivity.class);
                 break;
             case R.id.ivUserAvatar:
-                HomepageActivity.start(mContext, true, 1);
+                HomepageActivity.start(mContext, true, UserInfo.getUserInfo().getUserId());
                 break;
             case R.id.llAttentionLayout:
                 AttentionAndFansActivity.start(mContext, 1);
@@ -90,6 +106,37 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
             case R.id.llVipLayout:
                 break;
         }
+    }
+
+    private void getUserInfoMessage() {
+        HttpRequest.getUserInfoMessage(this, new HttpCallBack<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo userInfo) {
+                if (userInfo != null) {
+                    UserInfo.setUserInfo(userInfo);
+                    setDataToViews(userInfo);
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+
+            }
+        });
+    }
+
+    private void setDataToViews(UserInfo userInfo) {
+        GlideUtils.loadUserPhotoForLogin(mContext, userInfo.getProfilePictureKey(), mBinding.ivUserAvatar);
+        mBinding.tvUserNickName.setText(userInfo.getAvatar());
+        mBinding.tvMUNumber.setText("觅U号:" + userInfo.getUsername());
+        mBinding.tvUserSex.setText(String.valueOf(userInfo.getAge()));
+        mBinding.tvAttentionNumber.setText(String.valueOf(userInfo.getFollowNum()));
+        mBinding.tvFansNumber.setText(String.valueOf(userInfo.getFansNum()));
+        mBinding.tvVisitorNumber.setText(String.valueOf(userInfo.getVisitNum()));
+        mBinding.tvUserSex.setBackgroundResource(GenderHelper.getSexBackground(userInfo.getGender()));
+        int drawable = GenderHelper.getSexDrawable(userInfo.getGender());
+        SetDrawableHelper.setLeftDrawable(mContext, mBinding.tvUserSex, true, 2, drawable, drawable);
+
     }
 
 

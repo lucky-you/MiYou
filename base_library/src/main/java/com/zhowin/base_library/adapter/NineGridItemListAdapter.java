@@ -3,7 +3,6 @@ package com.zhowin.base_library.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,11 +87,14 @@ public class NineGridItemListAdapter extends RecyclerView.Adapter<NineGridItemLi
             viewHolder.ivDeleteImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int index = viewHolder.getAdapterPosition();
-                    if (index != RecyclerView.NO_POSITION) {
-                        localMediaList.remove(index);
-                        notifyItemRemoved(index);
-                        notifyItemRangeChanged(index, localMediaList.size());
+                    int position = viewHolder.getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        localMediaList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, localMediaList.size());
+                        if (onNineGridItemClickListener != null) {
+                            onNineGridItemClickListener.onItemClickDelete(position, localMediaList);
+                        }
                     }
                 }
             });

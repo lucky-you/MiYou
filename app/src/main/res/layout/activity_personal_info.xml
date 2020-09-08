@@ -38,15 +38,31 @@
                     android:textColor="@color/color_343434"
                     android:textSize="16sp" />
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/civUserHeadPhoto"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="16dp"
-                    android:src="@mipmap/ic_def_image"
-                    app:riv_corner_radius="5dp" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/civUserHeadPhoto"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="4dp"
+                        android:src="@mipmap/ic_def_image"
+                        app:riv_corner_radius="5dp" />
+
+                    <ImageView
+                        android:id="@+id/ivDeleteHead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:src="@mipmap/ic_delete_menu" />
+
+                </FrameLayout>
+
 
                 <TextView
+                    android:id="@+id/tvBackgroundSize"
                     style="@style/TextViewStyleOf14Sp"
                     android:layout_margin="16dp"
                     android:gravity="center"
@@ -88,10 +104,11 @@
 
 
                         <EditText
+                            android:id="@+id/editUserNickName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@null"
-                            android:gravity="center_vertical"
+                            android:gravity="right"
                             android:hint="请输入昵称"
                             android:textColor="@color/color_343434"
                             android:textColorHint="@color/color_9A9A9A"
@@ -118,6 +135,7 @@
 
 
                         <TextView
+                            android:id="@+id/tvUserSex"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@null"
@@ -185,7 +203,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:gravity="center_vertical"
-                            android:hint="喜欢我就点点关注吧"
+                            android:hint="输入你喜欢的签名吧"
                             android:paddingBottom="6dp"
                             android:textColor="@color/color_343434"
                             android:textColorHint="@color/color_666"

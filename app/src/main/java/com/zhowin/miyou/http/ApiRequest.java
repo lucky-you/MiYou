@@ -35,12 +35,16 @@ public interface ApiRequest {
     String CAPATH_CODE_LOGIN = "/mobile/sms/login";
     //忘记密码
     String RESET_PASSWORD_URL = "api/user/password";
+
+
     //获取用户信息
-    String GET_USER_INFO_MESSAGE_URL = "api/ucenter/info";
+    String GET_USER_INFO_MESSAGE_URL = "/ant/userInfo/my";
+
+    //获取别人的信息
+    String GET_OTHER_USER_INFO_MESSAGE_URL = "/ant/userInfo/getUserInfo";
 
     //获取七牛云的token
     String GET_QI_NIU_TOKEN_URL = "/qn/getUploadToken";
-
     //发送验证码
     String SEND_EMS_CODE = "/auth/sendCode";
     //获取默认图像
@@ -53,12 +57,10 @@ public interface ApiRequest {
     String UPDATE_USER_INFO_MESSAGE_URL = "/ant/userInfo/updateUserInfo";
 
     /**
-     * 返回的是用户信息
+     * 返回的是自己的用户信息
      */
-    @FormUrlEncoded
     @POST(GET_USER_INFO_MESSAGE_URL)
-    Observable<ApiResponse<UserInfo>> getUserInfoMessage(@Field(AUTHOR) String token);
-
+    Observable<ApiResponse<UserInfo>> getUserInfoMessage(@Header(AUTHOR) String token);
 
     /**
      * 七牛云的信息
@@ -118,7 +120,23 @@ public interface ApiRequest {
      * 提交用户认证信息
      */
     @FormUrlEncoded
-    @POST
-    Observable<ApiResponse<UserInfo>> submitUserInfoMessage(@Header(AUTHOR) String token,@Url String url, @FieldMap HashMap<String, Object> map);
+    @POST(SUBMIT_USER_INFO_MESSAGE_URL)
+    Observable<ApiResponse<UserInfo>> submitUserInfoMessage(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
+
+    /**
+     * 修改用户信息
+     */
+    @FormUrlEncoded
+    @POST(UPDATE_USER_INFO_MESSAGE_URL)
+    Observable<ApiResponse<Object>> changeUserInfoMessage(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
+
+
+    /**
+     * 获取别人的信息
+     */
+    @FormUrlEncoded
+    @POST(GET_OTHER_USER_INFO_MESSAGE_URL)
+    Observable<ApiResponse<UserInfo>> getOtherInfoMessage(@Header(AUTHOR) String token, @Field("userId") int userId);
+
 
 }

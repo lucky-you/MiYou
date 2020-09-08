@@ -20,8 +20,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".mine.activity.HelpOrFeedbackActivity"></activity>
+        <activity android:name=".mine.activity.OnlineServiceActivity" />
+        <activity android:name=".mine.activity.SignInDrawActivity" />
+        <activity android:name=".mine.activity.ShopMallActivity" />
+        <activity android:name=".mine.activity.UnionActivity" />
         <activity android:name=".main.activity.GuidePageActivity" />
-
         <activity android:name=".mine.activity.PersonalizedDressActivity" />
         <activity android:name=".mine.activity.YouthModeSetPasswordActivity" />
         <activity android:name=".mine.activity.YouthModeActivity" />
