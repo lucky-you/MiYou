@@ -28,15 +28,13 @@ public interface ApiRequest {
 
     String TOKEN_VALUE = "Bearer ";
 
-    //登录
-    String LOGIN_URL = "api/user/login";
     //注册
     String REGISTER = "api/user/register";
     //验证码登录
     String CAPATH_CODE_LOGIN = "/mobile/sms/login";
-    //忘记密码
-    String RESET_PASSWORD_URL = "api/user/password";
 
+    //手机号+密码登录
+    String MOBILE_AND_PASSWORD_URL = "/mobile/pwd/login";
 
     //获取用户信息
     String GET_USER_INFO_MESSAGE_URL = "/ant/userInfo/my";
@@ -64,6 +62,12 @@ public interface ApiRequest {
     //设置用户密码
     String SET_USER_PASSWORD_URL = "/user/initializePwd";
 
+    //修改用户密码
+    String CHANGE_USER_PASSWORD_URL = "/user/modifyPwd";
+
+    //忘记秘密
+    String FOR_GET_PASSWORD_URL = "/auth/findPassword";
+
 
     /**
      * 返回的是自己的用户信息
@@ -88,8 +92,8 @@ public interface ApiRequest {
      * 手机号 + 密码 登录
      */
     @FormUrlEncoded
-    @POST(LOGIN_URL)
-    Observable<ApiResponse<UserInfo>> userLoginFromMobile(@FieldMap HashMap<String, Object> map);
+    @POST(MOBILE_AND_PASSWORD_URL)
+    Observable<ApiResponse<UserInfo>> loginMobileAndPassword(@Header(AUTHOR) String token, @Field("phone") String phone, @Field("password") String password);
 
     /**
      * 手机号 + 短信验证码登录
@@ -97,13 +101,6 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(CAPATH_CODE_LOGIN)
     Observable<ApiResponse<UserInfo>> mobileVerificationCodeLogin(@Field("phone") String mobile, @Field("smsCode") String smsCode);
-
-    /**
-     * 忘记密码
-     */
-    @FormUrlEncoded
-    @POST(RESET_PASSWORD_URL)
-    Observable<ApiResponse<Object>> forgetPassword(@FieldMap HashMap<String, Object> map);
 
 
     /**
@@ -160,6 +157,20 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(SET_USER_PASSWORD_URL)
     Observable<ApiResponse<Boolean>> setUserPassword(@Header(AUTHOR) String token, @Field("pwd") String password);
+
+    /**
+     * 修改密码
+     */
+    @FormUrlEncoded
+    @POST(CHANGE_USER_PASSWORD_URL)
+    Observable<ApiResponse<Object>> changeUserPassword(@Header(AUTHOR) String token, @Field("oldPwd") String oldPwd, @Field("newPwd") String newPwd);
+
+    /**
+     * 忘记密码
+     */
+    @FormUrlEncoded
+    @POST(FOR_GET_PASSWORD_URL)
+    Observable<ApiResponse<Object>> forgetPassword(@Header(AUTHOR) String token, @Field("mobileNum") String mobileNum, @Field("msgCode") String msgCode, @Field("newPwd") String newPwd);
 
 
 }

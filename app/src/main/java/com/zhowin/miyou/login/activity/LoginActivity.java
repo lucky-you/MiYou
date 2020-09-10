@@ -33,8 +33,8 @@ import io.reactivex.functions.Consumer;
 public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
 
-    private boolean isShowPassword;
     private Disposable mdDisposable;
+    private boolean isShowPassword, isPhoneAndPasswordLogin;
 
     @Override
     public int getLayoutId() {
@@ -50,7 +50,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
     @Override
     public void initData() {
-        changeUiOfClickStatus(true);
+        changeUiOfClickStatus();
     }
 
 
@@ -66,10 +66,12 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rlSMSLoginLayout:
-                changeUiOfClickStatus(true);
+                isPhoneAndPasswordLogin = false;
+                changeUiOfClickStatus();
                 break;
             case R.id.rlPasswordLayout:
-                changeUiOfClickStatus(false);
+                isPhoneAndPasswordLogin = true;
+                changeUiOfClickStatus();
                 break;
             case R.id.tvForgetPassword:
                 startActivity(ForgetPasswordActivity.class);
@@ -78,11 +80,14 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 clickLoginOrGetCode(false);
                 break;
             case R.id.tvLogin:
-                clickLoginOrGetCode(true);
-                KeyboardUtils.hideSoftInput(mContext);
+                if (!isPhoneAndPasswordLogin) {
+                    clickLoginOrGetCode(true);
+                    KeyboardUtils.hideSoftInput(mContext);
+                } else {
+                    loginMobileAndPassword();
+                }
                 break;
             case R.id.tvOneClickLogin:
-
                 break;
             case R.id.ivPasswordClose:
                 isShowPassword = !isShowPassword;
@@ -98,6 +103,51 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
     }
 
 
+    /**
+     * 手机号 + 密码 登录
+     */
+    private void loginMobileAndPassword() {
+        String phoneNumber = mBinding.editMobileNumber.getText().toString().trim();
+        if (!PhoneUtils.checkPhone(phoneNumber, true)) {
+            return;
+        }
+        String password = mBinding.editPassword.getText().toString().trim();
+        if (TextUtils.isEmpty(password)) {
+            ToastUtils.showToast("请输入密码");
+            return;
+        }
+        if (password.length() < 6) {
+            ToastUtils.showToast("密码长度不能少于6位");
+            return;
+        }
+        showLoadDialog();
+        HttpRequest.loginMobileAndPassword(this, phoneNumber, password, new HttpCallBack<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo userInfo) {
+                dismissLoadDialog();
+                if (userInfo != null) {
+                    UserInfo.setUserInfo(userInfo);
+                    startActivity(MainActivity.class);
+                }
+                ActivityManager.getAppInstance().finishActivity();
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+
+            }
+        });
+
+    }
+
+
+    /**
+     * 手机号 + 验证码 登录
+     *
+     * @param isgLogin 是否是登录
+     */
     private void clickLoginOrGetCode(boolean isgLogin) {
         String phoneNumber = mBinding.editMobileNumber.getText().toString().trim();
         if (!PhoneUtils.checkPhone(phoneNumber, true)) {
@@ -137,6 +187,9 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
         }
     }
 
+    /**
+     * 获取验证码
+     */
     private void getVerificationCode(String phoneNumber) {
         showLoadDialog();
         HttpRequest.getVerificationCode(this, phoneNumber, new HttpCallBack<Object>() {
@@ -164,9 +217,11 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
         mBinding.editPassword.setSelection(mBinding.editPassword.getText().toString().trim().length());
     }
 
-
-    private void changeUiOfClickStatus(boolean isClickSMSLoginLayout) {
-        if (isClickSMSLoginLayout) {
+    /**
+     * 切换不同登录方式的UI
+     */
+    private void changeUiOfClickStatus() {
+        if (!isPhoneAndPasswordLogin) {
             mBinding.tvSMSLogin.setTextColor(getBaseColor(R.color.color_333));
             mBinding.ivSMSBottomView.setVisibility(View.VISIBLE);
             mBinding.tvPasswordLogin.setTextColor(getBaseColor(R.color.color_666));
@@ -174,7 +229,6 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
             mBinding.llPhoneLayout.setVisibility(View.VISIBLE);
             mBinding.llPasswordLayout.setVisibility(View.GONE);
             mBinding.tvForgetPassword.setVisibility(View.INVISIBLE);
-
         } else {
             mBinding.tvPasswordLogin.setTextColor(getBaseColor(R.color.color_333));
             mBinding.ivPasswordBottomView.setVisibility(View.VISIBLE);

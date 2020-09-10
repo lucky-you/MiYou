@@ -116,6 +116,27 @@ public class HttpRequest {
     }
 
     /**
+     * 手机号 + 密码登录
+     */
+    public static void loginMobileAndPassword(LifecycleOwner activity, String mobile, String password, final HttpCallBack<UserInfo> callBack) {
+        apiRequest.loginMobileAndPassword(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), mobile, password)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<UserInfo>() {
+
+                    @Override
+                    public void onSuccess(UserInfo demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
      * 获取默认图像
      */
     public static void getDefaultAvatar(LifecycleOwner activity, final HttpCallBack<List<DefaultImageList>> callBack) {
@@ -252,6 +273,48 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(Boolean demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 修改用户密码
+     */
+    public static void changeUserPassword(LifecycleOwner activity, String oldPwd, String newPwd, final HttpCallBack<Object> callBack) {
+        apiRequest.changeUserPassword(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), oldPwd, newPwd)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 忘记 密码
+     */
+    public static void forgetPassword(LifecycleOwner activity, String mobileNum, String msgCode, String newPwd, final HttpCallBack<Object> callBack) {
+        apiRequest.forgetPassword(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), mobileNum, msgCode, newPwd)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
                         callBack.onSuccess(demo);
                     }
 
