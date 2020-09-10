@@ -8,8 +8,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.zhowin.base_library.adapter.HomePageAdapter;
 import com.zhowin.base_library.base.BaseBindFragment;
+import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.RecommendFragmentLayoutBinding;
+import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.banner.BannerHelperUtils;
 import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.recommend.activity.UserListActivity;
@@ -56,6 +58,23 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
         bannerLists.add(new BannerList("https://img.zcool.cn/community/01270156fb62fd6ac72579485aa893.jpg"));
         BannerHelperUtils.showHomeFragmentBanner(mContext, mBinding.banner, bannerLists);
     }
+
+    private void loadHomeBannerList() {
+        HttpRequest.getHomeBannerList(this, new HttpCallBack<List<BannerList>>() {
+            @Override
+            public void onSuccess(List<BannerList> bannerLists) {
+                if (bannerLists != null && !bannerLists.isEmpty()) {
+                    BannerHelperUtils.showHomeFragmentBanner(mContext, mBinding.banner, bannerLists);
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View v) {

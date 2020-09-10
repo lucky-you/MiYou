@@ -14,6 +14,7 @@ import com.zhowin.base_library.utils.RxSchedulers;
 import com.zhowin.miyou.BuildConfig;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
+import com.zhowin.miyou.main.model.BannerList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -209,6 +210,48 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(UserInfo demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 首页banner
+     */
+    public static void getHomeBannerList(LifecycleOwner activity, final HttpCallBack<List<BannerList>> callBack) {
+        apiRequest.getHomeBannerList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<BannerList>>() {
+
+                    @Override
+                    public void onSuccess(List<BannerList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 设置用户密码
+     */
+    public static void setUserPassword(LifecycleOwner activity, String password, final HttpCallBack<Boolean> callBack) {
+        apiRequest.setUserPassword(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), password)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Boolean>() {
+
+                    @Override
+                    public void onSuccess(Boolean demo) {
                         callBack.onSuccess(demo);
                     }
 

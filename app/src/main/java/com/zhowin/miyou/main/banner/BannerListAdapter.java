@@ -25,12 +25,12 @@ public class BannerListAdapter extends BannerAdapter<BannerList, BannerListAdapt
 
     protected int imageType;
 
-    public BannerListAdapter(List<BannerList> datas) {
-        super(datas);
+    public BannerListAdapter(List<BannerList> dates) {
+        super(dates);
     }
 
-    public BannerListAdapter(List<BannerList> datas, int imageType) {
-        super(datas);
+    public BannerListAdapter(List<BannerList> dates, int imageType) {
+        super(dates);
         this.imageType = imageType;
     }
 
@@ -66,7 +66,7 @@ public class BannerListAdapter extends BannerAdapter<BannerList, BannerListAdapt
 
     @Override
     public void onBindView(ViewHolder holder, BannerList data, int position, int size) {
-        GlideUtils.loadObjectImage(holder.imageView.getContext(), data.getBannerImage(), holder.imageView);
+        GlideUtils.loadObjectImage(holder.imageView.getContext(), data.getPictureKey(), holder.imageView);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

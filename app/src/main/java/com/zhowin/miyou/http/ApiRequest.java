@@ -6,6 +6,7 @@ import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
+import com.zhowin.miyou.main.model.BannerList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +56,14 @@ public interface ApiRequest {
     String SUBMIT_USER_INFO_MESSAGE_URL = "/ant/userInfo/initializeUserInfo";
     //更新用户资料
     String UPDATE_USER_INFO_MESSAGE_URL = "/ant/userInfo/updateUserInfo";
+    //获取首页标签
+    String GET_HOME_BANNER_LIST_URL = "/ant/home/banner/getBanners";
+    //获取礼物列表
+    String GET_GIFT_LIST_URL = "/ant/gift/getGifts";
+
+    //设置用户密码
+    String SET_USER_PASSWORD_URL = "/user/initializePwd";
+
 
     /**
      * 返回的是自己的用户信息
@@ -137,6 +146,20 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(GET_OTHER_USER_INFO_MESSAGE_URL)
     Observable<ApiResponse<UserInfo>> getOtherInfoMessage(@Header(AUTHOR) String token, @Field("userId") int userId);
+
+
+    /**
+     * 获取首页banner
+     */
+    @POST(GET_HOME_BANNER_LIST_URL)
+    Observable<ApiResponse<List<BannerList>>> getHomeBannerList(@Header(AUTHOR) String token);
+
+    /**
+     * 设置用户密码
+     */
+    @FormUrlEncoded
+    @POST(SET_USER_PASSWORD_URL)
+    Observable<ApiResponse<Boolean>> setUserPassword(@Header(AUTHOR) String token, @Field("pwd") String password);
 
 
 }
