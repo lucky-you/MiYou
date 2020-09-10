@@ -12,7 +12,8 @@
         android:layout_height="76dp"
         android:layout_gravity="center"
         android:layout_margin="8dp"
-        android:src="#E9EEF0"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_def_image"
         app:riv_corner_radius="8dp" />
 
     <TextView

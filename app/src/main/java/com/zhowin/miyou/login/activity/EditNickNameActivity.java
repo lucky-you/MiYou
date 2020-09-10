@@ -27,6 +27,7 @@ import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.base_library.qiniu.QinIuUpLoadListener;
 import com.zhowin.base_library.qiniu.QinIuUtils;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.KeyboardUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.utils.ZodiacUtil;
 import com.zhowin.miyou.R;

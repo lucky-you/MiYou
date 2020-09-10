@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.model.GiftAndCarList;
 import com.zhowin.base_library.model.UserInfo;
+import com.zhowin.base_library.model.UserInterestList;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.GlideUtils;
@@ -22,10 +24,11 @@ import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.PersonalInfoActivity;
 import com.zhowin.miyou.recommend.adapter.HomePagerAdapter;
+import com.zhowin.miyou.recommend.callback.OnTopicTagClickListener;
 import com.zhowin.miyou.recommend.model.HomePageCategoryList;
+import com.zhowin.miyou.recommend.widget.SetTagsToViewHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,6 +40,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
     private boolean isMine;
     private int userId;
     private HomePagerAdapter homePagerAdapter;
+    private List<HomePageCategoryList> homePageCategoryLists = new ArrayList<>();
 
     public static void start(Context context, boolean isMine, int userId) {
         Intent intent = new Intent(context, HomepageActivity.class);
@@ -62,7 +66,9 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
 
     @Override
     public void initData() {
-        setAdapterData();
+        homePagerAdapter = new HomePagerAdapter(homePageCategoryLists);
+        mBinding.homePageRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mBinding.homePageRecyclerView.setAdapter(homePagerAdapter);
     }
 
     @Override
@@ -70,16 +76,6 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         super.onResume();
         getUserInfoMessage();
 
-    }
-
-    private void setAdapterData() {
-        List<HomePageCategoryList> homePageCategoryLists = new ArrayList<>();
-        homePageCategoryLists.add(new HomePageCategoryList("收到的礼物", Arrays.asList("告白气球", "告白气球", "告白气球", "告白气球", "告白气球")));
-        homePageCategoryLists.add(new HomePageCategoryList("头像框", Arrays.asList("熊熊框", "熊熊框", "熊熊框", "熊熊框", "熊熊框")));
-        homePageCategoryLists.add(new HomePageCategoryList("座驾", Arrays.asList("三轮宝马", "三轮宝马", "三轮宝马", "三轮宝马", "三轮宝马")));
-        homePagerAdapter = new HomePagerAdapter(homePageCategoryLists);
-        mBinding.homePageRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.homePageRecyclerView.setAdapter(homePagerAdapter);
     }
 
 
@@ -115,6 +111,29 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         String onLineStatus = "离线  " + userInfo.getFollowNum() + "关注" + "  •  " + userInfo.getFansNum() + "粉丝";
         mBinding.tvUserOnlineStatus.setText(onLineStatus);
 
+        List<UserInterestList> userInterestList = userInfo.getLabelList();
+        if (userInterestList != null && !userInterestList.isEmpty()) {
+            SetTagsToViewHelper.setInterestListTagToView(mContext, mBinding.flInterestTagsLayout, userInterestList, new OnTopicTagClickListener() {
+                @Override
+                public void onTagsClick(boolean isTagsData, int tagId, String nickName) {
+
+                }
+            });
+        }
+        if (!homePageCategoryLists.isEmpty()) homePageCategoryLists.clear();
+        List<GiftAndCarList> giftList = userInfo.getGifts();
+        if (giftList != null && !giftList.isEmpty()) {
+            homePageCategoryLists.add(new HomePageCategoryList("收到的礼物", giftList));
+        }
+        List<GiftAndCarList> userHeadList = userInfo.getDecorations();
+        if (userHeadList != null && !userHeadList.isEmpty()) {
+            homePageCategoryLists.add(new HomePageCategoryList("头像框", userHeadList));
+        }
+        List<GiftAndCarList> userCarList = userInfo.getCars();
+        if (userCarList != null && !userCarList.isEmpty()) {
+            homePageCategoryLists.add(new HomePageCategoryList("座驾", userCarList));
+        }
+        homePagerAdapter.setNewData(homePageCategoryLists);
 
     }
 

@@ -1,5 +1,7 @@
 package com.zhowin.miyou.recommend.model;
 
+import com.zhowin.base_library.model.GiftAndCarList;
+
 import java.util.List;
 
 /**
@@ -10,9 +12,9 @@ import java.util.List;
 public class HomePageCategoryList {
 
     private String leftTitle;
-    private List<String> stringList;
+    private List<GiftAndCarList> stringList;
 
-    public HomePageCategoryList(String leftTitle, List<String> stringList) {
+    public HomePageCategoryList(String leftTitle, List<GiftAndCarList> stringList) {
         this.leftTitle = leftTitle;
         this.stringList = stringList;
     }
@@ -25,11 +27,11 @@ public class HomePageCategoryList {
         this.leftTitle = leftTitle;
     }
 
-    public List<String> getStringList() {
+    public List<GiftAndCarList> getStringList() {
         return stringList;
     }
 
-    public void setStringList(List<String> stringList) {
+    public void setStringList(List<GiftAndCarList> stringList) {
         this.stringList = stringList;
     }
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.internal.FlowLayout;
+import com.zhowin.base_library.model.UserInterestList;
 import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.recommend.callback.OnTopicTagClickListener;
@@ -23,27 +24,27 @@ public class SetTagsToViewHelper {
     /**
      * 关注列表tags
      */
-    public static void setInterestListTagToView(Context mContext, FlowLayout llInterestItemLayout, List<TagList> tagsList, OnTopicTagClickListener onTopicTagClickListener) {
+    public static void setInterestListTagToView(Context mContext, FlowLayout llInterestItemLayout, List<UserInterestList> tagsList, OnTopicTagClickListener onTopicTagClickListener) {
         if (llInterestItemLayout == null) return;
         if (tagsList == null || tagsList.isEmpty()) return;
         llInterestItemLayout.removeAllViews();
         for (int i = 0; i < tagsList.size(); i++) {
-            TagList tagItem = tagsList.get(i);
+            UserInterestList tagItem = tagsList.get(i);
             TextView radiusTextView = new TextView(mContext);
-            radiusTextView.setPadding(SizeUtils.dp2px(4), 0, 0, 0);
+            radiusTextView.setBackground(mContext.getResources().getDrawable(R.drawable.shape_user_interest_bg));
+            radiusTextView.setPadding(SizeUtils.dp2px(6), 0, SizeUtils.dp2px(6), 0);
             radiusTextView.setGravity(Gravity.CENTER);
             radiusTextView.setTextColor(mContext.getResources().getColor(R.color.color_999));
-            radiusTextView.setText(tagItem.getTitle());
+            radiusTextView.setText(tagItem.getLabelName());
             llInterestItemLayout.addView(radiusTextView);
             radiusTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (onTopicTagClickListener != null) {
-                        onTopicTagClickListener.onTagsClick(false, tagItem.getId(), tagItem.getTitle());
+                        onTopicTagClickListener.onTagsClick(true, tagItem.getLabelId(), tagItem.getLabelName());
                     }
                 }
             });
-
         }
     }
 

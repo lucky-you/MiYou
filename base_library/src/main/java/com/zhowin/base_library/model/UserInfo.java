@@ -57,10 +57,12 @@ public class UserInfo {
     private int userId;
     private String username;
     private int visitNum;
+
+    private List<UserInterestList> labelList;
     private List<String> backgroundPictureKeys;
-    private List<CarsBean> cars;
-    private List<DecorationsBean> decorations;
-    private List<GiftsBean> gifts;
+    private List<GiftAndCarList> cars;
+    private List<GiftAndCarList> decorations;
+    private List<GiftAndCarList> gifts;
 
     public static void setUserInfo(UserInfo data) {
         Gson gson = new Gson();
@@ -241,156 +243,35 @@ public class UserInfo {
         this.backgroundPictureKeys = backgroundPictureKeys;
     }
 
-    public List<CarsBean> getCars() {
+    public List<UserInterestList> getLabelList() {
+        return labelList;
+    }
+
+    public void setLabelList(List<UserInterestList> labelList) {
+        this.labelList = labelList;
+    }
+
+    public List<GiftAndCarList> getCars() {
         return cars;
     }
 
-    public void setCars(List<CarsBean> cars) {
+    public void setCars(List<GiftAndCarList> cars) {
         this.cars = cars;
     }
 
-    public List<DecorationsBean> getDecorations() {
+    public List<GiftAndCarList> getDecorations() {
         return decorations;
     }
 
-    public void setDecorations(List<DecorationsBean> decorations) {
+    public void setDecorations(List<GiftAndCarList> decorations) {
         this.decorations = decorations;
     }
 
-    public List<GiftsBean> getGifts() {
+    public List<GiftAndCarList> getGifts() {
         return gifts;
     }
 
-    public void setGifts(List<GiftsBean> gifts) {
+    public void setGifts(List<GiftAndCarList> gifts) {
         this.gifts = gifts;
-    }
-
-
-    public static class CarsBean {
-        /**
-         * carId : 1
-         * carName : 兰博基尼
-         * number : 0
-         * pictureKey : image.backgroundPicture.default.default.jpg
-         */
-
-        private String carId;
-        private String carName;
-        private int number;
-        private String pictureKey;
-
-        public String getCarId() {
-            return carId;
-        }
-
-        public void setCarId(String carId) {
-            this.carId = carId;
-        }
-
-        public String getCarName() {
-            return carName;
-        }
-
-        public void setCarName(String carName) {
-            this.carName = carName;
-        }
-
-        public int getNumber() {
-            return number;
-        }
-
-        public void setNumber(int number) {
-            this.number = number;
-        }
-
-        public String getPictureKey() {
-            return pictureKey;
-        }
-
-        public void setPictureKey(String pictureKey) {
-            this.pictureKey = pictureKey;
-        }
-    }
-
-    public static class DecorationsBean {
-        /**
-         * id : 2
-         * name : 兔耳朵
-         * number : 0
-         * pictureKey : image.backgroundPicture.default.default.jpg
-         */
-
-        private String id;
-        private String name;
-        private int number;
-        private String pictureKey;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getNumber() {
-            return number;
-        }
-
-        public void setNumber(int number) {
-            this.number = number;
-        }
-
-        public String getPictureKey() {
-            return pictureKey;
-        }
-
-        public void setPictureKey(String pictureKey) {
-            this.pictureKey = pictureKey;
-        }
-    }
-
-    public static class GiftsBean {
-        /**
-         * giftId : 0
-         * giftName : 高跟鞋
-         * number : 0
-         */
-
-        private String giftId;
-        private String giftName;
-        private String number;
-
-        public String getGiftId() {
-            return giftId;
-        }
-
-        public void setGiftId(String giftId) {
-            this.giftId = giftId;
-        }
-
-        public String getGiftName() {
-            return giftName;
-        }
-
-        public void setGiftName(String giftName) {
-            this.giftName = giftName;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public void setNumber(String number) {
-            this.number = number;
-        }
     }
 }

@@ -4,7 +4,6 @@ package com.zhowin.miyou.mine.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -31,6 +30,7 @@ import com.zhowin.base_library.qiniu.QinIuUpLoadListener;
 import com.zhowin.base_library.qiniu.QinIuUtils;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.GlideUtils;
+import com.zhowin.base_library.utils.SetDrawableHelper;
 import com.zhowin.base_library.utils.SplitUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.utils.ZodiacUtil;
@@ -38,7 +38,6 @@ import com.zhowin.base_library.widget.FullyGridLayoutManager;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityPersonalInfoBinding;
 import com.zhowin.miyou.http.HttpRequest;
-import com.zhowin.miyou.main.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +55,7 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
     public static final int MAX_NUM = 3;
     private NineGridItemListAdapter nineGridItemListAdapter;
     private String qiNiuToken, qiNiuCdnUrl;
-    private boolean isChangeHead;
+    private boolean isChangeHead, isChangeBackground;
     private String headImageUrl, userNickName, userBirthday, userXinZuo, userSignText, backGroundUrlList = "";
 
 
@@ -99,8 +98,9 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
 
             @Override
             public void onItemClickDelete(int position, List<LocalMedia> localMediaList) {
+                isChangeBackground = true;
+                backGroundUrlList = "";
                 mBinding.tvBackgroundSize.setText("背景墙(" + localMediaList.size() + "/" + MAX_NUM + ")");
-                System.out.println("position:" + position + "--- size:" + localMediaList.size());
             }
         });
     }
@@ -148,21 +148,25 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
         mBinding.tvAgeText.setText(String.valueOf(userInfo.getAge()));
         userBirthday = userInfo.getBirthday();
         userXinZuo = ZodiacUtil.date2Constellation(userBirthday);
+        List<String> userBackgroundList = userInfo.getBackgroundPictureKeys();
+        if (userBackgroundList != null && !userBackgroundList.isEmpty())
+            backGroundUrlList = SplitUtils.getStringTextId(userBackgroundList);
+        SetDrawableHelper.setLeftDrawable(mContext, mBinding.tvUserSex, TextUtils.equals("男", userInfo.getGender()), 6, R.drawable.data_man_icon, R.drawable.data_girl_icon);
         if (!TextUtils.isEmpty(userInfo.getStatus())) {
             mBinding.editSignature.setText(userInfo.getStatus());
             mBinding.editSignature.setSelection(userInfo.getStatus().length());
         }
         List<String> backgroundList = userInfo.getBackgroundPictureKeys();
         if (backgroundList != null && !backgroundList.isEmpty()) {
-            if (!selectList.isEmpty()) selectList.clear();
-//            List<LocalMedia> mediaList = new ArrayList<>();
+//            if (!selectList.isEmpty()) selectList.clear();
+            List<LocalMedia> mediaList = new ArrayList<>();
             for (String item : backgroundList) {
                 LocalMedia localMedia = new LocalMedia();
                 localMedia.setPath(item);
-                selectList.add(localMedia);
+                mediaList.add(localMedia);
             }
-            mBinding.tvBackgroundSize.setText("背景墙(" + selectList.size() + "/" + MAX_NUM + ")");
-            nineGridItemListAdapter.setNewDataList(selectList);
+            mBinding.tvBackgroundSize.setText("背景墙(" + mediaList.size() + "/" + MAX_NUM + ")");
+            nineGridItemListAdapter.setNewDataList(mediaList);
         }
     }
 
@@ -171,6 +175,10 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
      * 上传图片
      */
     private void uploadBackgroundUrl() {
+        if (TextUtils.isEmpty(headImageUrl)) {
+            ToastUtils.showToast("请先上传图像哦");
+            return;
+        }
         if (selectList.isEmpty()) {
             //没有选择背景，直接提交
             submitUserMessageData();
@@ -226,9 +234,10 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
 
             case R.id.ivDeleteHead:
                 //点击删除头像按钮
-                GlideUtils.loadUserPhotoForLogin(mContext, R.mipmap.ic_def_image, mBinding.civUserHeadPhoto);
+                GlideUtils.loadUserPhotoForLogin(mContext, R.mipmap.data_update_pic, mBinding.civUserHeadPhoto);
                 mBinding.ivDeleteHead.setVisibility(View.GONE);
                 isChangeHead = true;
+                headImageUrl = "";
                 break;
             case R.id.clSelectAgeLayout:
                 showSelectAgeDialog();
