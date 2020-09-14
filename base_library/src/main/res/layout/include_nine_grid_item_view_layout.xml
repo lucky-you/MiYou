@@ -9,7 +9,7 @@
         android:id="@+id/ivSelectImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_margin="4dp"
+        android:layout_margin="5dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/data_update_pic"
         app:layout_constraintLeft_toLeftOf="parent"

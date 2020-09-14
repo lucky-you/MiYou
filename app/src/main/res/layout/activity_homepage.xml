@@ -14,12 +14,24 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
+            <View
+                android:id="@+id/topBarView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clTopView"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:background="@color/color_45BCFD">
+                android:layout_height="320dp">
 
+                <com.youth.banner.Banner
+                    android:id="@+id/userBackgroundBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:background="@color/color_4C9CFF"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/ivBackReturn"
@@ -72,6 +84,7 @@
                     android:src="@mipmap/ic_def_image"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

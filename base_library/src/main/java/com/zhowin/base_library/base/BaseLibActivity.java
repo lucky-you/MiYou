@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.R;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.KeyboardUtils;
 import com.zhowin.base_library.view.LoadProgressDialog;
 
 import me.yokeyword.fragmentation.SupportActivity;
@@ -81,6 +82,8 @@ public abstract class BaseLibActivity extends SupportActivity implements View.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        KeyboardUtils.fixAndroidBug5497(mContext);
+        KeyboardUtils.fixSoftInputLeaks(mContext);
         mContext = null;
         ActivityManager.getAppInstance().removeActivity(this);
     }
