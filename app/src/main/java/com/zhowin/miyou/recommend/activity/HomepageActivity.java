@@ -7,7 +7,6 @@ import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.GiftAndCarList;
@@ -24,7 +23,10 @@ import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.PersonalInfoActivity;
 import com.zhowin.miyou.recommend.adapter.HomePagerAdapter;
+import com.zhowin.miyou.recommend.callback.OnReportAndAttentionListener;
 import com.zhowin.miyou.recommend.callback.OnTopicTagClickListener;
+import com.zhowin.miyou.recommend.dialog.ReportAndAttentionDialog;
+import com.zhowin.miyou.recommend.dialog.ShareItemDialog;
 import com.zhowin.miyou.recommend.model.HomePageCategoryList;
 import com.zhowin.miyou.recommend.widget.SetTagsToViewHelper;
 
@@ -145,17 +147,44 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
                 ActivityManager.getAppInstance().finishActivity();
                 break;
             case R.id.ivEditPersonal:
-                if (isMine)
+                if (isMine) {
                     startActivity(PersonalInfoActivity.class);
+                } else {
+                    showShareAndAttentionDialog();
+                }
                 break;
         }
     }
 
-    @Override
-    public void initImmersionBar() {
-        ImmersionBar.with(this)
-                .titleBar(mBinding.clTopView, false)
-                .transparentBar()
-                .init();
+    private void showShareAndAttentionDialog() {
+        ReportAndAttentionDialog reportAndAttentionDialog = new ReportAndAttentionDialog();
+        reportAndAttentionDialog.show(getSupportFragmentManager(), "attention");
+        reportAndAttentionDialog.setOnReportAndAttentionListener(new OnReportAndAttentionListener() {
+            @Override
+            public void onItemClick(int itemType) {
+                if (4 == itemType) {
+                    showShareDialog();
+                }
+            }
+        });
     }
+
+    private void showShareDialog() {
+        ShareItemDialog shareItemDialog = new ShareItemDialog();
+        shareItemDialog.show(getSupportFragmentManager(), "share");
+        shareItemDialog.setOnReportAndAttentionListener(new OnReportAndAttentionListener() {
+            @Override
+            public void onItemClick(int itemType) {
+
+            }
+        });
+    }
+
+//    @Override
+//    public void initImmersionBar() {
+//        ImmersionBar.with(this)
+//                .titleBar(mBinding.clTopView, false)
+//                .transparentBar()
+//                .init();
+//    }
 }

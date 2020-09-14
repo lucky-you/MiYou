@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="16dp"
+    android:background="@color/white">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivGuildImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/ic_def_image"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="8dp" />
+
+    <TextView
+        android:id="@+id/tvGuildTitle"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginStart="10dp"
+        android:text="娱乐家族巴拉巴拉"
+        android:textColor="@color/color_343434"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/tvGuildContent"
+        app:layout_constraintLeft_toRightOf="@id/ivGuildImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvGuildContent"
+        style="@style/TextViewStyleOf14Sp"
+        android:text="这是娱乐家族巴拉巴拉"
+        android:textColor="@color/color_9A9A9A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/tvGuildTitle"
+        app:layout_constraintLeft_toRightOf="@id/ivGuildImage"
+        app:layout_constraintTop_toBottomOf="@id/tvGuildTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

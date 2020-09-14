@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_nummber_one_white_bg"
+        android:orientation="vertical"
+        app:divider="@drawable/shape_divide_line_bg"
+        app:dividerPadding="16dp"
+        app:showDividers="middle">
+
+        <TextView
+            android:id="@+id/tvUserNickNameAndId"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="双色鱼（ID：10002546）"
+            android:textColor="@color/color_999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvReport"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="举报"
+            android:textColor="@color/color_666"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvAttention"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="关注"
+            android:textColor="@color/color_666"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvPullBlack"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="拉黑"
+            android:textColor="@color/color_666"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvShare"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="分享"
+            android:textColor="@color/color_666"
+            android:textSize="16sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+        style="@style/DivideLineStyle"
+        android:layout_height="10dp"
+        android:background="@color/color_F3F7F8" />
+
+    <TextView
+        android:id="@+id/tvCancel"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/color_666"
+        android:textSize="16sp" />
+
+</LinearLayout>
