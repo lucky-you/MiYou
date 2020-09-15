@@ -14,6 +14,8 @@ import com.zhowin.miyou.databinding.RecommendFragmentLayoutBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.banner.BannerHelperUtils;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.recommend.activity.RoomSearchActivity;
+import com.zhowin.miyou.recommend.activity.SetUpAdministratorActivity;
 import com.zhowin.miyou.recommend.activity.UserListActivity;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
 
     @Override
     public void initView() {
-        setOnClick(R.id.ivUserList);
+        setOnClick(R.id.tvHomeSearch, R.id.ivUserList);
     }
 
     @Override
@@ -79,6 +81,9 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tvHomeSearch:
+                startActivity(RoomSearchActivity.class);
+                break;
             case R.id.ivUserList:
                 startActivity(UserListActivity.class);
                 break;

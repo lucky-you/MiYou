@@ -16,7 +16,6 @@ public class ShareItemDialog extends BaseDialogFragment {
 
     @Override
     public int getLayoutId() {
-
         return R.layout.include_share_item_dialog;
     }
 
