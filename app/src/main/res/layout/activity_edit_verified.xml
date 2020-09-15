@@ -15,8 +15,7 @@
             android:layout_height="wrap_content"
             app:mTitle="实名认证" />
 
-        <com.zhowin.base_library.view.NoNestedScrollview
-            style="@style/RecycleViewStyle">
+        <com.zhowin.base_library.view.NoNestedScrollview style="@style/RecycleViewStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -26,7 +25,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="128dp"
-                    android:background="@color/color_8E9DFD"
+                    android:background="@drawable/authen_bg"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -184,7 +183,7 @@
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:layout_width="match_parent"
                             android:layout_height="104dp"
-                            android:background="@color/white"
+                            android:src="@drawable/authen_upload_pic"
                             app:riv_corner_radius="6dp" />
 
                         <TextView
@@ -210,7 +209,7 @@
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:layout_width="match_parent"
                             android:layout_height="104dp"
-                            android:background="@color/white"
+                            android:src="@drawable/authen_upload_pic"
                             app:riv_corner_radius="6dp" />
 
                         <TextView
@@ -235,7 +234,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="60dp"
                     android:layout_marginBottom="40dp"
-                    android:background="@drawable/wallet_payment_btn"
+                    android:background="@drawable/authen_start_btn"
                     android:gravity="center"
                     android:text="确认提交"
                     android:textColor="@color/white"

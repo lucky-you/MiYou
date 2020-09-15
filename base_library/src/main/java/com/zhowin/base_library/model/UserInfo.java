@@ -57,7 +57,6 @@ public class UserInfo {
     private int userId;
     private String username;
     private int visitNum;
-
     private List<UserInterestList> labelList;
     private List<String> backgroundPictureKeys;
     private List<GiftAndCarList> cars;

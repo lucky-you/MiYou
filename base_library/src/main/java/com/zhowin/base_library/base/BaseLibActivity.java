@@ -2,6 +2,7 @@ package com.zhowin.base_library.base;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -90,6 +91,10 @@ public abstract class BaseLibActivity extends SupportActivity implements View.On
 
     public int getBaseColor(int colorId) {
         return mContext.getResources().getColor(colorId);
+    }
+
+    public Resources getBaseResources() {
+        return mContext.getResources();
     }
 
 

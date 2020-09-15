@@ -90,10 +90,10 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
 
             @Override
             public void onItemClick(int position, View view) {
-                PictureSelector.create(mContext)
-                        .themeStyle(R.style.picture_default_style)
-                        .imageEngine(GlideEngine.createGlideEngine())
-                        .openExternalPreview(position, selectList);
+//                PictureSelector.create(mContext)
+//                        .themeStyle(R.style.picture_default_style)
+//                        .imageEngine(GlideEngine.createGlideEngine())
+//                        .openExternalPreview(position, selectList);
             }
 
             @Override

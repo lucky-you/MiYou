@@ -28,7 +28,7 @@
             android:id="@+id/llPhoneOrPasswordLoginLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="150dp"
             android:background="@mipmap/login_white_bg"
             android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -290,7 +290,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="24dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"

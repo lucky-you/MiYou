@@ -28,7 +28,7 @@
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:src="@mipmap/ic_def_image" />
+            android:src="@drawable/authen_start_icon" />
 
         <TextView
             android:id="@+id/tvStartVerified"
@@ -37,7 +37,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/wallet_payment_btn"
+            android:background="@drawable/authen_start_btn"
             android:gravity="center"
             android:text="开始实名认证"
             android:textColor="@color/white"

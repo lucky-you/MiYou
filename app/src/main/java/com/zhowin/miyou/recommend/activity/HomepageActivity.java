@@ -7,12 +7,15 @@ import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.gyf.immersionbar.ImmersionBar;
+import com.zhowin.base_library.banner.BannerImageAdapter;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.GiftAndCarList;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.model.UserInterestList;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.BarUtils;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SetDrawableHelper;
@@ -112,7 +115,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         mBinding.tvUserSignText.setText("签名：" + userInfo.getStatus());
         String onLineStatus = "离线  " + userInfo.getFollowNum() + "关注" + "  •  " + userInfo.getFansNum() + "粉丝";
         mBinding.tvUserOnlineStatus.setText(onLineStatus);
-
+        setUserBannerData(userInfo.getBackgroundPictureKeys());
         List<UserInterestList> userInterestList = userInfo.getLabelList();
         if (userInterestList != null && !userInterestList.isEmpty()) {
             SetTagsToViewHelper.setInterestListTagToView(mContext, mBinding.flInterestTagsLayout, userInterestList, new OnTopicTagClickListener() {
@@ -127,16 +130,28 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         if (giftList != null && !giftList.isEmpty()) {
             homePageCategoryLists.add(new HomePageCategoryList("收到的礼物", giftList));
         }
+
         List<GiftAndCarList> userHeadList = userInfo.getDecorations();
         if (userHeadList != null && !userHeadList.isEmpty()) {
             homePageCategoryLists.add(new HomePageCategoryList("头像框", userHeadList));
         }
+
         List<GiftAndCarList> userCarList = userInfo.getCars();
         if (userCarList != null && !userCarList.isEmpty()) {
             homePageCategoryLists.add(new HomePageCategoryList("座驾", userCarList));
         }
         homePagerAdapter.setNewData(homePageCategoryLists);
 
+    }
+
+    private void setUserBannerData(List<String> bannerList) {
+        if (bannerList != null && !bannerList.isEmpty()) {
+            mBinding.userHomeBanner.setAdapter(new BannerImageAdapter(bannerList, 1))
+                    .isAutoLoop(false)
+                    .start();
+        } else {
+            mBinding.userHomeBanner.setBackground(getBaseResources().getDrawable(R.drawable.mine_top_bg));
+        }
     }
 
 
@@ -180,11 +195,14 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         });
     }
 
-//    @Override
-//    public void initImmersionBar() {
-//        ImmersionBar.with(this)
-//                .titleBar(mBinding.clTopView, false)
-//                .transparentBar()
-//                .init();
-//    }
+    @Override
+    public void initImmersionBar() {
+        ImmersionBar.with(this)
+                .statusBarView(R.id.topView)
+                .navigationBarColor(R.color.black)
+                .fullScreen(true)
+                .addTag("PicAndColor")
+                .init();
+
+    }
 }

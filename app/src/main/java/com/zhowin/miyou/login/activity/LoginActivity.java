@@ -57,9 +57,9 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
     @Override
     public void initImmersionBar() {
         ImmersionBar.with(this)
-                .titleBar(mBinding.titleView, false)
-                .transparentBar()
+                .titleBar(mBinding.titleView)
                 .init();
+
     }
 
     @Override
