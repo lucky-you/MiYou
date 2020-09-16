@@ -11,6 +11,10 @@ android {
     //正式环境
     def API_RELEASE_HOST = "\"http://47.110.139.24:8081\""
 
+    def RONG_KEY = "x18ywvqfx576c";
+
+    def  APP_SERVER="http://47.110.139.24:8080/";
+
     defaultConfig {
         applicationId "com.zhowin.miyou"
         minSdkVersion 19
