@@ -13,7 +13,7 @@ android {
 
     def RONG_KEY = "x18ywvqfx576c";
 
-    def  APP_SERVER="http://47.110.139.24:8080/";
+    def APP_SERVER = "http://47.110.139.24:8080/";
 
     defaultConfig {
         applicationId "com.zhowin.miyou"
@@ -23,6 +23,10 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "Rong_key", "\"${RONG_KEY}\"")
+
+        buildConfigField("String", "App_server", "\"${APP_SERVER}\"")
     }
     signingConfigs {
         release {
