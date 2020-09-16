@@ -1,8 +1,5 @@
 package com.zhowin.miyou.mine.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;

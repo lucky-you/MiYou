@@ -1,16 +1,16 @@
-package com.zhowin.miyou.recommend.fragment;
+package com.zhowin.miyou.recommend.activity;
 
-import android.os.Bundle;
+
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.zhowin.base_library.base.BaseBindFragment;
-import com.zhowin.base_library.utils.ConstantValue;
+import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
-import com.zhowin.miyou.databinding.IncludeKickOutRoomFragmentBinding;
+import com.zhowin.miyou.databinding.ActivityBroadcastDatingBinding;
+import com.zhowin.miyou.recommend.adapter.BroadcastDatingAdapter;
 import com.zhowin.miyou.recommend.adapter.KickOutRoomAdapter;
 import com.zhowin.miyou.recommend.callback.OnHitCenterClickListener;
 import com.zhowin.miyou.recommend.dialog.HitCenterDialog;
@@ -19,47 +19,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author : zho
- * date  ：2020/9/15
- * 踢出房间 ，和  禁言共用
- * type   1:踢出  2: 禁言
+ * 广播交友
  */
-public class KickOutRoomFragment extends BaseBindFragment<IncludeKickOutRoomFragmentBinding> implements BaseQuickAdapter.OnItemClickListener {
+public class BroadcastDatingActivity extends BaseBindActivity<ActivityBroadcastDatingBinding> implements BaseQuickAdapter.OnItemClickListener {
 
-    private int classType, fragmentIndex;
-    private KickOutRoomAdapter kickOutRoomAdapter;
 
-    public static KickOutRoomFragment newInstance(int type, int index) {
-        KickOutRoomFragment fragment = new KickOutRoomFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(ConstantValue.TYPE, type);
-        bundle.putInt(ConstantValue.INDEX, index);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
+    private BroadcastDatingAdapter broadcastDatingAdapter;
+
 
     @Override
     public int getLayoutId() {
-        return R.layout.include_kick_out_room_fragment;
+        return R.layout.activity_broadcast_dating;
     }
 
     @Override
     public void initView() {
-        classType = getArguments().getInt(ConstantValue.TYPE);
-        fragmentIndex = getArguments().getInt(ConstantValue.INDEX);
+
     }
 
     @Override
     public void initData() {
         List<String> stringList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
             stringList.add("");
         }
-        kickOutRoomAdapter = new KickOutRoomAdapter(stringList);
-        kickOutRoomAdapter.setClassType(classType, fragmentIndex);
+        broadcastDatingAdapter = new BroadcastDatingAdapter(stringList);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.recyclerView.setAdapter(kickOutRoomAdapter);
-        kickOutRoomAdapter.setOnItemClickListener(this::onItemClick);
+        mBinding.recyclerView.setAdapter(broadcastDatingAdapter);
+        broadcastDatingAdapter.setOnItemClickListener(this::onItemClick);
     }
 
     @Override
@@ -74,13 +61,14 @@ public class KickOutRoomFragment extends BaseBindFragment<IncludeKickOutRoomFrag
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        showKickOutDialog();
+        showCenterHitDialog();
     }
 
-    private void showKickOutDialog() {
-        String title = 1 == classType ? "确定将小猫猫踢出房间吗？" : "确定要将猫猫的鱼禁麦吗?";
+    private void showCenterHitDialog() {
+        String title = "小喇叭不足，请到商城购买哦";
         HitCenterDialog hitCenterDialog = new HitCenterDialog(mContext);
         hitCenterDialog.setDialogTitle(title);
+        hitCenterDialog.setDetermineText("商城");
         hitCenterDialog.show();
         hitCenterDialog.setOnHitCenterClickListener(new OnHitCenterClickListener() {
             @Override
@@ -93,5 +81,7 @@ public class KickOutRoomFragment extends BaseBindFragment<IncludeKickOutRoomFrag
 
             }
         });
+
+
     }
 }
