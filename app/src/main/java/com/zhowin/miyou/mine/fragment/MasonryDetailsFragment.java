@@ -16,6 +16,9 @@ import com.zhowin.miyou.mine.model.MasonryDetailsList;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 明细列表
+ */
 public class MasonryDetailsFragment extends BaseBindFragment<IncludeMasonryDetailsFragmentBinding> {
 
 

@@ -135,13 +135,11 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         if (userHeadList != null && !userHeadList.isEmpty()) {
             homePageCategoryLists.add(new HomePageCategoryList("头像框", userHeadList));
         }
-
         List<GiftAndCarList> userCarList = userInfo.getCars();
         if (userCarList != null && !userCarList.isEmpty()) {
             homePageCategoryLists.add(new HomePageCategoryList("座驾", userCarList));
         }
         homePagerAdapter.setNewData(homePageCategoryLists);
-
     }
 
     private void setUserBannerData(List<String> bannerList) {

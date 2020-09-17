@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_8E9DFD"
+        android:orientation="vertical">
+
+        <com.zhowin.base_library.view.TitleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mBackgroundColor="@color/transparent"
+            app:mLeftSrc="@mipmap/back_white_icon"
+            app:mTitle="房间榜单"
+            app:mTitleColor="@color/white" />
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/slidingTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:tl_indicator_color="@color/color_white"
+            app:tl_indicator_corner_radius="2dp"
+            app:tl_indicator_height="4dp"
+            app:tl_indicator_margin_bottom="4dp"
+            app:tl_indicator_width="20dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="@color/color_white"
+            app:tl_textUnselectColor="@color/color_white"
+            app:tl_textsize="15sp" />
+
+        <com.zhowin.base_library.view.NoScrollViewPager
+            android:id="@+id/noScrollViewPager"
+            style="@style/RecycleViewStyle" />
+
+    </LinearLayout>
+
+</layout>

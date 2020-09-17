@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.SizeUtils;
@@ -15,6 +16,7 @@ import com.zhowin.miyou.databinding.IncludeMyRoomFragmentBinding;
 import com.zhowin.miyou.mine.activity.CreateRoomActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
+import com.zhowin.miyou.mine.dialog.UnlockRoomDialog;
 import com.zhowin.miyou.mine.dialog.UserVerifiedDialog;
 import com.zhowin.miyou.recommend.adapter.RecommendListAdapter;
 
@@ -26,7 +28,7 @@ import java.util.List;
  * date  ：2020/9/1
  * desc ： 我的房间
  */
-public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBinding> {
+public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBinding> implements BaseQuickAdapter.OnItemClickListener {
 
 
     private int fragmentIndex;
@@ -62,6 +64,7 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
         mBinding.recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, SizeUtils.dp2px(10), false));
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         mBinding.recyclerView.setAdapter(myRoomListAdapter);
+        myRoomListAdapter.setOnItemClickListener(this::onItemClick);
     }
 
 
@@ -93,6 +96,17 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
                 startActivity(CreateRoomActivity.class);
             }
         });
+
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        showUnLockRoomDialog();
+    }
+
+    private void showUnLockRoomDialog() {
+        UnlockRoomDialog unlockRoomDialog = new UnlockRoomDialog(mContext);
+        unlockRoomDialog.show();
 
     }
 }
