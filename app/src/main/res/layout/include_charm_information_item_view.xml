@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/tvLevelNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:text="4"
+        android:textColor="#9896F9"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <FrameLayout
+        android:id="@+id/flSexLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvLevelNumber"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civUserHeadPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_default_hp"
+            app:civ_border_color="@color/color_8E9DFD"
+            app:civ_border_width="1dp" />
+
+        <ImageView
+            android:id="@+id/ivUserSexImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/list_girl_icon" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvUserNickName"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginStart="14dp"
+        android:ellipsize="end"
+        android:maxLength="6"
+        android:text="小喵喵小喵小猫"
+        android:textColor="@color/color_333"
+        app:layout_constraintBottom_toTopOf="@+id/tvUserCharmValue"
+        app:layout_constraintLeft_toRightOf="@id/flSexLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/tvUserLevel"
+        android:layout_width="30dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="10dp"
+        android:background="@mipmap/ic_def_image"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@id/tvUserNickName"
+        app:layout_constraintTop_toTopOf="@+id/tvUserNickName" />
+
+    <ImageView
+        android:id="@+id/tvUserKnighthood"
+        android:layout_width="30dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="10dp"
+        android:background="@mipmap/ic_def_image"
+        android:gravity="center"
+        android:scaleType="centerCrop"
+        app:layout_constraintLeft_toRightOf="@id/tvUserLevel"
+        app:layout_constraintTop_toTopOf="@+id/tvUserNickName" />
+
+
+    <TextView
+        android:id="@+id/tvUserCharmValue"
+        style="@style/TextViewStyleOf14Sp"
+        android:text="贡献值254w"
+        android:textColor="@color/color_666"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/tvUserNickName"
+        app:layout_constraintTop_toBottomOf="@id/tvUserNickName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

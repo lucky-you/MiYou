@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
-        android:name="com.zhowin.base_library.base.BaseApplication"
+        android:name=".MiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -76,6 +76,8 @@
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
+
+        <service android:name=".im.service.RTCNotificationService" />
 
         <activity android:name=".main.activity.SplashActivity">
             <intent-filter>

@@ -4,6 +4,7 @@ package com.zhowin.miyou.login.activity;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 
 import com.gyf.immersionbar.ImmersionBar;
@@ -17,15 +18,19 @@ import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
 import com.zhowin.miyou.http.HttpRequest;
+import com.zhowin.miyou.im.IMClient;
+import com.zhowin.miyou.im.manager.CacheManager;
 import com.zhowin.miyou.main.activity.MainActivity;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.rongcloud.rtc.media.http.HttpClient;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.rong.imlib.RongIMClient;
 
 /**
  * 登录
@@ -127,7 +132,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 dismissLoadDialog();
                 if (userInfo != null) {
                     UserInfo.setUserInfo(userInfo);
-                    startActivity(MainActivity.class);
+
                 }
                 ActivityManager.getAppInstance().finishActivity();
             }
@@ -170,12 +175,13 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                     if (userInfo != null) {
                         UserInfo.setUserInfo(userInfo);
                         if (userInfo.isCompleted()) {
-                            startActivity(MainActivity.class);
+                            connectIM(userInfo);
                         } else {
                             startActivity(EditNickNameActivity.class);
+                            ActivityManager.getAppInstance().finishActivity();
                         }
                     }
-                    ActivityManager.getAppInstance().finishActivity();
+
                 }
 
                 @Override
@@ -185,6 +191,44 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 }
             });
         }
+    }
+
+    /**
+     * 链接登录融云
+     *
+     * @param userInfo 用户信息
+     */
+    private void connectIM(UserInfo userInfo) {
+        IMClient.getInstance().disconnect();
+        String imToken = userInfo.getRongToken();
+        if (TextUtils.isEmpty(imToken)) return;
+        IMClient.getInstance().connect(imToken, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onSuccess(String s) {
+                Log.e(IMClient.TAG, "连接IM Success");
+                //保存用户信息
+                CacheManager.getInstance().cacheToken(imToken);
+                CacheManager.getInstance().cacheUserId(String.valueOf(userInfo.getUserId()));
+                CacheManager.getInstance().cacheUserName(userInfo.getAvatar());
+                CacheManager.getInstance().cacheUserPortrait(userInfo.getProfilePictureKey());
+                CacheManager.getInstance().cacheIsLogin(true);
+                ToastUtils.showToast(getString(R.string.login_success));
+                startActivity(MainActivity.class);
+                ActivityManager.getAppInstance().finishActivity();
+            }
+
+            @Override
+            public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
+                Log.e(IMClient.TAG, "连接IM Error:" + connectionErrorCode.getValue());
+                startActivity(MainActivity.class);
+                ActivityManager.getAppInstance().finishActivity();
+            }
+
+            @Override
+            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+            }
+
+        });
     }
 
     /**

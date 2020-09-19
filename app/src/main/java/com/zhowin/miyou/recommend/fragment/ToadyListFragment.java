@@ -19,6 +19,7 @@ import java.util.List;
  * 日榜
  */
 public class ToadyListFragment extends BaseBindFragment<IncludeTodayFragmentBinding> {
+
     private int fragmentIndex;
 
     private TodayListAdapter userListAdapter;

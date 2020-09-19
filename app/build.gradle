@@ -11,9 +11,9 @@ android {
     //正式环境
     def API_RELEASE_HOST = "\"http://47.110.139.24:8081\""
 
-    def RONG_KEY = "x18ywvqfx576c";
+    def Rong_key = "x18ywvqfx576c";
 
-    def APP_SERVER = "http://47.110.139.24:8080/";
+    def App_server = "http://47.110.139.24:8080/";
 
     defaultConfig {
         applicationId "com.zhowin.miyou"
@@ -24,9 +24,9 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "Rong_key", "\"${RONG_KEY}\"")
+        buildConfigField("String", "Rong_key", "\"${Rong_key}\"")
 
-        buildConfigField("String", "App_server", "\"${APP_SERVER}\"")
+        buildConfigField("String", "App_server", "\"${App_server}\"")
     }
     signingConfigs {
         release {
@@ -93,4 +93,5 @@ dependencies {
     implementation 'cn.rongcloud.sdk:im_kit:4.0.2' // 即时通讯 UI 基础组件
     implementation 'cn.rongcloud.sdk:call_kit:4.0.2' // 音视频通话能力 UI 组件
     implementation 'cn.rongcloud.sdk:call_lib:4.0.2' // 音视频呼叫信令
+    implementation 'androidx.work:work-runtime:2.4.0'
 }

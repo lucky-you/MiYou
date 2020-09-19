@@ -53,6 +53,7 @@ public class UserInfo {
     private String profilePictureKey;
     private String status;
     private String token;
+    private String rongToken;
     private int undefinedPwd;
     private int userId;
     private String username;
@@ -68,6 +69,7 @@ public class UserInfo {
         String userInfo = gson.toJson(data);
         SPUtils.set(ConstantValue.USER_INFO, userInfo);
         setUserToken(data.getToken());
+        setIMToken(data.getRongToken());
     }
 
     public static UserInfo getUserInfo() {
@@ -81,7 +83,7 @@ public class UserInfo {
     }
 
     /**
-     * 设置token
+     * 设置用户token
      */
     public static void setUserToken(String token) {
         if (!TextUtils.isEmpty(token)) {
@@ -92,11 +94,32 @@ public class UserInfo {
     }
 
     /**
+     * 设置融云token
+     */
+    public static void setIMToken(String token) {
+        if (!TextUtils.isEmpty(token)) {
+            SPUtils.set(ConstantValue.IM_TOKEN, token);
+        } else {
+            SPUtils.set(ConstantValue.IM_TOKEN, "");
+        }
+    }
+
+    /**
      * 获取token
      */
     public static String getUserToken() {
         return (String) SPUtils.get(ConstantValue.SP_TOKEN, "");
     }
+
+    /**
+     * 获取融云token
+     *
+     * @return
+     */
+    public static String getIMToken() {
+        return (String) SPUtils.get(ConstantValue.IM_TOKEN, "");
+    }
+
 
     public int getAge() {
         return age;
@@ -200,6 +223,14 @@ public class UserInfo {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getRongToken() {
+        return rongToken;
+    }
+
+    public void setRongToken(String rongToken) {
+        this.rongToken = rongToken;
     }
 
     public int getUndefinedPwd() {

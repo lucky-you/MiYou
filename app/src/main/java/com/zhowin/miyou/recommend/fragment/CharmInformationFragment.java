@@ -3,12 +3,16 @@ package com.zhowin.miyou.recommend.fragment;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.IncludeCharmInformationFragmentBinding;
+import com.zhowin.miyou.recommend.adapter.CharmInformationAdapter;
+
+import java.util.Arrays;
 
 
 /**
@@ -20,6 +24,8 @@ public class CharmInformationFragment extends BaseBindFragment<IncludeCharmInfor
 
 
     private int fragmentType, fragmentIndex;
+
+    private CharmInformationAdapter charmInformationAdapter;
 
     public static CharmInformationFragment newInstance(int type, int index) {
         CharmInformationFragment fragment = new CharmInformationFragment();
@@ -44,7 +50,9 @@ public class CharmInformationFragment extends BaseBindFragment<IncludeCharmInfor
 
     @Override
     public void initData() {
-
+        charmInformationAdapter = new CharmInformationAdapter(Arrays.asList("212", "14545", "ff", "dfd", "dfd"));
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mBinding.recyclerView.setAdapter(charmInformationAdapter);
     }
 
     @Override
