@@ -68,6 +68,9 @@ public interface ApiRequest {
     //忘记秘密
     String FOR_GET_PASSWORD_URL = "/auth/findPassword";
 
+    //创建房间
+    String CREATE_CHAT_ROOM_URL = "/ant/live/create";
+
 
     /**
      * 返回的是自己的用户信息
@@ -172,5 +175,12 @@ public interface ApiRequest {
     @POST(FOR_GET_PASSWORD_URL)
     Observable<ApiResponse<Object>> forgetPassword(@Header(AUTHOR) String token, @Field("mobileNum") String mobileNum, @Field("msgCode") String msgCode, @Field("newPwd") String newPwd);
 
+
+    /**
+     * 创建房间
+     */
+    @FormUrlEncoded
+    @POST(CREATE_CHAT_ROOM_URL)
+    Observable<ApiResponse<Object>> createChatRoom(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
 
 }

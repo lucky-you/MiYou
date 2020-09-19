@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".recommend.activity.RoomListActivity"></activity>
+        <activity android:name=".recommend.activity.ChatRoomActivity"></activity>
+        <activity android:name=".recommend.activity.RoomListActivity" />
         <activity android:name=".recommend.activity.RoomWaterActivity" />
         <activity android:name=".recommend.activity.BroadcastDatingActivity" />
         <activity android:name=".recommend.activity.ReportRoomActivity" />
