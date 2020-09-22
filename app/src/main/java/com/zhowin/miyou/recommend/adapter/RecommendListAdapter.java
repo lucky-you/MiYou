@@ -24,7 +24,7 @@ public class RecommendListAdapter extends BaseQuickAdapter<RecommendList, BaseVi
     @Override
     protected void convert(@NonNull BaseViewHolder helper, RecommendList item) {
         helper.setText(R.id.tvRoomType, item.getTitle());
-        GlideUtils.loadObjectImage(mContext, item.getImage(), helper.getView(R.id.ivRoomBackGround));
+        GlideUtils.loadObjectImage(mContext, item.getCoverPictureKey(), helper.getView(R.id.ivRoomBackGround));
 
     }
 }

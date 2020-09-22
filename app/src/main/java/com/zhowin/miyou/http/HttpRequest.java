@@ -15,6 +15,8 @@ import com.zhowin.miyou.BuildConfig;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.recommend.model.RecommendList;
+import com.zhowin.miyou.recommend.model.RoomCategory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -315,6 +317,71 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+
+    /**
+     * 获取直播间类型
+     */
+    public static void getRoomCategory(LifecycleOwner activity, final HttpCallBack<List<RoomCategory>> callBack) {
+        apiRequest.getRoomCategory(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<RoomCategory>>() {
+
+                    @Override
+                    public void onSuccess(List<RoomCategory> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取房间id
+     */
+    public static void getRoomID(LifecycleOwner activity, final HttpCallBack<Integer> callBack) {
+        apiRequest.getRoomID(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Integer>() {
+
+                    @Override
+                    public void onSuccess(Integer demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取我创建或者我收藏的room
+     */
+    public static void getMyCreateOrCollectionRoomList(LifecycleOwner activity, boolean isMyCreate, final HttpCallBack<List<RecommendList>> callBack) {
+        String url = isMyCreate ? ApiRequest.GET_MY_CREATE_ROOM_LIST : ApiRequest.MY_COLLECTION_ROOM_LIST;
+        apiRequest.getMyCreateOrCollectionRoomList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<RecommendList>>() {
+
+                    @Override
+                    public void onSuccess(List<RecommendList> demo) {
                         callBack.onSuccess(demo);
                     }
 

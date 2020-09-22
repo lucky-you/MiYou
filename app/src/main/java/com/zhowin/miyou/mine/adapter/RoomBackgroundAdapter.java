@@ -1,16 +1,18 @@
 package com.zhowin.miyou.mine.adapter;
 
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+
+import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SizeUtils;
+import com.zhowin.miyou.R;
+import com.zhowin.miyou.mine.model.RoomBackgroundList;
 
 import java.util.List;
 
@@ -19,45 +21,33 @@ import java.util.List;
  * date  ：2020/9/3
  * desc ： 房间背景
  */
-public class RoomBackgroundAdapter extends RecyclerView.Adapter<RoomBackgroundAdapter.ViewHolder> {
+public class RoomBackgroundAdapter extends BaseQuickAdapter<RoomBackgroundList, BaseViewHolder> {
 
-    private Context mContext;
-    private List<String> roomBgList;
+    private int currentPosition;
 
-    public RoomBackgroundAdapter(Context mContext, List<String> roomBgList) {
-        this.mContext = mContext;
-        this.roomBgList = roomBgList;
+
+    public RoomBackgroundAdapter(@Nullable List<RoomBackgroundList> data) {
+        super(R.layout.include_room_background_item_view, data);
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RoundedImageView roundedImageView = new RoundedImageView(mContext);
-        roundedImageView.setCornerRadius(SizeUtils.dp2px(5));
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(SizeUtils.dp2px(74), SizeUtils.dp2px(112));
-        layoutParams.setMargins(SizeUtils.dp2px(0), SizeUtils.dp2px(4), SizeUtils.dp2px(8), SizeUtils.dp2px(4));
-        roundedImageView.setLayoutParams(layoutParams);
-        return new ViewHolder(roundedImageView);
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+        notifyDataSetChanged();
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        GlideUtils.loadObjectImage(mContext, roomBgList.get(position), holder.roundedImageView);
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return roomBgList.isEmpty() ? 0 : roomBgList.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private RoundedImageView roundedImageView;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            roundedImageView = (RoundedImageView) itemView;
+    protected void convert(@NonNull BaseViewHolder helper, RoomBackgroundList item) {
+        RoundedImageView roundedImageView = helper.getView(R.id.ivBackground);
+        GlideUtils.loadObjectImage(mContext, item.getBackgroundImage(), roundedImageView);
+        if (currentPosition == helper.getAdapterPosition()) {
+            roundedImageView.setBorderWidth(1);
+            roundedImageView.setBorderColor(getItemColor(R.color.color_FF4747));
+        } else {
+            roundedImageView.setBorderWidth(0);
         }
     }
 
+    private int getItemColor(int color) {
+        return mContext.getResources().getColor(color);
+    }
 }

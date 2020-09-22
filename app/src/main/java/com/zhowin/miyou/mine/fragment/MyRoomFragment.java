@@ -8,17 +8,23 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.base.BaseBindFragment;
+import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ConstantValue;
+import com.zhowin.base_library.utils.EmptyViewUtils;
 import com.zhowin.base_library.utils.SizeUtils;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.IncludeMyRoomFragmentBinding;
+import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.activity.CreateRoomActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
 import com.zhowin.miyou.mine.dialog.UnlockRoomDialog;
 import com.zhowin.miyou.mine.dialog.UserVerifiedDialog;
 import com.zhowin.miyou.recommend.adapter.RecommendListAdapter;
+import com.zhowin.miyou.recommend.model.RecommendList;
+import com.zhowin.miyou.recommend.model.RoomCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +39,7 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
 
     private int fragmentIndex;
     private MyRoomListAdapter myRoomListAdapter;
+    private List<RecommendList> roomDataList = new ArrayList<>();
 
     public static MyRoomFragment newInstance(int index) {
         MyRoomFragment fragment = new MyRoomFragment();
@@ -56,15 +63,38 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
 
     @Override
     public void initData() {
-        List<String> recommendLists = new ArrayList<>();
-        for (int i = 0; i < 14; i++) {
-            recommendLists.add("");
-        }
-        myRoomListAdapter = new MyRoomListAdapter(recommendLists);
+        getMyCreateOrCollectionRoomList(0 == fragmentIndex);
+        myRoomListAdapter = new MyRoomListAdapter(roomDataList);
         mBinding.recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, SizeUtils.dp2px(10), false));
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         mBinding.recyclerView.setAdapter(myRoomListAdapter);
         myRoomListAdapter.setOnItemClickListener(this::onItemClick);
+    }
+
+
+    /**
+     * 获取我创建或者我收藏的房间
+     *
+     * @param isMyCreate 是否是我创建
+     */
+    private void getMyCreateOrCollectionRoomList(boolean isMyCreate) {
+        showLoadDialog();
+        HttpRequest.getMyCreateOrCollectionRoomList(this, isMyCreate, new HttpCallBack<List<RecommendList>>() {
+            @Override
+            public void onSuccess(List<RecommendList> roomList) {
+                dismissLoadDialog();
+                if (roomList != null && !roomList.isEmpty()) {
+                    myRoomListAdapter.setNewData(roomList);
+                } else
+                    EmptyViewUtils.bindEmptyView(mContext, myRoomListAdapter);
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+            }
+        });
     }
 
 

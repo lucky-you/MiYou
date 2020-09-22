@@ -7,6 +7,8 @@ import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.recommend.model.RecommendList;
+import com.zhowin.miyou.recommend.model.RoomCategory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +72,18 @@ public interface ApiRequest {
 
     //创建房间
     String CREATE_CHAT_ROOM_URL = "/ant/live/create";
+
+    //获取直播间房间类型
+    String GET_ROOM_CATEGORY_URL = "/ant/live/roomTypes";
+
+    //获取房间id
+    String GET_ROOM_ID_URL = "/ant/live/getNumber";
+
+    //我收藏的直播间
+    String MY_COLLECTION_ROOM_LIST = "/ant/live/collectionLiveRooms";
+
+    //获取我创建的直播间
+    String GET_MY_CREATE_ROOM_LIST = "/ant/live/myLiveRooms";
 
 
     /**
@@ -182,5 +196,24 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(CREATE_CHAT_ROOM_URL)
     Observable<ApiResponse<Object>> createChatRoom(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
+
+    /**
+     * 获取房间类型
+     */
+    @POST(GET_ROOM_CATEGORY_URL)
+    Observable<ApiResponse<List<RoomCategory>>> getRoomCategory(@Header(AUTHOR) String token);
+
+    /**
+     * 获取房间ID
+     */
+    @POST(GET_ROOM_ID_URL)
+    Observable<ApiResponse<Integer>> getRoomID(@Header(AUTHOR) String token);
+
+    /**
+     * 获取我创建的或者 收藏的直播间
+     */
+    @POST
+    Observable<ApiResponse<List<RecommendList>>> getMyCreateOrCollectionRoomList(@Header(AUTHOR) String token, @Url String url);
+
 
 }
