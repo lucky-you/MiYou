@@ -32,6 +32,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:background="@drawable/shape_cancel_button_bg"
             android:gravity="center"
             android:text="取消"
             android:textColor="@color/color_4C9CFF"
@@ -49,9 +50,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:background="@drawable/shape_determine_button_bg"
             android:gravity="center"
             android:text="确定"
-            android:textColor="@color/color_4C9CFF"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
     </LinearLayout>

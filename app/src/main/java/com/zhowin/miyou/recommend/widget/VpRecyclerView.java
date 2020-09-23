@@ -76,6 +76,7 @@ public class VpRecyclerView extends RecyclerView {
     }
 
     interface onPagerChangeListener {
+
         void onPagerChange(int position);
     }
 

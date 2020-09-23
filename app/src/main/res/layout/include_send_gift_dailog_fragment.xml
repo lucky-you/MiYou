@@ -38,4 +38,10 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.zhowin.miyou.recommend.widget.VpRecyclerView
+        android:id="@+id/giftRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never" />
+
 </LinearLayout>

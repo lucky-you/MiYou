@@ -9,7 +9,7 @@ import com.zhowin.miyou.recommend.callback.OnReportAndAttentionListener;
 /**
  * author : zho
  * date  ：2020/9/14
- * desc ：
+ * desc ：分享
  */
 public class ShareItemDialog extends BaseDialogFragment {
 

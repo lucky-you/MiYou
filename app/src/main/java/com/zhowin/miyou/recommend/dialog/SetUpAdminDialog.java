@@ -8,8 +8,7 @@ import com.zhowin.miyou.R;
 /**
  * author : zho
  * date  ：2020/9/15
- * desc ：
- */
+ * desc ：设置管理 */
 public class SetUpAdminDialog extends BaseDialogFragment {
     @Override
     public int getLayoutId() {
