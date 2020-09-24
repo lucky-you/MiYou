@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yanzhenjie.permission.runtime.Permission;
 import com.yanzhenjie.permission.runtime.PermissionDef;
@@ -29,7 +28,6 @@ import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.base_library.qiniu.QinIuUpLoadListener;
 import com.zhowin.base_library.qiniu.QinIuUtils;
 import com.zhowin.base_library.utils.GlideUtils;
-import com.zhowin.base_library.utils.SplitUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityCreateRoomBinding;
@@ -50,7 +48,7 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
 
     private RoomBackgroundAdapter roomBackgroundAdapter;
     private List<SelectPickerList> selectPickerLists = new ArrayList<>();
-    private int roomCategoryId, roomCategoryPosition = 0;
+    private int roomCategoryId, backgroundPictureId, roomCategoryPosition = 0;
     private String qiNiuToken, qiNiuCdnUrl, roomHeadImageUrl, roomName, roomDesc;
     private int MAX_NUMBER = 200;
 
@@ -63,6 +61,7 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
     public void initView() {
         setOnClick(R.id.tvRoomCategory, R.id.rvRoomBackground, R.id.ivRefreshRoomID, R.id.tvCreateRoom);
         mBinding.tvTextDescNumber.setText("0/" + MAX_NUMBER);
+        getRoomBackgroundList();
         getRoomCategory();
         getRoomID();
         getQiNiuToken();
@@ -70,17 +69,14 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
 
     @Override
     public void initData() {
-        List<RoomBackgroundList> bgList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            bgList.add(new RoomBackgroundList("http://gank.io/images/dc75cbde1d98448183e2f9514b4d1320"));
-        }
-        roomBackgroundAdapter = new RoomBackgroundAdapter(bgList);
+        roomBackgroundAdapter = new RoomBackgroundAdapter();
         mBinding.roomBgRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         mBinding.roomBgRecyclerView.setAdapter(roomBackgroundAdapter);
         roomBackgroundAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 roomBackgroundAdapter.setCurrentPosition(position);
+                backgroundPictureId = roomBackgroundAdapter.getItem(position).getId();
             }
         });
     }
@@ -95,6 +91,27 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
                     if (roomDesc.length() <= MAX_NUMBER) {
                         mBinding.tvTextDescNumber.setText(roomDesc.length() + "/" + MAX_NUMBER);
                     }
+            }
+        });
+    }
+
+    /**
+     * 获取直播间背景
+     */
+
+    private void getRoomBackgroundList() {
+        HttpRequest.getRoomBackgroundList(this, new HttpCallBack<List<RoomBackgroundList>>() {
+            @Override
+            public void onSuccess(List<RoomBackgroundList> roomBackgroundLists) {
+                if (roomBackgroundLists != null && !roomBackgroundLists.isEmpty()) {
+                    backgroundPictureId = roomBackgroundLists.get(0).getId();
+                    roomBackgroundAdapter.setNewData(roomBackgroundLists);
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+
             }
         });
     }
@@ -184,12 +201,14 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
                 getRoomID();
                 break;
             case R.id.tvCreateRoom:
-//                submitCreateRoom();
+                submitCreateRoom();
                 break;
         }
     }
 
     private void submitCreateRoom() {
+        roomName = mBinding.editRoomName.getText().toString().trim();
+        roomDesc = mBinding.editRoomDesc.getText().toString().trim();
         if (TextUtils.isEmpty(roomName)) {
             ToastUtils.showToast("请输入房间名称");
             return;
@@ -200,6 +219,13 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
         }
         showLoadDialog();
         HashMap<String, Object> map = new HashMap<>();
+        map.put("title", roomName);
+        map.put("description", roomDesc);
+        map.put("coverPictureKey", roomHeadImageUrl);
+        map.put("backgroundPictureId", backgroundPictureId);
+        map.put("typeId", roomCategoryId);
+        map.put("allowMicFree", 1);
+
         HttpRequest.createChatRoom(this, map, new HttpCallBack<Object>() {
             @Override
             public void onSuccess(Object o) {
@@ -284,4 +310,5 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
             }
         });
     }
+
 }

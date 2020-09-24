@@ -1,20 +1,14 @@
 package com.zhowin.miyou.mine.adapter;
 
 
-import android.annotation.SuppressLint;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhowin.base_library.utils.GlideUtils;
-import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
-
-import java.util.List;
 
 /**
  * author : zho
@@ -23,10 +17,10 @@ import java.util.List;
  */
 public class RoomBackgroundAdapter extends BaseQuickAdapter<RoomBackgroundList, BaseViewHolder> {
 
-    private int currentPosition;
+    private int currentPosition=0;
 
-    public RoomBackgroundAdapter(@Nullable List<RoomBackgroundList> data) {
-        super(R.layout.include_room_background_item_view, data);
+    public RoomBackgroundAdapter() {
+        super(R.layout.include_room_background_item_view);
     }
 
     public void setCurrentPosition(int currentPosition) {
@@ -37,7 +31,7 @@ public class RoomBackgroundAdapter extends BaseQuickAdapter<RoomBackgroundList, 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, RoomBackgroundList item) {
         RoundedImageView roundedImageView = helper.getView(R.id.ivBackground);
-        GlideUtils.loadObjectImage(mContext, item.getBackgroundImage(), roundedImageView);
+        GlideUtils.loadObjectImage(mContext, item.getPictureKey(), roundedImageView);
         if (currentPosition == helper.getAdapterPosition()) {
             helper.setGone(R.id.viewBackground, true);
         } else {

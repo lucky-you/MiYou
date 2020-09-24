@@ -16,6 +16,8 @@ import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
+import com.zhowin.miyou.mine.model.RoomBackgroundList;
+import com.zhowin.miyou.recommend.model.GiftList;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 
@@ -425,6 +427,48 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(MyWalletBalance demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取礼物列表
+     */
+    public static void getGiftList(LifecycleOwner activity, final HttpCallBack<List<GiftList>> callBack) {
+        apiRequest.getGiftList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<GiftList>>() {
+
+                    @Override
+                    public void onSuccess(List<GiftList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取直播间背景
+     */
+    public static void getRoomBackgroundList(LifecycleOwner activity, final HttpCallBack<List<RoomBackgroundList>> callBack) {
+        apiRequest.getRoomBackgroundList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<RoomBackgroundList>>() {
+
+                    @Override
+                    public void onSuccess(List<RoomBackgroundList> demo) {
                         callBack.onSuccess(demo);
                     }
 

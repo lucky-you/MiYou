@@ -8,6 +8,8 @@ import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
+import com.zhowin.miyou.mine.model.RoomBackgroundList;
+import com.zhowin.miyou.recommend.model.GiftList;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 
@@ -88,6 +90,9 @@ public interface ApiRequest {
 
     //获取我的钱包余额信息
     String GET_MY_WALLET_URL = "/ant/user/wallet";
+
+    //获取房间背景
+    String GET_ROOM_BACKGROUND_LIST_URL = "/ant/live/getBackgroundPictures";
 
 
     /**
@@ -224,4 +229,16 @@ public interface ApiRequest {
      */
     @POST(GET_MY_WALLET_URL)
     Observable<ApiResponse<MyWalletBalance>> getMyWalletBalance(@Header(AUTHOR) String token);
+
+    /**
+     * 获取礼物列表
+     */
+    @POST(GET_GIFT_LIST_URL)
+    Observable<ApiResponse<List<GiftList>>> getGiftList(@Header(AUTHOR) String token);
+
+    /**
+     * 获取直播间背景
+     */
+    @POST(GET_ROOM_BACKGROUND_LIST_URL)
+    Observable<ApiResponse<List<RoomBackgroundList>>> getRoomBackgroundList(@Header(AUTHOR) String token);
 }

@@ -8,26 +8,67 @@ package com.zhowin.miyou.mine.model;
 public class RoomBackgroundList {
 
 
-    private int backgroundId;
-    private String backgroundImage;
+    /**
+     * id : 1
+     * pictureKey : http://qfah2px93.hn-bkt.clouddn.com/image.room.background.1.jpg
+     * sort : 1
+     * enable : 1
+     * createTime : 1600780129000
+     * updateTime : 1600780131000
+     */
 
-    public RoomBackgroundList(String backgroundImage) {
-        this.backgroundImage = backgroundImage;
+    private int id;
+    private String pictureKey;
+    private int sort;
+    private int enable;
+    private long createTime;
+    private long updateTime;
+
+    public int getId() {
+        return id;
     }
 
-    public int getBackgroundId() {
-        return backgroundId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setBackgroundId(int backgroundId) {
-        this.backgroundId = backgroundId;
+    public String getPictureKey() {
+        return pictureKey;
     }
 
-    public String getBackgroundImage() {
-        return backgroundImage;
+    public void setPictureKey(String pictureKey) {
+        this.pictureKey = pictureKey;
     }
 
-    public void setBackgroundImage(String backgroundImage) {
-        this.backgroundImage = backgroundImage;
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public int getEnable() {
+        return enable;
+    }
+
+    public void setEnable(int enable) {
+        this.enable = enable;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
     }
 }

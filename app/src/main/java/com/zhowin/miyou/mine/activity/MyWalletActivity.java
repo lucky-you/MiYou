@@ -40,9 +40,9 @@ public class MyWalletActivity extends BaseBindActivity<ActivityMyWalletBinding> 
             public void onSuccess(MyWalletBalance myWalletBalance) {
                 dismissLoadDialog();
                 if (myWalletBalance != null) {
-
+                    mBinding.tvRechargeNumber.setText(myWalletBalance.getDiamondNum() + "");
+                    mBinding.tvExchangeNumber.setText(myWalletBalance.getCharmValue() + "");
                 }
-
             }
 
             @Override
