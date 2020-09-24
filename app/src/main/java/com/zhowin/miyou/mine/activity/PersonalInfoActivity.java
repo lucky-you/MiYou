@@ -29,6 +29,7 @@ import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.base_library.qiniu.QinIuUpLoadListener;
 import com.zhowin.base_library.qiniu.QinIuUtils;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.DateHelpUtils;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SetDrawableHelper;
 import com.zhowin.base_library.utils.SplitUtils;
@@ -144,9 +145,9 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
         mBinding.editUserNickName.setText(userInfo.getAvatar());
         mBinding.editUserNickName.setSelection(userInfo.getAvatar().length());
         mBinding.tvUserSex.setText(userInfo.getGender());
-        mBinding.tvAgeText.setText(userInfo.getBirthday());
-        mBinding.tvAgeText.setText(String.valueOf(userInfo.getAge()));
-        userBirthday = userInfo.getBirthday();
+//        userBirthday = userInfo.getBirthday();
+        userBirthday = DateHelpUtils.getStringDateOfDayTwo(userInfo.getBirthday());
+        mBinding.tvAgeText.setText(userBirthday);
         userXinZuo = ZodiacUtil.date2Constellation(userBirthday);
         List<String> userBackgroundList = userInfo.getBackgroundPictureKeys();
         if (userBackgroundList != null && !userBackgroundList.isEmpty())

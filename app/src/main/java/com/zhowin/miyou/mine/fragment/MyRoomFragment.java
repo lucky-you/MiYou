@@ -16,6 +16,7 @@ import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.IncludeMyRoomFragmentBinding;
+import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.activity.CreateRoomActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
@@ -79,12 +80,12 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
      */
     private void getMyCreateOrCollectionRoomList(boolean isMyCreate) {
         showLoadDialog();
-        HttpRequest.getMyCreateOrCollectionRoomList(this, isMyCreate, new HttpCallBack<List<RecommendList>>() {
+        HttpRequest.getMyCreateOrCollectionRoomList(this, isMyCreate, new HttpCallBack<BaseResponse<RecommendList>>() {
             @Override
-            public void onSuccess(List<RecommendList> roomList) {
+            public void onSuccess(BaseResponse<RecommendList> roomList) {
                 dismissLoadDialog();
-                if (roomList != null && !roomList.isEmpty()) {
-                    myRoomListAdapter.setNewData(roomList);
+                if (roomList != null && !roomList.getRecords().isEmpty()) {
+                    myRoomListAdapter.setNewData(roomList.getRecords());
                 } else
                     EmptyViewUtils.bindEmptyView(mContext, myRoomListAdapter);
             }

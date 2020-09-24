@@ -7,6 +7,7 @@ import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 
@@ -84,6 +85,9 @@ public interface ApiRequest {
 
     //获取我创建的直播间
     String GET_MY_CREATE_ROOM_LIST = "/ant/live/myLiveRooms";
+
+    //获取我的钱包余额信息
+    String GET_MY_WALLET_URL = "/ant/user/wallet";
 
 
     /**
@@ -213,7 +217,11 @@ public interface ApiRequest {
      * 获取我创建的或者 收藏的直播间
      */
     @POST
-    Observable<ApiResponse<List<RecommendList>>> getMyCreateOrCollectionRoomList(@Header(AUTHOR) String token, @Url String url);
+    Observable<ApiResponse<BaseResponse<RecommendList>>> getMyCreateOrCollectionRoomList(@Header(AUTHOR) String token, @Url String url);
 
-
+    /**
+     * 获取我的钱包余额信息
+     */
+    @POST(GET_MY_WALLET_URL)
+    Observable<ApiResponse<MyWalletBalance>> getMyWalletBalance(@Header(AUTHOR) String token);
 }

@@ -4,8 +4,12 @@ package com.zhowin.miyou.mine.activity;
 import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityMyWalletBinding;
+import com.zhowin.miyou.http.HttpRequest;
+import com.zhowin.miyou.mine.model.MyWalletBalance;
 
 /**
  * 我的钱包
@@ -21,11 +25,32 @@ public class MyWalletActivity extends BaseBindActivity<ActivityMyWalletBinding> 
     @Override
     public void initView() {
         setOnClick(R.id.tvRecharge, R.id.tvExchange);
+        getMyWalletBalance();
     }
 
     @Override
     public void initData() {
 
+    }
+
+    private void getMyWalletBalance() {
+        showLoadDialog();
+        HttpRequest.getMyWalletBalance(this, new HttpCallBack<MyWalletBalance>() {
+            @Override
+            public void onSuccess(MyWalletBalance myWalletBalance) {
+                dismissLoadDialog();
+                if (myWalletBalance != null) {
+
+                }
+
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+            }
+        });
     }
 
     @Override

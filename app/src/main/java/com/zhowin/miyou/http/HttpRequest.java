@@ -15,6 +15,7 @@ import com.zhowin.miyou.BuildConfig;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 
@@ -394,15 +395,36 @@ public class HttpRequest {
     /**
      * 获取我创建或者我收藏的room
      */
-    public static void getMyCreateOrCollectionRoomList(LifecycleOwner activity, boolean isMyCreate, final HttpCallBack<List<RecommendList>> callBack) {
+    public static void getMyCreateOrCollectionRoomList(LifecycleOwner activity, boolean isMyCreate, final HttpCallBack<BaseResponse<RecommendList>> callBack) {
         String url = isMyCreate ? ApiRequest.GET_MY_CREATE_ROOM_LIST : ApiRequest.MY_COLLECTION_ROOM_LIST;
         apiRequest.getMyCreateOrCollectionRoomList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
-                .subscribe(new ApiObserver<List<RecommendList>>() {
+                .subscribe(new ApiObserver<BaseResponse<RecommendList>>() {
 
                     @Override
-                    public void onSuccess(List<RecommendList> demo) {
+                    public void onSuccess(BaseResponse<RecommendList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取我的钱包余额
+     */
+    public static void getMyWalletBalance(LifecycleOwner activity, final HttpCallBack<MyWalletBalance> callBack) {
+        apiRequest.getMyWalletBalance(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<MyWalletBalance>() {
+
+                    @Override
+                    public void onSuccess(MyWalletBalance demo) {
                         callBack.onSuccess(demo);
                     }
 

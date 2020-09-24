@@ -274,7 +274,7 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
             public void upLoadSuccess(String path) {
                 roomHeadImageUrl = path;
                 String headUrl = qiNiuCdnUrl + path;
-                GlideUtils.loadUserPhotoForLogin(mContext, headUrl, mBinding.rvRoomBackground);
+                GlideUtils.loadObjectImage(mContext, headUrl, mBinding.rvRoomBackground);
                 mBinding.tvRoomHeadHit.setVisibility(View.GONE);
             }
 
