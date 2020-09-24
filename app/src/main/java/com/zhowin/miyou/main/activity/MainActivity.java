@@ -13,6 +13,8 @@ import com.zhowin.miyou.recommend.fragment.RecommendFragment;
 
 import java.util.ArrayList;
 
+import io.rong.callkit.RongCallKit;
+
 public class MainActivity extends BaseLibActivity {
 
     private CommonTabLayout commonTabLayout;
@@ -37,6 +39,12 @@ public class MainActivity extends BaseLibActivity {
     @Override
     public void initView() {
         commonTabLayout = get(R.id.commonTabLayout);
+
+        /**
+         * 防止 voip 通话页面被会话列表、会话页面或者开发者 app 层页面覆盖。
+         * 使用 maven 接入 callkit 的开发者在 app 层主页面的 onCreate 调用此方法即可。
+         */
+        RongCallKit.onViewCreated();
     }
 
     @Override

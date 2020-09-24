@@ -25,7 +25,6 @@ public class RoomBackgroundAdapter extends BaseQuickAdapter<RoomBackgroundList, 
 
     private int currentPosition;
 
-
     public RoomBackgroundAdapter(@Nullable List<RoomBackgroundList> data) {
         super(R.layout.include_room_background_item_view, data);
     }
@@ -40,10 +39,9 @@ public class RoomBackgroundAdapter extends BaseQuickAdapter<RoomBackgroundList, 
         RoundedImageView roundedImageView = helper.getView(R.id.ivBackground);
         GlideUtils.loadObjectImage(mContext, item.getBackgroundImage(), roundedImageView);
         if (currentPosition == helper.getAdapterPosition()) {
-            roundedImageView.setBorderWidth(1);
-            roundedImageView.setBorderColor(getItemColor(R.color.color_FF4747));
+            helper.setGone(R.id.viewBackground, true);
         } else {
-            roundedImageView.setBorderWidth(0);
+            helper.setGone(R.id.viewBackground, false);
         }
     }
 

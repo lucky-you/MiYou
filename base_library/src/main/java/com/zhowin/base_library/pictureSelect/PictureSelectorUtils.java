@@ -76,7 +76,7 @@ public class PictureSelectorUtils {
                 .synOrAsy(true)//同步true或异步false 压缩 默认同步
                 .withAspectRatio(1, 1)// 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽
-                .circleDimmedLayer(true)// 是否圆形裁剪
+                .circleDimmedLayer(false)// 是否圆形裁剪
                 .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
                 .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
                 .isOpenClickSound(false)// 是否开启点击声音

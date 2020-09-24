@@ -104,6 +104,7 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
             @Override
             public void onRefresh() {
                 mBinding.refreshLayout.setRefreshing(false);
+                getMyCreateOrCollectionRoomList(0 == fragmentIndex);
             }
         });
     }

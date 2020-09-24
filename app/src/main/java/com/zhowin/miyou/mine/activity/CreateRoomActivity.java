@@ -3,18 +3,21 @@ package com.zhowin.miyou.mine.activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yanzhenjie.permission.runtime.Permission;
 import com.yanzhenjie.permission.runtime.PermissionDef;
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.callback.OnTextChangedListener;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.permission.AndPermissionListener;
 import com.zhowin.base_library.permission.AndPermissionUtils;
@@ -36,6 +39,7 @@ import com.zhowin.miyou.mine.model.RoomBackgroundList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,7 +51,8 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
     private RoomBackgroundAdapter roomBackgroundAdapter;
     private List<SelectPickerList> selectPickerLists = new ArrayList<>();
     private int roomCategoryId, roomCategoryPosition = 0;
-    private String qiNiuToken, qiNiuCdnUrl, roomHeadImageUrl, roomName;
+    private String qiNiuToken, qiNiuCdnUrl, roomHeadImageUrl, roomName, roomDesc;
+    private int MAX_NUMBER = 200;
 
     @Override
     public int getLayoutId() {
@@ -57,6 +62,7 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
     @Override
     public void initView() {
         setOnClick(R.id.tvRoomCategory, R.id.rvRoomBackground, R.id.ivRefreshRoomID, R.id.tvCreateRoom);
+        mBinding.tvTextDescNumber.setText("0/" + MAX_NUMBER);
         getRoomCategory();
         getRoomID();
         getQiNiuToken();
@@ -71,6 +77,26 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
         roomBackgroundAdapter = new RoomBackgroundAdapter(bgList);
         mBinding.roomBgRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         mBinding.roomBgRecyclerView.setAdapter(roomBackgroundAdapter);
+        roomBackgroundAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                roomBackgroundAdapter.setCurrentPosition(position);
+            }
+        });
+    }
+
+    @Override
+    public void initListener() {
+        mBinding.editRoomDesc.addTextChangedListener(new OnTextChangedListener() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                roomDesc = editable.toString();
+                if (!TextUtils.isEmpty(roomDesc))
+                    if (roomDesc.length() <= MAX_NUMBER) {
+                        mBinding.tvTextDescNumber.setText(roomDesc.length() + "/" + MAX_NUMBER);
+                    }
+            }
+        });
     }
 
     /**
@@ -158,9 +184,35 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
                 getRoomID();
                 break;
             case R.id.tvCreateRoom:
-                ToastUtils.showCustomToast(mContext, "创建成功");
+//                submitCreateRoom();
                 break;
         }
+    }
+
+    private void submitCreateRoom() {
+        if (TextUtils.isEmpty(roomName)) {
+            ToastUtils.showToast("请输入房间名称");
+            return;
+        }
+        if (TextUtils.isEmpty(roomDesc)) {
+            ToastUtils.showToast("请介绍下您的房间");
+            return;
+        }
+        showLoadDialog();
+        HashMap<String, Object> map = new HashMap<>();
+        HttpRequest.createChatRoom(this, map, new HttpCallBack<Object>() {
+            @Override
+            public void onSuccess(Object o) {
+                dismissLoadDialog();
+                ToastUtils.showCustomToast(mContext, "创建成功");
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+            }
+        });
     }
 
     /**

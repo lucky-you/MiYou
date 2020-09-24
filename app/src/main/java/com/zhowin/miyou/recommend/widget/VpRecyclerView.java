@@ -75,7 +75,7 @@ public class VpRecyclerView extends RecyclerView {
         return ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
     }
 
-    interface onPagerChangeListener {
+  public   interface onPagerChangeListener {
 
         void onPagerChange(int position);
     }

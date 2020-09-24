@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.makeramen.roundedimageview.RoundedImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ivBackground"
-    android:layout_width="74dp"
-    android:layout_height="112dp"
-    android:layout_margin="4dp"
-    android:scaleType="centerCrop"
-    android:src="@mipmap/ic_def_image"
-    app:riv_corner_radius="5dp"
-    app:riv_oval="false">
+    android:layout_width="76dp"
+    android:layout_height="114dp"
+    android:layout_margin="4dp">
 
-</com.makeramen.roundedimageview.RoundedImageView>
+    <View
+        android:id="@+id/viewBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_room_background" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivBackground"
+        android:layout_width="74dp"
+        android:layout_height="112dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_def_image"
+        app:riv_corner_radius="5dp"
+        app:riv_oval="false" />
+
+</FrameLayout>

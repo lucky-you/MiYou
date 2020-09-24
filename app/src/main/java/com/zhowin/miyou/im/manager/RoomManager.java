@@ -22,6 +22,7 @@ import cn.rongcloud.rtc.api.callback.IRCRTCResultCallback;
 import cn.rongcloud.rtc.base.RTCErrorCode;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Message;
 
 /**
  * 有关房间的操作均在此
@@ -92,28 +93,7 @@ public class RoomManager {
                                         RTCClient.getInstance().subscribeLiveAVStream(liveUrl);
                                     }
                                 }
-
                                 callback.onSuccess(true);
-
-//                                //读取用户信息
-//                                String userId = CacheManager.getInstance().getUserId();
-//                                String userName = CacheManager.getInstance().getUserName();
-//                                String portrait = CacheManager.getInstance().getUserPortrait();
-//                                //发布欢迎消息
-//                                Message message = IMClient.getInstance().getWelcomeMessage(roomId, userId, userName, portrait);
-//                                IMClient.getInstance().sendMessage(message, new SendMessageAdapter() {
-//                                    @Override
-//                                    public void onSuccess(Message message) {
-//                                        super.onSuccess(message);
-//                                        callback.onSuccess(message);
-//                                    }
-//
-//                                    @Override
-//                                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-//                                        super.onError(message, errorCode);
-//                                        callback.onFail(errorCode.getValue());
-//                                    }
-//                                });
                             }
 
                             @Override
@@ -310,12 +290,25 @@ public class RoomManager {
         }
     }
 
+    /**
+     * 发送消息
+     *
+     * @param roomId             房间id
+     * @param messageContent     消息内容
+     * @param sendMessageAdapter
+     */
     public void sendMessage(String roomId, String messageContent, SendMessageAdapter sendMessageAdapter) {
         IMClient.getInstance().sendMessage(IMClient.getInstance().getTextMessage(roomId,
                 messageContent),
                 sendMessageAdapter);
     }
 
+    /**
+     * 获取房间的历史消息
+     *
+     * @param roomId   房间id
+     * @param callback
+     */
     public void getHistoryMessage(String roomId, IRongCallback.IChatRoomHistoryMessageCallback callback) {
         IMClient.getInstance().getHistoryMessage(roomId, callback);
     }

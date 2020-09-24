@@ -21,6 +21,7 @@ import com.zhowin.miyou.im.message.SendBroadcastGiftMessage;
 import com.zhowin.miyou.im.message.SendGiftMessage;
 import com.zhowin.miyou.im.message.TakeOverHostMessage;
 import com.zhowin.miyou.im.model.Event;
+import com.zhowin.miyou.im.model.SendSuperGiftBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +109,6 @@ public class IMClient {
         } catch (AnnotationNotFoundException e) {
             e.printStackTrace();
         }
-
         //管理消息监听，由于同一时间只能有一个消息监听加入 融云 的消息监听，所以做一个消息管理来做消息路由
         RongIMClient.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
             @Override
@@ -128,7 +128,6 @@ public class IMClient {
             }
 
         });
-
         //消息撤回，用来删除消息
         RongIMClient.setOnRecallMessageListener(new RongIMClient.OnRecallMessageListener() {
             @Override
@@ -224,7 +223,6 @@ public class IMClient {
         RongIMClient.getInstance().quitChatRoom(roomId, new RongIMClient.OperationCallback() {
             @Override
             public void onSuccess() {
-//                Log.i(TAG, "quitRoomSuccess");
                 if (callBack != null) {
                     callBack.onSuccess(roomId);
                 }
@@ -399,21 +397,21 @@ public class IMClient {
         return Message.obtain(roomId, Conversation.ConversationType.CHATROOM, sendGiftMessage);
     }
 
-//    /**
-//     * 发送超级礼物的消息
-//     *
-//     * @param roomName 房间名
-//     * @param tag      自定义消息头
-//     * @param userBean 用户实体
-//     * @return
-//     */
-//    public SendSuperGiftBean getSendSuperGiftBean(String roomName, String tag, SendSuperGiftBean.UserBean userBean) {
-//        SendSuperGiftBean sendSuperGiftBean = new SendSuperGiftBean();
-//        sendSuperGiftBean.setRoomName(roomName);
-//        sendSuperGiftBean.setTag(tag);
-//        sendSuperGiftBean.setUser(userBean);
-//        return sendSuperGiftBean;
-//    }
+    /**
+     * 发送超级礼物的消息
+     *
+     * @param roomName 房间名
+     * @param tag      自定义消息头
+     * @param userBean 用户实体
+     * @return
+     */
+    public SendSuperGiftBean getSendSuperGiftBean(String roomName, String tag, SendSuperGiftBean.UserBean userBean) {
+        SendSuperGiftBean sendSuperGiftBean = new SendSuperGiftBean();
+        sendSuperGiftBean.setRoomName(roomName);
+        sendSuperGiftBean.setTag(tag);
+        sendSuperGiftBean.setUser(userBean);
+        return sendSuperGiftBean;
+    }
 
     public void getHistoryMessage(String roomId, IRongCallback.IChatRoomHistoryMessageCallback callback) {
         RongIMClient.getInstance().getChatroomHistoryMessages(roomId, 0, 20, RongIMClient.TimestampOrder.RC_TIMESTAMP_ASC, callback);

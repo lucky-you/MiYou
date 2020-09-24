@@ -15,6 +15,9 @@ import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 
+/**
+ * 发送礼物广播
+ */
 @MessageTag(value = "RCMic:broadcastGift", flag = MessageTag.NONE)
 public class SendBroadcastGiftMessage extends MessageContent {
 
@@ -69,7 +72,7 @@ public class SendBroadcastGiftMessage extends MessageContent {
         String jsonStr = null;
         try {
             jsonStr = new String(data, "UTF-8");
-            Log.e(TAG, "收到的豪车礼物广播消息json串: "+ jsonStr);
+            Log.e(TAG, "收到的豪车礼物广播消息json串: " + jsonStr);
         } catch (UnsupportedEncodingException e) {
             Log.e(TAG, "UnsupportedEncodingException ", e);
         }

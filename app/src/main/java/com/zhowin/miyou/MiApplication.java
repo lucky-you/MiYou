@@ -114,7 +114,7 @@ public class MiApplication extends BaseApplication {
 
     public void connectIM() {
         String token = CacheManager.getInstance().getToken();
-        Log.i(IMClient.TAG, "token: " + token);
+        Log.e(IMClient.TAG, "token: " + token);
         IMClient.getInstance().connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onSuccess(String s) {
