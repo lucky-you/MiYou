@@ -42,7 +42,7 @@ public class UserInfo {
 
     private int age;
     private String avatar;
-    private String birthday;
+    private long birthday;
     private boolean completed;
     private String constellation;
     private int fansNum;
@@ -137,11 +137,11 @@ public class UserInfo {
         this.avatar = avatar;
     }
 
-    public String getBirthday() {
+    public long getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(long birthday) {
         this.birthday = birthday;
     }
 

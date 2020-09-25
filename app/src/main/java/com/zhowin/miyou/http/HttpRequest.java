@@ -17,6 +17,7 @@ import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
+import com.zhowin.miyou.mine.model.VerifiedStatus;
 import com.zhowin.miyou.recommend.model.GiftList;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
@@ -398,7 +399,7 @@ public class HttpRequest {
      * 获取我创建或者我收藏的room
      */
     public static void getMyCreateOrCollectionRoomList(LifecycleOwner activity, boolean isMyCreate, final HttpCallBack<BaseResponse<RecommendList>> callBack) {
-        String url = isMyCreate ? ApiRequest.GET_MY_CREATE_ROOM_LIST : ApiRequest.MY_COLLECTION_ROOM_LIST;
+        String url = isMyCreate ? ApiRequest.MY_COLLECTION_ROOM_LIST : ApiRequest.GET_MY_CREATE_ROOM_LIST;
         apiRequest.getMyCreateOrCollectionRoomList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
@@ -469,6 +470,27 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(List<RoomBackgroundList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 市民认证的状态
+     */
+    public static void getVerifiedStatus(LifecycleOwner activity, final HttpCallBack<VerifiedStatus> callBack) {
+        apiRequest.getVerifiedStatus(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<VerifiedStatus>() {
+
+                    @Override
+                    public void onSuccess(VerifiedStatus demo) {
                         callBack.onSuccess(demo);
                     }
 

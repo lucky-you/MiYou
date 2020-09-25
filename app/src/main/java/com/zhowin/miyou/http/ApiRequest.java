@@ -9,6 +9,7 @@ import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
+import com.zhowin.miyou.mine.model.VerifiedStatus;
 import com.zhowin.miyou.recommend.model.GiftList;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
@@ -93,6 +94,9 @@ public interface ApiRequest {
 
     //获取房间背景
     String GET_ROOM_BACKGROUND_LIST_URL = "/ant/live/getBackgroundPictures";
+
+    //获取实名认证的状态
+    String VERIFIED_STATUS_URL = "/ant/realValid/getRealValid";
 
 
     /**
@@ -241,4 +245,10 @@ public interface ApiRequest {
      */
     @POST(GET_ROOM_BACKGROUND_LIST_URL)
     Observable<ApiResponse<List<RoomBackgroundList>>> getRoomBackgroundList(@Header(AUTHOR) String token);
+
+    /**
+     * 获取实名认证状态
+     */
+    @POST(VERIFIED_STATUS_URL)
+    Observable<ApiResponse<VerifiedStatus>> getVerifiedStatus(@Header(AUTHOR) String token);
 }

@@ -98,7 +98,6 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
     /**
      * 获取直播间背景
      */
-
     private void getRoomBackgroundList() {
         HttpRequest.getRoomBackgroundList(this, new HttpCallBack<List<RoomBackgroundList>>() {
             @Override
@@ -111,7 +110,7 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
 
             @Override
             public void onFail(int errorCode, String errorMsg) {
-
+                ToastUtils.showToast(errorMsg);
             }
         });
     }
@@ -178,7 +177,7 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
 
             @Override
             public void onFail(int errorCode, String errorMsg) {
-
+                ToastUtils.showToast(errorMsg);
             }
         });
     }

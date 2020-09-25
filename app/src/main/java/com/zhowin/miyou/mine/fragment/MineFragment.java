@@ -11,11 +11,13 @@ import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SetDrawableHelper;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.MineFragmentLayoutBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.AttentionAndFansActivity;
+import com.zhowin.miyou.mine.activity.CreateRoomActivity;
 import com.zhowin.miyou.mine.activity.HelpOrFeedbackActivity;
 import com.zhowin.miyou.mine.activity.MyRoomActivity;
 import com.zhowin.miyou.mine.activity.MyWalletActivity;
@@ -29,6 +31,7 @@ import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.activity.YouthModeActivity;
 import com.zhowin.miyou.mine.adapter.MineIconListAdapter;
 import com.zhowin.miyou.mine.model.MineIconList;
+import com.zhowin.miyou.mine.model.VerifiedStatus;
 import com.zhowin.miyou.recommend.activity.HomepageActivity;
 
 import java.util.ArrayList;
@@ -38,19 +41,6 @@ import java.util.List;
  * 我的
  */
 public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> implements BaseQuickAdapter.OnItemClickListener {
-
-
-    private final Class<?>[] mClasses = {
-            UnionActivity.class,
-            MyRoomActivity.class,
-            VerifiedActivity.class,
-            ShopMallActivity.class,
-            PersonalizedDressActivity.class,
-            SignInDrawActivity.class,
-            OnlineServiceActivity.class,
-            HelpOrFeedbackActivity.class,
-            YouthModeActivity.class
-    };
 
 
     @Override
@@ -167,8 +157,71 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
                 .init();
     }
 
+    private final Class<?>[] mClasses = {
+            UnionActivity.class,
+            MyRoomActivity.class,
+            VerifiedActivity.class,
+            ShopMallActivity.class,
+            PersonalizedDressActivity.class,
+            SignInDrawActivity.class,
+            OnlineServiceActivity.class,
+            HelpOrFeedbackActivity.class,
+            YouthModeActivity.class
+    };
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        startActivity(mClasses[position]);
+//        startActivity(mClasses[position]);
+        switch (position) {
+            case 0:
+                startActivity(UnionActivity.class);
+                break;
+            case 1:
+                startActivity(MyRoomActivity.class);
+                break;
+            case 2:
+                getVerifiedStatus();
+                break;
+            case 3:
+                startActivity(ShopMallActivity.class);
+                break;
+            case 4:
+                startActivity(PersonalizedDressActivity.class);
+                break;
+            case 5:
+                startActivity(SignInDrawActivity.class);
+                break;
+            case 6:
+                startActivity(OnlineServiceActivity.class);
+                break;
+            case 7:
+                startActivity(HelpOrFeedbackActivity.class);
+                break;
+            case 8:
+                startActivity(YouthModeActivity.class);
+                break;
+        }
     }
+
+    /**
+     * 实名认证状态
+     */
+    private void getVerifiedStatus() {
+        HttpRequest.getVerifiedStatus(this, new HttpCallBack<VerifiedStatus>() {
+            @Override
+            public void onSuccess(VerifiedStatus verifiedStatus) {
+                if (verifiedStatus != null) {
+                    startActivity(CreateRoomActivity.class);
+                } else {
+                    startActivity(VerifiedActivity.class);
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                ToastUtils.showToast(errorMsg);
+            }
+        });
+    }
+
 }

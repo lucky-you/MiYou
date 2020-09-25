@@ -9,31 +9,40 @@ public class RecommendList {
 
 
     /**
-     * roomId : 4
-     * title : 测试直播间
-     * coverPictureKey : hijklmg.jpg
+     * roomId : 29
+     * roomNo : 15071
+     * title : 猫猫的鱼
+     * coverPictureKey : http://qfah2px93.hn-bkt.clouddn.com/miYou/2020/09/19/104141/1600483301592
+     * description : 创建一个房间
+     * backgroundPictureId : 1
+     * backgroundPictureKey : http://qfah2px93.hn-bkt.clouddn.com/image.room.background.1.jpg
      * decoratePicture : null
      * typeId : 1
-     * typeName : 娱乐房
-     * allowMicFree : 0
-     * existPwd : true
-     * owner : null
+     * pwd : null
+     * allowMicFree : 1
+     * owner : 34
+     * createTime : 1601020033000
      */
 
     private int roomId;
+    private int roomNo;
     private String title;
     private String coverPictureKey;
+    private String description;
+    private String backgroundPictureId;
+    private String backgroundPictureKey;
     private Object decoratePicture;
     private int typeId;
-    private String typeName;
+    private Object pwd;
     private int allowMicFree;
-    private boolean existPwd;
-    private Object owner;
+    private int owner;
+    private long createTime;
 
     public RecommendList(String title, String coverPictureKey) {
         this.title = title;
         this.coverPictureKey = coverPictureKey;
     }
+
 
     public int getRoomId() {
         return roomId;
@@ -41,6 +50,14 @@ public class RecommendList {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
+    }
+
+    public int getRoomNo() {
+        return roomNo;
+    }
+
+    public void setRoomNo(int roomNo) {
+        this.roomNo = roomNo;
     }
 
     public String getTitle() {
@@ -59,6 +76,30 @@ public class RecommendList {
         this.coverPictureKey = coverPictureKey;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getBackgroundPictureId() {
+        return backgroundPictureId;
+    }
+
+    public void setBackgroundPictureId(String backgroundPictureId) {
+        this.backgroundPictureId = backgroundPictureId;
+    }
+
+    public String getBackgroundPictureKey() {
+        return backgroundPictureKey;
+    }
+
+    public void setBackgroundPictureKey(String backgroundPictureKey) {
+        this.backgroundPictureKey = backgroundPictureKey;
+    }
+
     public Object getDecoratePicture() {
         return decoratePicture;
     }
@@ -75,12 +116,12 @@ public class RecommendList {
         this.typeId = typeId;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public Object getPwd() {
+        return pwd;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setPwd(Object pwd) {
+        this.pwd = pwd;
     }
 
     public int getAllowMicFree() {
@@ -91,19 +132,19 @@ public class RecommendList {
         this.allowMicFree = allowMicFree;
     }
 
-    public boolean isExistPwd() {
-        return existPwd;
-    }
-
-    public void setExistPwd(boolean existPwd) {
-        this.existPwd = existPwd;
-    }
-
-    public Object getOwner() {
+    public int getOwner() {
         return owner;
     }
 
-    public void setOwner(Object owner) {
+    public void setOwner(int owner) {
         this.owner = owner;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 }

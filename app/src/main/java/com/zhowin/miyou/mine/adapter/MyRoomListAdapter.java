@@ -23,8 +23,8 @@ public class MyRoomListAdapter extends BaseQuickAdapter<RecommendList, BaseViewH
     @Override
     protected void convert(@NonNull BaseViewHolder helper, RecommendList item) {
 
-        helper.setText(R.id.tvRoomDescription, item.getTitle())
-                .setText(R.id.tvRoomType, item.getTypeName());
+        helper.setText(R.id.tvRoomDescription, item.getTitle());
+//                .setText(R.id.tvRoomType, item.getTypeName())
 
     }
 }

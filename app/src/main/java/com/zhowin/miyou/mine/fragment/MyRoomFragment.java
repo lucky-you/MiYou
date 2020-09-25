@@ -19,10 +19,12 @@ import com.zhowin.miyou.databinding.IncludeMyRoomFragmentBinding;
 import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.activity.CreateRoomActivity;
+import com.zhowin.miyou.mine.activity.EditVerifiedActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
 import com.zhowin.miyou.mine.dialog.UnlockRoomDialog;
 import com.zhowin.miyou.mine.dialog.UserVerifiedDialog;
+import com.zhowin.miyou.mine.model.VerifiedStatus;
 import com.zhowin.miyou.recommend.adapter.RecommendListAdapter;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
@@ -114,21 +116,44 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvCreateRoom:
-                showCreateRoomDialog();
+                getVerifiedStatus();
                 break;
         }
     }
 
+    /**
+     * 实名认证状态
+     */
+    private void getVerifiedStatus() {
+        HttpRequest.getVerifiedStatus(this, new HttpCallBack<VerifiedStatus>() {
+            @Override
+            public void onSuccess(VerifiedStatus verifiedStatus) {
+                if (verifiedStatus != null) {
+                    startActivity(CreateRoomActivity.class);
+                } else {
+                    showCreateRoomDialog();
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                ToastUtils.showToast(errorMsg);
+            }
+        });
+    }
+
+    /**
+     * 实名认证
+     */
     private void showCreateRoomDialog() {
         UserVerifiedDialog userVerifiedDialog = new UserVerifiedDialog(mContext);
         userVerifiedDialog.show();
         userVerifiedDialog.setOnVerifiedButtonClickListener(new UserVerifiedDialog.OnVerifiedButtonClickListener() {
             @Override
             public void onGoToVerified() {
-                startActivity(CreateRoomActivity.class);
+                startActivity(VerifiedActivity.class);
             }
         });
-
     }
 
     @Override
