@@ -15,6 +15,7 @@ import com.zhowin.miyou.BuildConfig;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.mine.model.AttentionUserList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
@@ -635,4 +636,77 @@ public class HttpRequest {
                 });
     }
 
+    /**
+     * 添加/移除关注  添加/移除黑名单
+     */
+    public static void addAttentionOrBlackList(LifecycleOwner activity, int requestType, int target, final HttpCallBack<Object> callBack) {
+        String url;
+        switch (requestType) {
+            case 1://添加关注
+                url = ApiRequest.ADD_ATTENTION_LIST_URL;
+                break;
+            case 2: //移除关注
+                url = ApiRequest.REMOVE_ATTENTION_LIST_URL;
+                break;
+            case 3: //添加黑名单
+                url = ApiRequest.ADD_BLACK_LIST_URL;
+                break;
+            case 4: //移除黑名单
+                url = ApiRequest.REMOVE_BLACK_LIST_URL;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + requestType);
+        }
+        apiRequest.addAttentionOrBlackList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, target)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取关注/粉丝/访客列表
+     */
+    public static void getAttentionOrFansUserList(LifecycleOwner activity, int requestType, int target, final HttpCallBack<BaseResponse<AttentionUserList>> callBack) {
+        String url;
+        switch (requestType) {
+            case 1: //关注
+                url=ApiRequest.GET_ATTENTION_LIST_URL;
+                break;
+            case 2: //粉丝
+                url=ApiRequest.GET_FANS_LIST_URL;
+                break;
+
+            case 3: //访客
+                url=ApiRequest.GET_VISITOR_LIST_URL;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + requestType);
+        }
+        apiRequest.getAttentionOrFansUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, target)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<BaseResponse<AttentionUserList>>() {
+
+                    @Override
+                    public void onSuccess(BaseResponse<AttentionUserList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 }

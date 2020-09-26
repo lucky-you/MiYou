@@ -7,6 +7,7 @@ import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.mine.model.AttentionUserList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
@@ -119,6 +120,33 @@ public interface ApiRequest {
     String GET_ZAB_LIST_URL = "/ant/rl/zab";
     //提交实名认证信息
     String SUBMIT_USER_VERIFIED_URL = "/ant/realValid/submit";
+
+    //获取关注列表
+    String GET_ATTENTION_LIST_URL = "/ant/user/relation/followers";
+
+    //添加关注
+    String ADD_ATTENTION_LIST_URL = "/ant/user/relation/follow";
+
+    //移除关注
+    String REMOVE_ATTENTION_LIST_URL = "/ant/user/relation/unFollow";
+
+    //获取粉丝列表
+    String GET_FANS_LIST_URL = "/ant/user/relation/fans";
+
+    //获取访客列表
+    String GET_VISITOR_LIST_URL = "/ant/user/visit/getCurrentUserVisitors";
+
+    //获取黑名单列表
+    String GET_BLACK_LIST_URL = "/ant/user/relation/blackList";
+
+    //添加到黑名单
+    String ADD_BLACK_LIST_URL = "/ant/user/relation/addToBlackList";
+
+    //移除黑名单
+    String REMOVE_BLACK_LIST_URL = "/ant/user/relation/removeFromBlackList";
+
+    //获取爵位信息
+    String GET_KNIGHTHOOD_URL = "/ant/rank/rankPage";
 
     /**
      * 返回的是自己的用户信息
@@ -309,5 +337,21 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(SUBMIT_USER_VERIFIED_URL)
     Observable<ApiResponse<Object>> submitUserVerifiedInfo(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
+
+
+    //添加/移除关注  添加/移除黑名单
+    @FormUrlEncoded
+    @POST
+    Observable<ApiResponse<Object>> addAttentionOrBlackList(@Header(AUTHOR) String token, @Url String url, @Field("target") int target);
+
+    /**
+     * 获取关注/粉丝/访客列表
+     */
+    @FormUrlEncoded
+    @POST
+    Observable<ApiResponse<BaseResponse<AttentionUserList>>> getAttentionOrFansUserList(@Header(AUTHOR) String token, @Url String url, @Field("target") int target);
+
+
+
 
 }

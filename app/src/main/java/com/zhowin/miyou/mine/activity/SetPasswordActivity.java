@@ -24,7 +24,6 @@ import com.zhowin.miyou.login.activity.ForgetPasswordActivity;
  */
 public class SetPasswordActivity extends BaseBindActivity<ActivitySetPasswordBinding> {
 
-
     private int classType;
     private boolean isShowOriginalPassword, isShowPassword, isShowPasswordAgain;
 
@@ -32,7 +31,6 @@ public class SetPasswordActivity extends BaseBindActivity<ActivitySetPasswordBin
         Intent intent = new Intent(context, SetPasswordActivity.class);
         intent.putExtra(ConstantValue.TYPE, type);
         context.startActivity(intent);
-
     }
 
     @Override

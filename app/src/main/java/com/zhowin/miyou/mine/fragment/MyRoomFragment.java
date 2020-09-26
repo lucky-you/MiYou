@@ -85,8 +85,9 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
                 dismissLoadDialog();
                 if (roomList != null && !roomList.getRecords().isEmpty()) {
                     myRoomListAdapter.setNewData(roomList.getRecords());
-                } else
-                    EmptyViewUtils.bindEmptyView(mContext, myRoomListAdapter);
+                } else {
+                    EmptyViewUtils.bindEmptyView(mContext, myRoomListAdapter, R.drawable.empty_wusc_icon, isMyCreate ? "暂无房间" : "暂无收藏");
+                }
             }
 
             @Override

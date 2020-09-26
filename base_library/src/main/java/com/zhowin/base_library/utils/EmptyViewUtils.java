@@ -3,8 +3,6 @@ package com.zhowin.base_library.utils;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,8 +25,8 @@ public class EmptyViewUtils {
     }
 
 
-    public static void bindEmptyView(Context mContext, BaseQuickAdapter adapter, String emptyString) {
-        bindEmptyView(mContext, adapter, 0, emptyString, true);
+    public static void bindEmptyView(Context mContext, BaseQuickAdapter adapter, int imgIds, String emptyString) {
+        bindEmptyView(mContext, adapter, imgIds, emptyString, true);
     }
 
 
