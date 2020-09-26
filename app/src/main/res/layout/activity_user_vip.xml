@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <com.zhowin.base_library.view.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mBackgroundColor="@color/color_2E2E30"
+            app:mLeftSrc="@mipmap/back_white_icon"
+            app:mRightImage="@drawable/vip_notice_icon"
+            app:mTitle="会员中心"
+            app:mTitleColor="@color/white" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/color_2E2E30" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="-100dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/vip_card">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civUserHeadPhoto"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="14dp"
+                android:src="@mipmap/ic_default_hp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvNextStepValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center_vertical"
+                android:text="距离升到VIP1还需要8经验值"
+                android:textColor="@color/color_583806"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/civUserHeadPhoto" />
+
+            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                android:id="@+id/rProgressBar"
+                android:layout_width="280dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvNextStepValue"
+                app:rcBackgroundColor="@color/color_583806"
+                app:rcProgress="30"
+                app:rcProgressColor="@color/color_DE8800"
+                app:rcRadius="1dp"
+                app:rcReverse="false" />
+
+            <TextView
+                android:id="@+id/tvVipLeftValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:text="VIP1"
+                android:textColor="@color/color_583806"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rProgressBar" />
+
+            <TextView
+                android:id="@+id/tvVipRightValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:text="VIP2"
+                android:textColor="@color/color_583806"
+                android:textSize="13sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rProgressBar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:text="我的特权"
+            android:textColor="@color/color_583806"
+            android:textSize="17sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            style="@style/RecycleViewStyle"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
+
+</layout>

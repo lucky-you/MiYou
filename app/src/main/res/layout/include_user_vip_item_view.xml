@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:scaleType="centerCrop"
+            android:src="@color/color_F6F8F9"
+            app:riv_corner_radius="12dp" />
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="59dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_def_image" />
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:text="VIP徽章"
+        android:textColor="@color/color_343434"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="VIP1解锁"
+        android:textColor="@color/color_666"
+        android:textSize="13sp" />
+
+</LinearLayout>

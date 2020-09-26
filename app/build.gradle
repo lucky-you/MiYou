@@ -89,6 +89,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation project(path: ':base_library')
     implementation 'com.sunfusheng:MarqueeView:1.4.0'
+    implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     implementation 'cn.rongcloud.sdk:im_lib:4.0.2' // 即时通讯基础能力库
     implementation 'cn.rongcloud.sdk:im_kit:4.0.2' // 即时通讯 UI 基础组件
     implementation 'cn.rongcloud.sdk:call_kit:4.0.2' // 音视频通话能力 UI 组件

@@ -18,6 +18,7 @@ import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.AttentionAndFansActivity;
 import com.zhowin.miyou.mine.activity.HelpOrFeedbackActivity;
+import com.zhowin.miyou.mine.activity.KnighthoodActivity;
 import com.zhowin.miyou.mine.activity.MyRoomActivity;
 import com.zhowin.miyou.mine.activity.MyWalletActivity;
 import com.zhowin.miyou.mine.activity.OnlineServiceActivity;
@@ -26,6 +27,7 @@ import com.zhowin.miyou.mine.activity.SettingActivity;
 import com.zhowin.miyou.mine.activity.ShopMallActivity;
 import com.zhowin.miyou.mine.activity.SignInDrawActivity;
 import com.zhowin.miyou.mine.activity.UnionActivity;
+import com.zhowin.miyou.mine.activity.UserVipActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
 import com.zhowin.miyou.mine.activity.VerifiedSuccessActivity;
 import com.zhowin.miyou.mine.activity.YouthModeActivity;
@@ -92,8 +94,10 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
                 startActivity(MyWalletActivity.class);
                 break;
             case R.id.llKnighthoodLayout:
+                startActivity(KnighthoodActivity.class);
                 break;
             case R.id.llVipLayout:
+                startActivity(UserVipActivity.class);
                 break;
         }
     }
