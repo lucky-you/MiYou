@@ -10,6 +10,7 @@
         android:id="@+id/tvLevelText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:background="@drawable/list_shouhu1_iocn"
         android:textColor="@color/color_9896F9"
         android:textSize="18sp"
@@ -19,7 +20,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clUserHeadPhotosLayout"
-        android:layout_width="96dp"
+        android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,18 +35,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/civAccepterHead"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
                 android:layout_gravity="center"
                 android:src="@mipmap/ic_default_hp"
                 app:civ_border_color="@color/white"
                 app:civ_border_width="1dp" />
 
             <ImageView
+                android:id="@+id/ivAccepterSexImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:src="@drawable/list_man_icon" />
+                android:src="@drawable/list_girl_icon" />
 
         </FrameLayout>
 
@@ -58,14 +61,16 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/civInitiatorHead"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
                 android:layout_gravity="center"
                 android:src="@mipmap/ic_default_hp"
                 app:civ_border_color="@color/white"
                 app:civ_border_width="1dp" />
 
             <ImageView
+                android:id="@+id/ivInitiatorSexImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
@@ -77,26 +82,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/clUserHeadPhotosLayout"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvUserNickName"
+            android:id="@+id/tvInitiatorNickName"
             style="@style/TextViewStyleOf14Sp"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLength="4"
             android:singleLine="true"
-            android:text="小喵喵喵喵"
+            android:text="@string/app_name"
             android:textColor="@color/color_333"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvUserLevel"
+            android:id="@+id/tvInitiatorLevel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -104,12 +109,12 @@
             android:gravity="center"
             android:text="V11"
             android:textColor="@color/color_white"
-            android:textSize="11sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/tvUserNickName"
-            app:layout_constraintLeft_toRightOf="@id/tvUserNickName" />
+            android:textSize="10sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvInitiatorNickName"
+            app:layout_constraintLeft_toRightOf="@id/tvInitiatorNickName" />
 
         <TextView
-            android:id="@+id/tvUserKnighthood"
+            android:id="@+id/tvInitiatorKnighthood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -117,12 +122,12 @@
             android:gravity="center"
             android:text="爵位"
             android:textColor="@color/color_white"
-            android:textSize="11sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/tvUserLevel"
-            app:layout_constraintLeft_toRightOf="@id/tvUserLevel" />
+            android:textSize="10sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvInitiatorLevel"
+            app:layout_constraintLeft_toRightOf="@id/tvInitiatorLevel" />
 
         <TextView
-            android:id="@+id/tvRewardNam"
+            android:id="@+id/tvInitiatorRewardNam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -130,17 +135,18 @@
             android:text="小梦梦"
             android:textColor="@color/color_FE6267"
             android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="@+id/tvUserNickName"
-            app:layout_constraintTop_toBottomOf="@id/tvUserNickName" />
+            app:layout_constraintLeft_toLeftOf="@+id/tvInitiatorNickName"
+            app:layout_constraintTop_toBottomOf="@id/tvInitiatorNickName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <TextView
+        android:id="@+id/tvInitiatorMLValue"
         style="@style/TextViewStyleOf14Sp"
-        android:layout_marginEnd="14dp"
-        android:text="5000"
+        android:layout_marginEnd="8dp"
+        android:text="0000"
         android:textColor="@color/color_FE6267"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

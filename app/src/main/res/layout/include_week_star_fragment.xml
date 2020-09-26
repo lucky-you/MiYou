@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
 
-        <RadioGroup
+        <LinearLayout
             android:id="@+id/rgListButton"
             android:layout_width="210dp"
             android:layout_height="36dp"
@@ -19,7 +19,7 @@
             android:orientation="horizontal">
 
 
-            <RadioButton
+            <TextView
                 android:id="@+id/rbCharmList"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -27,14 +27,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/shape_today_select_bg"
                 android:button="@null"
-                android:checked="true"
                 android:gravity="center"
                 android:text="魅力榜"
-                android:textColor="#13A1FB"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@color/color_13A1FB"
+                android:textSize="16sp" />
 
-            <RadioButton
+            <TextView
                 android:id="@+id/rbContributionList"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -47,7 +45,7 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
-        </RadioGroup>
+        </LinearLayout>
 
         <com.zhowin.base_library.view.RefreshLayout
             android:id="@+id/refreshLayout"
@@ -157,7 +155,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:background="@drawable/list_szzx1_box">
+                                android:background="@drawable/list_szzx2_box">
 
                                 <de.hdodenhof.circleimageview.CircleImageView
                                     android:layout_width="62dp"
@@ -235,35 +233,80 @@
                     android:background="@drawable/shape_white_color_10dp_bg"
                     android:orientation="vertical">
 
-
-                    <com.flyco.tablayout.CommonTabLayout
-                        android:id="@+id/commonTabLayout"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
-                        app:tl_iconGravity="LEFT"
-                        app:tl_iconHeight="20dp"
-                        app:tl_iconMargin="5dp"
-                        app:tl_iconWidth="18dp"
-                        app:tl_indicator_color="@color/color_85A2FD"
-                        app:tl_indicator_corner_radius="2dp"
-                        app:tl_indicator_height="4dp"
-                        app:tl_indicator_margin_bottom="4dp"
-                        app:tl_indicator_width="20dp"
-                        app:tl_tab_space_equal="true"
-                        app:tl_textSelectColor="@color/color_333"
-                        app:tl_textUnselectColor="@color/color_666" />
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
 
-                    <FrameLayout
-                        android:id="@+id/flWeekStarFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="240dp"
-                        android:layout_margin="6dp"
-                        android:background="@color/color_white" />
 
+                        <LinearLayout
+                            android:id="@+id/llLeftWeekLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/ivLeftWeekImage"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_def_image" />
+
+                            <TextView
+                                android:id="@+id/tvLeftWeekText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="6dp"
+                                android:gravity="center_vertical"
+                                android:text="高跟鞋"
+                                android:textColor="@color/color_343434"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llRightWeekLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/ivRightImage"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_def_image" />
+
+                            <TextView
+                                android:id="@+id/tvRightWeekText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="6dp"
+                                android:gravity="center_vertical"
+                                android:text="小熊猫"
+                                android:textColor="@color/color_666"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        style="@style/RecycleViewStyle" />
 
                 </LinearLayout>
-            </LinearLayout>
 
+            </LinearLayout>
 
         </com.zhowin.base_library.view.RefreshLayout>
 

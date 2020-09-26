@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
 
-        <RadioGroup
+        <LinearLayout
             android:id="@+id/rgListButton"
             android:layout_width="210dp"
             android:layout_height="36dp"
@@ -20,7 +20,7 @@
             android:orientation="horizontal">
 
 
-            <RadioButton
+            <TextView
                 android:id="@+id/rbCharmList"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -28,14 +28,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/shape_today_select_bg"
                 android:button="@null"
-                android:checked="true"
                 android:gravity="center"
                 android:text="魅力榜"
-                android:textColor="#13A1FB"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@color/color_13A1FB"
+                android:textSize="16sp" />
 
-            <RadioButton
+            <TextView
                 android:id="@+id/rbContributionList"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -48,7 +46,7 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
-        </RadioGroup>
+        </LinearLayout>
 
         <com.zhowin.base_library.view.RefreshLayout
             android:id="@+id/refreshLayout"
@@ -88,29 +86,43 @@
                             app:layout_constraintLeft_toLeftOf="parent">
 
 
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:background="@drawable/list_ribang2_box">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="94dp"
+                                android:layout_height="94dp"
+                                android:layout_marginTop="8dp">
 
                                 <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
+                                    android:id="@+id/civNumberTwoHead"
+                                    android:layout_width="55dp"
+                                    android:layout_height="55dp"
                                     android:layout_gravity="center"
-                                    android:src="@mipmap/ic_default_hp" />
+                                    android:src="@mipmap/ic_default_hp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                            </FrameLayout>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/list_ribang2_box"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                             <TextView
+                                android:id="@+id/tvNumberTwoName"
                                 style="@style/TextViewStyleOf14Sp"
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
                                 android:maxLength="5"
                                 android:singleLine="true"
-                                android:text="小喵喵喵喵"
                                 android:textColor="@color/color_333"
                                 android:textSize="15sp" />
 
@@ -121,17 +133,19 @@
                                 android:layout_marginTop="6dp">
 
                                 <TextView
+                                    android:id="@+id/tvNumberTwoLevel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginStart="10dp"
                                     android:background="@drawable/shape_user_level_bg"
                                     android:gravity="center"
-                                    android:text="V11"
+                                    android:text="V1"
                                     android:textColor="@color/color_white"
                                     android:textSize="11sp" />
 
                                 <TextView
+                                    android:id="@+id/tvNumberTwoKnighthood"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -144,10 +158,12 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/tvNumberTwoCharmValue"
                                 style="@style/TextViewStyleOf14Sp"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_margin="8dp"
-                                android:text="魅力值254w"
+                                android:text="魅力值000"
                                 android:textColor="@color/color_666"
                                 android:textSize="12sp" />
 
@@ -165,29 +181,43 @@
                             app:layout_constraintRight_toRightOf="parent">
 
 
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:background="@drawable/list_ribang3_box">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="94dp"
+                                android:layout_height="94dp"
+                                android:layout_marginTop="8dp">
 
                                 <de.hdodenhof.circleimageview.CircleImageView
-                                    android:layout_width="52dp"
-                                    android:layout_height="52dp"
+                                    android:id="@+id/civNumberThreeHead"
+                                    android:layout_width="55dp"
+                                    android:layout_height="55dp"
                                     android:layout_gravity="center"
-                                    android:src="@mipmap/ic_default_hp" />
+                                    android:src="@mipmap/ic_default_hp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                            </FrameLayout>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/list_ribang3_box"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                             <TextView
+                                android:id="@+id/tvNumberThreeName"
                                 style="@style/TextViewStyleOf14Sp"
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
                                 android:maxLength="5"
                                 android:singleLine="true"
-                                android:text="小喵喵喵喵"
                                 android:textColor="@color/color_333"
                                 android:textSize="15sp" />
 
@@ -198,17 +228,19 @@
                                 android:layout_marginTop="6dp">
 
                                 <TextView
+                                    android:id="@+id/tvNumberThreeLevel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginStart="10dp"
                                     android:background="@drawable/shape_user_level_bg"
                                     android:gravity="center"
-                                    android:text="V11"
+                                    android:text="V1"
                                     android:textColor="@color/color_white"
                                     android:textSize="11sp" />
 
                                 <TextView
+                                    android:id="@+id/tvNumberThreeKnighthood"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -221,10 +253,11 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/tvNumberThreeCharmValue"
                                 style="@style/TextViewStyleOf14Sp"
                                 android:layout_gravity="center"
                                 android:layout_margin="8dp"
-                                android:text="魅力值254w"
+                                android:text="魅力值000"
                                 android:textColor="@color/color_666"
                                 android:textSize="12sp" />
 
@@ -243,29 +276,44 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/list_ribang1_box">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="121dp"
+                            android:layout_height="121dp"
+                            android:layout_marginTop="8dp">
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="62dp"
-                                android:layout_height="62dp"
+                                android:id="@+id/civNumberOneHead"
+                                android:layout_width="65dp"
+                                android:layout_height="65dp"
                                 android:layout_gravity="center"
-                                android:src="@mipmap/ic_default_hp" />
+                                android:src="@mipmap/ic_default_hp"
+                                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                        </FrameLayout>
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/list_ribang1_box"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                         <TextView
+                            android:id="@+id/tvNumberOneName"
                             style="@style/TextViewStyleOf14Sp"
                             android:layout_gravity="center_horizontal"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLength="5"
                             android:singleLine="true"
-                            android:text="小喵喵喵喵"
                             android:textColor="@color/color_333"
                             android:textSize="15sp" />
 
@@ -276,17 +324,19 @@
                             android:layout_marginTop="6dp">
 
                             <TextView
+                                android:id="@+id/tvNumberOneLevel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:background="@drawable/shape_user_level_bg"
                                 android:gravity="center"
-                                android:text="V11"
+                                android:text="V1"
                                 android:textColor="@color/color_white"
                                 android:textSize="11sp" />
 
                             <TextView
+                                android:id="@+id/tvNumberOneKnighthood"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -299,10 +349,11 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvNumberOneCharmValue"
                             style="@style/TextViewStyleOf14Sp"
                             android:layout_gravity="center_horizontal"
                             android:layout_margin="8dp"
-                            android:text="魅力值254w"
+                            android:text="魅力值000"
                             android:textColor="@color/color_666"
                             android:textSize="12sp" />
 
@@ -331,13 +382,14 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="270dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/shape_white_color_10dp_bg">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
-                        style="@style/RecycleViewStyle" />
+                        style="@style/RecycleViewStyle"
+                        android:layout_height="match_parent" />
                 </FrameLayout>
 
 

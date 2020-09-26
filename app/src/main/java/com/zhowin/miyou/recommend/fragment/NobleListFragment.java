@@ -2,17 +2,20 @@ package com.zhowin.miyou.recommend.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhowin.base_library.base.BaseBindFragment;
-import com.zhowin.base_library.utils.ConstantValue;
+import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.utils.EmptyViewUtils;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.IncludeNobleListFragmentBinding;
+import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.recommend.adapter.NobleListAdapter;
-import com.zhowin.miyou.recommend.model.UserList;
+import com.zhowin.miyou.recommend.model.GZBUserList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,11 +25,12 @@ public class NobleListFragment extends BaseBindFragment<IncludeNobleListFragment
 
 
     private NobleListAdapter nobleListAdapter;
+    private boolean isRefreshing;// 是否刷新
 
-    public static NobleListFragment newInstance(int index) {
+
+    public static NobleListFragment newInstance() {
         NobleListFragment fragment = new NobleListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ConstantValue.INDEX, index);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -44,13 +48,15 @@ public class NobleListFragment extends BaseBindFragment<IncludeNobleListFragment
 
     @Override
     public void initData() {
-        List<UserList> userLists = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            userLists.add(new UserList());
-        }
-        nobleListAdapter = new NobleListAdapter(userLists);
+        nobleListAdapter = new NobleListAdapter();
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(nobleListAdapter);
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        getGZBUserList();
     }
 
     @Override
@@ -58,10 +64,42 @@ public class NobleListFragment extends BaseBindFragment<IncludeNobleListFragment
         mBinding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                isRefreshing = true;
+                getGZBUserList();
                 mBinding.refreshLayout.setRefreshing(false);
             }
         });
     }
+
+
+    /**
+     * 获取贵族帮
+     */
+    private void getGZBUserList() {
+        if (isRefreshing) {
+            showLoadDialog();
+        }
+        HttpRequest.getGZBUserList(this, new HttpCallBack<List<GZBUserList>>() {
+            @Override
+            public void onSuccess(List<GZBUserList> toadyUserLists) {
+                dismissLoadDialog();
+                isRefreshing = false;
+                if (toadyUserLists != null && !toadyUserLists.isEmpty()) {
+                    nobleListAdapter.setNewData(toadyUserLists);
+                } else {
+                    EmptyViewUtils.bindEmptyView(mContext, nobleListAdapter);
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                isRefreshing = false;
+                ToastUtils.showToast(errorMsg);
+            }
+        });
+    }
+
 
     @Override
     public void initImmersionBar() {

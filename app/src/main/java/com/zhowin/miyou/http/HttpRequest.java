@@ -18,9 +18,14 @@ import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
+import com.zhowin.miyou.recommend.model.GZBUserList;
 import com.zhowin.miyou.recommend.model.GiftList;
+import com.zhowin.miyou.recommend.model.GuardUserList;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
+import com.zhowin.miyou.recommend.model.ToadyUserList;
+import com.zhowin.miyou.recommend.model.WeekStarUserList;
+import com.zhowin.miyou.recommend.model.ZABUserList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -501,5 +506,133 @@ public class HttpRequest {
                 });
     }
 
+    /**
+     * 获取每日魅力和贡献榜单
+     */
+    public static void getTodayUserList(LifecycleOwner activity, boolean is_MLB, final HttpCallBack<List<ToadyUserList>> callBack) {
+        String url = is_MLB ? ApiRequest.GET_MRML_LIST_URL : ApiRequest.GET_MRGX_LIST_URL;
+        apiRequest.getTodayUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<ToadyUserList>>() {
+
+                    @Override
+                    public void onSuccess(List<ToadyUserList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取贵族榜单
+     */
+    public static void getGZBUserList(LifecycleOwner activity, final HttpCallBack<List<GZBUserList>> callBack) {
+        apiRequest.getGZBUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<GZBUserList>>() {
+
+                    @Override
+                    public void onSuccess(List<GZBUserList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+
+    }
+
+    /**
+     * 守护榜单
+     */
+    public static void getGuardUserList(LifecycleOwner activity, final HttpCallBack<List<GuardUserList>> callBack) {
+        apiRequest.getGuardUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<GuardUserList>>() {
+
+                    @Override
+                    public void onSuccess(List<GuardUserList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取每日魅力和贡献榜单
+     */
+    public static void getWeekStarUserList(LifecycleOwner activity, boolean is_MLB, final HttpCallBack<WeekStarUserList> callBack) {
+        String url = is_MLB ? ApiRequest.GET_MZML_LIST_URL : ApiRequest.GET_MZGX_LIST_URL;
+        apiRequest.getWeekStarUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<WeekStarUserList>() {
+
+                    @Override
+                    public void onSuccess(WeekStarUserList demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 真爱榜单
+     */
+    public static void getZABUserList(LifecycleOwner activity, final HttpCallBack<List<ZABUserList>> callBack) {
+        apiRequest.getZABUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<ZABUserList>>() {
+
+                    @Override
+                    public void onSuccess(List<ZABUserList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 提交认证信息
+     */
+    public static void submitUserVerifiedInfo(LifecycleOwner activity, HashMap<String, Object> map, final HttpCallBack<Object> callBack) {
+        apiRequest.submitUserVerifiedInfo(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), map)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 
 }

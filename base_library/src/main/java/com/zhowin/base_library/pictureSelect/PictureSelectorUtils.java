@@ -84,6 +84,28 @@ public class PictureSelectorUtils {
                 .forResult(requestCode);//结果回调onActivityResult code
     }
 
+    public static void selectOneImage(Activity activity, int requestCode, boolean isCamera,boolean isCut) {
+        PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+                .imageEngine(GlideEngine.createGlideEngine())// 外部传入图片加载引擎，必传项
+                .maxSelectNum(1)// 最大图片选择数量
+                .selectionMode(PictureConfig.SINGLE)// 多选 or 单选
+                .isPreviewImage(true)// 是否可预览图片
+                .isCamera(isCamera)// 是否显示拍照按钮
+                .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
+                .isEnableCrop(isCut)// 是否裁剪
+                .isCompress(true)// 是否压缩
+                .synOrAsy(true)//同步true或异步false 压缩 默认同步
+                .withAspectRatio(1, 1)// 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .freeStyleCropEnabled(true)// 裁剪框是否可拖拽
+                .circleDimmedLayer(false)// 是否圆形裁剪
+                .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
+                .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
+                .isOpenClickSound(false)// 是否开启点击声音
+                .minimumCompressSize(100)// 小于100kb的图片不压缩
+                .forResult(requestCode);//结果回调onActivityResult code
+    }
+
 
     /**
      * 选择多张图片

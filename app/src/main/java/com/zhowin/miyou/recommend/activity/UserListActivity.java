@@ -40,14 +40,14 @@ public class UserListActivity extends BaseBindActivity<ActivityUserListBinding> 
     public void initData() {
         String[] mTitles = {"日榜", "真爱榜", "守护榜", "周星榜", "贵族榜"};
         List<Fragment> mFragments = new ArrayList<>();
-        mFragments.add(ToadyListFragment.newInstance(1));
-        mFragments.add(TrueLoveListFragment.newInstance(2));
-        mFragments.add(GuardListFragment.newInstance(3));
-        mFragments.add(WeekStarListFragment.newInstance(4));
-        mFragments.add(NobleListFragment.newInstance(5));
+        mFragments.add(ToadyListFragment.newInstance());
+        mFragments.add(TrueLoveListFragment.newInstance());
+        mFragments.add(GuardListFragment.newInstance());
+        mFragments.add(WeekStarListFragment.newInstance());
+        mFragments.add(NobleListFragment.newInstance());
         HomePageAdapter homePageAdapter = new HomePageAdapter(getSupportFragmentManager(), mFragments, mTitles);
         mBinding.noScrollViewPager.setAdapter(homePageAdapter);
-        mBinding.noScrollViewPager.setOffscreenPageLimit(mTitles.length);
+        mBinding.noScrollViewPager.setScroll(true);
         mBinding.slidingTabLayout.setViewPager(mBinding.noScrollViewPager);
     }
 

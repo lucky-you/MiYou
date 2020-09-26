@@ -9,7 +9,7 @@ import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.IncludeWeekStartGiftFragmentBinding;
 import com.zhowin.miyou.recommend.adapter.WeekStarGiftAdapter;
-import com.zhowin.miyou.recommend.model.UserList;
+import com.zhowin.miyou.recommend.model.ToadyUserList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,11 +44,7 @@ public class WeekStarGiftFragment extends BaseBindFragment<IncludeWeekStartGiftF
 
     @Override
     public void initData() {
-        List<UserList> userLists = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            userLists.add(new UserList());
-        }
-        weekStarGiftAdapter = new WeekStarGiftAdapter(userLists);
+        weekStarGiftAdapter = new WeekStarGiftAdapter();
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(weekStarGiftAdapter);
     }

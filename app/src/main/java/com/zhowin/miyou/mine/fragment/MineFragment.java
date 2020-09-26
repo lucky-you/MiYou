@@ -17,7 +17,6 @@ import com.zhowin.miyou.databinding.MineFragmentLayoutBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.AttentionAndFansActivity;
-import com.zhowin.miyou.mine.activity.CreateRoomActivity;
 import com.zhowin.miyou.mine.activity.HelpOrFeedbackActivity;
 import com.zhowin.miyou.mine.activity.MyRoomActivity;
 import com.zhowin.miyou.mine.activity.MyWalletActivity;
@@ -28,6 +27,7 @@ import com.zhowin.miyou.mine.activity.ShopMallActivity;
 import com.zhowin.miyou.mine.activity.SignInDrawActivity;
 import com.zhowin.miyou.mine.activity.UnionActivity;
 import com.zhowin.miyou.mine.activity.VerifiedActivity;
+import com.zhowin.miyou.mine.activity.VerifiedSuccessActivity;
 import com.zhowin.miyou.mine.activity.YouthModeActivity;
 import com.zhowin.miyou.mine.adapter.MineIconListAdapter;
 import com.zhowin.miyou.mine.model.MineIconList;
@@ -211,7 +211,8 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
             @Override
             public void onSuccess(VerifiedStatus verifiedStatus) {
                 if (verifiedStatus != null) {
-                    startActivity(CreateRoomActivity.class);
+                    //状态 0：审核中、1：审核通过、2：审核失败
+                    VerifiedSuccessActivity.start(mContext, verifiedStatus.getStatus());
                 } else {
                     startActivity(VerifiedActivity.class);
                 }

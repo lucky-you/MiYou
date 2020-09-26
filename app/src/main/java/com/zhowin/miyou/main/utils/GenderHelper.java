@@ -39,4 +39,19 @@ public class GenderHelper {
         return drawable;
     }
 
+    public static int getSexResource(String sexText) {
+        int drawable;
+        switch (sexText) {
+            case "男":
+                drawable = R.drawable.list_man_icon;
+                break;
+            case "女":
+                drawable = R.drawable.list_girl_icon;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + sexText);
+        }
+        return drawable;
+    }
+
 }

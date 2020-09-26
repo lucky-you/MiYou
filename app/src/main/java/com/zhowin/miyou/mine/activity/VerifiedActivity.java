@@ -4,6 +4,7 @@ package com.zhowin.miyou.mine.activity;
 import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.SpanUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityVerifiedBinding;
@@ -43,6 +44,7 @@ public class VerifiedActivity extends BaseBindActivity<ActivityVerifiedBinding> 
         switch (v.getId()) {
             case R.id.tvStartVerified:
                 startActivity(EditVerifiedActivity.class);
+                ActivityManager.getAppInstance().finishActivity();
                 break;
         }
     }

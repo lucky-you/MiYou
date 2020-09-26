@@ -10,9 +10,14 @@ import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
+import com.zhowin.miyou.recommend.model.GZBUserList;
 import com.zhowin.miyou.recommend.model.GiftList;
+import com.zhowin.miyou.recommend.model.GuardUserList;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
+import com.zhowin.miyou.recommend.model.ToadyUserList;
+import com.zhowin.miyou.recommend.model.WeekStarUserList;
+import com.zhowin.miyou.recommend.model.ZABUserList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -98,6 +103,22 @@ public interface ApiRequest {
     //获取实名认证的状态
     String VERIFIED_STATUS_URL = "/ant/realValid/getRealValid";
 
+    //获取每日贡献榜
+    String GET_MRGX_LIST_URL = "/ant/rl/dailyContribute";
+    //获取每日魅力榜
+    String GET_MRML_LIST_URL = "/ant/rl/dailyGlamour";
+    //获取贵族榜
+    String GET_GZB_LIST_URL = "/ant/rl/gzb";
+    //获取守护榜
+    String GET_SHB_LIST_URL = "/ant/rl/shb";
+    //获取每周贡献榜
+    String GET_MZGX_LIST_URL = "/ant/rl/weekContribute";
+    //获取每周魅力榜
+    String GET_MZML_LIST_URL = "/ant/rl/weekGlamour";
+    //获取真爱榜
+    String GET_ZAB_LIST_URL = "/ant/rl/zab";
+    //提交实名认证信息
+    String SUBMIT_USER_VERIFIED_URL = "/ant/realValid/submit";
 
     /**
      * 返回的是自己的用户信息
@@ -251,4 +272,42 @@ public interface ApiRequest {
      */
     @POST(VERIFIED_STATUS_URL)
     Observable<ApiResponse<VerifiedStatus>> getVerifiedStatus(@Header(AUTHOR) String token);
+
+    /**
+     * 获取每日榜
+     */
+    @POST
+    Observable<ApiResponse<List<ToadyUserList>>> getTodayUserList(@Header(AUTHOR) String token, @Url String url);
+
+    /**
+     * 获取贵族榜单
+     */
+    @POST(GET_GZB_LIST_URL)
+    Observable<ApiResponse<List<GZBUserList>>> getGZBUserList(@Header(AUTHOR) String token);
+
+    /**
+     * 获取守护榜单
+     */
+    @POST(GET_SHB_LIST_URL)
+    Observable<ApiResponse<List<GuardUserList>>> getGuardUserList(@Header(AUTHOR) String token);
+
+    /**
+     * 获取周星榜
+     */
+    @POST
+    Observable<ApiResponse<WeekStarUserList>> getWeekStarUserList(@Header(AUTHOR) String token, @Url String url);
+
+    /**
+     * 真爱榜单
+     */
+    @POST(GET_ZAB_LIST_URL)
+    Observable<ApiResponse<List<ZABUserList>>> getZABUserList(@Header(AUTHOR) String token);
+
+    /**
+     * 提交实名认证
+     */
+    @FormUrlEncoded
+    @POST(SUBMIT_USER_VERIFIED_URL)
+    Observable<ApiResponse<Object>> submitUserVerifiedInfo(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
+
 }
