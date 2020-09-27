@@ -10,6 +10,7 @@ import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.AttentionUserList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
+import com.zhowin.miyou.mine.model.ShopMallPropsList;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
 import com.zhowin.miyou.recommend.model.GZBUserList;
 import com.zhowin.miyou.recommend.model.GiftList;
@@ -165,6 +166,22 @@ public interface ApiRequest {
 
     //获取爵位信息
     String GET_KNIGHTHOOD_URL = "/ant/rank/rankPage";
+
+    //搜索用户
+    String SEARCH_USER_LIST_URL = "/ant/search/searchUser";
+
+    //搜索房间
+    String SEARCH_ROOM_lIST_URL = "/ant/search/searchLiveRoom";
+
+    //商城头像框
+    String SHOP_MALL_HEADER_PHOTO_URL = "/ant/mall/txkList";
+
+    //商城座驾
+    String SHOP_MALL_ZJ_PHOTO_URL = "/ant/mall/cars";
+
+    //商城道具
+    String SHOP_MALL_DJ_PHOTO_URL = "/ant/mall/others";
+
 
     /**
      * 返回的是自己的用户信息
@@ -382,5 +399,10 @@ public interface ApiRequest {
     @POST(GET_BLACK_LIST_URL)
     Observable<ApiResponse<BaseResponse<AttentionUserList>>> getBlackListUserList(@Header(AUTHOR) String token, @Field("principal") int target);
 
+    /**
+     * 商城商品
+     */
+    @POST
+    Observable<ApiResponse<List<ShopMallPropsList>>> getShopMallPropsList(@Header(AUTHOR) String token, @Url String url);
 
 }

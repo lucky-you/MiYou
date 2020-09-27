@@ -27,6 +27,7 @@ import com.zhowin.base_library.pictureSelect.PictureSelectorUtils;
 import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.base_library.qiniu.QinIuUpLoadListener;
 import com.zhowin.base_library.qiniu.QinIuUtils;
+import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
@@ -230,6 +231,7 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
             public void onSuccess(Object o) {
                 dismissLoadDialog();
                 ToastUtils.showCustomToast(mContext, "创建成功");
+                ActivityManager.getAppInstance().finishActivity();
             }
 
             @Override

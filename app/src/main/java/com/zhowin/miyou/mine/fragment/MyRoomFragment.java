@@ -63,7 +63,6 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
 
     @Override
     public void initData() {
-        getMyCreateOrCollectionRoomList(0 == fragmentIndex);
         myRoomListAdapter = new MyRoomListAdapter(roomDataList);
         mBinding.recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, SizeUtils.dp2px(10), false));
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
@@ -71,6 +70,11 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
         myRoomListAdapter.setOnItemClickListener(this::onItemClick);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMyCreateOrCollectionRoomList(0 == fragmentIndex);
+    }
 
     /**
      * 获取我创建或者我收藏的房间

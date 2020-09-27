@@ -18,6 +18,7 @@ import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.AttentionUserList;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
+import com.zhowin.miyou.mine.model.ShopMallPropsList;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
 import com.zhowin.miyou.recommend.model.GZBUserList;
 import com.zhowin.miyou.recommend.model.GiftList;
@@ -742,6 +743,39 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(BaseResponse<AttentionUserList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 商城列表
+     */
+    public static void getShopMallPropsList(LifecycleOwner activity, int type, final HttpCallBack<List<ShopMallPropsList>> callBack) {
+        String url = null;
+        switch (type) {
+            case 0:
+                url=ApiRequest.SHOP_MALL_HEADER_PHOTO_URL;
+                break;
+            case 1:
+                url=ApiRequest.SHOP_MALL_ZJ_PHOTO_URL;
+                break;
+            case 2:
+                url=ApiRequest.SHOP_MALL_DJ_PHOTO_URL;
+                break;
+        }
+        apiRequest.getShopMallPropsList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(),url)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<ShopMallPropsList>>() {
+
+                    @Override
+                    public void onSuccess(List<ShopMallPropsList> demo) {
                         callBack.onSuccess(demo);
                     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <com.zhowin.base_library.view.RefreshLayout
@@ -10,13 +11,58 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 style="@style/RecycleViewStyle"
+                android:layout_height="0dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp" />
+                android:layout_marginRight="12dp"
+                android:layout_weight="1" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clBottomBuyLayout"
+                android:layout_width="260dp"
+                android:layout_height="49dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/wallet_payment_btn"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvTopBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="购买"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/tvEndTime"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvEndTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="(5200钻石/7天）"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTopBuy" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </com.zhowin.base_library.view.RefreshLayout>
 

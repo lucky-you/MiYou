@@ -6,8 +6,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -25,9 +24,17 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:background="@color/color_45BCFD">
+                    android:layout_height="300dp">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/shop_bg"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clTopView"
@@ -87,13 +94,6 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="14dp"
-                        android:background="@drawable/shape_home_page_bottom_bg"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -103,6 +103,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-12dp"
+                android:background="@drawable/shape_home_page_bottom_bg"
                 android:orientation="vertical">
 
                 <View
@@ -113,7 +115,7 @@
                 <com.flyco.tablayout.SlidingTabLayout
                     android:id="@+id/slidingTabLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="44dp"
                     app:tl_indicator_color="@color/color_4C9CFF"
                     app:tl_indicator_corner_radius="2dp"
                     app:tl_indicator_height="4dp"

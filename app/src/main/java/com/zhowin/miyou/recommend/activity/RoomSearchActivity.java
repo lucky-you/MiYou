@@ -3,18 +3,12 @@ package com.zhowin.miyou.recommend.activity;
 
 import android.view.View;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.utils.ActivityManager;
-import com.zhowin.base_library.utils.SizeUtils;
-import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityRoomSearchBinding;
-import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
-import com.zhowin.miyou.recommend.adapter.SearchHistoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +40,7 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
 //        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
 //        mBinding.recyclerView.setAdapter(myRoomListAdapter);
 
-        SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(recommendLists);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.recyclerView.setAdapter(searchHistoryAdapter);
+
     }
 
     @Override

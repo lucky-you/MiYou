@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * author : zho
  * date  ：2020/9/15
- * desc ： 搜索的历史记录
+ * desc ： 搜索用户的历史记录
  */
 public class SearchHistoryAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public SearchHistoryAdapter(@Nullable List<String> data) {
