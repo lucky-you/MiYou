@@ -3,6 +3,7 @@ package com.zhowin.miyou.recommend.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,8 +27,10 @@ import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.PersonalInfoActivity;
 import com.zhowin.miyou.recommend.adapter.HomePagerAdapter;
+import com.zhowin.miyou.recommend.callback.OnHitCenterClickListener;
 import com.zhowin.miyou.recommend.callback.OnReportAndAttentionListener;
 import com.zhowin.miyou.recommend.callback.OnTopicTagClickListener;
+import com.zhowin.miyou.recommend.dialog.HitCenterDialog;
 import com.zhowin.miyou.recommend.dialog.ReportAndAttentionDialog;
 import com.zhowin.miyou.recommend.dialog.ShareItemDialog;
 import com.zhowin.miyou.recommend.model.HomePageCategoryList;
@@ -46,6 +49,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
     private int userId;
     private HomePagerAdapter homePagerAdapter;
     private List<HomePageCategoryList> homePageCategoryLists = new ArrayList<>();
+    private String userNickName, userIDCode;
 
     public static void start(Context context, boolean isMine, int userId) {
         Intent intent = new Intent(context, HomepageActivity.class);
@@ -67,6 +71,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         setOnClick(R.id.ivBackReturn, R.id.ivEditPersonal);
         mBinding.ivEditPersonal.setImageResource(isMine ? R.drawable.personal_add_icon : R.drawable.personal_more_icon);
         mBinding.llBottomAttentionLayout.setVisibility(isMine ? View.GONE : View.VISIBLE);
+        mBinding.tvIsLiving.setVisibility(View.GONE);
     }
 
     @Override
@@ -106,13 +111,16 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
 
     private void setDataToViews(UserInfo userInfo) {
         GlideUtils.loadUserPhotoForLogin(mContext, userInfo.getProfilePictureKey(), mBinding.civUserHeadPhoto);
-        mBinding.tvUserNickName.setText(userInfo.getAvatar());
-        mBinding.tvUserMuNumber.setText("ID号:" + userInfo.getUsername());
+        userNickName = userInfo.getAvatar();
+        userIDCode = userInfo.getUsername();
+        mBinding.tvUserNickName.setText(userNickName);
+        mBinding.tvUserMuNumber.setText("ID号:" + userIDCode);
         mBinding.tvUserSex.setText(String.valueOf(userInfo.getAge()));
         mBinding.tvUserSex.setBackgroundResource(GenderHelper.getSexBackground(userInfo.getGender()));
         int drawable = GenderHelper.getSexDrawable(userInfo.getGender());
         SetDrawableHelper.setLeftDrawable(mContext, mBinding.tvUserSex, true, 2, drawable, drawable);
-        mBinding.tvUserSignText.setText("签名：" + userInfo.getStatus());
+        if (!TextUtils.isEmpty(userInfo.getStatus()))
+            mBinding.tvUserSignText.setText("签名：" + userInfo.getStatus());
         String onLineStatus = "离线  " + userInfo.getFollowNum() + "关注" + "  •  " + userInfo.getFansNum() + "粉丝";
         mBinding.tvUserOnlineStatus.setText(onLineStatus);
         setUserBannerData(userInfo.getBackgroundPictureKeys());
@@ -170,18 +178,82 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
     }
 
     private void showShareAndAttentionDialog() {
-        ReportAndAttentionDialog reportAndAttentionDialog = new ReportAndAttentionDialog();
+        String userNickNameAndId = userNickName + "(ID:" + userIDCode + ")";
+        ReportAndAttentionDialog reportAndAttentionDialog = ReportAndAttentionDialog.newInstance(userNickNameAndId);
         reportAndAttentionDialog.show(getSupportFragmentManager(), "attention");
         reportAndAttentionDialog.setOnReportAndAttentionListener(new OnReportAndAttentionListener() {
             @Override
             public void onItemClick(int itemType) {
-                if (4 == itemType) {
-                    showShareDialog();
+                switch (itemType) {
+                    case 1://举报
+                        ToastUtils.showToast("举报");
+                        break;
+                    case 2://关注
+                        addAttentionOrBlackList(1, userId);
+                        break;
+                    case 3://拉黑
+                        showAddUserToBlackListDialog(userId);
+                        break;
+                    case 4://分享
+                        showShareDialog();
+                        break;
                 }
             }
         });
     }
 
+    /**
+     * 拉黑
+     */
+    private void showAddUserToBlackListDialog(int userId) {
+        String hitTitle = "确定要将" + userNickName + "加入黑名单吗?";
+        HitCenterDialog hitCenterDialog = new HitCenterDialog(mContext);
+        hitCenterDialog.setDialogTitle(hitTitle);
+        hitCenterDialog.show();
+        hitCenterDialog.setOnHitCenterClickListener(new OnHitCenterClickListener() {
+            @Override
+            public void onCancelClick() {
+
+            }
+
+            @Override
+            public void onDetermineClick() {
+                addAttentionOrBlackList(3, userId);
+            }
+        });
+    }
+
+    /**
+     * 关注或者拉黑
+     */
+    private void addAttentionOrBlackList(int type, int userId) {
+        showLoadDialog();
+        HttpRequest.addAttentionOrBlackList(this, type, userId, new HttpCallBack<Object>() {
+            @Override
+            public void onSuccess(Object o) {
+                dismissLoadDialog();
+                switch (type) {
+                    case 1:
+                        ToastUtils.showCustomToast(mContext, "关注成功");
+                        break;
+                    case 3:
+                        ToastUtils.showCustomToast(mContext, "添加到黑名单成功");
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+            }
+        });
+    }
+
+    /**
+     * 分享
+     */
     private void showShareDialog() {
         ShareItemDialog shareItemDialog = new ShareItemDialog();
         shareItemDialog.show(getSupportFragmentManager(), "share");

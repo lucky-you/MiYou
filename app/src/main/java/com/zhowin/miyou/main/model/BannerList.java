@@ -3,28 +3,28 @@ package com.zhowin.miyou.main.model;
 /**
  * author : zho
  * date  ：2020/8/24
- * desc ：
+ * desc ：首页banner
  */
 public class BannerList {
 
 
     /**
-     * bannerId : 0
-     * createTime :
-     * enable : 0
-     * pictureKey :
-     * sort : 0
-     * title :
-     * url :
+     * bannerId : 1
+     * title : 测试Banner
+     * pictureKey : http://qfah2px93.hn-bkt.clouddn.com/abc.jpg
+     * url : http://www.baidu.com
+     * createTime : 1601066500000
+     * enable : 1
+     * sort : 1
      */
 
     private int bannerId;
-    private String createTime;
-    private int enable;
-    private String pictureKey;
-    private int sort;
     private String title;
+    private String pictureKey;
     private String url;
+    private long createTime;
+    private int enable;
+    private int sort;
 
     public BannerList(String pictureKey) {
         this.pictureKey = pictureKey;
@@ -38,11 +38,35 @@ public class BannerList {
         this.bannerId = bannerId;
     }
 
-    public String getCreateTime() {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPictureKey() {
+        return pictureKey;
+    }
+
+    public void setPictureKey(String pictureKey) {
+        this.pictureKey = pictureKey;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 
@@ -54,35 +78,11 @@ public class BannerList {
         this.enable = enable;
     }
 
-    public String getPictureKey() {
-        return pictureKey;
-    }
-
-    public void setPictureKey(String pictureKey) {
-        this.pictureKey = pictureKey;
-    }
-
     public int getSort() {
         return sort;
     }
 
     public void setSort(int sort) {
         this.sort = sort;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

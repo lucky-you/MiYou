@@ -75,19 +75,25 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_marginBottom="10dp"
                             android:background="@drawable/home_notice_bg">
 
-                            <TextView
-                                style="@style/TextViewStyleOf14Sp"
+                            <com.sunfusheng.marqueeview.MarqueeView
+                                android:id="@+id/marqueeView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dp"
                                 android:layout_centerVertical="true"
-                                android:layout_marginLeft="84dp"
-                                android:singleLine="true"
-                                android:text="通告打造稳定绿色的主播平台啊主播..."
-                                android:textColor="@color/color_333" />
+                                android:layout_marginLeft="80dp"
+                                android:paddingLeft="10dp"
+                                app:mvAnimDuration="1000"
+                                app:mvDirection="bottom_to_top"
+                                app:mvInterval="3000"
+                                app:mvSingleLine="true" />
+
+
                         </RelativeLayout>
 
 

@@ -42,6 +42,7 @@ public interface ApiRequest {
 
     //注册
     String REGISTER = "api/user/register";
+
     //验证码登录
     String CAPATH_CODE_LOGIN = "/mobile/sms/login";
 
@@ -56,18 +57,28 @@ public interface ApiRequest {
 
     //获取七牛云的token
     String GET_QI_NIU_TOKEN_URL = "/qn/getUploadToken";
+
     //发送验证码
     String SEND_EMS_CODE = "/auth/sendCode";
+
     //获取默认图像
     String GET_DEFAULT_AVATAR_URL = "/ant/profilePicture/getOptionalProfilePicture";
+
     //获取默认的标签
     String GET_DEFAULT_LABEL_LIST_URL = "/ant/user/label/getChoiceLabels";
+
     //提交用户认证信息
     String SUBMIT_USER_INFO_MESSAGE_URL = "/ant/userInfo/initializeUserInfo";
+
     //更新用户资料
     String UPDATE_USER_INFO_MESSAGE_URL = "/ant/userInfo/updateUserInfo";
+
     //获取首页标签
     String GET_HOME_BANNER_LIST_URL = "/ant/home/banner/getBanners";
+
+    //获取首页公告
+    String GET_HOME_NOTICE_MESSAGE_URL = "/ant/message/scroll/get";
+
     //获取礼物列表
     String GET_GIFT_LIST_URL = "/ant/gift/getGifts";
 
@@ -106,18 +117,25 @@ public interface ApiRequest {
 
     //获取每日贡献榜
     String GET_MRGX_LIST_URL = "/ant/rl/dailyContribute";
+
     //获取每日魅力榜
     String GET_MRML_LIST_URL = "/ant/rl/dailyGlamour";
+
     //获取贵族榜
     String GET_GZB_LIST_URL = "/ant/rl/gzb";
+
     //获取守护榜
     String GET_SHB_LIST_URL = "/ant/rl/shb";
+
     //获取每周贡献榜
     String GET_MZGX_LIST_URL = "/ant/rl/weekContribute";
+
     //获取每周魅力榜
     String GET_MZML_LIST_URL = "/ant/rl/weekGlamour";
+
     //获取真爱榜
     String GET_ZAB_LIST_URL = "/ant/rl/zab";
+
     //提交实名认证信息
     String SUBMIT_USER_VERIFIED_URL = "/ant/realValid/submit";
 
@@ -229,6 +247,12 @@ public interface ApiRequest {
      */
     @POST(GET_HOME_BANNER_LIST_URL)
     Observable<ApiResponse<List<BannerList>>> getHomeBannerList(@Header(AUTHOR) String token);
+
+    /**
+     * 获取首页滚动信息
+     */
+    @POST(GET_HOME_NOTICE_MESSAGE_URL)
+    Observable<ApiResponse<List<String>>> getHomeNoticeMessageList(@Header(AUTHOR) String token);
 
     /**
      * 设置用户密码
@@ -350,8 +374,6 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST
     Observable<ApiResponse<BaseResponse<AttentionUserList>>> getAttentionOrFansUserList(@Header(AUTHOR) String token, @Url String url, @Field("target") int target);
-
-
 
 
 }

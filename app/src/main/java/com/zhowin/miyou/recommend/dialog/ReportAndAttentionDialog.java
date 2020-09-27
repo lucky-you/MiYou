@@ -1,9 +1,12 @@
 package com.zhowin.miyou.recommend.dialog;
 
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zhowin.base_library.base.BaseDialogFragment;
+import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.recommend.callback.OnReportAndAttentionListener;
 
@@ -14,8 +17,18 @@ import com.zhowin.miyou.recommend.callback.OnReportAndAttentionListener;
  */
 public class ReportAndAttentionDialog extends BaseDialogFragment {
 
+    public static ReportAndAttentionDialog newInstance(String userNickNameAndId) {
+        ReportAndAttentionDialog dialog = new ReportAndAttentionDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString(ConstantValue.NAME, userNickNameAndId);
+        dialog.setArguments(bundle);
+        return dialog;
+    }
+
     private TextView tvUserNickNameAndId;
     private OnReportAndAttentionListener onReportAndAttentionListener;
+    private String userNickNameAndId;
+
 
     @Override
     public int getLayoutId() {
@@ -38,7 +51,9 @@ public class ReportAndAttentionDialog extends BaseDialogFragment {
 
     @Override
     public void initData() {
-
+        userNickNameAndId = getArguments().getString(ConstantValue.NAME);
+        if (!TextUtils.isEmpty(userNickNameAndId))
+            tvUserNickNameAndId.setText(userNickNameAndId);
     }
 
     @Override

@@ -7,16 +7,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_2E2E30">
+            android:background="@color/color_2E2E30"
+            android:orientation="vertical">
 
 
             <ImageView
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_gravity="center"
+                android:layout_margin="30dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_def_image"
                 app:layout_constraintBottom_toTopOf="@id/csBottomLayout"
@@ -25,17 +27,20 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/csBottomLayout"
                 android:layout_width="match_parent"
-                android:layout_height="480dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@drawable/shape_knighthood_bg"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <LinearLayout
                     android:id="@+id/llPrivilegeLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
+                    android:layout_gravity="center_horizontal"
                     android:orientation="horizontal"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -69,19 +74,15 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     style="@style/RecycleViewStyle"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:layout_constraintBottom_toTopOf="@id/csBottomRenewNowLayout"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llPrivilegeLayout" />
+                    android:layout_height="0dp"
+                    android:layout_margin="12dp"
+                    android:layout_weight="1" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/csBottomRenewNowLayout"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_margin="16dp"
                     android:background="@drawable/shape_knighthood_bottom_bg"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -128,10 +129,10 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
     </com.zhowin.base_library.view.RefreshLayout>

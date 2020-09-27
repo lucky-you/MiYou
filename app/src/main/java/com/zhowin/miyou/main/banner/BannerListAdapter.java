@@ -78,5 +78,4 @@ public class BannerListAdapter extends BannerAdapter<BannerList, BannerListAdapt
         }
     }
 
-
 }

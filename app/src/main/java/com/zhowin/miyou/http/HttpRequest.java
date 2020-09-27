@@ -275,6 +275,27 @@ public class HttpRequest {
     }
 
     /**
+     * 首页滚动信息
+     */
+    public static void getHomeNoticeMessageList(LifecycleOwner activity, final HttpCallBack<List<String>> callBack) {
+        apiRequest.getHomeNoticeMessageList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<String>>() {
+
+                    @Override
+                    public void onSuccess(List<String> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
      * 设置用户密码
      */
     public static void setUserPassword(LifecycleOwner activity, String password, final HttpCallBack<Boolean> callBack) {
@@ -681,14 +702,14 @@ public class HttpRequest {
         String url;
         switch (requestType) {
             case 1: //关注
-                url=ApiRequest.GET_ATTENTION_LIST_URL;
+                url = ApiRequest.GET_ATTENTION_LIST_URL;
                 break;
             case 2: //粉丝
-                url=ApiRequest.GET_FANS_LIST_URL;
+                url = ApiRequest.GET_FANS_LIST_URL;
                 break;
 
             case 3: //访客
-                url=ApiRequest.GET_VISITOR_LIST_URL;
+                url = ApiRequest.GET_VISITOR_LIST_URL;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + requestType);
