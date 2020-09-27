@@ -112,7 +112,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
      * 手机号 + 密码 登录
      */
     private void loginMobileAndPassword() {
-        String phoneNumber = mBinding.editMobileNumber.getText().toString().trim();
+        String phoneNumber = mBinding.editPhoneNumber.getText().toString().trim();
         if (!PhoneUtils.checkPhone(phoneNumber, true)) {
             return;
         }
@@ -132,7 +132,12 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 dismissLoadDialog();
                 if (userInfo != null) {
                     UserInfo.setUserInfo(userInfo);
-
+                    if (userInfo.isCompleted()) {
+//                        connectIM(userInfo);
+                        startActivity(MainActivity.class);
+                    } else {
+                        startActivity(EditNickNameActivity.class);
+                    }
                 }
                 ActivityManager.getAppInstance().finishActivity();
             }
@@ -175,7 +180,8 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                     if (userInfo != null) {
                         UserInfo.setUserInfo(userInfo);
                         if (userInfo.isCompleted()) {
-                            connectIM(userInfo);
+//                            connectIM(userInfo);
+                            startActivity(MainActivity.class);
                         } else {
                             startActivity(EditNickNameActivity.class);
                             ActivityManager.getAppInstance().finishActivity();
@@ -226,6 +232,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
             @Override
             public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+                Log.e(IMClient.TAG, "连接IM database");
             }
 
         });

@@ -141,7 +141,7 @@ public class AttentionAndFansActivity extends BaseBindActivity<ActivityAttention
                 showCancelAttentionUserDialog(position, userId);
                 break;
             case 2: //关注我的只能添加关注
-                addAttentionOrBlackList(1, position, userId);
+                addAttentionOrCancelUserList(1, position, userId);
                 break;
         }
     }
@@ -161,7 +161,7 @@ public class AttentionAndFansActivity extends BaseBindActivity<ActivityAttention
 
             @Override
             public void onDetermineClick() {
-                addAttentionOrBlackList(2, position, userId);
+                addAttentionOrCancelUserList(2, position, userId);
             }
         });
     }
@@ -169,7 +169,7 @@ public class AttentionAndFansActivity extends BaseBindActivity<ActivityAttention
     /**
      * 关注或者取消
      */
-    private void addAttentionOrBlackList(int type, int position, int userId) {
+    private void addAttentionOrCancelUserList(int type, int position, int userId) {
         showLoadDialog();
         HttpRequest.addAttentionOrBlackList(this, type, userId, new HttpCallBack<Object>() {
             @Override

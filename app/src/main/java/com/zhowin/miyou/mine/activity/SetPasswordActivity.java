@@ -27,11 +27,11 @@ public class SetPasswordActivity extends BaseBindActivity<ActivitySetPasswordBin
     private int classType;
     private boolean isShowOriginalPassword, isShowPassword, isShowPasswordAgain;
 
-    public static void start(Context context, int type) {
-        Intent intent = new Intent(context, SetPasswordActivity.class);
-        intent.putExtra(ConstantValue.TYPE, type);
-        context.startActivity(intent);
-    }
+//    public static void start(Context context, int type) {
+//        Intent intent = new Intent(context, SetPasswordActivity.class);
+//        intent.putExtra(ConstantValue.TYPE, type);
+//        context.startActivity(intent);
+//    }
 
     @Override
     public int getLayoutId() {

@@ -144,7 +144,7 @@ public class PersonalInfoActivity extends BaseBindActivity<ActivityPersonalInfoB
         mBinding.editUserNickName.setText(userInfo.getAvatar());
         mBinding.editUserNickName.setSelection(userInfo.getAvatar().length());
         mBinding.tvUserSex.setText(userInfo.getGender());
-        userBirthday = DateHelpUtils.getStringDateOfDayTwo(userInfo.getBirthday());
+        userBirthday = DateHelpUtils.getStringDateOfDay(userInfo.getBirthday());
         mBinding.tvAgeText.setText(userBirthday);
         userXinZuo = ZodiacUtil.date2Constellation(userBirthday);
         List<String> userBackgroundList = userInfo.getBackgroundPictureKeys();

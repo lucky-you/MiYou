@@ -16,7 +16,6 @@ import com.zhowin.base_library.R;
 
 
 /**
- * Created by : Z_B on 2019/7/13.
  * describe：加载进度条
  */
 public class MiniLoadingView  extends View {

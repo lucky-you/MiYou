@@ -4,6 +4,8 @@ package com.zhowin.miyou.mine.activity;
 import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.model.UserInfo;
+import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityAccountSecurityBinding;
 
@@ -21,11 +23,11 @@ public class AccountSecurityActivity extends BaseBindActivity<ActivityAccountSec
     @Override
     public void initView() {
         setOnClick(R.id.clChangePhoneNumber, R.id.clPasswordManagement, R.id.clAccountLogout);
-
     }
 
     @Override
     public void initData() {
+//        mBinding.tvUserMobile.setText(PhoneUtils.hitCenterMobilNumber(UserInfo.getUserInfo().));
 
     }
 

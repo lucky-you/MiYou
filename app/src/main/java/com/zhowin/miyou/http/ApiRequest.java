@@ -375,5 +375,12 @@ public interface ApiRequest {
     @POST
     Observable<ApiResponse<BaseResponse<AttentionUserList>>> getAttentionOrFansUserList(@Header(AUTHOR) String token, @Url String url, @Field("target") int target);
 
+    /**
+     * 获取黑名单列表
+     */
+    @FormUrlEncoded
+    @POST(GET_BLACK_LIST_URL)
+    Observable<ApiResponse<BaseResponse<AttentionUserList>>> getBlackListUserList(@Header(AUTHOR) String token, @Field("principal") int target);
+
 
 }

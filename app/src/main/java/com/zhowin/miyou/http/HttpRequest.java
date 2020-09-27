@@ -730,4 +730,25 @@ public class HttpRequest {
                     }
                 });
     }
+
+    /**
+     * 获取黑名单列表
+     */
+    public static void getBlackListUserList(LifecycleOwner activity, int target, final HttpCallBack<BaseResponse<AttentionUserList>> callBack) {
+        apiRequest.getBlackListUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), target)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<BaseResponse<AttentionUserList>>() {
+
+                    @Override
+                    public void onSuccess(BaseResponse<AttentionUserList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 }

@@ -19,100 +19,32 @@ public class DateHelpUtils {
         return format.format(date);
     }
 
-    public static String getCurrentTwoDay() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-        Date date = new Date(System.currentTimeMillis());
-        return format.format(date);
-    }
 
-    public static String getCurrentDataNoDay() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
-        Date date = new Date(System.currentTimeMillis());
-        return format.format(date);
-    }
-
+    /**
+     * 获取当前时间
+     */
     public static String getCurrentData() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         return format.format(date);
     }
 
+
     /**
-     * 年月日，没有时分秒
+     * 转换成当天时间
      */
     public static String getStringDateOfDay(long time) {
-        Date date = new Date(time * 1000);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return format.format(date);
-    }
-
-    public static String getStringDateOfDayTwo(long time) {
         Date date = new Date(time);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
-    }
-
-    public static String getStringDateOfDayTwoOfString(long time) {
-        Date date = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-        return format.format(date);
-    }
-
-    /**
-     * 当前的时间
-     */
-    public static String getCurrentStringDate(long time) {
-        Date date = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        return format.format(date);
-    }
-
-
-    public static String getStrTime(long timeStamp) {
-        Date date = new Date(timeStamp * 1000);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(date);
     }
 
     /**
      * 没有秒
      */
     public static String getStrTimeNotSeconds(long timeStamp) {
-        Date date = new Date(timeStamp * 1000);
+        Date date = new Date(timeStamp);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        return sdf.format(date);
-    }
-
-    public static String getStrTimeNotMinute(long timeStamp) {
-        Date date = new Date(timeStamp * 1000);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-        return sdf.format(date);
-    }
-
-    public static String getStrTimeNoSecond(long timeStamp) {
-        Date date = new Date(timeStamp);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-        return sdf.format(date);
-    }
-
-    /**
-     * 没有年 和 分秒
-     */
-    public static String getTimeNotDay(long timeStamp) {
-        Date date = new Date(timeStamp * 1000);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
-        return sdf.format(date);
-    }
-
-    public static String getTimeNotDayString(long timeStamp) {
-        Date date = new Date(timeStamp * 1000);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
-        return sdf.format(date);
-    }
-
-    public static String getTimeNotDayTwo(long timeStamp) {
-        Date date = new Date(timeStamp);
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(date);
     }
 
@@ -154,19 +86,19 @@ public class DateHelpUtils {
     }
 
     public static String getPostDetailTime(long timeStamp) {
-        long totleTime = System.currentTimeMillis() - timeStamp ;
+        long totleTime = System.currentTimeMillis() - timeStamp;
         if (totleTime >= 24 * 60 * 60 * 1000) {
             Date date = new Date(timeStamp * 1000);
             return mDateFormat1.format(date);
-        } else if (totleTime>=60*60*1000){
-            return totleTime/(60*60*1000)+"小时前";
-        }else if (totleTime>=60*1000){
-            return totleTime/(60*1000)+"分钟前";
-        }else {
-            if (totleTime<1000){
+        } else if (totleTime >= 60 * 60 * 1000) {
+            return totleTime / (60 * 60 * 1000) + "小时前";
+        } else if (totleTime >= 60 * 1000) {
+            return totleTime / (60 * 1000) + "分钟前";
+        } else {
+            if (totleTime < 1000) {
                 return "刚刚";
             }
-            return totleTime/1000+"秒前";
+            return totleTime / 1000 + "秒前";
         }
     }
 

@@ -33,7 +33,6 @@
         <activity android:name=".mine.activity.HelpOrFeedbackActivity" />
         <activity android:name=".mine.activity.OnlineServiceActivity" />
         <activity android:name=".mine.activity.SignInDrawActivity" />
-        <activity android:name=".mine.activity.ShopMallActivity" />
         <activity android:name=".mine.activity.UnionActivity" />
         <activity android:name=".main.activity.GuidePageActivity" />
         <activity android:name=".mine.activity.PersonalizedDressActivity" />

@@ -7,7 +7,7 @@ import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityYouthModeBindingImpl;
 
 /**
- * 亲少年模式
+ * 青少年模式
  */
 public class YouthModeActivity extends BaseBindActivity<ActivityYouthModeBindingImpl> {
 

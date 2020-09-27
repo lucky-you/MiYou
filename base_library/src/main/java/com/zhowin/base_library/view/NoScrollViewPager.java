@@ -7,8 +7,6 @@ import android.view.MotionEvent;
 import androidx.viewpager.widget.ViewPager;
 
 /**
- * 作者： zhoubin
- * 时间： 2017/4/21
  * 描述： 禁止滑动的ViewPager
  */
 

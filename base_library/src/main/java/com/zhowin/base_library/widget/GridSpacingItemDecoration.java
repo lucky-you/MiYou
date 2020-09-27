@@ -6,9 +6,7 @@ import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * author Z_B
- * date :2020/5/16 11:11
- * description:
+ * description: 分割线
  */
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
     private int spanCount;  //列数

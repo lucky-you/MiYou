@@ -26,7 +26,7 @@ public class AttentionUserList {
     private LevelObjBean levelObj;
     private RankBean rank;
     private int relation;
-    private Object operateTime;
+    private long operateTime;
 
     public int getUserId() {
         return userId;
@@ -92,11 +92,11 @@ public class AttentionUserList {
         this.relation = relation;
     }
 
-    public Object getOperateTime() {
+    public long getOperateTime() {
         return operateTime;
     }
 
-    public void setOperateTime(Object operateTime) {
+    public void setOperateTime(long operateTime) {
         this.operateTime = operateTime;
     }
 

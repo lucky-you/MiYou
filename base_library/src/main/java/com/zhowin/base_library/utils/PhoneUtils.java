@@ -13,7 +13,7 @@ public final class PhoneUtils {
     /**
      * 隐藏电话号码中间的四位数
      */
-    public static String mobilNumber(String phone) {
+    public static String hitCenterMobilNumber(String phone) {
         return phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
     }
 

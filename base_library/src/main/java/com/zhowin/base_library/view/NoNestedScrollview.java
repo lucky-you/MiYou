@@ -11,8 +11,6 @@ import com.zhowin.base_library.callback.NestedScrollViewListener;
 
 
 /**
- * author      : Z_B
- * date       : 2018/7/15
  * function  : ScrollView屏蔽 滑动事件
  */
 public class NoNestedScrollview extends NestedScrollView {

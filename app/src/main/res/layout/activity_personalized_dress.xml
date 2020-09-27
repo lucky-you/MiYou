@@ -24,13 +24,13 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clTopView"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:background="@color/color_45BCFD">
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clTopView"
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
                         android:layout_marginStart="10dp"
@@ -51,6 +51,7 @@
 
 
                         <TextView
+                            android:id="@+id/tvTopTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="个性装扮"
@@ -99,19 +100,30 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
-            <com.flyco.tablayout.SlidingTabLayout
-                android:id="@+id/slidingTabLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:tl_indicator_color="@color/color_4C9CFF"
-                app:tl_indicator_corner_radius="2dp"
-                app:tl_indicator_height="4dp"
-                app:tl_indicator_margin_bottom="4dp"
-                app:tl_indicator_width="20dp"
-                app:tl_tab_space_equal="true"
-                app:tl_textSelectColor="@color/color_4C9CFF"
-                app:tl_textUnselectColor="@color/color_666"
-                app:tl_textsize="17sp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/tabTopView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/slidingTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    app:tl_indicator_color="@color/color_4C9CFF"
+                    app:tl_indicator_corner_radius="2dp"
+                    app:tl_indicator_height="4dp"
+                    app:tl_indicator_margin_bottom="4dp"
+                    app:tl_indicator_width="20dp"
+                    app:tl_tab_space_equal="true"
+                    app:tl_textSelectColor="@color/color_4C9CFF"
+                    app:tl_textUnselectColor="@color/color_666"
+                    app:tl_textsize="17sp" />
+            </LinearLayout>
 
 
         </com.google.android.material.appbar.AppBarLayout>

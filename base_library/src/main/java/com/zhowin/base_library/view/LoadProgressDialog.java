@@ -11,8 +11,6 @@ import com.zhowin.base_library.R;
 
 
 /**
- * author      : Z_B
- * date       : 2017/6/14
  * function  : 加载进度的Dialog
  */
 public class LoadProgressDialog extends Dialog {

@@ -24,7 +24,6 @@ import com.zhowin.miyou.mine.activity.MyWalletActivity;
 import com.zhowin.miyou.mine.activity.OnlineServiceActivity;
 import com.zhowin.miyou.mine.activity.PersonalizedDressActivity;
 import com.zhowin.miyou.mine.activity.SettingActivity;
-import com.zhowin.miyou.mine.activity.ShopMallActivity;
 import com.zhowin.miyou.mine.activity.SignInDrawActivity;
 import com.zhowin.miyou.mine.activity.UnionActivity;
 import com.zhowin.miyou.mine.activity.UserVipActivity;
@@ -161,21 +160,9 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
                 .init();
     }
 
-    private final Class<?>[] mClasses = {
-            UnionActivity.class,
-            MyRoomActivity.class,
-            VerifiedActivity.class,
-            ShopMallActivity.class,
-            PersonalizedDressActivity.class,
-            SignInDrawActivity.class,
-            OnlineServiceActivity.class,
-            HelpOrFeedbackActivity.class,
-            YouthModeActivity.class
-    };
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//        startActivity(mClasses[position]);
         switch (position) {
             case 0:
                 startActivity(UnionActivity.class);
@@ -187,10 +174,10 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
                 getVerifiedStatus();
                 break;
             case 3:
-                startActivity(ShopMallActivity.class);
+                PersonalizedDressActivity.start(mContext, 1);
                 break;
             case 4:
-                startActivity(PersonalizedDressActivity.class);
+                PersonalizedDressActivity.start(mContext, 2);
                 break;
             case 5:
                 startActivity(SignInDrawActivity.class);

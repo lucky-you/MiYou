@@ -17,8 +17,6 @@ import com.zhowin.base_library.utils.SizeUtils;
 
 
 /**
- * author Z_B
- * date :2018/5/15 17:25
  * description: 居中提示的dialog -->全局通用
  */
 public class CenterHitMessageDialog extends Dialog implements View.OnClickListener {

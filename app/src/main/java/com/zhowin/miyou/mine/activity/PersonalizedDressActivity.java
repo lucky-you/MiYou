@@ -1,6 +1,9 @@
 package com.zhowin.miyou.mine.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
@@ -9,6 +12,9 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.adapter.HomePageAdapter;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.BarUtils;
+import com.zhowin.base_library.utils.ConstantValue;
+import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityPersonalizedDressBinding;
 import com.zhowin.miyou.mine.fragment.PropsFragment;
@@ -17,10 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 个性装扮
+ * 商城 和 个性装扮 共用
+ * type  1:商城  2：个性装扮
  */
 public class PersonalizedDressActivity extends BaseBindActivity<ActivityPersonalizedDressBinding> {
 
+
+    private int classType;//类型
+    private boolean isScrollBottom;//是否滑动到顶部
+
+    public static void start(Context mContext, int type) {
+        Intent intent = new Intent(mContext, PersonalizedDressActivity.class);
+        intent.putExtra(ConstantValue.TYPE, type);
+        mContext.startActivity(intent);
+
+    }
 
     @Override
     public int getLayoutId() {
@@ -29,7 +46,10 @@ public class PersonalizedDressActivity extends BaseBindActivity<ActivityPersonal
 
     @Override
     public void initView() {
-        setOnClick(R.id.ivBackReturn);
+        classType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
+        setOnClick(R.id.ivBackReturn, R.id.tvShoppingMall);
+        mBinding.tvTopTitle.setText(1 == classType ? "商城" : "个性装扮");
+        mBinding.tvShoppingMall.setText(1 == classType ? "装扮" : "商城");
     }
 
     @Override
@@ -51,6 +71,16 @@ public class PersonalizedDressActivity extends BaseBindActivity<ActivityPersonal
             case R.id.ivBackReturn:
                 ActivityManager.getAppInstance().finishActivity();
                 break;
+            case R.id.tvShoppingMall:
+                switch (classType) {
+                    case 1://商城
+                        PersonalizedDressActivity.start(mContext, 2);
+                        break;
+                    case 2://个性装扮
+                        PersonalizedDressActivity.start(mContext, 1);
+                        break;
+                }
+                break;
 
         }
     }
@@ -58,8 +88,7 @@ public class PersonalizedDressActivity extends BaseBindActivity<ActivityPersonal
     @Override
     public void initImmersionBar() {
         ImmersionBar.with(this)
-                .titleBar(mBinding.clTopView, false)
-                .transparentBar()
+                .titleBar(mBinding.clTopView)
                 .init();
     }
 
@@ -67,13 +96,31 @@ public class PersonalizedDressActivity extends BaseBindActivity<ActivityPersonal
     public void initListener() {
         mBinding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.BaseOnOffsetChangedListener() {
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-                if (i >= 0) {
-//                    mBinding.refreshLayout.setEnabled(true);
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (appBarLayout.getTotalScrollRange() == -verticalOffset) {
+                    isScrollBottom = true;
                 } else {
-//                    mBinding.refreshLayout.setEnabled(false);
+                    isScrollBottom = false;
+                }
+                if (isScrollBottom) {
+                    setStatusBar(get(R.id.tabTopView), true);
+
+                } else {
+                    setStatusBar(get(R.id.tabTopView), false);
                 }
             }
         });
+    }
+
+    public void setStatusBar(View view, boolean isShow) {
+        if (view == null) return;
+        LinearLayout.LayoutParams params;
+        if (isShow) {
+            params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, BarUtils.getStatusBarHeight());
+        } else {
+            params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(1));
+        }
+        view.setLayoutParams(params);
+        BarUtils.setStatusBarLightMode(this, isShow);
     }
 }

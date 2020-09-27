@@ -156,7 +156,6 @@ public class ForgetPasswordActivity extends BaseBindActivity<ActivityForgetPassw
                         mBinding.tvGetVerificationCode.setEnabled(false);
                         int countdownNumber = (int) (count - aLong);
                         String showText = countdownNumber + "s";
-//                        SpannableString colorNumberText = SplitUtils.getTextColor(showText, 0, String.valueOf(countdownNumber).length(), getBaseColor(R.color.color_8c86fa));
                         mBinding.tvGetVerificationCode.setText(showText);
                     }
                 })

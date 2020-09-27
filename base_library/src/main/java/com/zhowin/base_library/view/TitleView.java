@@ -19,9 +19,6 @@ import android.widget.TextView;
 import com.zhowin.base_library.R;
 
 
-/**
- * Created by apple on 18/6/23.
- */
 
 public class TitleView extends RelativeLayout {
     private View mRootView;

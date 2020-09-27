@@ -1,6 +1,7 @@
 package com.zhowin.miyou.mine.activity;
 
 
+import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
@@ -19,11 +20,30 @@ public class HelpOrFeedbackActivity extends BaseBindActivity<ActivityHelpOrFeedb
 
     @Override
     public void initView() {
-
+        setOnClick(R.id.clCZGMLayout, R.id.clTXXZLayout, R.id.clGHJSLayout,
+                R.id.clSQGZLayout, R.id.clXXFBLayout, R.id.clXWGFLayout);
     }
 
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.clCZGMLayout:
+                break;
+            case R.id.clTXXZLayout:
+                break;
+            case R.id.clGHJSLayout:
+                break;
+            case R.id.clSQGZLayout:
+                break;
+            case R.id.clXXFBLayout:
+                break;
+            case R.id.clXWGFLayout:
+                break;
+        }
     }
 }
