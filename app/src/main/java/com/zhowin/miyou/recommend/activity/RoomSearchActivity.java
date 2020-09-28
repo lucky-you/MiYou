@@ -3,19 +3,29 @@ package com.zhowin.miyou.recommend.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhowin.base_library.base.BaseBindActivity;
+import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.ConstantValue;
+import com.zhowin.base_library.utils.EmptyViewUtils;
+import com.zhowin.base_library.utils.KeyboardUtils;
 import com.zhowin.base_library.utils.SizeUtils;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityRoomSearchBinding;
+import com.zhowin.miyou.http.BaseResponse;
+import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
 import com.zhowin.miyou.recommend.adapter.SearchHistoryAdapter;
 import com.zhowin.miyou.recommend.model.RecommendList;
@@ -31,6 +41,7 @@ import java.util.List;
 public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBinding> {
 
     private int classType;
+    private MyRoomListAdapter roomSearchAdapter;
 
     public static void start(Context context, int type) {
         Intent intent = new Intent(context, RoomSearchActivity.class);
@@ -54,14 +65,10 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
         switch (classType) {
             case 1:
                 mBinding.editSearch.setHint("请输入房间ID/名称关键字");
-                List<RecommendList> recommendLists = new ArrayList<>();
-                for (int i = 0; i < 12; i++) {
-                    recommendLists.add(new RecommendList("娱乐房" + i, "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1027245443,3552957153&fm=26&gp=0.jpg"));
-                }
-                MyRoomListAdapter myRoomListAdapter = new MyRoomListAdapter(recommendLists);
+                roomSearchAdapter = new MyRoomListAdapter();
                 mBinding.recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, SizeUtils.dp2px(10), false));
                 mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-                mBinding.recyclerView.setAdapter(myRoomListAdapter);
+                mBinding.recyclerView.setAdapter(roomSearchAdapter);
                 break;
             case 2:
                 mBinding.editSearch.setHint("请输入好友ID/昵称关键字");
@@ -81,7 +88,27 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
         mBinding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                currentPage = 0;
+                if (1 == classType) {
+                    startSearchRoom();
+                } else {
+                    startSearchFriend();
+                }
                 mBinding.refreshLayout.setRefreshing(false);
+            }
+        });
+        mBinding.editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (1 == classType) {
+                        startSearchRoom();
+                    } else {
+                        startSearchFriend();
+                    }
+                    return true;
+                }
+                return false;
             }
         });
     }
@@ -93,7 +120,52 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
                 ActivityManager.getAppInstance().finishActivity();
                 break;
             case R.id.tvSearchText:
+                if (1 == classType) {
+                    startSearchRoom();
+                } else {
+                    startSearchFriend();
+                }
+                KeyboardUtils.hideSoftInput(mContext);
                 break;
         }
+    }
+
+    /**
+     * 搜索房间
+     */
+    private void startSearchRoom() {
+        String keyWord = mBinding.editSearch.getText().toString().trim();
+        if (TextUtils.isEmpty(keyWord)) {
+            ToastUtils.showToast("关键字不能为空哦");
+            return;
+        }
+        showLoadDialog();
+        HttpRequest.searchRoomResultList(this, keyWord, currentPage, pageNumber, new HttpCallBack<BaseResponse<RecommendList>>() {
+            @Override
+            public void onSuccess(BaseResponse<RecommendList> recommendListBaseResponse) {
+                dismissLoadDialog();
+                if (recommendListBaseResponse != null) {
+                    List<RecommendList> roomList = recommendListBaseResponse.getRecords();
+                    if (roomList != null && !roomList.isEmpty()) {
+                        roomSearchAdapter.setNewData(roomList);
+                    } else {
+                        EmptyViewUtils.bindEmptyView(mContext, roomSearchAdapter, R.drawable.empty_wufj_icon, "没有搜索到房间");
+                        ToastUtils.showToast("没有符合条件的房间哦");
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+            }
+        });
+
+    }
+
+    /**
+     * 搜索好友
+     */
+    private void startSearchFriend() {
     }
 }

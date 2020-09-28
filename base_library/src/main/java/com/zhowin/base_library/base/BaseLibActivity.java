@@ -24,7 +24,7 @@ public abstract class BaseLibActivity extends SupportActivity implements View.On
     protected LoadProgressDialog progressDialog;
 
     protected int totalPage;//总页数
-    protected int currentPage = 1;//当前页数
+    protected int currentPage = 0;//当前页数
     protected int pageNumber = 10; //每一页的个数
 
     @Override

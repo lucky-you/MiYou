@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * author : zho
  * date  ：2020/8/24
- * desc ：
+ * desc ：首页房间列表
  */
 public class RecommendListAdapter extends BaseQuickAdapter<RecommendList, BaseViewHolder> {
     public RecommendListAdapter(@Nullable List<RecommendList> data) {

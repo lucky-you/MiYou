@@ -63,7 +63,7 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
 
     @Override
     public void initData() {
-        myRoomListAdapter = new MyRoomListAdapter(roomDataList);
+        myRoomListAdapter = new MyRoomListAdapter();
         mBinding.recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, SizeUtils.dp2px(10), false));
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         mBinding.recyclerView.setAdapter(myRoomListAdapter);

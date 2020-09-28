@@ -428,7 +428,9 @@ public interface ApiRequest {
     /**
      * 搜索房间
      */
-
+    @FormUrlEncoded
+    @POST(SEARCH_ROOM_lIST_URL)
+    Observable<ApiResponse<BaseResponse<RecommendList>>> searchRoomResultList(@Header(AUTHOR) String token, @Field("keyWord") String keyWord, @Field("current") int current, @Field("size") int size);
 
     /**
      * 搜索用户

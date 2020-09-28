@@ -827,4 +827,25 @@ public class HttpRequest {
                     }
                 });
     }
+
+    /**
+     * 搜索房间
+     */
+    public static void searchRoomResultList(LifecycleOwner activity, String keyWord, int currentPage, int pageNumber, final HttpCallBack<BaseResponse<RecommendList>> callBack) {
+        apiRequest.searchRoomResultList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), keyWord, currentPage, pageNumber)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<BaseResponse<RecommendList>>() {
+
+                    @Override
+                    public void onSuccess(BaseResponse<RecommendList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 }
