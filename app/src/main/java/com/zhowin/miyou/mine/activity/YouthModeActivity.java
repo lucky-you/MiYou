@@ -27,7 +27,6 @@ public class YouthModeActivity extends BaseBindActivity<ActivityYouthModeBinding
 
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

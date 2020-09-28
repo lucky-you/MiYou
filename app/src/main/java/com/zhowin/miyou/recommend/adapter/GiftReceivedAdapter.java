@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zhowin.miyou.R;
 import com.zhowin.miyou.recommend.model.GiftList;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class GiftReceivedAdapter extends BaseQuickAdapter<GiftList, BaseViewHolder> {
     public GiftReceivedAdapter(@Nullable List<GiftList> data) {
-        super(data);
+        super(R.layout.include_gift_received_item_view, data);
     }
 
     @Override

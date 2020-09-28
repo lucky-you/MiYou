@@ -18,7 +18,6 @@ import com.zhowin.miyou.mine.dialog.UnlockRoomDialog;
 import com.zhowin.miyou.recommend.adapter.RecommendListAdapter;
 import com.zhowin.miyou.recommend.model.RecommendList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -86,7 +85,7 @@ public class RecommendListFragment extends BaseLibFragment implements BaseQuickA
         if (roomIsLock) {
             showUnLockRoomDialog();
         } else {
-
+//            startActivity(ChatRoomActivity.class);
         }
     }
 

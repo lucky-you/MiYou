@@ -164,7 +164,7 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
         if (roomIsLock) {
             showUnLockRoomDialog();
         } else {
-
+//            startActivity(ChatRoomActivity.class);
         }
     }
 
