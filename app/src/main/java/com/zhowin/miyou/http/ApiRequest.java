@@ -50,6 +50,9 @@ public interface ApiRequest {
     //手机号+密码登录
     String MOBILE_AND_PASSWORD_URL = "/mobile/pwd/login";
 
+    //账号 + 密码登录
+    String NAME_AND_PASSWORD_LOGIN_URL = "/login";
+
     //获取用户信息
     String GET_USER_INFO_MESSAGE_URL = "/ant/userInfo/my";
 
@@ -211,6 +214,13 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(MOBILE_AND_PASSWORD_URL)
     Observable<ApiResponse<UserInfo>> loginMobileAndPassword(@Field("phone") String phone, @Field("password") String password);
+
+    /**
+     * 账号 + 密码 登录
+     */
+    @FormUrlEncoded
+    @POST(NAME_AND_PASSWORD_LOGIN_URL)
+    Observable<ApiResponse<UserInfo>> nameAndPasswordLogin(@Field("username") String username, @Field("password") String password);
 
     /**
      * 手机号 + 短信验证码登录

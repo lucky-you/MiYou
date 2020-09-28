@@ -6,6 +6,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
@@ -109,11 +110,12 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
 
     /**
-     * 手机号 + 密码 登录
+     * 账号 + 密码 登录
      */
     private void loginMobileAndPassword() {
-        String phoneNumber = mBinding.editPhoneNumber.getText().toString().trim();
-        if (!PhoneUtils.checkPhone(phoneNumber, true)) {
+        String userNameId = mBinding.editPhoneNumber.getText().toString().trim();
+        if (TextUtils.isEmpty(userNameId)) {
+            ToastUtils.showToast("请输入您的账号");
             return;
         }
         String password = mBinding.editPassword.getText().toString().trim();
@@ -126,7 +128,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
             return;
         }
         showLoadDialog();
-        HttpRequest.loginMobileAndPassword(this, phoneNumber, password, new HttpCallBack<UserInfo>() {
+        HttpRequest.nameAndPasswordLogin(this, userNameId, password, new HttpCallBack<UserInfo>() {
             @Override
             public void onSuccess(UserInfo userInfo) {
                 dismissLoadDialog();

@@ -16,11 +16,12 @@ import java.util.List;
  */
 public class ReportListAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public ReportListAdapter(@Nullable List<String> data) {
-        super(R.layout.include_report_list_item_view,   data);
+        super(R.layout.include_report_list_item_view, data);
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, String item) {
+        helper.setText(R.id.tvReportItemTitle, item);
 
     }
 }

@@ -150,6 +150,27 @@ public class HttpRequest {
     }
 
     /**
+     * 账号 + 密码 登录
+     */
+    public static void nameAndPasswordLogin(LifecycleOwner activity, String username, String password, final HttpCallBack<UserInfo> callBack) {
+        apiRequest.nameAndPasswordLogin(username, password)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<UserInfo>() {
+
+                    @Override
+                    public void onSuccess(UserInfo demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
      * 获取默认图像
      */
     public static void getDefaultAvatar(LifecycleOwner activity, final HttpCallBack<List<DefaultImageList>> callBack) {

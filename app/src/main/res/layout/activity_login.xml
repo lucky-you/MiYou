@@ -187,8 +187,8 @@
                     android:layout_gravity="center"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:hint="请输入手机号码"
-                    android:inputType="phone"
+                    android:hint="请输入您的账号"
+                    android:inputType="number"
                     android:textColor="@color/color_333"
                     android:textColorHint="@color/color_999"
                     android:textSize="13dp" />

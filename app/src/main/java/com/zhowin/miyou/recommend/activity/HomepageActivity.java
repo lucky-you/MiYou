@@ -186,7 +186,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
             public void onItemClick(int itemType) {
                 switch (itemType) {
                     case 1://举报
-                        ToastUtils.showToast("举报");
+                        ReportRoomActivity.start(mContext, 2);
                         break;
                     case 2://关注
                         addAttentionOrBlackList(1, userId);
