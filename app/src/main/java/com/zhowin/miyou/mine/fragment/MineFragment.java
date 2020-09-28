@@ -9,6 +9,7 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
+import com.zhowin.base_library.model.UserLevelInfo;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SetDrawableHelper;
 import com.zhowin.base_library.utils.ToastUtils;
@@ -129,7 +130,10 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
         mBinding.tvUserSex.setBackgroundResource(GenderHelper.getSexBackground(userInfo.getGender()));
         int drawable = GenderHelper.getSexDrawable(userInfo.getGender());
         SetDrawableHelper.setLeftDrawable(mContext, mBinding.tvUserSex, true, 2, drawable, drawable);
-
+        UserLevelInfo userLevel = userInfo.getLevelObj();
+        if (userLevel != null) {
+            mBinding.ivUserLevel.setText("V" + userLevel.getLevel());
+        }
     }
 
 
