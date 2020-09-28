@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ActivityManager;
@@ -27,6 +28,7 @@ import com.zhowin.miyou.databinding.ActivityRoomSearchBinding;
 import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
+import com.zhowin.miyou.mine.dialog.UnlockRoomDialog;
 import com.zhowin.miyou.recommend.adapter.SearchHistoryAdapter;
 import com.zhowin.miyou.recommend.model.RecommendList;
 
@@ -38,7 +40,7 @@ import java.util.List;
  * <p>
  * type: 1 房间  2 好友
  */
-public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBinding> {
+public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBinding> implements BaseQuickAdapter.OnItemClickListener {
 
     private int classType;
     private MyRoomListAdapter roomSearchAdapter;
@@ -69,6 +71,7 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
                 mBinding.recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, SizeUtils.dp2px(10), false));
                 mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
                 mBinding.recyclerView.setAdapter(roomSearchAdapter);
+                roomSearchAdapter.setOnItemClickListener(this::onItemClick);
                 break;
             case 2:
                 mBinding.editSearch.setHint("请输入好友ID/昵称关键字");
@@ -109,6 +112,27 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
                     return true;
                 }
                 return false;
+            }
+        });
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        boolean roomIsLock = roomSearchAdapter.getItem(position).isExistPwd();
+        if (roomIsLock) {
+            showUnLockRoomDialog();
+        } else {
+
+        }
+    }
+
+    private void showUnLockRoomDialog() {
+        UnlockRoomDialog unlockRoomDialog = new UnlockRoomDialog(mContext);
+        unlockRoomDialog.show();
+        unlockRoomDialog.setOnUnLockRoomListener(new UnlockRoomDialog.OnUnLockRoomListener() {
+            @Override
+            public void onUnLockRoom(String password) {
+
             }
         });
     }

@@ -15,6 +15,7 @@ import com.zhowin.miyou.mine.model.VerifiedStatus;
 import com.zhowin.miyou.recommend.model.GZBUserList;
 import com.zhowin.miyou.recommend.model.GiftList;
 import com.zhowin.miyou.recommend.model.GuardUserList;
+import com.zhowin.miyou.recommend.model.HomeCategory;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 import com.zhowin.miyou.recommend.model.ToadyUserList;
@@ -187,6 +188,15 @@ public interface ApiRequest {
 
     //购买道具/座驾
     String USER_BUY_PROPS_URL = "/ant/mall/buy";
+
+    //获取首页类型分类
+    String GET_HOME_CATEGORY_LIST = "/ant/live/typesView";
+
+    //获取首页直播间列表
+    String GET_HOME_LIVE_ROOM_LIST = "/ant/live/list";
+
+    //提交举报原因
+    String SUBMIT_REPORT_MESSAGE_URL = "";
 
 
     /**
@@ -435,5 +445,28 @@ public interface ApiRequest {
     /**
      * 搜索用户
      */
+    @FormUrlEncoded
+    @POST(SEARCH_USER_LIST_URL)
+    Observable<ApiResponse<BaseResponse<UserInfo>>> searchUserResultList(@Header(AUTHOR) String token, @Field("keyWord") String keyWord, @Field("current") int current, @Field("size") int size);
 
+    /**
+     * 获取首页类型分类
+     */
+    @POST(GET_HOME_CATEGORY_LIST)
+    Observable<ApiResponse<List<HomeCategory>>> getHomeCategoryList(@Header(AUTHOR) String token);
+
+    /**
+     * 获取首页房间列表
+     */
+    @FormUrlEncoded
+    @POST(GET_HOME_LIVE_ROOM_LIST)
+    Observable<ApiResponse<List<RecommendList>>> getHomeRoomList(@Header(AUTHOR) String token, @Field("type") int type);
+
+
+    /**
+     * 提交举报原因
+     */
+    @FormUrlEncoded
+    @POST(SUBMIT_REPORT_MESSAGE_URL)
+    Observable<ApiResponse<Object>> submitReportMessage(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
 }

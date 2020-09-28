@@ -17,14 +17,15 @@ import java.util.List;
  * desc ：首页房间列表
  */
 public class RecommendListAdapter extends BaseQuickAdapter<RecommendList, BaseViewHolder> {
-    public RecommendListAdapter(@Nullable List<RecommendList> data) {
-        super(R.layout.include_recommens_list_item_view, data);
+    public RecommendListAdapter() {
+        super(R.layout.include_recommens_list_item_view);
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, RecommendList item) {
-        helper.setText(R.id.tvRoomType, item.getTitle());
-        GlideUtils.loadObjectImage(mContext, item.getCoverPictureKey(), helper.getView(R.id.ivRoomBackGround));
+        GlideUtils.loadObjectImage(mContext,item.getBackgroundPictureKey(),helper.getView(R.id.ivRoomBackGround));
+        helper.setText(R.id.tvRoomType, item.getTypeName())
+                .setText(R.id.tvRoomDescription,item.getTitle());
 
     }
 }

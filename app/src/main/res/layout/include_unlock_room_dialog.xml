@@ -24,7 +24,7 @@
         android:layout_margin="16dp"
         android:background="@drawable/shape_unlock_room_password_20dp_bg"
         android:gravity="center"
-        android:inputType="number"
+        android:inputType="numberPassword"
         android:maxLength="4"
         android:textColor="@color/color_333"
         android:textColorHint="@color/color_999"

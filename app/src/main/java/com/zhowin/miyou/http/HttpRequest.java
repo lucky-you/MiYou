@@ -23,6 +23,7 @@ import com.zhowin.miyou.mine.model.VerifiedStatus;
 import com.zhowin.miyou.recommend.model.GZBUserList;
 import com.zhowin.miyou.recommend.model.GiftList;
 import com.zhowin.miyou.recommend.model.GuardUserList;
+import com.zhowin.miyou.recommend.model.HomeCategory;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 import com.zhowin.miyou.recommend.model.ToadyUserList;
@@ -839,6 +840,90 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(BaseResponse<RecommendList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 搜索用户
+     */
+    public static void searchUserResultList(LifecycleOwner activity, String keyWord, int currentPage, int pageNumber, final HttpCallBack<BaseResponse<UserInfo>> callBack) {
+        apiRequest.searchUserResultList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), keyWord, currentPage, pageNumber)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<BaseResponse<UserInfo>>() {
+
+                    @Override
+                    public void onSuccess(BaseResponse<UserInfo> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取首页分类
+     */
+    public static void getHomeCategoryList(LifecycleOwner activity, final HttpCallBack<List<HomeCategory>> callBack) {
+        apiRequest.getHomeCategoryList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<HomeCategory>>() {
+
+                    @Override
+                    public void onSuccess(List<HomeCategory> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取首页的直播房间
+     */
+    public static void getHomeRoomList(LifecycleOwner activity, int type, final HttpCallBack<List<RecommendList>> callBack) {
+        apiRequest.getHomeRoomList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), type)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<RecommendList>>() {
+
+                    @Override
+                    public void onSuccess(List<RecommendList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 提交举报原因
+     */
+    public static void submitReportMessage(LifecycleOwner activity, HashMap<String, Object> map, final HttpCallBack<Object> callBack) {
+        apiRequest.submitReportMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), map)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
                         callBack.onSuccess(demo);
                     }
 

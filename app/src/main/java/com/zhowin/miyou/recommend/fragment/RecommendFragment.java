@@ -1,10 +1,7 @@
 package com.zhowin.miyou.recommend.fragment;
 
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -19,8 +16,8 @@ import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.banner.BannerHelperUtils;
 import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.recommend.activity.RoomSearchActivity;
-import com.zhowin.miyou.recommend.activity.SetUpAdministratorActivity;
 import com.zhowin.miyou.recommend.activity.UserListActivity;
+import com.zhowin.miyou.recommend.model.HomeCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,28 +36,15 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
     @Override
     public void initView() {
         setOnClick(R.id.tvHomeSearch, R.id.ivUserList);
-        loadHomeBannerList();
-        getHomeNoticeMessageList();
-    }
-
-    @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
 
     }
+
 
     @Override
     public void initData() {
-        String[] mTitles = {"热门", "女神", "男神", "娱乐", "FM"};
-        List<Fragment> mFragments = new ArrayList<>();
-        for (int i = 0; i < mTitles.length; i++) {
-            mFragments.add(RecommendListFragment.newInstance(i));
-        }
-        HomePageAdapter homePageAdapter = new HomePageAdapter(getChildFragmentManager(), mFragments, mTitles);
-        mBinding.noScrollViewPager.setAdapter(homePageAdapter);
-        mBinding.noScrollViewPager.setScroll(true);
-        mBinding.slidingTabLayout.setViewPager(mBinding.noScrollViewPager);
-
+        loadHomeBannerList();
+        getHomeNoticeMessageList();
+        getHomeCategoryList();
     }
 
 
@@ -102,6 +86,35 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
         });
     }
 
+    /**
+     * 获取分类
+     */
+    private void getHomeCategoryList() {
+        HttpRequest.getHomeCategoryList(this, new HttpCallBack<List<HomeCategory>>() {
+            @Override
+            public void onSuccess(List<HomeCategory> homeCategories) {
+                if (homeCategories != null && !homeCategories.isEmpty()) {
+                    List<Fragment> mFragments = new ArrayList<>();
+                    List<String> mTitles = new ArrayList<>();
+                    for (int i = 0; i < homeCategories.size(); i++) {
+                        mTitles.add(homeCategories.get(i).getTypeName());
+                        mFragments.add(RecommendListFragment.newInstance(i, homeCategories.get(i).getTypeId()));
+                    }
+                    HomePageAdapter homePageAdapter = new HomePageAdapter(getChildFragmentManager(), mFragments, mTitles);
+                    mBinding.noScrollViewPager.setAdapter(homePageAdapter);
+                    mBinding.noScrollViewPager.setScroll(true);
+                    mBinding.slidingTabLayout.setViewPager(mBinding.noScrollViewPager);
+                }
+
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -120,6 +133,9 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
         mBinding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                loadHomeBannerList();
+//                getHomeNoticeMessageList();
+//                getHomeCategoryList();
                 mBinding.refreshLayout.setRefreshing(false);
             }
         });

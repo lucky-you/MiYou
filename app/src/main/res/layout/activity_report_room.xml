@@ -92,7 +92,7 @@
                 style="@style/TextViewStyleOf14Sp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="6dp"
-                android:text="觅U号:000000"
+                android:text="ID:000000"
                 android:textColor="@color/color_999"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/ivUserAvatar"
@@ -122,6 +122,7 @@
             android:background="@drawable/shape_gery_color_5dp_bg">
 
             <EditText
+                android:id="@+id/editReportReason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="60dp"

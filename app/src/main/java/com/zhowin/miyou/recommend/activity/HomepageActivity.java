@@ -28,12 +28,14 @@ import com.zhowin.miyou.main.utils.GenderHelper;
 import com.zhowin.miyou.mine.activity.PersonalInfoActivity;
 import com.zhowin.miyou.recommend.adapter.HomePagerAdapter;
 import com.zhowin.miyou.recommend.callback.OnHitCenterClickListener;
+import com.zhowin.miyou.recommend.callback.OnHomePageMoreGiftListener;
 import com.zhowin.miyou.recommend.callback.OnReportAndAttentionListener;
 import com.zhowin.miyou.recommend.callback.OnTopicTagClickListener;
 import com.zhowin.miyou.recommend.dialog.HitCenterDialog;
 import com.zhowin.miyou.recommend.dialog.ReportAndAttentionDialog;
 import com.zhowin.miyou.recommend.dialog.ShareItemDialog;
 import com.zhowin.miyou.recommend.model.HomePageCategoryList;
+import com.zhowin.miyou.recommend.model.ReportUserOrRoom;
 import com.zhowin.miyou.recommend.widget.SetTagsToViewHelper;
 
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ import java.util.List;
 /**
  * 个人主页 自己和别人共用
  */
-public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> {
+public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> implements OnHomePageMoreGiftListener {
 
 
     private boolean isMine;
@@ -50,6 +52,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
     private HomePagerAdapter homePagerAdapter;
     private List<HomePageCategoryList> homePageCategoryLists = new ArrayList<>();
     private String userNickName, userIDCode;
+    private ReportUserOrRoom reportUserOrRoom = new ReportUserOrRoom();
 
     public static void start(Context context, boolean isMine, int userId) {
         Intent intent = new Intent(context, HomepageActivity.class);
@@ -79,6 +82,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         homePagerAdapter = new HomePagerAdapter(homePageCategoryLists);
         mBinding.homePageRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.homePageRecyclerView.setAdapter(homePagerAdapter);
+        homePagerAdapter.setOnHomePageMoreGiftListener(this::onSeeMoreItemClick);
     }
 
     @Override
@@ -123,6 +127,12 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
             mBinding.tvUserSignText.setText("签名：" + userInfo.getStatus());
         String onLineStatus = "离线  " + userInfo.getFollowNum() + "关注" + "  •  " + userInfo.getFansNum() + "粉丝";
         mBinding.tvUserOnlineStatus.setText(onLineStatus);
+        reportUserOrRoom.setUserId(userId);
+        reportUserOrRoom.setUserNickName(userNickName);
+        reportUserOrRoom.setUserHeadPhoto(userInfo.getProfilePictureKey());
+        reportUserOrRoom.setUserMUNumber("ID:" + userIDCode);
+        reportUserOrRoom.setUserGender(userInfo.getGender());
+        reportUserOrRoom.setUserAge(userInfo.getAge());
         setUserBannerData(userInfo.getBackgroundPictureKeys());
         List<UserInterestList> userInterestList = userInfo.getLabelList();
         if (userInterestList != null && !userInterestList.isEmpty()) {
@@ -186,7 +196,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
             public void onItemClick(int itemType) {
                 switch (itemType) {
                     case 1://举报
-                        ReportRoomActivity.start(mContext, 2);
+                        ReportRoomActivity.start(mContext, 2, reportUserOrRoom);
                         break;
                     case 2://关注
                         addAttentionOrBlackList(1, userId);
@@ -274,5 +284,18 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
                 .addTag("PicAndColor")
                 .init();
 
+    }
+
+    @Override
+    public void onSeeMoreItemClick(int position) {
+        switch (position) {
+            case 0:
+                startActivity(GiftReceivedActivity.class);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
     }
 }

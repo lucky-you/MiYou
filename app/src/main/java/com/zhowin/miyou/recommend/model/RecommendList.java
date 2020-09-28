@@ -1,7 +1,5 @@
 package com.zhowin.miyou.recommend.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * author : zho
  * date  ：2020/8/24
@@ -12,40 +10,35 @@ public class RecommendList {
 
     /**
      * roomId : 30
+     * roomNo : 73379
      * title : LOl在线直播
-     * coverPictureKey : miYou/2020/09/27/210334/1601211814114
-     * decoratePicture : null
+     * coverPictureKey : http://qfah2px93.hn-bkt.clouddn.com/miYou/2020/09/27/210334/1601211814114
+     * description : 盘点历年来LOL世界赛中3场最精彩的B05！扣肉让人惋惜！
+     * backgroundPictureId : 1
      * backgroundPictureKey : http://qfah2px93.hn-bkt.clouddn.com/image.room.background.1.jpg
      * typeId : 1
      * typeName : 娱乐房
-     * allowMicFree : 1
+     * heatValue : 0
+     * decoratePicture : null
      * existPwd : false
      * owner : 34
-     */
-
-    private int roomId;
-    private String title;
-    private String coverPictureKey;
-    private String decoratePicture;
-    private String backgroundPictureKey;
-    private int typeId;
-    private String typeName;
-    private int allowMicFree;
-    private boolean existPwd;
-    private int owner;
-    /**
-     * roomNo : 73379
-     * description : 盘点历年来LOL世界赛中3场最精彩的B05！扣肉让人惋惜！
-     * backgroundPictureId : 1
-     * decoratePicture : null
      * createTime : 1601211839000
      */
 
+    private int roomId;
     private String roomNo;
+    private String title;
+    private String coverPictureKey;
     private String description;
     private String backgroundPictureId;
+    private String backgroundPictureKey;
+    private int typeId;
+    private String typeName;
+    private int heatValue;
+    private String decoratePicture;
+    private boolean existPwd;
+    private int owner;
     private long createTime;
-
 
     public RecommendList(String title, String backgroundPictureKey) {
         this.title = title;
@@ -58,6 +51,14 @@ public class RecommendList {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
+    }
+
+    public String getRoomNo() {
+        return roomNo;
+    }
+
+    public void setRoomNo(String roomNo) {
+        this.roomNo = roomNo;
     }
 
     public String getTitle() {
@@ -76,12 +77,20 @@ public class RecommendList {
         this.coverPictureKey = coverPictureKey;
     }
 
-    public String getDecoratePicture() {
-        return decoratePicture;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecoratePicture(String decoratePicture) {
-        this.decoratePicture = decoratePicture;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getBackgroundPictureId() {
+        return backgroundPictureId;
+    }
+
+    public void setBackgroundPictureId(String backgroundPictureId) {
+        this.backgroundPictureId = backgroundPictureId;
     }
 
     public String getBackgroundPictureKey() {
@@ -108,12 +117,20 @@ public class RecommendList {
         this.typeName = typeName;
     }
 
-    public int getAllowMicFree() {
-        return allowMicFree;
+    public int getHeatValue() {
+        return heatValue;
     }
 
-    public void setAllowMicFree(int allowMicFree) {
-        this.allowMicFree = allowMicFree;
+    public void setHeatValue(int heatValue) {
+        this.heatValue = heatValue;
+    }
+
+    public String getDecoratePicture() {
+        return decoratePicture;
+    }
+
+    public void setDecoratePicture(String decoratePicture) {
+        this.decoratePicture = decoratePicture;
     }
 
     public boolean isExistPwd() {
@@ -130,30 +147,6 @@ public class RecommendList {
 
     public void setOwner(int owner) {
         this.owner = owner;
-    }
-
-    public String getRoomNo() {
-        return roomNo;
-    }
-
-    public void setRoomNo(String roomNo) {
-        this.roomNo = roomNo;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getBackgroundPictureId() {
-        return backgroundPictureId;
-    }
-
-    public void setBackgroundPictureId(String backgroundPictureId) {
-        this.backgroundPictureId = backgroundPictureId;
     }
 
     public long getCreateTime() {

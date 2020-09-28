@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llReportItemLayout"
     android:layout_width="match_parent"
     android:layout_height="44dp"
     android:orientation="horizontal">
+
+
+    <ImageView
+        android:id="@+id/ivReportSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/report_unclick_icon" />
 
     <TextView
         android:id="@+id/tvReportItemTitle"
         style="@style/TextViewStyleOf14Sp"
         android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
         android:gravity="center"
         android:text="广告骚扰" />
 </LinearLayout>

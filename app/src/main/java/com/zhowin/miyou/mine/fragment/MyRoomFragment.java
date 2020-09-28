@@ -160,12 +160,22 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//        showUnLockRoomDialog();
+        boolean roomIsLock = myRoomListAdapter.getItem(position).isExistPwd();
+        if (roomIsLock) {
+            showUnLockRoomDialog();
+        } else {
+
+        }
     }
 
     private void showUnLockRoomDialog() {
         UnlockRoomDialog unlockRoomDialog = new UnlockRoomDialog(mContext);
         unlockRoomDialog.show();
+        unlockRoomDialog.setOnUnLockRoomListener(new UnlockRoomDialog.OnUnLockRoomListener() {
+            @Override
+            public void onUnLockRoom(String password) {
 
+            }
+        });
     }
 }
