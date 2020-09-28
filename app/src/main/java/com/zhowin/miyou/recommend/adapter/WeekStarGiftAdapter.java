@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.main.utils.GenderHelper;
@@ -36,21 +38,16 @@ public class WeekStarGiftAdapter extends BaseQuickAdapter<WeekStarUserList.GiftA
         }
         WeekStarUserList.GiftARankingBean.UserInfoBean weekStarWeekUserInfo = item.getUserInfo();
         if (weekStarWeekUserInfo != null) {
-
             GlideUtils.loadUserPhotoForLogin(mContext, weekStarWeekUserInfo.getProfilePictureKey(), helper.getView(R.id.civUserHeadPhoto));
-
-            helper .setText(R.id.tvUserNickName, weekStarWeekUserInfo.getAvatar())
+            helper.setText(R.id.tvUserNickName, weekStarWeekUserInfo.getAvatar())
                     .setImageResource(R.id.ivUserSexImage, GenderHelper.getSexResource(weekStarWeekUserInfo.getGender()))
                     .setGone(R.id.tvFollow, false)
                     .setText(R.id.tvGiftName, "送出 " + item.getScore());
-
-            WeekStarUserList.GiftARankingBean.UserInfoBean.LevelObjBean userLevel = weekStarWeekUserInfo.getLevelObj();
-
+            UserLevelInfo userLevel = weekStarWeekUserInfo.getLevelObj();
             if (userLevel != null) {
                 helper.setText(R.id.tvUserLevel, "V" + userLevel.getLevel());
             }
-
-            WeekStarUserList.GiftARankingBean.UserInfoBean.RankBean userRank = weekStarWeekUserInfo.getRank();
+            UserRankInfo userRank = weekStarWeekUserInfo.getRank();
             if (userRank != null) {
                 helper.setGone(R.id.tvUserKnighthood, true)
                         .setText(R.id.tvUserKnighthood, userRank.getRankName());

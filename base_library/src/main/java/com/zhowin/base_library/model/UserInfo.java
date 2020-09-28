@@ -57,7 +57,9 @@ public class UserInfo {
     private int undefinedPwd;
     private int userId;
     private String username;
+    private String mobileNum;
     private int visitNum;
+    private UserLevelInfo levelObj;
     private List<UserInterestList> labelList;
     private List<String> backgroundPictureKeys;
     private List<GiftAndCarList> cars;
@@ -255,6 +257,22 @@ public class UserInfo {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public UserLevelInfo getLevelObj() {
+        return levelObj;
+    }
+
+    public void setLevelObj(UserLevelInfo levelObj) {
+        this.levelObj = levelObj;
+    }
+
+    public String getMobileNum() {
+        return mobileNum;
+    }
+
+    public void setMobileNum(String mobileNum) {
+        this.mobileNum = mobileNum;
     }
 
     public int getVisitNum() {

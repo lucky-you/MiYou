@@ -28,6 +28,9 @@ public class ShopMallPropsList {
     private long createTime;
     private List<GoodsTimesBean> goodsTimes;
 
+    private boolean isSelect;
+
+
     public int getId() {
         return id;
     }
@@ -92,11 +95,19 @@ public class ShopMallPropsList {
         this.goodsTimes = goodsTimes;
     }
 
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
     public static class GoodsTimesBean {
         /**
          * id : dfasdf34t
          * goodsId : 2
-         * timeType : 0
+         * timeType : 0  物品期限 0：七天、1：一个月、2：三个月、3：一年、4：无限期
          * price : 38
          * bidPrice : 35
          * sort : 1

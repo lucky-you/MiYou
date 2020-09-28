@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 /**
  * author : zho
  * date  ：2020/9/15
- * desc ：
+ * desc ：管理人员信息
  */
 public class AdminInfoList implements MultiItemEntity {
 

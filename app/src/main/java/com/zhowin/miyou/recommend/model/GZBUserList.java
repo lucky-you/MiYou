@@ -1,5 +1,8 @@
 package com.zhowin.miyou.recommend.model;
 
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
+
 /**
  * 贵族榜单
  */
@@ -21,8 +24,8 @@ public class GZBUserList {
     private String gender;
     private int age;
     private String profilePictureKey;
-    private LevelObjBean levelObj;
-    private RankBean rank;
+    private UserLevelInfo levelObj;
+    private UserRankInfo rank;
 
     public int getUserId() {
         return userId;
@@ -64,141 +67,19 @@ public class GZBUserList {
         this.profilePictureKey = profilePictureKey;
     }
 
-    public LevelObjBean getLevelObj() {
+    public UserLevelInfo getLevelObj() {
         return levelObj;
     }
 
-    public void setLevelObj(LevelObjBean levelObj) {
+    public void setLevelObj(UserLevelInfo levelObj) {
         this.levelObj = levelObj;
     }
 
-    public RankBean getRank() {
+    public UserRankInfo getRank() {
         return rank;
     }
 
-    public void setRank(RankBean rank) {
+    public void setRank(UserRankInfo rank) {
         this.rank = rank;
-    }
-
-    public static class LevelObjBean {
-        /**
-         * level : 0
-         * startExpValue : 0
-         * endExpValue : 0
-         * color : #eeeee
-         */
-
-        private int level;
-        private int startExpValue;
-        private int endExpValue;
-        private String color;
-
-        public int getLevel() {
-            return level;
-        }
-
-        public void setLevel(int level) {
-            this.level = level;
-        }
-
-        public int getStartExpValue() {
-            return startExpValue;
-        }
-
-        public void setStartExpValue(int startExpValue) {
-            this.startExpValue = startExpValue;
-        }
-
-        public int getEndExpValue() {
-            return endExpValue;
-        }
-
-        public void setEndExpValue(int endExpValue) {
-            this.endExpValue = endExpValue;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        public void setColor(String color) {
-            this.color = color;
-        }
-    }
-
-    public static class RankBean {
-        /**
-         * userId : 32
-         * rankId : 1
-         * rankName : 子爵
-         * rankPictureKey : 2341234tr34r.jpg
-         * level : 2
-         * expireTime : 1606339509000
-         * status : 1
-         */
-
-        private int userId;
-        private int rankId;
-        private String rankName;
-        private String rankPictureKey;
-        private int level;
-        private long expireTime;
-        private int status;
-
-        public int getUserId() {
-            return userId;
-        }
-
-        public void setUserId(int userId) {
-            this.userId = userId;
-        }
-
-        public int getRankId() {
-            return rankId;
-        }
-
-        public void setRankId(int rankId) {
-            this.rankId = rankId;
-        }
-
-        public String getRankName() {
-            return rankName;
-        }
-
-        public void setRankName(String rankName) {
-            this.rankName = rankName;
-        }
-
-        public String getRankPictureKey() {
-            return rankPictureKey;
-        }
-
-        public void setRankPictureKey(String rankPictureKey) {
-            this.rankPictureKey = rankPictureKey;
-        }
-
-        public int getLevel() {
-            return level;
-        }
-
-        public void setLevel(int level) {
-            this.level = level;
-        }
-
-        public long getExpireTime() {
-            return expireTime;
-        }
-
-        public void setExpireTime(long expireTime) {
-            this.expireTime = expireTime;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
     }
 }

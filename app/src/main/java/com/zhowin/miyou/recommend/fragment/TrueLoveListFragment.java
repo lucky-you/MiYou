@@ -9,6 +9,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.EmptyViewUtils;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.ToastUtils;
@@ -107,11 +109,11 @@ public class TrueLoveListFragment extends BaseBindFragment<IncludeTrueLoveListFr
             GlideUtils.loadUserPhotoForLogin(mContext, itemGiverInfo.getProfilePictureKey(), mBinding.civInitiatorHead);
             mBinding.ivInitiatorSexImage.setImageResource(GenderHelper.getSexResource(itemGiverInfo.getGender()));
             mBinding.tvInitiatorUserNickName.setText(itemGiverInfo.getAvatar());
-            ZABUserList.GiverBean.LevelObjBean itemInitiatorLevelInfo = itemGiverInfo.getLevelObj();
+            UserLevelInfo itemInitiatorLevelInfo = itemGiverInfo.getLevelObj();
             if (itemInitiatorLevelInfo != null) {
                 mBinding.tvInitiatorUserLevel.setText("v" + itemInitiatorLevelInfo.getLevel());
             }
-            ZABUserList.GiverBean.RankBean itemInitiatorRankInfo = itemGiverInfo.getRank();
+            UserRankInfo itemInitiatorRankInfo = itemGiverInfo.getRank();
             if (itemInitiatorRankInfo != null) {
                 mBinding.tvInitiatorUserKnighthood.setVisibility(View.VISIBLE);
                 mBinding.tvAccepterUserKnighthood.setText(itemInitiatorRankInfo.getRankName());
@@ -125,11 +127,11 @@ public class TrueLoveListFragment extends BaseBindFragment<IncludeTrueLoveListFr
             mBinding.ivAccepterSexImage.setImageResource(GenderHelper.getSexResource(itemAccepterInfo.getGender()));
             mBinding.tvAccepterNickName.setText(itemAccepterInfo.getAvatar());
 
-            ZABUserList.AccepterBean.LevelObjBeanX itemAccepterUserLevelInfo = itemAccepterInfo.getLevelObj();
+            UserLevelInfo itemAccepterUserLevelInfo = itemAccepterInfo.getLevelObj();
             if (itemAccepterUserLevelInfo != null) {
                 mBinding.tvAccepterUserLevel.setText("v" + itemAccepterUserLevelInfo.getLevel());
             }
-            ZABUserList.AccepterBean.RankBean itemAccepterUserRankInfo = itemAccepterInfo.getRank();
+            UserRankInfo itemAccepterUserRankInfo = itemAccepterInfo.getRank();
             if (itemAccepterUserRankInfo != null) {
                 mBinding.tvAccepterUserKnighthood.setVisibility(View.VISIBLE);
                 mBinding.tvAccepterUserKnighthood.setText(itemAccepterUserRankInfo.getRankName());

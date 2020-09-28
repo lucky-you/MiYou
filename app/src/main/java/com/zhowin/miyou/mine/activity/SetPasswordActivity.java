@@ -142,7 +142,6 @@ public class SetPasswordActivity extends BaseBindActivity<ActivitySetPasswordBin
 
     /**
      * 设置密码
-     *
      * @param password 密码
      */
     private void setUserPassword(String password) {

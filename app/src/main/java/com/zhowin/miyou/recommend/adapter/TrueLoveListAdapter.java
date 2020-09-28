@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.main.utils.GenderHelper;
@@ -25,11 +27,11 @@ public class TrueLoveListAdapter extends BaseQuickAdapter<ZABUserList, BaseViewH
             helper.setImageResource(R.id.ivAccepterSexImage, GenderHelper.getSexResource(itemGiverInfo.getGender()))
                     .setText(R.id.tvUserNickName, itemGiverInfo.getAvatar());
 
-            ZABUserList.GiverBean.LevelObjBean userLevelInfo = itemGiverInfo.getLevelObj();
+            UserLevelInfo userLevelInfo = itemGiverInfo.getLevelObj();
             if (userLevelInfo != null) {
                 helper.setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
             }
-            ZABUserList.GiverBean.RankBean userRankInfo = itemGiverInfo.getRank();
+            UserRankInfo userRankInfo = itemGiverInfo.getRank();
             if (userRankInfo != null) {
                 helper.setGone(R.id.tvUserKnighthood, true)
                         .setText(R.id.tvUserKnighthood, userRankInfo.getRankName());

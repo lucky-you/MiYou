@@ -50,7 +50,7 @@
                     android:drawableRight="@drawable/mine_more_icon"
                     android:drawablePadding="6dp"
                     android:gravity="center_vertical"
-                    android:text="130****0011"
+                    android:text="130****0000"
                     android:textColor="@color/color_343434"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"

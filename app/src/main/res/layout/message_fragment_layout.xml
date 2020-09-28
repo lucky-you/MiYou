@@ -54,8 +54,8 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <EditText
-            android:id="@+id/editSearchFriend"
+        <TextView
+            android:id="@+id/tvSearchFriend"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_margin="16dp"
@@ -63,8 +63,8 @@
             android:drawableLeft="@drawable/home_search_icon"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:hint="搜索好友"
             android:paddingLeft="8dp"
+            android:text="搜索好友"
             android:textColor="@color/color_999"
             android:textSize="13sp" />
 

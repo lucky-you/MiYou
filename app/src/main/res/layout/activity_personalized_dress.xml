@@ -27,6 +27,7 @@
                     android:layout_height="300dp">
 
                     <ImageView
+                        android:id="@+id/ivUserHeadBackground"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -86,6 +87,7 @@
 
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civUserHeadPhoto"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:src="@mipmap/ic_def_image"

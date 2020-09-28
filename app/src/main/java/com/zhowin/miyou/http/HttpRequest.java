@@ -132,7 +132,7 @@ public class HttpRequest {
      * 手机号 + 密码登录
      */
     public static void loginMobileAndPassword(LifecycleOwner activity, String mobile, String password, final HttpCallBack<UserInfo> callBack) {
-        apiRequest.loginMobileAndPassword(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), mobile, password)
+        apiRequest.loginMobileAndPassword(mobile, password)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
                 .subscribe(new ApiObserver<UserInfo>() {
@@ -342,7 +342,7 @@ public class HttpRequest {
      * 忘记 密码
      */
     public static void forgetPassword(LifecycleOwner activity, String mobileNum, String msgCode, String newPwd, final HttpCallBack<Object> callBack) {
-        apiRequest.forgetPassword(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), mobileNum, msgCode, newPwd)
+        apiRequest.forgetPassword(mobileNum, msgCode, newPwd)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
                 .subscribe(new ApiObserver<Object>() {
@@ -760,22 +760,43 @@ public class HttpRequest {
         String url = null;
         switch (type) {
             case 0:
-                url=ApiRequest.SHOP_MALL_HEADER_PHOTO_URL;
+                url = ApiRequest.SHOP_MALL_HEADER_PHOTO_URL;
                 break;
             case 1:
-                url=ApiRequest.SHOP_MALL_ZJ_PHOTO_URL;
+                url = ApiRequest.SHOP_MALL_ZJ_PHOTO_URL;
                 break;
             case 2:
-                url=ApiRequest.SHOP_MALL_DJ_PHOTO_URL;
+                url = ApiRequest.SHOP_MALL_DJ_PHOTO_URL;
                 break;
         }
-        apiRequest.getShopMallPropsList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(),url)
+        apiRequest.getShopMallPropsList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
                 .subscribe(new ApiObserver<List<ShopMallPropsList>>() {
 
                     @Override
                     public void onSuccess(List<ShopMallPropsList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 购买道具/座驾
+     */
+    public static void userBuyProps(LifecycleOwner activity, String goodId, int number, final HttpCallBack<Object> callBack) {
+        apiRequest.userBuyProps(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), goodId, number)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
                         callBack.onSuccess(demo);
                     }
 

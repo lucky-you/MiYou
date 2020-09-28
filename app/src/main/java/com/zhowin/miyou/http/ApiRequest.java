@@ -182,6 +182,9 @@ public interface ApiRequest {
     //商城道具
     String SHOP_MALL_DJ_PHOTO_URL = "/ant/mall/others";
 
+    //购买道具/座驾
+    String USER_BUY_PROPS_URL = "/ant/mall/buy";
+
 
     /**
      * 返回的是自己的用户信息
@@ -207,7 +210,7 @@ public interface ApiRequest {
      */
     @FormUrlEncoded
     @POST(MOBILE_AND_PASSWORD_URL)
-    Observable<ApiResponse<UserInfo>> loginMobileAndPassword(@Header(AUTHOR) String token, @Field("phone") String phone, @Field("password") String password);
+    Observable<ApiResponse<UserInfo>> loginMobileAndPassword(@Field("phone") String phone, @Field("password") String password);
 
     /**
      * 手机号 + 短信验证码登录
@@ -290,7 +293,7 @@ public interface ApiRequest {
      */
     @FormUrlEncoded
     @POST(FOR_GET_PASSWORD_URL)
-    Observable<ApiResponse<Object>> forgetPassword(@Header(AUTHOR) String token, @Field("mobileNum") String mobileNum, @Field("msgCode") String msgCode, @Field("newPwd") String newPwd);
+    Observable<ApiResponse<Object>> forgetPassword(@Field("mobileNum") String mobileNum, @Field("msgCode") String msgCode, @Field("newPwd") String newPwd);
 
 
     /**
@@ -404,5 +407,21 @@ public interface ApiRequest {
      */
     @POST
     Observable<ApiResponse<List<ShopMallPropsList>>> getShopMallPropsList(@Header(AUTHOR) String token, @Url String url);
+
+    /**
+     * 购买道具/座驾
+     */
+    @FormUrlEncoded
+    @POST(USER_BUY_PROPS_URL)
+    Observable<ApiResponse<Object>> userBuyProps(@Header(AUTHOR) String token, @Field("id") String goodId, @Field("number") int number);
+
+    /**
+     * 搜索房间
+     */
+
+
+    /**
+     * 搜索用户
+     */
 
 }

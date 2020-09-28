@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.main.utils.GenderHelper;
@@ -42,11 +44,11 @@ public class GuardListAdapter extends BaseQuickAdapter<GuardUserList, BaseViewHo
                     .setText(R.id.tvInitiatorNickName, itemGiverInfo.getAvatar())
                     .setText(R.id.tvInitiatorMLValue, item.getScore() + "");
 
-            GuardUserList.GiverBean.LevelObjBean userLevelInfo = itemGiverInfo.getLevelObj();
+            UserLevelInfo userLevelInfo = itemGiverInfo.getLevelObj();
             if (userLevelInfo != null) {
                 helper.setText(R.id.tvInitiatorLevel, "V" + userLevelInfo.getLevel());
             }
-            GuardUserList.GiverBean.RankBean userRankInfo = itemGiverInfo.getRank();
+            UserRankInfo userRankInfo = itemGiverInfo.getRank();
             if (userRankInfo != null) {
                 helper.setGone(R.id.tvInitiatorKnighthood, true)
                         .setText(R.id.tvInitiatorKnighthood, userRankInfo.getRankName());

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * author : zho
  * date  ：2020/9/5
- * desc ：
+ * desc ：首页分类管理
  */
 public class HomePageCategoryList {
 

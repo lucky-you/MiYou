@@ -60,6 +60,7 @@ dependencies {
     api 'com.makeramen:roundedimageview:2.3.0'
     api 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+//    api 'jp.wasabeef:glide-transformations:4.3.0'
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     api 'com.contrarywind:Android-PickerView:4.1.8'
     api 'com.yanzhenjie:permission:2.0.3'

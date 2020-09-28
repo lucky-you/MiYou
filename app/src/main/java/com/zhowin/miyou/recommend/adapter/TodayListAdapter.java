@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.main.utils.GenderHelper;
@@ -27,11 +29,11 @@ public class TodayListAdapter extends BaseQuickAdapter<ToadyUserList, BaseViewHo
                     .setImageResource(R.id.ivUserSexImage, GenderHelper.getSexResource(itemUserInfo.getGender()))
                     .setGone(R.id.tvFollow, false);
             GlideUtils.loadUserPhotoForLogin(mContext, itemUserInfo.getProfilePictureKey(), helper.getView(R.id.civUserHeadPhoto));
-            ToadyUserList.UserInfoBean.LevelObjBean userLevelInfo = itemUserInfo.getLevelObj();
+            UserLevelInfo userLevelInfo = itemUserInfo.getLevelObj();
             if (userLevelInfo != null) {
                 helper.setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
             }
-            ToadyUserList.UserInfoBean.RankBean userRankInfo = itemUserInfo.getRank();
+            UserRankInfo userRankInfo = itemUserInfo.getRank();
             if (userRankInfo != null) {
                 helper.setGone(R.id.tvUserKnighthood, true)
                         .setText(R.id.tvUserKnighthood, userRankInfo.getRankName());

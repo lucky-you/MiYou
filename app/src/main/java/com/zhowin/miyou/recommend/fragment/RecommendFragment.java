@@ -107,7 +107,7 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvHomeSearch:
-                startActivity(RoomSearchActivity.class);
+                RoomSearchActivity.start(mContext, 1);
                 break;
             case R.id.ivUserList:
                 startActivity(UserListActivity.class);

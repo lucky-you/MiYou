@@ -9,6 +9,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.EmptyViewUtils;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.ToastUtils;
@@ -129,11 +131,11 @@ public class ToadyListFragment extends BaseBindFragment<IncludeTodayFragmentBind
         if (userInfoBean != null) {
             GlideUtils.loadUserPhotoForLogin(mContext, userInfoBean.getProfilePictureKey(), mBinding.civNumberOneHead);
             mBinding.tvNumberOneName.setText(userInfoBean.getAvatar());
-            ToadyUserList.UserInfoBean.LevelObjBean userLevelInfo = userInfoBean.getLevelObj();
+            UserLevelInfo userLevelInfo = userInfoBean.getLevelObj();
             if (userLevelInfo != null) {
                 mBinding.tvNumberOneLevel.setText("V" + userLevelInfo.getLevel());
             }
-            ToadyUserList.UserInfoBean.RankBean userRankInfo = userInfoBean.getRank();
+            UserRankInfo userRankInfo = userInfoBean.getRank();
             if (userRankInfo != null) {
                 mBinding.tvNumberOneKnighthood.setVisibility(View.VISIBLE);
                 mBinding.tvNumberOneKnighthood.setText(userRankInfo.getRankName());
@@ -149,11 +151,11 @@ public class ToadyListFragment extends BaseBindFragment<IncludeTodayFragmentBind
         if (userInfoBean != null) {
             GlideUtils.loadUserPhotoForLogin(mContext, userInfoBean.getProfilePictureKey(), mBinding.civNumberTwoHead);
             mBinding.tvNumberTwoName.setText(userInfoBean.getAvatar());
-            ToadyUserList.UserInfoBean.LevelObjBean userLevelInfo = userInfoBean.getLevelObj();
+            UserLevelInfo userLevelInfo = userInfoBean.getLevelObj();
             if (userLevelInfo != null) {
                 mBinding.tvNumberTwoLevel.setText("V" + userLevelInfo.getLevel());
             }
-            ToadyUserList.UserInfoBean.RankBean userRankInfo = userInfoBean.getRank();
+            UserRankInfo userRankInfo = userInfoBean.getRank();
             if (userRankInfo != null) {
                 mBinding.tvNumberTwoKnighthood.setVisibility(View.VISIBLE);
                 mBinding.tvNumberTwoKnighthood.setText(userRankInfo.getRankName());
@@ -169,11 +171,11 @@ public class ToadyListFragment extends BaseBindFragment<IncludeTodayFragmentBind
         if (userInfoBean != null) {
             GlideUtils.loadUserPhotoForLogin(mContext, userInfoBean.getProfilePictureKey(), mBinding.civNumberThreeHead);
             mBinding.tvNumberThreeName.setText(userInfoBean.getAvatar());
-            ToadyUserList.UserInfoBean.LevelObjBean userLevelInfo = userInfoBean.getLevelObj();
+            UserLevelInfo userLevelInfo = userInfoBean.getLevelObj();
             if (userLevelInfo != null) {
                 mBinding.tvNumberThreeLevel.setText("V" + userLevelInfo.getLevel());
             }
-            ToadyUserList.UserInfoBean.RankBean userRankInfo = userInfoBean.getRank();
+            UserRankInfo userRankInfo = userInfoBean.getRank();
             if (userRankInfo != null) {
                 mBinding.tvNumberThreeKnighthood.setVisibility(View.VISIBLE);
                 mBinding.tvNumberThreeKnighthood.setText(userRankInfo.getRankName());

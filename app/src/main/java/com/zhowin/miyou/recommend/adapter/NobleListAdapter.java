@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.main.utils.GenderHelper;
@@ -37,11 +39,11 @@ public class NobleListAdapter extends BaseQuickAdapter<GZBUserList, BaseViewHold
         helper.setText(R.id.tvUserNickName, item.getAvatar())
                 .setImageResource(R.id.ivUserSexImage, GenderHelper.getSexResource(item.getGender()));
         GlideUtils.loadUserPhotoForLogin(mContext, item.getProfilePictureKey(), helper.getView(R.id.civUserHeadPhoto));
-        GZBUserList.LevelObjBean userLevelInfo = item.getLevelObj();
+        UserLevelInfo userLevelInfo = item.getLevelObj();
         if (userLevelInfo != null) {
             helper.setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
         }
-        GZBUserList.RankBean userRankInfo = item.getRank();
+        UserRankInfo userRankInfo = item.getRank();
         if (userRankInfo != null) {
             helper.setGone(R.id.ivUserKnightImage, true);
             GlideUtils.loadObjectImage(mContext, userRankInfo.getRankPictureKey(), helper.getView(R.id.ivUserKnightImage));
