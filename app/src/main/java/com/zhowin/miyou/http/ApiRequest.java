@@ -195,8 +195,14 @@ public interface ApiRequest {
     //获取首页直播间列表
     String GET_HOME_LIVE_ROOM_LIST = "/ant/live/list";
 
-    //提交举报原因
-    String SUBMIT_REPORT_MESSAGE_URL = "";
+    //举报用户
+    String SUBMIT_REPORT_USER_MESSAGE_URL = "/ant/inform/report";
+
+    //举报房间
+    String SUBMIT_REPORT_ROOM_MESSAGE_URL = "/ant/inform/report";
+
+    //进入直播间
+    String JOIN_LIVE_ROOM_URL = "/ant/live/join";
 
 
     /**
@@ -321,7 +327,7 @@ public interface ApiRequest {
      */
     @FormUrlEncoded
     @POST(CREATE_CHAT_ROOM_URL)
-    Observable<ApiResponse<Object>> createChatRoom(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
+    Observable<ApiResponse<RecommendList>> createChatRoom(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
 
     /**
      * 获取房间类型
@@ -464,9 +470,16 @@ public interface ApiRequest {
 
 
     /**
-     * 提交举报原因
+     * 提交举报房间/用户原因
      */
     @FormUrlEncoded
-    @POST(SUBMIT_REPORT_MESSAGE_URL)
-    Observable<ApiResponse<Object>> submitReportMessage(@Header(AUTHOR) String token, @FieldMap HashMap<String, Object> map);
+    @POST
+    Observable<ApiResponse<Object>> submitReportMessage(@Header(AUTHOR) String token,@Url String url, @FieldMap HashMap<String, Object> map);
+
+    /**
+     * 加入直播间
+     */
+    @FormUrlEncoded
+    @POST(JOIN_LIVE_ROOM_URL)
+    Observable<ApiResponse<RecommendList>> joinLiveRoom(@Header(AUTHOR) String token, @Field("roomId") int roomId, @Field("pwd") String roomPassword);
 }

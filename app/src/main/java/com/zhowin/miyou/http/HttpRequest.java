@@ -427,14 +427,14 @@ public class HttpRequest {
     /**
      * 创建房间
      */
-    public static void createChatRoom(LifecycleOwner activity, HashMap<String, Object> map, final HttpCallBack<Object> callBack) {
+    public static void createChatRoom(LifecycleOwner activity, HashMap<String, Object> map, final HttpCallBack<RecommendList> callBack) {
         apiRequest.createChatRoom(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), map)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
-                .subscribe(new ApiObserver<Object>() {
+                .subscribe(new ApiObserver<RecommendList>() {
 
                     @Override
-                    public void onSuccess(Object demo) {
+                    public void onSuccess(RecommendList demo) {
                         callBack.onSuccess(demo);
                     }
 
@@ -914,16 +914,38 @@ public class HttpRequest {
     }
 
     /**
-     * 提交举报原因
+     * 提交举报房间/用户原因
      */
-    public static void submitReportMessage(LifecycleOwner activity, HashMap<String, Object> map, final HttpCallBack<Object> callBack) {
-        apiRequest.submitReportMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), map)
+    public static void submitReportMessage(LifecycleOwner activity, boolean isReportRoom, HashMap<String, Object> map, final HttpCallBack<Object> callBack) {
+        String url = isReportRoom ? ApiRequest.SUBMIT_REPORT_ROOM_MESSAGE_URL : ApiRequest.SUBMIT_REPORT_USER_MESSAGE_URL;
+        apiRequest.submitReportMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, map)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
                 .subscribe(new ApiObserver<Object>() {
 
                     @Override
                     public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 加入直播间
+     */
+    public static void joinLiveRoom(LifecycleOwner activity, int roomId, String roomPassword, final HttpCallBack<RecommendList> callBack) {
+        apiRequest.joinLiveRoom(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), roomId, roomPassword)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<RecommendList>() {
+
+                    @Override
+                    public void onSuccess(RecommendList demo) {
                         callBack.onSuccess(demo);
                     }
 

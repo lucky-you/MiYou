@@ -91,15 +91,17 @@ public class ToadyListFragment extends BaseBindFragment<IncludeTodayFragmentBind
                 dismissLoadDialog();
                 isRefreshing = false;
                 if (toadyUserLists != null && !toadyUserLists.isEmpty()) {
+                    mBinding.clTopNumberLayout.setVisibility(View.VISIBLE);
                     setTopUserDataToView(toadyUserLists);
                     if (toadyUserLists.size() > 3) {
                         List<ToadyUserList> spiltUserList = toadyUserLists.subList(3, toadyUserLists.size() - 1);
                         userListAdapter.setNewData(spiltUserList);
                     } else {
-                        EmptyViewUtils.bindEmptyView(mContext, userListAdapter);
+                        EmptyViewUtils.bindEmptyView(mContext, userListAdapter, R.drawable.empty_wusc_icon, "没有榜单数据");
                     }
                 } else {
-                    EmptyViewUtils.bindEmptyView(mContext, userListAdapter);
+                    mBinding.clTopNumberLayout.setVisibility(View.GONE);
+                    EmptyViewUtils.bindEmptyView(mContext, userListAdapter, R.drawable.empty_wusc_icon, "没有榜单数据");
                 }
             }
 

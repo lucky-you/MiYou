@@ -113,13 +113,13 @@ public class WeekStarListFragment extends BaseBindFragment<IncludeWeekStarFragme
             if (leftGiftList != null && !leftGiftList.isEmpty()) {
                 weekStarGiftAdapter.setNewData(leftGiftList);
             } else {
-                EmptyViewUtils.bindEmptyView(mContext, weekStarGiftAdapter);
+                EmptyViewUtils.bindEmptyView(mContext, weekStarGiftAdapter, R.drawable.empty_wusc_icon, "没有榜单数据");
             }
         } else {
             if (rightGiftList != null && !rightGiftList.isEmpty()) {
                 weekStarGiftAdapter.setNewData(rightGiftList);
             } else {
-                EmptyViewUtils.bindEmptyView(mContext, weekStarGiftAdapter);
+                EmptyViewUtils.bindEmptyView(mContext, weekStarGiftAdapter, R.drawable.empty_wusc_icon, "没有榜单数据");
             }
         }
 

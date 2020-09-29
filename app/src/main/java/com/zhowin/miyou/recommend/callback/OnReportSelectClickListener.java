@@ -8,6 +8,6 @@ package com.zhowin.miyou.recommend.callback;
 public interface OnReportSelectClickListener {
 
 
-    void onReportItemSelect(int reportId);
+    void onReportItemSelect(String reportText);
 
 }

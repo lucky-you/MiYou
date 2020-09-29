@@ -35,6 +35,7 @@ import com.zhowin.miyou.databinding.ActivityCreateRoomBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.adapter.RoomBackgroundAdapter;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
+import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 
 import java.util.ArrayList;
@@ -225,13 +226,30 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
         map.put("backgroundPictureId", backgroundPictureId);
         map.put("typeId", roomCategoryId);
         map.put("allowMicFree", 1);
-
-        HttpRequest.createChatRoom(this, map, new HttpCallBack<Object>() {
+        HttpRequest.createChatRoom(this, map, new HttpCallBack<RecommendList>() {
             @Override
-            public void onSuccess(Object o) {
+            public void onSuccess(RecommendList recommendList) {
+                if (recommendList != null)
+                    joinLiveRoom(recommendList.getRoomId());
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
                 dismissLoadDialog();
-                ToastUtils.showCustomToast(mContext, "创建成功");
-                ActivityManager.getAppInstance().finishActivity();
+
+            }
+        });
+    }
+
+    private void joinLiveRoom(int roomId) {
+        HttpRequest.joinLiveRoom(this, roomId, "", new HttpCallBack<RecommendList>() {
+            @Override
+            public void onSuccess(RecommendList recommendList) {
+                dismissLoadDialog();
+                if (recommendList != null) {
+                    ToastUtils.showCustomToast(mContext, "创建成功");
+                    ActivityManager.getAppInstance().finishActivity();
+                }
             }
 
             @Override

@@ -46,7 +46,7 @@ public class ReportListAdapter extends BaseQuickAdapter<ReportList, BaseViewHold
                 }
                 item.setSelect(!item.isSelect());
                 if (onReportSelectClickListener != null) {
-                    onReportSelectClickListener.onReportItemSelect(item.getId());
+                    onReportSelectClickListener.onReportItemSelect(item.getTitle());
                 }
                 notifyDataSetChanged();
             }

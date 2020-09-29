@@ -71,7 +71,6 @@ public class NobleListFragment extends BaseBindFragment<IncludeNobleListFragment
         });
     }
 
-
     /**
      * 获取贵族帮
      */

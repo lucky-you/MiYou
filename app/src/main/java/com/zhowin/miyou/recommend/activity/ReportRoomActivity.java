@@ -4,6 +4,7 @@ package com.zhowin.miyou.recommend.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.zhowin.base_library.adapter.NineGridItemListAdapter;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.callback.OnNineGridItemClickListener;
+import com.zhowin.base_library.callback.OnTextChangedListener;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.pictureSelect.PictureSelectorUtils;
 import com.zhowin.base_library.qiniu.QiNiuYunBean;
@@ -61,8 +63,10 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
     public static final int MAX_NUM = 3;
     private NineGridItemListAdapter nineGridItemListAdapter;
     private String qiNiuToken, qiNiuCdnUrl, backGroundUrlList;
-    private int classType, reportInfoId;
+    private int classType;
+    private String reportTypeText, reportReason;
     private ReportUserOrRoom reportInfo;
+    private int MAX_NUMBER = 10;
 
 
     @Override
@@ -77,6 +81,7 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
         mBinding.llReportRoomLayout.setVisibility(1 == classType ? View.VISIBLE : View.GONE);
         mBinding.clReportUserLayout.setVisibility(1 != classType ? View.VISIBLE : View.GONE);
         setOnClick(R.id.tvSubmit);
+        mBinding.tvReasonText.setText("0/" + MAX_NUMBER);
         getQiNiuToken();
         if (reportInfo != null)
             if (2 == classType) {
@@ -133,11 +138,46 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
         });
     }
 
+
+    @Override
+    public void initListener() {
+        mBinding.tvReasonText.addTextChangedListener(new OnTextChangedListener() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                reportReason = editable.toString();
+                if (!TextUtils.isEmpty(reportReason))
+                    if (reportReason.length() <= MAX_NUMBER) {
+                        mBinding.tvReasonText.setText(reportReason.length() + "/" + MAX_NUMBER);
+                    }
+            }
+        });
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvSubmit:
-
+                switch (classType) {
+                    case 1:
+                        if (selectList.isEmpty()) {
+                            submitReportRoomOrUserMessage(true);
+                        } else {
+                            for (int i = 0; i < selectList.size(); i++) {
+                                qinIuUpLoad(true, PictureSelectorUtils.getPhotoPath(selectList.get(i)));
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (selectList.isEmpty()) {
+                            submitReportRoomOrUserMessage(false);
+                        } else {
+                            for (int i = 0; i < selectList.size(); i++) {
+                                qinIuUpLoad(false, PictureSelectorUtils.getPhotoPath(selectList.get(i)));
+                            }
+                        }
+                        break;
+                }
                 break;
         }
     }
@@ -171,7 +211,11 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
                 qinIuImages.add(path);
                 if (qinIuImages.size() == selectList.size()) {
                     backGroundUrlList = SplitUtils.getStringTextId(qinIuImages);
-                    submitReportMessageData();
+                    if (reportRoom) {
+                        submitReportRoomOrUserMessage(true);
+                    } else {
+                        submitReportRoomOrUserMessage(false);
+                    }
                 }
             }
 
@@ -182,8 +226,12 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
         });
     }
 
-    private void submitReportMessageData() {
-        if (reportInfoId == 0) {
+
+    /**
+     * 举报 房间 / 用户
+     */
+    private void submitReportRoomOrUserMessage(boolean isReportRoom) {
+        if (TextUtils.isEmpty(reportTypeText)) {
             ToastUtils.showToast("请选择举报类型哦");
             return;
         }
@@ -193,22 +241,29 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
             return;
         }
         HashMap<String, Object> map = new HashMap<>();
-        showLoadDialog();
-        HttpRequest.submitReportMessage(this, map, new HttpCallBack<Object>() {
-            @Override
-            public void onSuccess(Object o) {
-                dismissLoadDialog();
-                ToastUtils.showCustomToast(mContext, "提交成功");
-                ActivityManager.getAppInstance().finishActivity();
-            }
+        if (isReportRoom) {
 
-            @Override
-            public void onFail(int errorCode, String errorMsg) {
-                dismissLoadDialog();
-                ToastUtils.showToast(errorMsg);
-
-            }
-        });
+        } else {
+            map.put("target", reportInfo.getUserId());
+            map.put("content", reportTypeText);
+            map.put("pictures", backGroundUrlList);
+        }
+//        showLoadDialog();
+//        HttpRequest.submitReportMessage(this, isReportRoom, map, new HttpCallBack<Object>() {
+//            @Override
+//            public void onSuccess(Object o) {
+//                dismissLoadDialog();
+//                ToastUtils.showCustomToast(mContext, "提交成功");
+//                ActivityManager.getAppInstance().finishActivity();
+//            }
+//
+//            @Override
+//            public void onFail(int errorCode, String errorMsg) {
+//                dismissLoadDialog();
+//                ToastUtils.showToast(errorMsg);
+//
+//            }
+//        });
 
     }
 
@@ -230,9 +285,9 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
     }
 
     @Override
-    public void onReportItemSelect(int reportId) {
-        if (reportId != 0) {
-            reportInfoId = reportId;
+    public void onReportItemSelect(String reportId) {
+        if (TextUtils.isEmpty(reportId)) {
+            reportTypeText = reportId;
         }
     }
 }

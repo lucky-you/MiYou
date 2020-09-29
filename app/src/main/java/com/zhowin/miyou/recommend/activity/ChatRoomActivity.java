@@ -1,10 +1,13 @@
 package com.zhowin.miyou.recommend.activity;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityChatRoomBinding;
 import com.zhowin.miyou.recommend.dialog.SendGiftDialogFragment;
@@ -14,6 +17,14 @@ import com.zhowin.miyou.recommend.dialog.SendGiftDialogFragment;
  */
 public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> {
 
+    private int roomId;
+
+    public static void start(Context context, int roomId) {
+        Intent intent = new Intent(context, ChatRoomActivity.class);
+        intent.putExtra(ConstantValue.ID, roomId);
+        context.startActivity(intent);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_chat_room;
@@ -21,6 +32,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
 
     @Override
     public void initView() {
+        roomId=getIntent().getIntExtra(ConstantValue.ID,-1);
         setOnClick(R.id.ivBackReturn, R.id.llReleaseBroadcastLayout, R.id.ivUserList,
                 R.id.ivGiftPhoto);
     }
