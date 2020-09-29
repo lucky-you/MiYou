@@ -10,6 +10,7 @@ import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.model.UserLevelInfo;
 import com.zhowin.base_library.utils.EmptyViewUtils;
 import com.zhowin.base_library.utils.GlideUtils;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityUserVipBinding;
 import com.zhowin.miyou.http.HttpRequest;
@@ -17,7 +18,6 @@ import com.zhowin.miyou.mine.adapter.UserVipAdapter;
 import com.zhowin.miyou.mine.model.VipMessageInfo;
 import com.zhowin.miyou.mine.model.VipPrivilegeList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,6 +73,7 @@ public class UserVipActivity extends BaseBindActivity<ActivityUserVipBinding> {
             @Override
             public void onFail(int errorCode, String errorMsg) {
                 dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
 
             }
         });
