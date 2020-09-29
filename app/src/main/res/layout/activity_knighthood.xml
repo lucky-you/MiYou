@@ -10,11 +10,11 @@
 
         <com.zhowin.base_library.view.TitleView
             android:id="@+id/titleView"
-            app:mRightImage="@drawable/vip_notice_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:mBackgroundColor="@color/color_2E2E30"
             app:mLeftSrc="@mipmap/back_white_icon"
+            app:mRightImage="@drawable/vip_notice_icon"
             app:mTitle="爵位特权"
             app:mTitleColor="@color/white" />
 

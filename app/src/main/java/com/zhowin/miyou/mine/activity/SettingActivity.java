@@ -90,6 +90,7 @@ public class SettingActivity extends BaseBindActivity<ActivitySettingBinding> {
             @Override
             public void onDetermineClick() {
                 CacheDataUtils.clearAllCache(mContext);
+                mBinding.tvCacheText.setText("0.0KB");
             }
         });
     }

@@ -8,6 +8,7 @@
 
 
     <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivKnighthoodPhoto"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
@@ -16,6 +17,7 @@
 
 
     <TextView
+        android:id="@+id/tvKnighthoodTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -25,6 +27,7 @@
         android:textSize="15sp" />
 
     <TextView
+        android:id="@+id/tvKnighthoodContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

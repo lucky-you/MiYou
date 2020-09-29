@@ -16,10 +16,12 @@ import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.AttentionUserList;
+import com.zhowin.miyou.mine.model.KnighthoodMessageInfo;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
 import com.zhowin.miyou.mine.model.ShopMallPropsList;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
+import com.zhowin.miyou.mine.model.VipMessageInfo;
 import com.zhowin.miyou.recommend.model.GZBUserList;
 import com.zhowin.miyou.recommend.model.GiftList;
 import com.zhowin.miyou.recommend.model.GuardUserList;
@@ -916,9 +918,9 @@ public class HttpRequest {
     /**
      * 提交举报房间/用户原因
      */
-    public static void submitReportMessage(LifecycleOwner activity, boolean isReportRoom, HashMap<String, Object> map, final HttpCallBack<Object> callBack) {
+    public static void submitReportMessage(LifecycleOwner activity, boolean isReportRoom, int target, String type, String content, String pictures, final HttpCallBack<Object> callBack) {
         String url = isReportRoom ? ApiRequest.SUBMIT_REPORT_ROOM_MESSAGE_URL : ApiRequest.SUBMIT_REPORT_USER_MESSAGE_URL;
-        apiRequest.submitReportMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, map)
+        apiRequest.submitReportMessage(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, target, type, content, pictures)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
                 .subscribe(new ApiObserver<Object>() {
@@ -946,6 +948,69 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(RecommendList demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取vip 信息
+     */
+    public static void getVipMessageInfo(LifecycleOwner activity, final HttpCallBack<VipMessageInfo> callBack) {
+        apiRequest.getVipMessageInfo(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<VipMessageInfo>() {
+
+                    @Override
+                    public void onSuccess(VipMessageInfo demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取爵位得信息
+     */
+    public static void getKnighthoodMessageInfo(LifecycleOwner activity, final HttpCallBack<KnighthoodMessageInfo> callBack) {
+        apiRequest.getKnighthoodMessageInfo(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<KnighthoodMessageInfo>() {
+
+                    @Override
+                    public void onSuccess(KnighthoodMessageInfo demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 开通或者续费爵位
+     */
+    public static void openKnighthoodLevel(LifecycleOwner activity, int rankId, final HttpCallBack<Object> callBack) {
+        apiRequest.openKnighthoodLevel(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), rankId)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
                         callBack.onSuccess(demo);
                     }
 

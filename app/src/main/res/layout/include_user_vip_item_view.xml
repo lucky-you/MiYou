@@ -21,6 +21,7 @@
             app:riv_corner_radius="12dp" />
 
         <ImageView
+            android:id="@+id/ivLevelImage"
             android:layout_width="45dp"
             android:layout_height="59dp"
             android:layout_gravity="center"
@@ -30,6 +31,7 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/tvPrivilegeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -39,6 +41,7 @@
         android:textSize="15sp" />
 
     <TextView
+        android:id="@+id/tvEndLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

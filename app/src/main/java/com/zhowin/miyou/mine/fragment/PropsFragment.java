@@ -77,11 +77,6 @@ public class PropsFragment extends BaseBindFragment<IncludeProsFragmentLayoutBin
         mBinding.recyclerView.setAdapter(propsListAdapter);
     }
 
-    public RefreshLayout getRefreshView() {
-
-        return mBinding.refreshLayout;
-    }
-
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);

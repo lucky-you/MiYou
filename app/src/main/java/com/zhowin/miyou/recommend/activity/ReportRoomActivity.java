@@ -141,7 +141,7 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
 
     @Override
     public void initListener() {
-        mBinding.tvReasonText.addTextChangedListener(new OnTextChangedListener() {
+        mBinding.editReportReason.addTextChangedListener(new OnTextChangedListener() {
             @Override
             public void afterTextChanged(Editable editable) {
                 reportReason = editable.toString();
@@ -240,31 +240,25 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
             ToastUtils.showToast("请填写原因哦");
             return;
         }
-        HashMap<String, Object> map = new HashMap<>();
-        if (isReportRoom) {
-
-        } else {
-            map.put("target", reportInfo.getUserId());
-            map.put("content", reportTypeText);
-            map.put("pictures", backGroundUrlList);
+        if (TextUtils.isEmpty(backGroundUrlList)) {
+            ToastUtils.showToast("请上传图片哦");
+            return;
         }
-//        showLoadDialog();
-//        HttpRequest.submitReportMessage(this, isReportRoom, map, new HttpCallBack<Object>() {
-//            @Override
-//            public void onSuccess(Object o) {
-//                dismissLoadDialog();
-//                ToastUtils.showCustomToast(mContext, "提交成功");
-//                ActivityManager.getAppInstance().finishActivity();
-//            }
-//
-//            @Override
-//            public void onFail(int errorCode, String errorMsg) {
-//                dismissLoadDialog();
-//                ToastUtils.showToast(errorMsg);
-//
-//            }
-//        });
+        showLoadDialog();
+        HttpRequest.submitReportMessage(this, isReportRoom, reportInfo.getUserId(), reportTypeText, reason, backGroundUrlList, new HttpCallBack<Object>() {
+            @Override
+            public void onSuccess(Object o) {
+                dismissLoadDialog();
+                ToastUtils.showCustomToast(mContext, "提交成功");
+                ActivityManager.getAppInstance().finishActivity();
+            }
 
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+            }
+        });
     }
 
     private void getQiNiuToken() {
@@ -286,7 +280,7 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
 
     @Override
     public void onReportItemSelect(String reportId) {
-        if (TextUtils.isEmpty(reportId)) {
+        if (!TextUtils.isEmpty(reportId)) {
             reportTypeText = reportId;
         }
     }

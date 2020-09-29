@@ -121,7 +121,7 @@
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/noble_kait_btn"
                         android:gravity="center"
-                        android:text="立即续费"
+                        android:text="立即开通"
                         android:textColor="@color/color_F6CC79"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"

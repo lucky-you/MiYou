@@ -7,31 +7,28 @@ package com.zhowin.base_library.model;
  */
 public class UserRankInfo {
 
+
     /**
-     * userId : 32
-     * rankId : 1
-     * rankName : 子爵
-     * rankPictureKey : 2341234tr34r.jpg
-     * level : 2
-     * expireTime : 1606339509000
-     * status : 1
+     * rankId : 2
+     * rankName : 男爵
+     * rankPictureKey : 231.jpg
+     * price : 600
+     * bidPrice : 588
+     * level : 1
+     * enable : 1
+     * sort : 0
+     * createTime : 1600956617000
      */
 
-    private int userId;
     private int rankId;
     private String rankName;
     private String rankPictureKey;
+    private int price;
+    private int bidPrice;
     private int level;
-    private long expireTime;
-    private int status;
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    private int enable;
+    private int sort;
+    private long createTime;
 
     public int getRankId() {
         return rankId;
@@ -57,6 +54,22 @@ public class UserRankInfo {
         this.rankPictureKey = rankPictureKey;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getBidPrice() {
+        return bidPrice;
+    }
+
+    public void setBidPrice(int bidPrice) {
+        this.bidPrice = bidPrice;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -65,19 +78,27 @@ public class UserRankInfo {
         this.level = level;
     }
 
-    public long getExpireTime() {
-        return expireTime;
+    public int getEnable() {
+        return enable;
     }
 
-    public void setExpireTime(long expireTime) {
-        this.expireTime = expireTime;
+    public void setEnable(int enable) {
+        this.enable = enable;
     }
 
-    public int getStatus() {
-        return status;
+    public int getSort() {
+        return sort;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 }

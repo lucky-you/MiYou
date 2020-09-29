@@ -8,10 +8,12 @@ import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
 import com.zhowin.miyou.mine.model.AttentionUserList;
+import com.zhowin.miyou.mine.model.KnighthoodMessageInfo;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
 import com.zhowin.miyou.mine.model.RoomBackgroundList;
 import com.zhowin.miyou.mine.model.ShopMallPropsList;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
+import com.zhowin.miyou.mine.model.VipMessageInfo;
 import com.zhowin.miyou.recommend.model.GZBUserList;
 import com.zhowin.miyou.recommend.model.GiftList;
 import com.zhowin.miyou.recommend.model.GuardUserList;
@@ -203,6 +205,15 @@ public interface ApiRequest {
 
     //进入直播间
     String JOIN_LIVE_ROOM_URL = "/ant/live/join";
+
+    //获取vip的相关信息
+    String GET_VIP_INFO_MESSAGE_URL = "/ant/level/levelPage";
+
+    //获取爵位信息
+    String GET_KNIGHTHOOD_INFO_URL = "/ant/rank/rankPage";
+
+    //开通/续费爵位
+    String OPEN_KNIGHTHOOD_URL = "/ant/rank/openRank";
 
 
     /**
@@ -474,7 +485,7 @@ public interface ApiRequest {
      */
     @FormUrlEncoded
     @POST
-    Observable<ApiResponse<Object>> submitReportMessage(@Header(AUTHOR) String token,@Url String url, @FieldMap HashMap<String, Object> map);
+    Observable<ApiResponse<Object>> submitReportMessage(@Header(AUTHOR) String token, @Url String url, @Field("target") int target, @Field("type") String type, @Field("content") String content, @Field("pictures") String pictures);
 
     /**
      * 加入直播间
@@ -482,4 +493,23 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(JOIN_LIVE_ROOM_URL)
     Observable<ApiResponse<RecommendList>> joinLiveRoom(@Header(AUTHOR) String token, @Field("roomId") int roomId, @Field("pwd") String roomPassword);
+
+    /**
+     * 获取vip信息
+     */
+    @POST(GET_VIP_INFO_MESSAGE_URL)
+    Observable<ApiResponse<VipMessageInfo>> getVipMessageInfo(@Header(AUTHOR) String token);
+
+    /**
+     * 获取爵位信息
+     */
+    @POST(GET_KNIGHTHOOD_INFO_URL)
+    Observable<ApiResponse<KnighthoodMessageInfo>> getKnighthoodMessageInfo(@Header(AUTHOR) String token);
+
+    /**
+     * 开通爵位
+     */
+    @FormUrlEncoded
+    @POST(OPEN_KNIGHTHOOD_URL)
+    Observable<ApiResponse<Object>> openKnighthoodLevel(@Header(AUTHOR) String token, @Field("rankId") int rankId);
 }

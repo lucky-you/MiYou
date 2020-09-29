@@ -25,6 +25,8 @@ public class MyDiamondActivity extends BaseBindActivity<ActivityMyDiamondBinding
 
 
     private int classType;
+    private RechargeListAdapter rechargeLIstAdapter;
+
 
     public static void start(Context context, int type) {
         Intent intent = new Intent(context, MyDiamondActivity.class);
@@ -32,8 +34,6 @@ public class MyDiamondActivity extends BaseBindActivity<ActivityMyDiamondBinding
         context.startActivity(intent);
 
     }
-
-    private RechargeListAdapter rechargeLIstAdapter;
 
 
     @Override
@@ -51,12 +51,11 @@ public class MyDiamondActivity extends BaseBindActivity<ActivityMyDiamondBinding
         mBinding.editRechargeMoney.setHint(1 == classType ? "请输入充值金额（元）" : "请输入兑换魅力值(1~100000之间）");
         mBinding.llRechargeLayout.setVisibility(1 == classType ? View.VISIBLE : View.GONE);
         mBinding.tvConfirmPayment.setText(1 == classType ? "确认支付（30元）" : "确认兑换（1000魅力值）");
-        mBinding.tvRechargeConsultation.setText(1==classType?"充值咨询":"兑换咨询");
+        mBinding.tvRechargeConsultation.setText(1 == classType ? "充值咨询" : "兑换咨询");
     }
 
     @Override
     public void initData() {
-
         setRecyclerViewData();
     }
 
@@ -82,6 +81,7 @@ public class MyDiamondActivity extends BaseBindActivity<ActivityMyDiamondBinding
         mBinding.rechargeRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         rechargeLIstAdapter = new RechargeListAdapter(rechargeLists);
         mBinding.rechargeRecyclerView.setAdapter(rechargeLIstAdapter);
+        rechargeLIstAdapter.setAdapterType(classType);
         rechargeLIstAdapter.setOnItemClickListener(this::onItemClick);
     }
 

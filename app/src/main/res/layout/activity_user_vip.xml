@@ -111,6 +111,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             style="@style/RecycleViewStyle"
+            android:layout_height="match_parent"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="12dp" />

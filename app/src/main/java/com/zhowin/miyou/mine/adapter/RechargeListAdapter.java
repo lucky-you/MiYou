@@ -16,6 +16,7 @@ import java.util.List;
 public class RechargeListAdapter extends BaseQuickAdapter<RechargeList, BaseViewHolder> {
 
     private int currentPosition;
+    private int adapterType;
 
 
     public RechargeListAdapter(@Nullable List<RechargeList> data) {
@@ -27,6 +28,10 @@ public class RechargeListAdapter extends BaseQuickAdapter<RechargeList, BaseView
         notifyDataSetChanged();
     }
 
+    public void setAdapterType(int adapterType) {
+        this.adapterType = adapterType;
+    }
+
     @Override
     protected void convert(@NonNull BaseViewHolder helper, RechargeList item) {
         helper
@@ -35,6 +40,7 @@ public class RechargeListAdapter extends BaseQuickAdapter<RechargeList, BaseView
                 .setTextColor(R.id.tvTopDiamond, currentPosition == helper.getAdapterPosition() ? getBaseColor(R.color.color_4C9CFF) : getBaseColor(R.color.color_666))
                 .setTextColor(R.id.tvBottomMoney, currentPosition == helper.getAdapterPosition() ? getBaseColor(R.color.color_4C9CFF) : getBaseColor(R.color.color_333))
                 .setText(R.id.tvTopDiamond, item.getTopTitle() + "钻石")
+                .setGone(R.id.tvBottomMoney, 1 == adapterType)
                 .setText(R.id.tvBottomMoney, "¥" + item.getBottomTitle());
 
     }
