@@ -23,7 +23,7 @@ public class MyRoomListAdapter extends BaseQuickAdapter<RecommendList, BaseViewH
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, RecommendList item) {
-        GlideUtils.loadObjectImage(mContext, item.getBackgroundPictureKey(), helper.getView(R.id.ivRoomBackGround));
+        GlideUtils.loadObjectImage(mContext, item.getCoverPictureKey(), helper.getView(R.id.ivRoomBackGround));
         helper.setText(R.id.tvRoomDescription, item.getTitle())
                 .setText(R.id.tvRoomType, item.getTypeName())
                 .setGone(R.id.ivRoomLock, item.isExistPwd());
