@@ -28,6 +28,8 @@ import java.util.List;
 public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutBinding> {
 
 
+    private List<Fragment> mFragments = new ArrayList<>();
+
     @Override
     public int getLayoutId() {
         return R.layout.recommend_fragment_layout;
@@ -94,8 +96,8 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
             @Override
             public void onSuccess(List<HomeCategory> homeCategories) {
                 if (homeCategories != null && !homeCategories.isEmpty()) {
-                    List<Fragment> mFragments = new ArrayList<>();
                     List<String> mTitles = new ArrayList<>();
+                    if (!mFragments.isEmpty()) mFragments.clear();
                     for (int i = 0; i < homeCategories.size(); i++) {
                         mTitles.add(homeCategories.get(i).getTypeName());
                         mFragments.add(RecommendListFragment.newInstance(i, homeCategories.get(i).getTypeId()));
@@ -134,8 +136,8 @@ public class RecommendFragment extends BaseBindFragment<RecommendFragmentLayoutB
             @Override
             public void onRefresh() {
                 loadHomeBannerList();
-//                getHomeNoticeMessageList();
-//                getHomeCategoryList();
+                RecommendListFragment recommendListFragment = (RecommendListFragment) mFragments.get(mBinding.slidingTabLayout.getCurrentTab());
+                recommendListFragment.setRefreshData();
                 mBinding.refreshLayout.setRefreshing(false);
             }
         });

@@ -4,12 +4,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             style="@style/RecycleViewStyle"
+            android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp" />
 

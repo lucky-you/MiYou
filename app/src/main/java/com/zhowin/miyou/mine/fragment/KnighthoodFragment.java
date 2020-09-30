@@ -115,7 +115,7 @@ public class KnighthoodFragment extends BaseBindFragment<IncludeKnighthoodFragme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvRenewNow:
-//                openKnighthoodLevel();
+                openKnighthoodLevel();
                 break;
         }
     }

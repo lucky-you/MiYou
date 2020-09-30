@@ -10,7 +10,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.base.BaseLibFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ConstantValue;
+import com.zhowin.base_library.utils.EmptyViewUtils;
 import com.zhowin.base_library.utils.SizeUtils;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.http.HttpRequest;
@@ -29,6 +31,7 @@ public class RecommendListFragment extends BaseLibFragment implements BaseQuickA
     private RecyclerView recyclerView;
     private RecommendListAdapter recommendListAdapter;
     private int fragmentIndex, typeId;
+    private boolean isRefreshIng;//刷新
 
     public static RecommendListFragment newInstance(int index, int typeId) {
         RecommendListFragment fragment = new RecommendListFragment();
@@ -64,20 +67,33 @@ public class RecommendListFragment extends BaseLibFragment implements BaseQuickA
 
 
     private void getHomeRoomList() {
+        if (isRefreshIng) showLoadDialog();
         HttpRequest.getHomeRoomList(this, typeId, new HttpCallBack<List<RecommendList>>() {
             @Override
             public void onSuccess(List<RecommendList> recommendLists) {
+                dismissLoadDialog();
+                isRefreshIng = false;
                 if (recommendLists != null && !recommendLists.isEmpty()) {
                     recommendListAdapter.setNewData(recommendLists);
+                } else {
+                    EmptyViewUtils.bindEmptyView(mContext, recommendListAdapter, R.drawable.empty_wusc_icon, "暂无房间");
                 }
             }
 
             @Override
             public void onFail(int errorCode, String errorMsg) {
-
+                dismissLoadDialog();
+                isRefreshIng = false;
+                ToastUtils.showToast(errorMsg);
             }
         });
     }
+
+    public void setRefreshData() {
+        isRefreshIng = true;
+        getHomeRoomList();
+    }
+
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
