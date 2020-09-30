@@ -1,7 +1,15 @@
-package com.zhowin.base_library.http;
+package com.zhowin.miyou.http;
 
 
 import com.google.gson.JsonParseException;
+import com.zhowin.base_library.base.BaseApplication;
+import com.zhowin.base_library.callback.OnNoNetWorkClickListener;
+import com.zhowin.base_library.http.ApiResponse;
+import com.zhowin.base_library.model.UserInfo;
+import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.view.NoNetWorkDialogView;
+import com.zhowin.miyou.login.activity.LoginActivity;
+import com.zhowin.miyou.main.activity.MainActivity;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -30,9 +38,26 @@ public abstract class ApiObserver<T> implements Observer<ApiResponse<T>> {
         //在这边对 基础数据 进行统一处理  初步解析：
         if (response.getCode() == 200) {
             onSuccess(response.getData());
+        } else if (response.getCode() == 401) {
+//            onFail(response.getCode(), response.getMsg());
+            showNoNetWorkDialog();
         } else {
             onFail(response.getCode(), response.getMsg());
         }
+    }
+
+    private void showNoNetWorkDialog() {
+        NoNetWorkDialogView noNetWorkDialogView = new NoNetWorkDialogView(BaseApplication.getInstance());
+        noNetWorkDialogView.setHitTitleMessage("Token已失效,请重新登录");
+        noNetWorkDialogView.show();
+        noNetWorkDialogView.setOnNoNetWorkClickListener(new OnNoNetWorkClickListener() {
+            @Override
+            public void onDurationClick() {
+                UserInfo.setUserInfo(new UserInfo());
+                LoginActivity.start(BaseApplication.getInstance());
+                ActivityManager.getAppInstance().finishActivity(MainActivity.class);
+            }
+        });
     }
 
     @Override

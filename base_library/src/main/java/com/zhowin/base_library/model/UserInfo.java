@@ -59,6 +59,7 @@ public class UserInfo {
     private String username;
     private String mobileNum;
     private int visitNum;
+    private UserRankInfo rank;
     private UserLevelInfo levelObj;
     private List<UserInterestList> labelList;
     private List<String> backgroundPictureKeys;
@@ -257,6 +258,14 @@ public class UserInfo {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public UserRankInfo getRank() {
+        return rank;
+    }
+
+    public void setRank(UserRankInfo rank) {
+        this.rank = rank;
     }
 
     public UserLevelInfo getLevelObj() {

@@ -18,8 +18,8 @@ public abstract class BaseDialogView extends Dialog implements View.OnClickListe
 
 
     private long lastClick = 0;
-    private View rootView;
-    private Context mContext;
+    protected View rootView;
+    protected Context mContext;
 
     public BaseDialogView(@NonNull Context context) {
         super(context);

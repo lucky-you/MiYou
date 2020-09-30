@@ -24,6 +24,7 @@ public class GZBUserList {
     private String gender;
     private int age;
     private String profilePictureKey;
+    private String status;
     private UserLevelInfo levelObj;
     private UserRankInfo rank;
 
@@ -65,6 +66,14 @@ public class GZBUserList {
 
     public void setProfilePictureKey(String profilePictureKey) {
         this.profilePictureKey = profilePictureKey;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public UserLevelInfo getLevelObj() {

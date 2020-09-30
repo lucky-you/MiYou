@@ -33,15 +33,17 @@ public class NobleListAdapter extends BaseQuickAdapter<GZBUserList, BaseViewHold
             helper.setBackgroundRes(R.id.tvLevelText, R.drawable.list_shouhu3_iocn)
                     .setText(R.id.tvLevelText, "");
         } else {
-            helper.setText(R.id.tvLevelText, helper.getAdapterPosition() + "")
+            helper.setText(R.id.tvLevelText, String.valueOf(helper.getAdapterPosition() + 1))
                     .setBackgroundRes(R.id.tvLevelText, 0);
         }
         helper.setText(R.id.tvUserNickName, item.getAvatar())
+                .setText(R.id.tvRewardNam, item.getStatus())
                 .setImageResource(R.id.ivUserSexImage, GenderHelper.getSexResource(item.getGender()));
         GlideUtils.loadUserPhotoForLogin(mContext, item.getProfilePictureKey(), helper.getView(R.id.civUserHeadPhoto));
         UserLevelInfo userLevelInfo = item.getLevelObj();
         if (userLevelInfo != null) {
-            helper.setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
+            helper.setGone(R.id.tvUserLevel, 0 != userLevelInfo.getLevel())
+                    .setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
         }
         UserRankInfo userRankInfo = item.getRank();
         if (userRankInfo != null) {

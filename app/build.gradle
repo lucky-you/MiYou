@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.1"
@@ -76,6 +76,11 @@ android {
             }
         }
     }
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.zhowin.miyou'
+        targetGenDir 'src/main/java/dao'
+    }
 
 }
 
@@ -88,6 +93,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation project(path: ':base_library')
+    implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.sunfusheng:MarqueeView:1.4.1'
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     implementation 'cn.rongcloud.sdk:im_lib:4.0.2' // 即时通讯基础能力库

@@ -15,6 +15,8 @@ import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.GiftAndCarList;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.model.UserInterestList;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.BarUtils;
 import com.zhowin.base_library.utils.ConstantValue;
@@ -133,6 +135,17 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         reportUserOrRoom.setUserMUNumber("ID:" + userIDCode);
         reportUserOrRoom.setUserGender(userInfo.getGender());
         reportUserOrRoom.setUserAge(userInfo.getAge());
+        UserLevelInfo userLevelInfo = userInfo.getLevelObj();
+        if (userLevelInfo != null) {
+            mBinding.ivUserLevel.setVisibility(0 == userLevelInfo.getLevel() ? View.GONE : View.VISIBLE);
+        }
+        UserRankInfo userRankInfo = userInfo.getRank();
+        if (userRankInfo != null) {
+            mBinding.ivUserKnight.setVisibility(View.VISIBLE);
+            GlideUtils.loadObjectImage(mContext, userRankInfo.getRankPictureKey(), mBinding.ivUserKnight);
+        } else {
+            mBinding.ivUserKnight.setVisibility(View.GONE);
+        }
         setUserBannerData(userInfo.getBackgroundPictureKeys());
         List<UserInterestList> userInterestList = userInfo.getLabelList();
         if (userInterestList != null && !userInterestList.isEmpty()) {

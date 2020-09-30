@@ -33,7 +33,7 @@ public class WeekStarGiftAdapter extends BaseQuickAdapter<WeekStarUserList.GiftA
             helper.setBackgroundRes(R.id.tvLevelText, R.drawable.list_shouhu3_iocn)
                     .setText(R.id.tvLevelText, "");
         } else {
-            helper.setText(R.id.tvLevelText, helper.getAdapterPosition() + "")
+            helper.setText(R.id.tvLevelText, String.valueOf(helper.getAdapterPosition() + 1))
                     .setBackgroundRes(R.id.tvLevelText, 0);
         }
         WeekStarUserList.GiftARankingBean.UserInfoBean weekStarWeekUserInfo = item.getUserInfo();
@@ -45,7 +45,8 @@ public class WeekStarGiftAdapter extends BaseQuickAdapter<WeekStarUserList.GiftA
                     .setText(R.id.tvGiftName, "送出 " + item.getScore());
             UserLevelInfo userLevel = weekStarWeekUserInfo.getLevelObj();
             if (userLevel != null) {
-                helper.setText(R.id.tvUserLevel, "V" + userLevel.getLevel());
+                helper.setGone(R.id.tvUserLevel, 0 != userLevel.getLevel())
+                        .setText(R.id.tvUserLevel, "V" + userLevel.getLevel());
             }
             UserRankInfo userRank = weekStarWeekUserInfo.getRank();
             if (userRank != null) {

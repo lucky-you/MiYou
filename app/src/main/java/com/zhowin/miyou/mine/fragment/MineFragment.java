@@ -132,10 +132,8 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
         SetDrawableHelper.setLeftDrawable(mContext, mBinding.tvUserSex, true, 2, drawable, drawable);
         UserLevelInfo userLevel = userInfo.getLevelObj();
         if (userLevel != null) {
-            mBinding.ivUserLevel.setVisibility(View.VISIBLE);
+            mBinding.ivUserLevel.setVisibility(0 == userLevel.getLevel() ? View.GONE : View.VISIBLE);
             mBinding.ivUserLevel.setText("V" + userLevel.getLevel());
-        } else {
-            mBinding.ivUserLevel.setVisibility(View.GONE);
         }
     }
 

@@ -33,7 +33,7 @@ public class GuardListAdapter extends BaseQuickAdapter<GuardUserList, BaseViewHo
             helper.setBackgroundRes(R.id.tvLevelText, R.drawable.list_shouhu3_iocn)
                     .setText(R.id.tvLevelText, "");
         } else {
-            helper.setText(R.id.tvLevelText, helper.getAdapterPosition() + "")
+            helper.setText(R.id.tvLevelText, String.valueOf(helper.getAdapterPosition() + 1))
                     .setBackgroundRes(R.id.tvLevelText, 0);
         }
 
@@ -46,7 +46,9 @@ public class GuardListAdapter extends BaseQuickAdapter<GuardUserList, BaseViewHo
 
             UserLevelInfo userLevelInfo = itemGiverInfo.getLevelObj();
             if (userLevelInfo != null) {
-                helper.setText(R.id.tvInitiatorLevel, "V" + userLevelInfo.getLevel());
+                helper.
+                        setGone(R.id.tvInitiatorLevel, 0 != userLevelInfo.getLevel())
+                        .setText(R.id.tvInitiatorLevel, "V" + userLevelInfo.getLevel());
             }
             UserRankInfo userRankInfo = itemGiverInfo.getRank();
             if (userRankInfo != null) {
@@ -55,7 +57,6 @@ public class GuardListAdapter extends BaseQuickAdapter<GuardUserList, BaseViewHo
             } else {
                 helper.setGone(R.id.tvInitiatorKnighthood, false);
             }
-
         }
 
         GuardUserList.AccepterBean itemAccepterInfo = item.getAccepter();//被守护者

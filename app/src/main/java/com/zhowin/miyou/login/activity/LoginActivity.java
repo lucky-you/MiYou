@@ -1,6 +1,8 @@
 package com.zhowin.miyou.login.activity;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -41,6 +43,12 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
     private Disposable mdDisposable;
     private boolean isShowPassword, isPhoneAndPasswordLogin;
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     @Override
     public int getLayoutId() {

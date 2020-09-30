@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.zhowin.base_library.model.UserLevelInfo;
+import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SetDrawableHelper;
 import com.zhowin.miyou.R;
@@ -68,11 +70,12 @@ public class AttentionAndFansAdapter extends BaseQuickAdapter<AttentionUserList,
         TextView tvUserSex = helper.getView(R.id.tvUserSex);
         SetDrawableHelper.setLeftDrawable(mContext, tvUserSex, TextUtils.equals("男", item.getGender()), 2, R.drawable.man_icon, R.drawable.girl_icon);
 
-        AttentionUserList.LevelObjBean userItemLevelInf = item.getLevelObj();
+        UserLevelInfo userItemLevelInf = item.getLevelObj();
         if (userItemLevelInf != null) {
-            helper.setText(R.id.tvUserLevel, "v" + userItemLevelInf.getLevel());
+            helper.setGone(R.id.tvUserLevel, 0 != userItemLevelInf.getLevel())
+                    .setText(R.id.tvUserLevel, "v" + userItemLevelInf.getLevel());
         }
-        AttentionUserList.RankBean itemUserRank = item.getRank();
+        UserRankInfo itemUserRank = item.getRank();
         if (itemUserRank != null) {
             helper.setGone(R.id.tvKnighthood, true)
                     .setText(R.id.tvKnighthood, itemUserRank.getRankName());

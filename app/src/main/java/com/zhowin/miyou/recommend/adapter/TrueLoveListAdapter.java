@@ -29,7 +29,8 @@ public class TrueLoveListAdapter extends BaseQuickAdapter<ZABUserList, BaseViewH
 
             UserLevelInfo userLevelInfo = itemGiverInfo.getLevelObj();
             if (userLevelInfo != null) {
-                helper.setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
+                helper.setVisible(R.id.tvUserLevel, 0 != userLevelInfo.getLevel())
+                        .setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
             }
             UserRankInfo userRankInfo = itemGiverInfo.getRank();
             if (userRankInfo != null) {

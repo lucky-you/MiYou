@@ -45,7 +45,6 @@ public class UserVipActivity extends BaseBindActivity<ActivityUserVipBinding> {
         userVipAdapter = new UserVipAdapter();
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         mBinding.recyclerView.setAdapter(userVipAdapter);
-
     }
 
     private void getVipMessageInfo() {
@@ -74,7 +73,6 @@ public class UserVipActivity extends BaseBindActivity<ActivityUserVipBinding> {
             public void onFail(int errorCode, String errorMsg) {
                 dismissLoadDialog();
                 ToastUtils.showToast(errorMsg);
-
             }
         });
     }

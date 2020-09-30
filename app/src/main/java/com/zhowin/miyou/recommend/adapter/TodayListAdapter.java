@@ -31,7 +31,8 @@ public class TodayListAdapter extends BaseQuickAdapter<ToadyUserList, BaseViewHo
             GlideUtils.loadUserPhotoForLogin(mContext, itemUserInfo.getProfilePictureKey(), helper.getView(R.id.civUserHeadPhoto));
             UserLevelInfo userLevelInfo = itemUserInfo.getLevelObj();
             if (userLevelInfo != null) {
-                helper.setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
+                helper.setGone(R.id.tvUserLevel, 0 != userLevelInfo.getLevel())
+                        .setText(R.id.tvUserLevel, "V" + userLevelInfo.getLevel());
             }
             UserRankInfo userRankInfo = itemUserInfo.getRank();
             if (userRankInfo != null) {

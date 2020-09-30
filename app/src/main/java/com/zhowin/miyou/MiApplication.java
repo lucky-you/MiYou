@@ -13,6 +13,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.zhowin.base_library.base.BaseApplication;
+import com.zhowin.miyou.db.manager.DBManager;
 import com.zhowin.miyou.im.IMClient;
 import com.zhowin.miyou.im.manager.CacheManager;
 import com.zhowin.miyou.im.service.RTCNotificationService;
@@ -38,6 +39,7 @@ public class MiApplication extends BaseApplication {
         if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             return;
         }
+        DBManager.initDao();
         //初始化IM
         IMClient.getInstance().init(getApplicationContext());
         registerLifecycleCallbacks();

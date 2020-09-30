@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.EmptyViewUtils;
@@ -25,11 +26,16 @@ import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityRoomSearchBinding;
+import com.zhowin.miyou.db.manager.DaoManagerUtils;
+import com.zhowin.miyou.db.model.SearchUserHistory;
 import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
 import com.zhowin.miyou.mine.dialog.UnlockRoomDialog;
 import com.zhowin.miyou.recommend.adapter.SearchHistoryAdapter;
+import com.zhowin.miyou.recommend.adapter.SearchUserResultAdapter;
+import com.zhowin.miyou.recommend.callback.OnHitCenterClickListener;
+import com.zhowin.miyou.recommend.dialog.HitCenterDialog;
 import com.zhowin.miyou.recommend.model.RecommendList;
 
 import java.util.ArrayList;
@@ -44,6 +50,8 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
 
     private int classType;
     private MyRoomListAdapter roomSearchAdapter;
+    private SearchHistoryAdapter searchHistoryAdapter;
+    private SearchUserResultAdapter searchUserResultAdapter;
 
     public static void start(Context context, int type) {
         Intent intent = new Intent(context, RoomSearchActivity.class);
@@ -75,14 +83,27 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
                 break;
             case 2:
                 mBinding.editSearch.setHint("请输入好友ID/昵称关键字");
-                List<String> searchHistoryLists = new ArrayList<>();
-                searchHistoryLists.add("周树人");
-                searchHistoryLists.add("树人教育");
-                searchHistoryLists.add("hello树先生");
-                SearchHistoryAdapter searchHistoryAdapter = new SearchHistoryAdapter(searchHistoryLists);
                 mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-                mBinding.recyclerView.setAdapter(searchHistoryAdapter);
+                searchHistoryAdapter = new SearchHistoryAdapter();
+                searchHistoryAdapter.setOnItemClickListener(this::onItemClick);
+
+                searchUserResultAdapter = new SearchUserResultAdapter();
+                searchUserResultAdapter.setOnItemClickListener(this::onItemClick);
+                queryHistoryData();
                 break;
+        }
+    }
+
+    /**
+     * 查询数据
+     */
+    private void queryHistoryData() {
+        List<SearchUserHistory> searchHistoryList = DaoManagerUtils.getHistoryData();
+        if (searchHistoryList != null && !searchHistoryList.isEmpty()) {
+            mBinding.recyclerView.setAdapter(searchHistoryAdapter);
+            searchHistoryAdapter.setNewData(searchHistoryList);
+        } else {
+            EmptyViewUtils.bindEmptyView(mContext, searchHistoryAdapter, R.drawable.empty_wufj_icon, "没有历史记录");
         }
     }
 
@@ -91,13 +112,15 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
         mBinding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mBinding.refreshLayout.setRefreshing(false);
+                String keyWord = mBinding.editSearch.getText().toString().trim();
+                if (TextUtils.isEmpty(keyWord)) return;
                 currentPage = 0;
                 if (1 == classType) {
                     startSearchRoom();
                 } else {
                     startSearchFriend();
                 }
-                mBinding.refreshLayout.setRefreshing(false);
             }
         });
         mBinding.editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -118,14 +141,46 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        boolean roomIsLock = roomSearchAdapter.getItem(position).isExistPwd();
-        if (roomIsLock) {
-            showUnLockRoomDialog();
-        } else {
+        if (adapter instanceof MyRoomListAdapter) {
+            boolean roomIsLock = roomSearchAdapter.getItem(position).isExistPwd();
+            if (roomIsLock) {
+                showUnLockRoomDialog();
+            } else {
 
+            }
+        } else if (adapter instanceof SearchHistoryAdapter) {
+            SearchUserHistory searchUserHistory = searchHistoryAdapter.getItem(position);
+            if (searchUserHistory != null) {
+                showDeleteUserDialog(searchUserHistory);
+            }
+        } else if (adapter instanceof SearchUserResultAdapter) {
+            int userId = searchUserResultAdapter.getItem(position).getUserId();
+            HomepageActivity.start(mContext, userId == UserInfo.getUserInfo().getUserId(), userId);
         }
     }
 
+    private void showDeleteUserDialog(SearchUserHistory searchUserHistory) {
+        HitCenterDialog hitCenterDialog = new HitCenterDialog(mContext);
+        hitCenterDialog.setDialogTitle("确定要删除吗?");
+        hitCenterDialog.show();
+        hitCenterDialog.setOnHitCenterClickListener(new OnHitCenterClickListener() {
+            @Override
+            public void onCancelClick() {
+
+            }
+
+            @Override
+            public void onDetermineClick() {
+                DaoManagerUtils.deleteData(searchUserHistory);
+                queryHistoryData();
+            }
+        });
+
+    }
+
+    /**
+     * 解锁房间
+     */
     private void showUnLockRoomDialog() {
         UnlockRoomDialog unlockRoomDialog = new UnlockRoomDialog(mContext);
         unlockRoomDialog.show();
@@ -171,6 +226,7 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
                 if (recommendListBaseResponse != null) {
                     List<RecommendList> roomList = recommendListBaseResponse.getRecords();
                     if (roomList != null && !roomList.isEmpty()) {
+                        mBinding.recyclerView.setAdapter(roomSearchAdapter);
                         roomSearchAdapter.setNewData(roomList);
                     } else {
                         EmptyViewUtils.bindEmptyView(mContext, roomSearchAdapter, R.drawable.empty_wufj_icon, "没有搜索到房间");
@@ -182,6 +238,7 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
             @Override
             public void onFail(int errorCode, String errorMsg) {
                 dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
             }
         });
 
@@ -191,5 +248,36 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
      * 搜索好友
      */
     private void startSearchFriend() {
+        String keyWord = mBinding.editSearch.getText().toString().trim();
+        if (TextUtils.isEmpty(keyWord)) {
+            ToastUtils.showToast("关键字不能为空哦");
+            return;
+        }
+        showLoadDialog();
+        HttpRequest.searchUserResultList(this, keyWord, currentPage, pageNumber, new HttpCallBack<BaseResponse<UserInfo>>() {
+            @Override
+            public void onSuccess(BaseResponse<UserInfo> userInfoBaseResponse) {
+                dismissLoadDialog();
+                DaoManagerUtils.insertHistoryDao(keyWord);
+                if (userInfoBaseResponse != null) {
+                    List<UserInfo> userInfoList = userInfoBaseResponse.getRecords();
+                    if (userInfoList != null && !userInfoList.isEmpty()) {
+                        mBinding.recyclerView.setAdapter(searchUserResultAdapter);
+                        searchUserResultAdapter.setNewData(userInfoList);
+                    } else {
+                        mBinding.recyclerView.setAdapter(searchUserResultAdapter);
+                        searchUserResultAdapter.setNewData(userInfoList);
+                        EmptyViewUtils.bindEmptyView(mContext, searchUserResultAdapter, R.drawable.empty_wufj_icon, "没有搜索到好友");
+                        ToastUtils.showToast("没有符合条件的好友哦");
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+            }
+        });
     }
 }
