@@ -95,7 +95,7 @@
                 android:layout_height="26dp"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_def_image"
+                android:src="@drawable/room_jiangb_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ivRoomSetting"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -105,7 +105,7 @@
                 android:layout_width="24dp"
                 android:layout_height="26dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_def_image"
+                android:src="@drawable/room_more_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -134,7 +134,7 @@
                     android:layout_height="36dp"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_def_image" />
+                    android:src="@drawable/room_radio2_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -160,7 +160,7 @@
                 android:layout_width="60dp"
                 android:layout_height="34dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/list_fllow_box"
+                android:background="@drawable/room_up_btn"
                 android:gravity="center"
                 android:text="上麦"
                 android:textColor="@color/color_white"
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/mine_room_icon" />
+                android:src="@drawable/room_more2_icon" />
 
             <View
                 android:layout_width="0dp"
@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/mine_room_icon" />
+                android:src="@drawable/room_gift_icon" />
 
             <ImageView
                 android:id="@+id/ivLetters"
@@ -194,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/mine_room_icon" />
+                android:src="@drawable/room_message_icon" />
 
             <ImageView
                 android:id="@+id/ivComment"
@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/mine_room_icon" />
+                android:src="@drawable/room_chat_icon" />
 
             <ImageView
                 android:id="@+id/ivEmoji"
@@ -210,7 +210,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/mine_room_icon" />
+                android:src="@drawable/room_smile_icon" />
 
         </LinearLayout>
 
