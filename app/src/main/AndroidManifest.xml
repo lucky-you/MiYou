@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".recommend.activity.GiftReceivedActivity"></activity>
+        <activity android:name=".mine.activity.GuildSearchActivity"></activity>
+        <activity android:name=".mine.activity.MyGuildActivity" />
+        <activity android:name=".recommend.activity.GiftReceivedActivity" />
         <activity android:name=".mine.activity.UserVipActivity" />
         <activity android:name=".mine.activity.KnighthoodActivity" />
         <activity android:name=".recommend.activity.ChatRoomActivity" />

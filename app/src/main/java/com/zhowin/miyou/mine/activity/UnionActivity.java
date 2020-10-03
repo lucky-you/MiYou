@@ -1,6 +1,8 @@
 package com.zhowin.miyou.mine.activity;
 
 
+import android.view.View;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -28,7 +30,7 @@ public class UnionActivity extends BaseBindActivity<ActivityUnionBinding> {
 
     @Override
     public void initView() {
-
+        setOnClick(R.id.tvSearch,R.id.tvMyGuild);
     }
 
     @Override
@@ -52,4 +54,18 @@ public class UnionActivity extends BaseBindActivity<ActivityUnionBinding> {
             }
         });
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.tvSearch:
+                startActivity(GuildSearchActivity.class);
+                break;
+            case R.id.tvMyGuild:
+                startActivity(MyGuildActivity.class);
+                break;
+        }
+    }
+
 }
