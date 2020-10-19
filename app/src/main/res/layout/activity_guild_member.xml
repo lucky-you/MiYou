@@ -23,18 +23,18 @@
             android:paddingLeft="16dp"
             android:text="成员共5人" />
 
+        <com.zhowin.base_library.view.RefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                style="@style/RecycleViewStyle" />
+
+        </com.zhowin.base_library.view.RefreshLayout>
+
     </LinearLayout>
-
-    <com.zhowin.base_library.view.RefreshLayout
-        android:id="@+id/refreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            style="@style/RecycleViewStyle" />
-
-    </com.zhowin.base_library.view.RefreshLayout>
 
 
 </layout>

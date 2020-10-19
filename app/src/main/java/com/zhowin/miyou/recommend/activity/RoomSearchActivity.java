@@ -86,7 +86,6 @@ public class RoomSearchActivity extends BaseBindActivity<ActivityRoomSearchBindi
                 mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                 searchHistoryAdapter = new SearchHistoryAdapter();
                 searchHistoryAdapter.setOnItemClickListener(this::onItemClick);
-
                 searchUserResultAdapter = new SearchUserResultAdapter();
                 searchUserResultAdapter.setOnItemClickListener(this::onItemClick);
                 queryHistoryData();

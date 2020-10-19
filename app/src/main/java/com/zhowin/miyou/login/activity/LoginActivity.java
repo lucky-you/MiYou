@@ -190,8 +190,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                     if (userInfo != null) {
                         UserInfo.setUserInfo(userInfo);
                         if (userInfo.isCompleted()) {
-//                            connectIM(userInfo);
-                            startActivity(MainActivity.class);
+                            connectIM(userInfo);
                         } else {
                             startActivity(EditNickNameActivity.class);
                             ActivityManager.getAppInstance().finishActivity();
@@ -242,9 +241,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
             @Override
             public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
-                Log.e(IMClient.TAG, "连接IM database");
             }
-
         });
     }
 

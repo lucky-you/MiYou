@@ -20,7 +20,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mine.activity.GuildMemberActivity"></activity>
+        <activity
+            android:name=".message.activity.IMChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.zhowin.miyou"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".mine.activity.GuildMemberActivity" />
         <activity android:name=".mine.activity.GuildFlowActivity" />
         <activity android:name=".mine.activity.GuildSearchActivity" />
         <activity android:name=".mine.activity.MyGuildActivity" />
@@ -95,7 +109,18 @@
         </activity>
         <activity
             android:name=".main.activity.MainActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zhowin.miyou"
+                    android:pathPrefix="/conversationlist/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".login.activity.LoginActivity"
             android:launchMode="singleTask" />

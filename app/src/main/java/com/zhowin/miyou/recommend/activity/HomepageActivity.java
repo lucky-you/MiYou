@@ -43,6 +43,9 @@ import com.zhowin.miyou.recommend.widget.SetTagsToViewHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+
 /**
  * 个人主页 自己和别人共用
  */
@@ -73,7 +76,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
         isMine = getIntent().getBooleanExtra(ConstantValue.TYPE, false);
         userId = getIntent().getIntExtra(ConstantValue.ID, -1);
         mBinding.homePageRecyclerView.setFocusable(false);
-        setOnClick(R.id.ivBackReturn, R.id.ivEditPersonal);
+        setOnClick(R.id.ivBackReturn, R.id.ivEditPersonal, R.id.tvAttention, R.id.tvChatWith);
         mBinding.ivEditPersonal.setImageResource(isMine ? R.drawable.personal_add_icon : R.drawable.personal_more_icon);
         mBinding.llBottomAttentionLayout.setVisibility(isMine ? View.GONE : View.VISIBLE);
         mBinding.tvIsLiving.setVisibility(View.GONE);
@@ -196,6 +199,13 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
                 } else {
                     showShareAndAttentionDialog();
                 }
+                break;
+            case R.id.tvAttention:
+
+                break;
+            case  R.id.tvChatWith:
+//                bundle.putInt(ConstantValue.TYPE, ConstantValue.THE_TYPE_OF_PRIVATE_CHAT);
+//                RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, String.valueOf(userID), userNickName, bundle);
                 break;
         }
     }

@@ -230,6 +230,7 @@
 
 
                     <TextView
+                        android:id="@+id/tvAttention"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -248,6 +249,7 @@
                         android:layout_weight="0.2" />
 
                     <TextView
+                        android:id="@+id/tvChatWith"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
