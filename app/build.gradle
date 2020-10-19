@@ -100,6 +100,10 @@ dependencies {
     implementation 'cn.rongcloud.sdk:im_kit:4.0.2' // 即时通讯 UI 基础组件
     implementation 'cn.rongcloud.sdk:call_kit:4.0.2' // 音视频通话能力 UI 组件
     implementation 'cn.rongcloud.sdk:call_lib:4.0.2' // 音视频呼叫信令
+
     implementation 'androidx.work:work-runtime:2.4.0'
     implementation 'androidx.room:room-common:2.2.3'
+
+//    implementation project(':IMKit_Source')
+//    implementation 'cn.rongcloud.sdk:rtc_lib:4.0.3.2'
 }
