@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" />
 
     <application
         android:name=".MiApplication"
@@ -20,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".message.activity.SystemMessageActivity"></activity>
         <activity
             android:name=".message.activity.IMChatActivity"
             android:launchMode="singleTask"
@@ -27,10 +30,12 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
-                    android:host="com.zhowin.miyou"
-                    android:pathPrefix="/conversation/"
+                    android:host="${applicationId}"
+                    android:pathPrefix="/conversation"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
@@ -98,7 +103,22 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
-        <service android:name=".im.service.RTCNotificationService" />
+        <service android:name=".im.service.RTCNotificationService" /> <!-- push 应用定义消息 receiver 声明 -->
+        <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
+            <intent-filter>
+
+                <!-- 接收 push 消息 -->
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="io.rong.push.platform.hms.HMSPushService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity android:name=".main.activity.SplashActivity">
             <intent-filter>
@@ -116,8 +136,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.zhowin.miyou"
-                    android:pathPrefix="/conversationlist/"
+                    android:host="${applicationId}"
+                    android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
             </intent-filter>
         </activity>

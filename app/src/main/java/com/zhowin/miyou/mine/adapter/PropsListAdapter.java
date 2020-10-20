@@ -40,7 +40,7 @@ public class PropsListAdapter extends BaseQuickAdapter<ShopMallPropsList, BaseVi
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, ShopMallPropsList item) {
-        GlideUtils.loadObjectImage(mContext, item.getPictureKey(), helper.getView(R.id.ivPropsPhoto));
+        GlideUtils.loadObjectImage(mContext, item.getGreyPicture(), helper.getView(R.id.ivPropsPhoto));
         helper.setText(R.id.tvPropsName, item.getName());
         List<ShopMallPropsList.GoodsTimesBean> itemGoodList = item.getGoodsTimes();
         if (itemGoodList != null && !itemGoodList.isEmpty()) {

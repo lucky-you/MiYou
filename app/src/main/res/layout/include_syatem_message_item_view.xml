@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tvCreateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="3月15日 3:15"
+        android:textColor="@color/color_999"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tvMessageContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/shape_white_color_10dp_bg"
+        android:padding="10dp"
+        android:text="恭喜娃哈哈吧啦啦啦获得了资金卡奖章"
+        android:textColor="@color/color_333"
+        android:textSize="16sp" />
+
+
+</LinearLayout>

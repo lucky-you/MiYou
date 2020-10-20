@@ -241,6 +241,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
             @Override
             public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+                Log.e(IMClient.TAG, "连接IM DatabaseOpened");
             }
         });
     }

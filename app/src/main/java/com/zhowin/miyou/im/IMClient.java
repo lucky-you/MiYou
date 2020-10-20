@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import io.rong.eventbus.EventBus;
+import io.rong.imkit.RongExtensionManager;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.AnnotationNotFoundException;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -37,6 +39,7 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.RecallNotificationMessage;
 import io.rong.message.TextMessage;
+import io.rong.sight.SightExtensionModule;
 
 import static io.rong.imlib.RongIMClient.ConnectionStatusListener.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT;
 
@@ -97,7 +100,6 @@ public class IMClient {
         /*
          * 初始化 SDK，在整个应用程序全局，只需要调用一次。建议在 Application 继承类中调用。
          */
-        // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
         RongIMClient.init(context, BuildConfig.Rong_key, false);
         try {
             RongIMClient.registerMessageType(RoomMemberChangedMessage.class);
@@ -106,7 +108,9 @@ public class IMClient {
             RongIMClient.registerMessageType(KickMemberMessage.class);
             RongIMClient.registerMessageType(HandOverHostMessage.class);
             RongIMClient.registerMessageType(TakeOverHostMessage.class);
-        } catch (AnnotationNotFoundException e) {
+            RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
+            RongIM.getInstance().setReadReceiptConversationTypeList(Conversation.ConversationType.PRIVATE);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //管理消息监听，由于同一时间只能有一个消息监听加入 融云 的消息监听，所以做一个消息管理来做消息路由
@@ -126,7 +130,6 @@ public class IMClient {
                 }
                 return true;
             }
-
         });
         //消息撤回，用来删除消息
         RongIMClient.setOnRecallMessageListener(new RongIMClient.OnRecallMessageListener() {

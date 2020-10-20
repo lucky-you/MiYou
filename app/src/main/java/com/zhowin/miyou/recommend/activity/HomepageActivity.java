@@ -3,6 +3,7 @@ package com.zhowin.miyou.recommend.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -203,9 +204,9 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
             case R.id.tvAttention:
 
                 break;
-            case  R.id.tvChatWith:
-//                bundle.putInt(ConstantValue.TYPE, ConstantValue.THE_TYPE_OF_PRIVATE_CHAT);
-//                RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, String.valueOf(userID), userNickName, bundle);
+            case R.id.tvChatWith:
+                Bundle bundle = new Bundle();
+                RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, String.valueOf(userId), userNickName, bundle);
                 break;
         }
     }

@@ -14,6 +14,7 @@ import com.zhowin.miyou.BuildConfig;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.message.model.SystemMessage;
 import com.zhowin.miyou.mine.model.AttentionUserList;
 import com.zhowin.miyou.mine.model.KnighthoodMessageInfo;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
@@ -1010,6 +1011,24 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    public static void getSystemMessageList(LifecycleOwner activity, final HttpCallBack<BaseResponse<SystemMessage>> callBack) {
+        apiRequest.getSystemMessageList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<BaseResponse<SystemMessage>>() {
+
+                    @Override
+                    public void onSuccess(BaseResponse<SystemMessage> demo) {
                         callBack.onSuccess(demo);
                     }
 

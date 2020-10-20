@@ -7,6 +7,7 @@ import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.miyou.login.model.DefaultImageList;
 import com.zhowin.miyou.login.model.LabelList;
 import com.zhowin.miyou.main.model.BannerList;
+import com.zhowin.miyou.message.model.SystemMessage;
 import com.zhowin.miyou.mine.model.AttentionUserList;
 import com.zhowin.miyou.mine.model.KnighthoodMessageInfo;
 import com.zhowin.miyou.mine.model.MyWalletBalance;
@@ -214,6 +215,9 @@ public interface ApiRequest {
 
     //开通/续费爵位
     String OPEN_KNIGHTHOOD_URL = "/ant/rank/openRank";
+
+    //获取系统消息
+    String GET_SYSTEM_LIST_URL = "/ant/msg/system/get";
 
 
     /**
@@ -512,4 +516,10 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(OPEN_KNIGHTHOOD_URL)
     Observable<ApiResponse<Object>> openKnighthoodLevel(@Header(AUTHOR) String token, @Field("rankId") int rankId);
+
+    /**
+     * 获取系统消息
+     */
+    @POST(GET_SYSTEM_LIST_URL)
+    Observable<ApiResponse<BaseResponse<SystemMessage>>> getSystemMessageList(@Header(AUTHOR) String token);
 }

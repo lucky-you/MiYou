@@ -19,7 +19,11 @@ import com.zhowin.miyou.im.manager.CacheManager;
 import com.zhowin.miyou.im.service.RTCNotificationService;
 
 import cn.rongcloud.rtc.api.RCRTCEngine;
+import io.rong.imkit.RongExtensionManager;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.sight.SightExtensionModule;
 
 /**
  * author : zho

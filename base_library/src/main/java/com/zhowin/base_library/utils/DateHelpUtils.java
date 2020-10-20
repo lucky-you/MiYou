@@ -10,15 +10,6 @@ import java.util.Date;
 public class DateHelpUtils {
     static SimpleDateFormat mDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 
-    /**
-     * 获取当前日期
-     */
-    public static String getCurrentDay() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(System.currentTimeMillis());
-        return format.format(date);
-    }
-
 
     /**
      * 获取当前时间
@@ -47,6 +38,16 @@ public class DateHelpUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return sdf.format(date);
     }
+
+
+
+
+    public static String getCurrentDayNotYear(long timeStamp) {
+        Date date = new Date(timeStamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日 HH:mm");
+        return sdf.format(date);
+    }
+
 
     public static long getStringToDate(String dateString, String pattern) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);

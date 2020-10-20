@@ -253,16 +253,18 @@ public class RTCClient {
      * @param liveUrl 直播URL final SealMicResultCallback<RongRTCVideoView> callback
      */
     public void subscribeLiveAVStream(String liveUrl) {
-        RCRTCEngine.getInstance().subscribeLiveStream(liveUrl, RCRTCRoomType.LIVE_AUDIO, new IRCRTCResultDataCallback<List<RCRTCInputStream>>() {
-            @Override
-            public void onSuccess(List<RCRTCInputStream> rcrtcInputStreams) {
-            }
+//        RCRTCEngine.getInstance().subscribeLiveStream(liveUrl, RCRTCRoomType.LIVE_AUDIO, new IRCRTCResultDataCallback<List<RCRTCInputStream>>() {
+//            @Override
+//            public void onSuccess(List<RCRTCInputStream> rcrtcInputStreams) {
+//
+//            }
+//
+//            @Override
+//            public void onFailed(RTCErrorCode rtcErrorCode) {
+//                Log.i("TAG", rtcErrorCode.toString());
+//            }
+//        });
 
-            @Override
-            public void onFailed(RTCErrorCode rtcErrorCode) {
-                Log.i("TAG", rtcErrorCode.toString());
-            }
-        });
     }
 
     /**

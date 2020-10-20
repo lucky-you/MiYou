@@ -1,6 +1,7 @@
 package com.zhowin.miyou.message.activity;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
@@ -10,20 +11,16 @@ import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityIMChatBinding;
 
-import io.rong.imkit.RongIM;
-import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.RongIMClient;
+import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * 聊天的activity
  */
-public class IMChatActivity extends BaseBindActivity<ActivityIMChatBinding> implements RongIM.UserInfoProvider,
-        RongIMClient.ConnectionStatusListener {
+public class IMChatActivity extends BaseBindActivity<ActivityIMChatBinding> {
 
     private String userName, mTargetId;
-
+    private Conversation.ConversationType mConversationType; //会话类型
 
     @Override
     public int getLayoutId() {
@@ -32,35 +29,32 @@ public class IMChatActivity extends BaseBindActivity<ActivityIMChatBinding> impl
 
     @Override
     public void initView() {
-
-        RongIM.setUserInfoProvider(this, true);
-        RongIM.setConnectionStatusListener(this); //链接状态的监听
+        // 没有intent 的则直接返回
+        Intent intent = getIntent();
+        if (intent == null || intent.getData() == null) {
+            finish();
+            return;
+        }
         userName = getIntent().getData().getQueryParameter("title");
         mTargetId = getIntent().getData().getQueryParameter("targetId");
-//        Log.d("my", "userName=" + userName + "\n" + "mTargetId=" + mTargetId + "\n" + "classType=" + classType);
+        mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase());
+        Log.d("xy", "userName=" + userName + "\n" + "mTargetId=" + mTargetId);
+        mBinding.titleView.setTitle(userName);
     }
 
     @Override
     public void initData() {
-        ConversationListFragment chatConversationFragment = new ConversationListFragment();
+        ConversationFragment fragment = new ConversationFragment();
         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversation")
-                .appendPath(Conversation.ConversationType.PRIVATE.getName().toLowerCase())
+                .appendPath(mConversationType.getName().toLowerCase())
                 .appendQueryParameter("targetId", mTargetId)
                 .build();
-        chatConversationFragment.setUri(uri);
+        fragment.setUri(uri);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.rong_content, chatConversationFragment);
-        transaction.commitAllowingStateLoss();
+        transaction.add(R.id.conversation, fragment);
+        transaction.commit();
     }
 
-    @Override
-    public UserInfo getUserInfo(String s) {
-        return null;
-    }
 
-    @Override
-    public void onChanged(ConnectionStatus connectionStatus) {
-
-    }
 }

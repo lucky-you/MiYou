@@ -10,6 +10,7 @@ import com.zhowin.base_library.base.BaseApplication;
 import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.MessageFragmentLayoutBinding;
+import com.zhowin.miyou.message.activity.SystemMessageActivity;
 import com.zhowin.miyou.message.adapter.ConversationListAdapterEx;
 import com.zhowin.miyou.recommend.activity.RoomSearchActivity;
 
@@ -22,7 +23,6 @@ import io.rong.imlib.model.Conversation;
 public class MessageFragment extends BaseBindFragment<MessageFragmentLayoutBinding> {
 
 
-
     @Override
     public int getLayoutId() {
         return R.layout.message_fragment_layout;
@@ -30,38 +30,14 @@ public class MessageFragment extends BaseBindFragment<MessageFragmentLayoutBindi
 
     @Override
     public void initView() {
-        setOnClick(R.id.tvSearchFriend);
-//        loadIMConversation();
+        setOnClick(R.id.tvSearchFriend, R.id.llSystemLayout, R.id.llAnnouncementLayout, R.id.llGuildMessageLayout);
+
     }
 
     @Override
     public void initData() {
-        loadIMFragment();
+//        loadIMConversation();
     }
-
-    private void loadIMFragment() {
-        ConversationListFragment conversationListFragment = new ConversationListFragment();
-        // 此处设置 Uri. 通过 appendQueryParameter 去设置所要支持的会话类型. 例如
-        // .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(),"false")
-        // 表示支持单聊会话, false 表示不聚合显示, true 则为聚合显示
-        Uri uri = Uri.parse("rong://" +
-                getActivity().getApplicationInfo().packageName).buildUpon()
-                .appendPath("conversationlist")
-                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
-                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//群组
-                .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
-                .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "false")//订阅号
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
-                .build();
-
-        conversationListFragment.setUri(uri);
-        FragmentManager manager = getChildFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.rong_content, conversationListFragment);
-        transaction.commit();
-
-    }
-
 
     private void loadIMConversation() {
         ConversationListFragment conversationListFragment = new ConversationListFragment();
@@ -75,8 +51,8 @@ public class MessageFragment extends BaseBindFragment<MessageFragmentLayoutBindi
         conversationListFragment.setAdapter(chatMessageListAdapter);
         conversationListFragment.setUri(IMRongUri);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.rong_content, conversationListFragment);
-        transaction.commitAllowingStateLoss();
+        transaction.replace(R.id.rong_content, conversationListFragment);
+        transaction.commit();
     }
 
 
@@ -85,6 +61,15 @@ public class MessageFragment extends BaseBindFragment<MessageFragmentLayoutBindi
         switch (v.getId()) {
             case R.id.tvSearchFriend:
                 RoomSearchActivity.start(mContext, 2);
+                break;
+            case R.id.llSystemLayout:
+                SystemMessageActivity.start(mContext,1);
+                break;
+            case R.id.llAnnouncementLayout:
+                SystemMessageActivity.start(mContext,2);
+                break;
+            case R.id.llGuildMessageLayout:
+                SystemMessageActivity.start(mContext,3);
                 break;
         }
     }

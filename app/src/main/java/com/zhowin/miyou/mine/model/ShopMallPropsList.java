@@ -22,7 +22,8 @@ public class ShopMallPropsList {
     private int id;
     private String name;
     private int type;
-    private String pictureKey;
+    private String heightPicture;
+    private String greyPicture;
     private int enable;
     private int sort;
     private long createTime;
@@ -55,12 +56,20 @@ public class ShopMallPropsList {
         this.type = type;
     }
 
-    public String getPictureKey() {
-        return pictureKey;
+    public String getHeightPicture() {
+        return heightPicture;
     }
 
-    public void setPictureKey(String pictureKey) {
-        this.pictureKey = pictureKey;
+    public void setHeightPicture(String heightPicture) {
+        this.heightPicture = heightPicture;
+    }
+
+    public String getGreyPicture() {
+        return greyPicture;
+    }
+
+    public void setGreyPicture(String greyPicture) {
+        this.greyPicture = greyPicture;
     }
 
     public int getEnable() {
