@@ -3,7 +3,6 @@ package com.zhowin.miyou.message.fragment;
 import android.net.Uri;
 import android.view.View;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.zhowin.base_library.base.BaseApplication;
@@ -51,7 +50,7 @@ public class MessageFragment extends BaseBindFragment<MessageFragmentLayoutBindi
         conversationListFragment.setAdapter(chatMessageListAdapter);
         conversationListFragment.setUri(IMRongUri);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.rong_content, conversationListFragment);
+        transaction.replace(R.id.conversationlist, conversationListFragment);
         transaction.commit();
     }
 

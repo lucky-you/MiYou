@@ -8,7 +8,6 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.base.BaseBindActivity;
@@ -27,12 +26,12 @@ import com.zhowin.miyou.main.activity.MainActivity;
 
 import java.util.concurrent.TimeUnit;
 
-import cn.rongcloud.rtc.media.http.HttpClient;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 /**
@@ -217,7 +216,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
         IMClient.getInstance().disconnect();
         String imToken = userInfo.getRongToken();
         if (TextUtils.isEmpty(imToken)) return;
-        IMClient.getInstance().connect(imToken, new RongIMClient.ConnectCallback() {
+        RongIM.connect(imToken,new RongIMClient.ConnectCallback(){
             @Override
             public void onSuccess(String s) {
                 Log.e(IMClient.TAG, "连接IM Success");

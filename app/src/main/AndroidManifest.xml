@@ -35,7 +35,7 @@
 
                 <data
                     android:host="${applicationId}"
-                    android:pathPrefix="/conversation"
+                    android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
         </activity>

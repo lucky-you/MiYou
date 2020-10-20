@@ -3,7 +3,6 @@ package com.zhowin.miyou.recommend.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -19,7 +18,6 @@ import com.zhowin.base_library.model.UserInterestList;
 import com.zhowin.base_library.model.UserLevelInfo;
 import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.ActivityManager;
-import com.zhowin.base_library.utils.BarUtils;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SetDrawableHelper;
@@ -205,8 +203,7 @@ public class HomepageActivity extends BaseBindActivity<ActivityHomepageBinding> 
 
                 break;
             case R.id.tvChatWith:
-                Bundle bundle = new Bundle();
-                RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, String.valueOf(userId), userNickName, bundle);
+                RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, String.valueOf(userId), userNickName);
                 break;
         }
     }
