@@ -15,6 +15,8 @@ import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivitySystemMessageBinding;
 import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
+import com.zhowin.miyou.message.adapter.AnnouncementMessageAdapter;
+import com.zhowin.miyou.message.adapter.GuildMessageAdapter;
 import com.zhowin.miyou.message.adapter.SystemMessageAdapter;
 import com.zhowin.miyou.message.model.SystemMessage;
 
@@ -28,6 +30,8 @@ public class SystemMessageActivity extends BaseBindActivity<ActivitySystemMessag
 
     private int classType;
     private SystemMessageAdapter systemMessageAdapter;
+    private AnnouncementMessageAdapter announcementMessageAdapter;
+    private GuildMessageAdapter guildMessageAdapter;
 
 
     public static void start(Context context, int type) {
@@ -54,9 +58,22 @@ public class SystemMessageActivity extends BaseBindActivity<ActivitySystemMessag
                 break;
             case 2:
                 mBinding.titleView.setTitle("官方公告");
+                List<SystemMessage> systemMessages = new ArrayList<>();
+                systemMessages.add(new SystemMessage());
+                systemMessages.add(new SystemMessage());
+                systemMessages.add(new SystemMessage());
+                announcementMessageAdapter = new AnnouncementMessageAdapter(systemMessages);
+                mBinding.recyclerView.setAdapter(announcementMessageAdapter);
                 break;
             case 3:
                 mBinding.titleView.setTitle("公会消息");
+                List<SystemMessage> messageList = new ArrayList<>();
+                messageList.add(new SystemMessage());
+                messageList.add(new SystemMessage());
+                messageList.add(new SystemMessage());
+                messageList.add(new SystemMessage());
+                guildMessageAdapter = new GuildMessageAdapter(messageList);
+                mBinding.recyclerView.setAdapter(guildMessageAdapter);
                 break;
         }
 
@@ -87,6 +104,10 @@ public class SystemMessageActivity extends BaseBindActivity<ActivitySystemMessag
 
             }
         });
+    }
+
+    private void getAnnouncementMessage() {
+
     }
 
 

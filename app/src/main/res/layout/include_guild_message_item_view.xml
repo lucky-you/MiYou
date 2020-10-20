@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tvCreateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="3月15日 3:15"
+        android:textColor="@color/color_999"
+        android:textSize="12sp" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/shape_white_color_10dp_bg"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civUserHeadPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_default_hp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvUserNickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:gravity="center_vertical"
+            android:text="小辣椒小辣椒小辣椒"
+            android:textColor="@color/color_333"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/civUserHeadPhoto"
+            app:layout_constraintTop_toTopOf="@id/civUserHeadPhoto" />
+
+        <TextView
+            android:id="@+id/tvMessageContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:text="邀请您加入TA的巴拉巴拉公会"
+            android:textColor="@color/color_666"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="@id/tvUserNickName"
+            app:layout_constraintTop_toBottomOf="@id/tvUserNickName" />
+
+
+        <View
+            android:id="@+id/divideLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="6dp"
+            android:background="@color/color_DDDDDD"
+            app:layout_constraintTop_toBottomOf="@id/civUserHeadPhoto" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:gravity="right"
+            android:orientation="horizontal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divideLine">
+
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/shape_blue_color_stroke_bg"
+                android:gravity="center"
+                android:text="拒绝"
+                android:textColor="@color/color_4C9CFF"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/systemmessa_ok_btn"
+                android:gravity="center"
+                android:text="同意"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
