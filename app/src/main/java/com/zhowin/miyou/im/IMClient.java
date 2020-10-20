@@ -100,21 +100,21 @@ public class IMClient {
         /*
          * 初始化 SDK，在整个应用程序全局，只需要调用一次。建议在 Application 继承类中调用。
          */
-        RongIMClient.init(context, BuildConfig.Rong_key, false);
+        RongIM.init(context, BuildConfig.Rong_key, false);
         try {
-            RongIMClient.registerMessageType(RoomMemberChangedMessage.class);
-            RongIMClient.registerMessageType(SendGiftMessage.class);
-            RongIMClient.registerMessageType(SendBroadcastGiftMessage.class);
-            RongIMClient.registerMessageType(KickMemberMessage.class);
-            RongIMClient.registerMessageType(HandOverHostMessage.class);
-            RongIMClient.registerMessageType(TakeOverHostMessage.class);
+            RongIM.registerMessageType(RoomMemberChangedMessage.class);
+            RongIM.registerMessageType(SendGiftMessage.class);
+            RongIM.registerMessageType(SendBroadcastGiftMessage.class);
+            RongIM.registerMessageType(KickMemberMessage.class);
+            RongIM.registerMessageType(HandOverHostMessage.class);
+            RongIM.registerMessageType(TakeOverHostMessage.class);
             RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
             RongIM.getInstance().setReadReceiptConversationTypeList(Conversation.ConversationType.PRIVATE);
         } catch (Exception e) {
             e.printStackTrace();
         }
         //管理消息监听，由于同一时间只能有一个消息监听加入 融云 的消息监听，所以做一个消息管理来做消息路由
-        RongIMClient.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+        RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
             @Override
             public boolean onReceived(Message message, int left) {
                 Log.e(TAG, "onReceived message. tag:" + message.getObjectName());
@@ -150,7 +150,7 @@ public class IMClient {
             }
         });
         //IM连接状态监听
-        RongIMClient.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
+        RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
             @Override
             public void onChanged(ConnectionStatus connectionStatus) {
                 if (connectionStatus == KICKED_OFFLINE_BY_OTHER_CLIENT) {
@@ -168,18 +168,18 @@ public class IMClient {
     }
 
     public void connect(String token, final RongIMClient.ConnectCallback callback) {
-        RongIMClient.connect(token, callback);
+        RongIM.connect(token, callback);
     }
 
     public void disconnect() {
-        RongIMClient.getInstance().disconnect();
+        RongIM.getInstance().disconnect();
     }
 
     /**
      * 加入 IM 聊天室
      */
     public void joinChatRoom(final String roomId, final RongIMClient.ResultCallback<String> callBack) {
-        RongIMClient.getInstance().joinChatRoom(roomId, DEFAULT_MESSAGE_COUNT, new RongIMClient.OperationCallback() {
+        RongIM.getInstance().joinChatRoom(roomId, DEFAULT_MESSAGE_COUNT, new RongIMClient.OperationCallback() {
             @Override
             public void onSuccess() {
                 if (callBack != null) {
