@@ -45,7 +45,7 @@ public class MiApplication extends BaseApplication {
         }
         DBManager.initDao();
         //初始化IM
-        IMClient.getInstance().init(getApplicationContext());
+//        IMClient.getInstance().init(getApplicationContext());
         registerLifecycleCallbacks();
 //        connectIM();
     }
