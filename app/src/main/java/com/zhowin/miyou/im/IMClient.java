@@ -100,7 +100,7 @@ public class IMClient {
         /*
          * 初始化 SDK，在整个应用程序全局，只需要调用一次。建议在 Application 继承类中调用。
          */
-        RongIM.init(context, BuildConfig.Rong_key, false);
+        RongIM.init(context, BuildConfig.Rong_key, true);
         try {
             RongIM.registerMessageType(RoomMemberChangedMessage.class);
             RongIM.registerMessageType(SendGiftMessage.class);

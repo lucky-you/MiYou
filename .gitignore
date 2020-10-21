@@ -12,3 +12,9 @@
 /captures
 .externalNativeBuild
 .cxx
+IMKit_Source/build/
+app/libs/
+app/release/output.json
+app/src/main/java/dao/
+base_library/libs/
+base_library/src/main/res/color/

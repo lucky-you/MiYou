@@ -47,7 +47,7 @@ public class MiApplication extends BaseApplication {
         //初始化IM
         IMClient.getInstance().init(getApplicationContext());
         registerLifecycleCallbacks();
-        connectIM();
+//        connectIM();
     }
 
     private void registerLifecycleCallbacks() {
