@@ -12,7 +12,6 @@ import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
-import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivitySetPasswordBinding;
@@ -26,12 +25,6 @@ public class SetPasswordActivity extends BaseBindActivity<ActivitySetPasswordBin
 
     private int classType;
     private boolean isShowOriginalPassword, isShowPassword, isShowPasswordAgain;
-
-//    public static void start(Context context, int type) {
-//        Intent intent = new Intent(context, SetPasswordActivity.class);
-//        intent.putExtra(ConstantValue.TYPE, type);
-//        context.startActivity(intent);
-//    }
 
     @Override
     public int getLayoutId() {
@@ -52,7 +45,7 @@ public class SetPasswordActivity extends BaseBindActivity<ActivitySetPasswordBin
             mBinding.titleView.setRightTextViewClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(ForgetPasswordActivity.class);
+                    ForgetPasswordActivity.start(mContext,1);
                 }
             });
         }
@@ -142,6 +135,7 @@ public class SetPasswordActivity extends BaseBindActivity<ActivitySetPasswordBin
 
     /**
      * 设置密码
+     *
      * @param password 密码
      */
     private void setUserPassword(String password) {

@@ -25,7 +25,7 @@
             android:layout_height="92dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:src="@mipmap/ic_def_image" />
+            android:src="@drawable/cancellation_icon" />
 
         <TextView
             android:layout_width="wrap_content"

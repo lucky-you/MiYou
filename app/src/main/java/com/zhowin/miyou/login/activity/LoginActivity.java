@@ -87,7 +87,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 changeUiOfClickStatus();
                 break;
             case R.id.tvForgetPassword:
-                startActivity(ForgetPasswordActivity.class);
+                ForgetPasswordActivity.start(mContext, 1);
                 break;
             case R.id.tvGetVerificationCode:
                 clickLoginOrGetCode(false);
@@ -189,13 +189,13 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                     if (userInfo != null) {
                         UserInfo.setUserInfo(userInfo);
                         if (userInfo.isCompleted()) {
-                            connectIM(userInfo);
+//                            connectIM(userInfo);
+                            startActivity(MainActivity.class);
                         } else {
                             startActivity(EditNickNameActivity.class);
                             ActivityManager.getAppInstance().finishActivity();
                         }
                     }
-
                 }
 
                 @Override
@@ -216,7 +216,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
         IMClient.getInstance().disconnect();
         String imToken = userInfo.getRongToken();
         if (TextUtils.isEmpty(imToken)) return;
-        RongIM.connect(imToken,new RongIMClient.ConnectCallback(){
+        RongIM.connect(imToken, new RongIMClient.ConnectCallback() {
             @Override
             public void onSuccess(String s) {
                 Log.e(IMClient.TAG, "连接IM Success");
@@ -250,7 +250,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
      */
     private void getVerificationCode(String phoneNumber) {
         showLoadDialog();
-        HttpRequest.getVerificationCode(this, phoneNumber, new HttpCallBack<Object>() {
+        HttpRequest.getVerificationCode(this, 0, phoneNumber, new HttpCallBack<Object>() {
             @Override
             public void onSuccess(Object o) {
                 dismissLoadDialog();

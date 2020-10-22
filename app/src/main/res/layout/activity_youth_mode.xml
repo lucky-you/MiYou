@@ -16,6 +16,7 @@
         <View style="@style/DivideLineStyle" />
 
         <ImageView
+            android:id="@+id/ivModeStatusImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -24,6 +25,7 @@
             android:src="@drawable/young_close_icon" />
 
         <TextView
+            android:id="@+id/tvModeStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

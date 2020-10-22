@@ -17,20 +17,22 @@ import com.zhowin.miyou.im.manager.RoomManager;
 import com.zhowin.miyou.im.message.HandOverHostMessage;
 import com.zhowin.miyou.im.message.KickMemberMessage;
 import com.zhowin.miyou.im.message.RoomMemberChangedMessage;
+import com.zhowin.miyou.im.message.SealContactNotificationMessage;
 import com.zhowin.miyou.im.message.SendBroadcastGiftMessage;
 import com.zhowin.miyou.im.message.SendGiftMessage;
 import com.zhowin.miyou.im.message.TakeOverHostMessage;
 import com.zhowin.miyou.im.model.Event;
 import com.zhowin.miyou.im.model.SendSuperGiftBean;
+import com.zhowin.miyou.im.plugin.SealExtensionModule;
+import com.zhowin.miyou.im.provider.ContactNotificationMessageProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import io.rong.eventbus.EventBus;
-import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.AnnotationNotFoundException;
+import io.rong.imkit.widget.provider.RealTimeLocationMessageProvider;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.ChatRoomInfo;
@@ -39,7 +41,6 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.RecallNotificationMessage;
 import io.rong.message.TextMessage;
-import io.rong.sight.SightExtensionModule;
 
 import static io.rong.imlib.RongIMClient.ConnectionStatusListener.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT;
 
@@ -108,7 +109,15 @@ public class IMClient {
             RongIM.registerMessageType(KickMemberMessage.class);
             RongIM.registerMessageType(HandOverHostMessage.class);
             RongIM.registerMessageType(TakeOverHostMessage.class);
-            RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
+
+            RongIM.registerMessageType(SealContactNotificationMessage.class);
+
+            RongIM.registerMessageTemplate(new ContactNotificationMessageProvider());
+            RongIM.registerMessageTemplate(new RealTimeLocationMessageProvider());
+
+//            RongExtensionManager.getInstance().registerExtensionModule(new SealExtensionModule(context));
+//            RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
+
             RongIM.getInstance().setReadReceiptConversationTypeList(Conversation.ConversationType.PRIVATE);
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,6 +171,9 @@ public class IMClient {
                     CacheManager.getInstance().cacheIsLogin(false);
                     //3. 调用游客登录接口重新登录
                     EventBus.getDefault().post(new Event.UserGoOutBean());
+                } else if (connectionStatus == ConnectionStatus.TOKEN_INCORRECT) {
+                    //TODO token 错误时，重新登录
+                    Log.e(IMClient.TAG, "token错误");
                 }
             }
         });

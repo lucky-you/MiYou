@@ -7,6 +7,7 @@ import com.zhowin.base_library.callback.OnNoNetWorkClickListener;
 import com.zhowin.base_library.http.ApiResponse;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.view.NoNetWorkDialogView;
 import com.zhowin.miyou.login.activity.LoginActivity;
 import com.zhowin.miyou.main.activity.MainActivity;
@@ -17,6 +18,7 @@ import java.net.UnknownHostException;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.rong.eventbus.EventBus;
 import retrofit2.adapter.rxjava2.HttpException;
 
 
@@ -39,8 +41,8 @@ public abstract class ApiObserver<T> implements Observer<ApiResponse<T>> {
         if (response.getCode() == 200) {
             onSuccess(response.getData());
         } else if (response.getCode() == 401) {
-//            onFail(response.getCode(), response.getMsg());
-            showNoNetWorkDialog();
+            onFail(response.getCode(), response.getMsg());
+//            showNoNetWorkDialog();
         } else {
             onFail(response.getCode(), response.getMsg());
         }

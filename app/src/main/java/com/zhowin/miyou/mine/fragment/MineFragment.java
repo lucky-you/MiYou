@@ -194,9 +194,30 @@ public class MineFragment extends BaseBindFragment<MineFragmentLayoutBinding> im
                 startActivity(HelpOrFeedbackActivity.class);
                 break;
             case 8:
-                startActivity(YouthModeActivity.class);
+//                checkYouthMode();
+                YouthModeActivity.start(mContext, false);
                 break;
         }
+    }
+
+    /**
+     * 查询青少年模式
+     */
+    private void checkYouthMode() {
+        showLoadDialog();
+        HttpRequest.checkYouthMode(this, new HttpCallBack<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                dismissLoadDialog();
+                YouthModeActivity.start(mContext, aBoolean);
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+
+            }
+        });
     }
 
     /**

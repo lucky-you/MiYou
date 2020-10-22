@@ -92,8 +92,8 @@ public class HttpRequest {
     /**
      * 获取验证码
      */
-    public static void getVerificationCode(LifecycleOwner activity, String mobile, final HttpCallBack<Object> callBack) {
-        apiRequest.getVerificationCode(ApiRequest.SEND_EMS_CODE, mobile)
+    public static void getVerificationCode(LifecycleOwner activity, int event, String mobile, final HttpCallBack<Object> callBack) {
+        apiRequest.getVerificationCode(ApiRequest.SEND_EMS_CODE, event, mobile)
                 .compose(RxSchedulers.io_main())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
                 .subscribe(new ApiObserver<Object>() {
@@ -1021,6 +1021,9 @@ public class HttpRequest {
                 });
     }
 
+    /**
+     * 获取系统消息
+     */
     public static void getSystemMessageList(LifecycleOwner activity, final HttpCallBack<BaseResponse<SystemMessage>> callBack) {
         apiRequest.getSystemMessageList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
                 .compose(RxSchedulers.io_main())
@@ -1029,6 +1032,133 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(BaseResponse<SystemMessage> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 查询青少年模式状态
+     */
+    public static void checkYouthMode(LifecycleOwner activity, final HttpCallBack<Boolean> callBack) {
+        apiRequest.checkYouthMode(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Boolean>() {
+
+                    @Override
+                    public void onSuccess(Boolean demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 开启或者关闭青少年模式
+     */
+    public static void openOrCloseYouthMode(LifecycleOwner activity, boolean isOpenMode, String password, final HttpCallBack<Object> callBack) {
+        String url = isOpenMode ? ApiRequest.OPEN_YOUTH_MODE_URL : ApiRequest.CLOSE_YOUTH_MODE_URL;
+        apiRequest.openOrCloseYouthMode(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, password)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 找回青少年模式密码
+     */
+    public static void findYouthModePassword(LifecycleOwner activity, String msgCode, String newPwd, final HttpCallBack<Object> callBack) {
+        apiRequest.findYouthModePassword(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), msgCode, newPwd)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 验证手机号码
+     */
+    public static void verifyMobileNumber(LifecycleOwner activity, String mobile, String msgCode, final HttpCallBack<String> callBack) {
+        apiRequest.verifyMobileNumber(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), mobile, msgCode)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<String>() {
+
+                    @Override
+                    public void onSuccess(String demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 换绑手机
+     */
+    public static void verifyChangeMobileNumber(LifecycleOwner activity, String msgCode, String mobile, String validCode, final HttpCallBack<Object> callBack) {
+        apiRequest.verifyChangeMobileNumber(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), msgCode, mobile, validCode)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 永久注销
+     */
+    public static void longTimeOutLogin(LifecycleOwner activity, String mobile, String msgCode, final HttpCallBack<Object> callBack) {
+        apiRequest.longTimeOutLogin(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken())
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
                         callBack.onSuccess(demo);
                     }
 

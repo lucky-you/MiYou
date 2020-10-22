@@ -3,6 +3,7 @@ package com.zhowin.miyou;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -46,7 +47,7 @@ public class MiApplication extends BaseApplication {
         DBManager.initDao();
         //初始化IM
 //        IMClient.getInstance().init(getApplicationContext());
-        registerLifecycleCallbacks();
+//        registerLifecycleCallbacks();
 //        connectIM();
     }
 
@@ -121,22 +122,23 @@ public class MiApplication extends BaseApplication {
     public void connectIM() {
         String token = CacheManager.getInstance().getToken();
         Log.e(IMClient.TAG, "token: " + token);
-        IMClient.getInstance().connect(token, new RongIMClient.ConnectCallback() {
-            @Override
-            public void onSuccess(String s) {
-                Log.e(IMClient.TAG, "IM连接成功");
-            }
+        if (!TextUtils.isEmpty(token))
+            IMClient.getInstance().connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onSuccess(String s) {
+                    Log.e(IMClient.TAG, "IM连接成功");
+                }
 
-            @Override
-            public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
-                Log.e(IMClient.TAG, "IM连接失败，错误码为: " + connectionErrorCode.getValue());
-            }
+                @Override
+                public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
+                    Log.e(IMClient.TAG, "IM连接失败，错误码为: " + connectionErrorCode.getValue());
+                }
 
-            @Override
-            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+                @Override
+                public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
 
-            }
-        });
+                }
+            });
     }
 
 }

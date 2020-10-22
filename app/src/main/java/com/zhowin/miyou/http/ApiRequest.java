@@ -219,6 +219,27 @@ public interface ApiRequest {
     //获取系统消息
     String GET_SYSTEM_LIST_URL = "/ant/msg/system/get";
 
+    //查询青少年模式
+    String CHECK_YOUTH_MODE_URL = "/ant/user/younthModel/openStatus";
+
+    //开启青少年模式
+    String OPEN_YOUTH_MODE_URL = "/ant/user/younthModel/open";
+
+    //关闭青少年模式
+    String CLOSE_YOUTH_MODE_URL = "/ant/user/younthModel/close";
+
+    //获取青少年密码
+    String GET_YOUTH_MODE_PASSWORD_URL = "/ant/user/younthModel/findPwd";
+
+    //验证手机号码
+    String VERIFY_MOBILE_NUMBER_URL = "/user/validMobileNum";
+
+    //换绑手机号码
+    String CHANGE_BIND_MOBILE_NUMBER_URL = "/user/modifyMobileNum";
+
+    //永久注销当前账号
+    String LONG_TIME_OUT_LOGIN_URL = "/user/off";
+
 
     /**
      * 返回的是自己的用户信息
@@ -266,7 +287,7 @@ public interface ApiRequest {
      */
     @FormUrlEncoded
     @POST
-    Observable<ApiResponse<Object>> getVerificationCode(@Url String url, @Field("mobileNum") String mobile);
+    Observable<ApiResponse<Object>> getVerificationCode(@Url String url, @Field("event") int event, @Field("mobileNum") String mobile);
 
     /**
      * 获取默认图像
@@ -522,4 +543,47 @@ public interface ApiRequest {
      */
     @POST(GET_SYSTEM_LIST_URL)
     Observable<ApiResponse<BaseResponse<SystemMessage>>> getSystemMessageList(@Header(AUTHOR) String token);
+
+    /**
+     * 查询青少年模式
+     */
+    @POST(CHECK_YOUTH_MODE_URL)
+    Observable<ApiResponse<Boolean>> checkYouthMode(@Header(AUTHOR) String token);
+
+    /**
+     * 开启/关闭青少年模式
+     */
+    @FormUrlEncoded
+    @POST
+    Observable<ApiResponse<Object>> openOrCloseYouthMode(@Header(AUTHOR) String token, @Url String url, @Field("pwd") String pwd);
+
+    /**
+     * 找回青少年模式密码
+     */
+    @FormUrlEncoded
+    @POST(GET_YOUTH_MODE_PASSWORD_URL)
+    Observable<ApiResponse<Object>> findYouthModePassword(@Header(AUTHOR) String token, @Field("msgCode") String msgCode, @Field("newPwd") String newPwd);
+
+
+    /**
+     * 验证手机号码
+     */
+    @FormUrlEncoded
+    @POST(VERIFY_MOBILE_NUMBER_URL)
+    Observable<ApiResponse<String>> verifyMobileNumber(@Header(AUTHOR) String token, @Field("mobileNum") String mobileNum, @Field("msgCode") String msgCode);
+
+    /**
+     * 换绑当前手机号码
+     */
+    @FormUrlEncoded
+    @POST(CHANGE_BIND_MOBILE_NUMBER_URL)
+    Observable<ApiResponse<Object>> verifyChangeMobileNumber(@Header(AUTHOR) String token, @Field("msgCode") String msgCode, @Field("newMobileNum") String newMobileNum, @Field("validCode") String validCode);
+
+    /**
+     * 永久注销
+     */
+    @FormUrlEncoded
+    @POST(LONG_TIME_OUT_LOGIN_URL)
+    Observable<ApiResponse<Object>> longTimeOutLogin(@Header(AUTHOR) String token);
+
 }

@@ -27,8 +27,13 @@ public class AccountSecurityActivity extends BaseBindActivity<ActivityAccountSec
 
     @Override
     public void initData() {
-        mBinding.tvUserMobile.setText(PhoneUtils.hitCenterMobilNumber(UserInfo.getUserInfo().getMobileNum()));
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mBinding.tvUserMobile.setText(PhoneUtils.hitCenterMobilNumber(UserInfo.getUserInfo().getMobileNum()));
     }
 
     @Override

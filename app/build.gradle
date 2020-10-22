@@ -108,9 +108,8 @@ dependencies {
     api 'cn.rongcloud.sdk:im_kit:4.0.0.3' // 即时通讯 UI 基础组件
 
     api 'cn.rongcloud.sdk:call_kit:4.0.0.3' // 音视频通话能力 UI 组件
-//    api 'cn.rongcloud.sdk:call_lib:4.0.0.3' // 音视频呼叫信令
+    api 'cn.rongcloud.sdk:call_lib:4.0.0.3' // 音视频呼叫信令
 
-    api 'cn.rongcloud.sdk:rtc_lib:4.0.0.3'  // 音视频基础能力库
     implementation 'cn.rongcloud.sdk:sight:4.0.0.3'
 
 //    implementation project(':IMKit_Source')

@@ -1,6 +1,8 @@
 package com.zhowin.miyou.login.activity;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -8,7 +10,9 @@ import android.view.View;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
@@ -31,6 +35,16 @@ public class ForgetPasswordActivity extends BaseBindActivity<ActivityForgetPassw
 
     private Disposable mdDisposable;
     private boolean isShowPassword;
+    private int classType;
+
+    /**
+     * @param type 1:登录忘记密码  2：忘记青少年模式密码
+     */
+    public static void start(Context context, int type) {
+        Intent intent = new Intent(context, ForgetPasswordActivity.class);
+        intent.putExtra(ConstantValue.TYPE, type);
+        context.startActivity(intent);
+    }
 
     @Override
     public int getLayoutId() {
@@ -40,11 +54,20 @@ public class ForgetPasswordActivity extends BaseBindActivity<ActivityForgetPassw
     @Override
     public void initView() {
         setOnClick(R.id.tvGetVerificationCode, R.id.ivPasswordClose, R.id.tvDetermine);
+        classType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
     }
 
     @Override
     public void initData() {
-
+        if (2 == classType) {
+            UserInfo userInfo = UserInfo.getUserInfo();
+            if (!TextUtils.isEmpty(userInfo.getMobileNum())) {
+                mBinding.editMobileNumber.setText(userInfo.getMobileNum());
+                mBinding.editMobileNumber.setEnabled(false);
+                mBinding.editMobileNumber.setKeyListener(null);
+                mBinding.editMobileNumber.setFocusable(false);
+            }
+        }
     }
 
 
@@ -86,20 +109,45 @@ public class ForgetPasswordActivity extends BaseBindActivity<ActivityForgetPassw
             ToastUtils.showToast("新密码长度不能少于6位");
             return;
         }
-        showLoadDialog();
-        HttpRequest.forgetPassword(this, phoneNumber, captchaCode, password, new HttpCallBack<Object>() {
-            @Override
-            public void onSuccess(Object o) {
-                dismissLoadDialog();
-                startActivity(LoginActivity.class);
-                ActivityManager.getAppInstance().finishActivity();
-            }
+        switch (classType) {
+            case 1:
+                showLoadDialog();
+                HttpRequest.forgetPassword(this, phoneNumber, captchaCode, password, new HttpCallBack<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        dismissLoadDialog();
+                        startActivity(LoginActivity.class);
+                        ActivityManager.getAppInstance().finishActivity();
+                    }
 
-            @Override
-            public void onFail(int errorCode, String errorMsg) {
-                dismissLoadDialog();
-            }
-        });
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        dismissLoadDialog();
+                        ToastUtils.showToast(errorMsg);
+                    }
+                });
+                break;
+            case 2:
+                showLoadDialog();
+                HttpRequest.findYouthModePassword(this, captchaCode, password, new HttpCallBack<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        dismissLoadDialog();
+                        ToastUtils.showCustomToast(mContext, "操作成功");
+                        ActivityManager.getAppInstance().finishActivity();
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        dismissLoadDialog();
+                        ToastUtils.showToast(errorMsg);
+                    }
+                });
+
+                break;
+        }
+
+
     }
 
     private void setShowPassword() {
@@ -130,7 +178,7 @@ public class ForgetPasswordActivity extends BaseBindActivity<ActivityForgetPassw
      */
     private void getVerificationCode(String phoneNumber) {
         showLoadDialog();
-        HttpRequest.getVerificationCode(this, phoneNumber, new HttpCallBack<Object>() {
+        HttpRequest.getVerificationCode(this, classType == 1 ? 2 : 5, phoneNumber, new HttpCallBack<Object>() {
             @Override
             public void onSuccess(Object o) {
                 dismissLoadDialog();
@@ -139,6 +187,7 @@ public class ForgetPasswordActivity extends BaseBindActivity<ActivityForgetPassw
             @Override
             public void onFail(int errorCode, String errorMsg) {
                 dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
             }
         });
     }
@@ -155,7 +204,7 @@ public class ForgetPasswordActivity extends BaseBindActivity<ActivityForgetPassw
                     public void accept(Long aLong) throws Exception {
                         mBinding.tvGetVerificationCode.setEnabled(false);
                         int countdownNumber = (int) (count - aLong);
-                        String showText = countdownNumber + "s";
+                        String showText = countdownNumber + "s后重发";
                         mBinding.tvGetVerificationCode.setText(showText);
                     }
                 })
