@@ -3,6 +3,7 @@ package com.zhowin.miyou.login.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -20,9 +21,11 @@ import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
 import com.zhowin.miyou.http.HttpRequest;
-import com.zhowin.miyou.im.IMClient;
-import com.zhowin.miyou.im.manager.CacheManager;
 import com.zhowin.miyou.main.activity.MainActivity;
+import com.zhowin.miyou.rongIM.IMManager;
+import com.zhowin.miyou.rongIM.common.ResultCallback;
+import com.zhowin.miyou.rongIM.model.UserCacheInfo;
+import com.zhowin.miyou.rongIM.sp.UserCache;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +36,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import retrofit2.http.Url;
 
 /**
  * 登录
@@ -142,8 +146,8 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 if (userInfo != null) {
                     UserInfo.setUserInfo(userInfo);
                     if (userInfo.isCompleted()) {
-//                        connectIM(userInfo);
-                        startActivity(MainActivity.class);
+                        connectIM(userInfo);
+//                        startActivity(MainActivity.class);
                     } else {
                         startActivity(EditNickNameActivity.class);
                     }
@@ -189,8 +193,8 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                     if (userInfo != null) {
                         UserInfo.setUserInfo(userInfo);
                         if (userInfo.isCompleted()) {
-//                            connectIM(userInfo);
-                            startActivity(MainActivity.class);
+                            connectIM(userInfo);
+//                            startActivity(MainActivity.class);
                         } else {
                             startActivity(EditNickNameActivity.class);
                             ActivityManager.getAppInstance().finishActivity();
@@ -213,34 +217,32 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
      * @param userInfo 用户信息
      */
     private void connectIM(UserInfo userInfo) {
-        IMClient.getInstance().disconnect();
+        RongIM.getInstance().disconnect();
         String imToken = userInfo.getRongToken();
         if (TextUtils.isEmpty(imToken)) return;
-        RongIM.connect(imToken, new RongIMClient.ConnectCallback() {
+        RongIM.connect(imToken, 0,new RongIMClient.ConnectCallback() {
             @Override
             public void onSuccess(String s) {
-                Log.e(IMClient.TAG, "连接IM Success");
                 //保存用户信息
-                CacheManager.getInstance().cacheToken(imToken);
-                CacheManager.getInstance().cacheUserId(String.valueOf(userInfo.getUserId()));
-                CacheManager.getInstance().cacheUserName(userInfo.getAvatar());
-                CacheManager.getInstance().cacheUserPortrait(userInfo.getProfilePictureKey());
-                CacheManager.getInstance().cacheIsLogin(true);
+                IMManager.getInstance().setUserCache(s, imToken, userInfo.getUsername(), userInfo.getProfilePictureKey());
+                IMManager.getInstance().updateUserInfoCache(s, userInfo.getUsername(), Uri.parse(userInfo.getProfilePictureKey()));
                 ToastUtils.showToast(getString(R.string.login_success));
+                Log.e("xy", "连接IM Success,userId:" + s);
                 startActivity(MainActivity.class);
                 ActivityManager.getAppInstance().finishActivity();
             }
 
             @Override
-            public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
-                Log.e(IMClient.TAG, "连接IM Error:" + connectionErrorCode.getValue());
+            public void onError(RongIMClient.ConnectionErrorCode errorCode) {
+                Log.e("xy", "连接IM Error:" + errorCode.getValue());
                 startActivity(MainActivity.class);
                 ActivityManager.getAppInstance().finishActivity();
             }
 
             @Override
             public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
-                Log.e(IMClient.TAG, "连接IM DatabaseOpened");
+//                Log.e("xy", "连接IM DatabaseOpened");
+
             }
         });
     }

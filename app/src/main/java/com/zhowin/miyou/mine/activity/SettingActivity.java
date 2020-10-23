@@ -12,11 +12,12 @@ import com.zhowin.base_library.utils.CacheDataUtils;
 import com.zhowin.base_library.view.CenterHitMessageDialog;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivitySettingBinding;
-import com.zhowin.miyou.im.IMClient;
 import com.zhowin.miyou.login.activity.LoginActivity;
 import com.zhowin.miyou.main.activity.MainActivity;
 import com.zhowin.miyou.recommend.callback.OnHitCenterClickListener;
 import com.zhowin.miyou.recommend.dialog.HitCenterDialog;
+
+import io.rong.imkit.RongIM;
 
 /**
  * 设置
@@ -107,7 +108,7 @@ public class SettingActivity extends BaseBindActivity<ActivitySettingBinding> {
             public void onPositiveClick(Dialog dialog) {
                 UserInfo.setUserInfo(new UserInfo());
                 ActivityManager.getAppInstance().finishActivity(MainActivity.class);
-                IMClient.getInstance().disconnect();
+                RongIM.getInstance().disconnect();
                 startActivity(LoginActivity.class);
 //                ActivityManager.getAppInstance().finishActivity();
             }

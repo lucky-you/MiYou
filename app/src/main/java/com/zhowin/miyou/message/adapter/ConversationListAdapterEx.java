@@ -17,6 +17,7 @@ import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.UIConversation;
+import io.rong.imkit.widget.AsyncImageView;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
 import io.rong.imlib.model.Conversation;
 
@@ -48,6 +49,7 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
 
     @Override
     protected View newView(Context context, int position, ViewGroup group) {
+
         return super.newView(context, position, group);
     }
 
@@ -61,17 +63,19 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
             if (isGroupApplyMessage(data) && !TextUtils.isEmpty(mContent)) {
                 data.setConversationContent(new SpannableString(mContent));
             }
+            AsyncImageView leftImg = v.findViewById(R.id.rc_left);
+            leftImg.setCircle(true);
+            if (isGroupApplyMessage(data)) {
+                groupView = v;
+                groupAllyData = data;
+                //设置头像
+                leftImg.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.group_notice));
+                //更新未读消息数
+                updateGroupApplyView(groupView);
+            }
         }
         super.bindView(v, position, data);
-        if (isGroupApplyMessage(data)) {
-            groupView = v;
-            groupAllyData = data;
-            //设置头像
-            ImageView leftImg = v.findViewById(R.id.rc_left);
-            leftImg.setImageDrawable(v.getContext().getResources().getDrawable(R.drawable.group_notice));
-            //更新未读消息数
-            updateGroupApplyView(groupView);
-        }
+
     }
 
     private boolean isGroupApplyMessage(UIConversation data) {

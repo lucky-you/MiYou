@@ -4,12 +4,14 @@ package com.zhowin.miyou.message.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 
 import androidx.fragment.app.FragmentTransaction;
 
 import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.databinding.ActivityIMChatBinding;
+import com.zhowin.miyou.rongIM.IMManager;
 
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
@@ -56,5 +58,13 @@ public class IMChatActivity extends BaseBindActivity<ActivityIMChatBinding> {
         transaction.commit();
     }
 
+    @Override
+    public void initListener() {
+        mBinding.titleView.getRightImage().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+    }
 }

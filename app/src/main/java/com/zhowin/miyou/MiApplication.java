@@ -1,30 +1,14 @@
 package com.zhowin.miyou;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.Constraints;
-import androidx.work.NetworkType;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 
 import com.zhowin.base_library.base.BaseApplication;
 import com.zhowin.miyou.db.manager.DBManager;
-import com.zhowin.miyou.im.IMClient;
-import com.zhowin.miyou.im.manager.CacheManager;
-import com.zhowin.miyou.im.service.RTCNotificationService;
-
-import cn.rongcloud.rtc.api.RCRTCEngine;
-import io.rong.imkit.RongExtensionManager;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
-import io.rong.sight.SightExtensionModule;
+import com.zhowin.miyou.main.activity.MainActivity;
+import com.zhowin.miyou.rongIM.IMManager;
 
 /**
  * author : zho
@@ -34,9 +18,13 @@ import io.rong.sight.SightExtensionModule;
 public class MiApplication extends BaseApplication {
 
 
-    private int activeCount = 0;
-    private int aliveCount = 0;
-    private boolean isActive;
+    /**
+     * 应用是否在后台
+     */
+    private boolean isAppInForeground;
+    private String lastVisibleActivityName;
+    private Intent nextOnForegroundIntent;
+    private boolean isMainActivityIsCreated;
 
     @Override
     public void onCreate() {
@@ -45,100 +33,102 @@ public class MiApplication extends BaseApplication {
             return;
         }
         DBManager.initDao();
-        //初始化IM
-//        IMClient.getInstance().init(getApplicationContext());
-//        registerLifecycleCallbacks();
-//        connectIM();
+        IMManager.getInstance().init(this);
+        // 监听 App 前后台变化
+        observeAppInBackground();
     }
 
-    private void registerLifecycleCallbacks() {
+
+    private void observeAppInBackground() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
-            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-                aliveCount++;
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                if (activity instanceof MainActivity) {
+                    isMainActivityIsCreated = true;
+                }
             }
 
             @Override
-            public void onActivityStarted(@NonNull Activity activity) {
-                activeCount++;
-                notifyChange();
+            public void onActivityStarted(Activity activity) {
             }
 
             @Override
-            public void onActivityResumed(@NonNull Activity activity) {
+            public void onActivityResumed(Activity activity) {
+                // 当切换为前台时启动预设的优先显示界面
+                if (isMainActivityIsCreated && !isAppInForeground && nextOnForegroundIntent != null) {
+                    activity.startActivity(nextOnForegroundIntent);
+                    nextOnForegroundIntent = null;
+                }
 
+                lastVisibleActivityName = activity.getClass().getSimpleName();
+                isAppInForeground = true;
             }
 
             @Override
-            public void onActivityPaused(@NonNull Activity activity) {
-
+            public void onActivityPaused(Activity activity) {
+                String pauseActivityName = activity.getClass().getSimpleName();
+                /*
+                 * 介于 Activity 生命周期在切换画面时现进行要跳转画面的 onResume，
+                 * 再进行当前画面 onPause，所以当用户且到后台时肯定会为当前画面直接进行 onPause，
+                 * 同过此来判断是否应用在前台
+                 */
+                if (pauseActivityName.equals(lastVisibleActivityName)) {
+                    isAppInForeground = false;
+                }
             }
 
             @Override
-            public void onActivityStopped(@NonNull Activity activity) {
-                activeCount--;
-                notifyChange();
+            public void onActivityStopped(Activity activity) {
             }
 
             @Override
-            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
             }
 
             @Override
-            public void onActivityDestroyed(@NonNull Activity activity) {
-                aliveCount--;
-                if (aliveCount == 0) {
-                    stopNotificationService();
+            public void onActivityDestroyed(Activity activity) {
+                if (activity instanceof MainActivity) {
+                    isMainActivityIsCreated = false;
                 }
             }
         });
     }
 
-    private void notifyChange() {
-        if (activeCount > 0) {
-            if (!isActive) {
-                isActive = true;
-                // AppForeground
-                stopNotificationService();
-            }
-        } else {
-            if (isActive) {
-                isActive = false;
-                // AppBackground
-                if (RCRTCEngine.getInstance().getRoom() != null) {
-                    startService(new Intent(this, RTCNotificationService.class));
-                }
-            }
-        }
+    /**
+     * 当前 App 是否在前台
+     *
+     * @return
+     */
+    public boolean isAppInForeground() {
+        return isAppInForeground;
     }
 
-    private void stopNotificationService() {
-        if (RCRTCEngine.getInstance().getRoom() != null) {
-            stopService(new Intent(MiApplication.this, RTCNotificationService.class));
-        }
+
+    /**
+     * 设置当 App 切换为前台时启动的 intent，该 intent 在启动后情况
+     *
+     * @param intent
+     */
+    public void setOnAppForegroundStartIntent(Intent intent) {
+        nextOnForegroundIntent = intent;
     }
 
-    public void connectIM() {
-        String token = CacheManager.getInstance().getToken();
-        Log.e(IMClient.TAG, "token: " + token);
-        if (!TextUtils.isEmpty(token))
-            IMClient.getInstance().connect(token, new RongIMClient.ConnectCallback() {
-                @Override
-                public void onSuccess(String s) {
-                    Log.e(IMClient.TAG, "IM连接成功");
-                }
+    /**
+     * 获取最近设置的未触发的启动 intent
+     *
+     * @return
+     */
+    public Intent getLastOnAppForegroundStartIntent() {
+        return nextOnForegroundIntent;
+    }
 
-                @Override
-                public void onError(RongIMClient.ConnectionErrorCode connectionErrorCode) {
-                    Log.e(IMClient.TAG, "IM连接失败，错误码为: " + connectionErrorCode.getValue());
-                }
-
-                @Override
-                public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
-
-                }
-            });
+    /**
+     * 判断是否进入到了主界面
+     *
+     * @return
+     */
+    public boolean isMainActivityCreated() {
+        return isMainActivityIsCreated;
     }
 
 }

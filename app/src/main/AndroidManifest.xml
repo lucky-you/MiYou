@@ -103,14 +103,6 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
-        <service android:name=".im.service.RTCNotificationService" /> <!-- push 应用定义消息 receiver 声明 -->
-        <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
-            <intent-filter>
-
-                <!-- 接收 push 消息 -->
-                <action android:name="com.vivo.pushclient.action.RECEIVE" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name="io.rong.push.platform.hms.HMSPushService"
