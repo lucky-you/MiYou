@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
-import com.zhowin.base_library.base.BaseLibActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseLibActivity;
 import com.zhowin.miyou.main.entity.TabEntity;
 import com.zhowin.miyou.message.fragment.MessageFragment;
 import com.zhowin.miyou.mine.fragment.MineFragment;

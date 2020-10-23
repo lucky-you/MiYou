@@ -6,11 +6,10 @@ import android.util.Log;
 import androidx.fragment.app.Fragment;
 
 import com.zhowin.base_library.adapter.HomePageAdapter;
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeCharmListFragmentBinding;
-import com.zhowin.miyou.mine.fragment.MasonryDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

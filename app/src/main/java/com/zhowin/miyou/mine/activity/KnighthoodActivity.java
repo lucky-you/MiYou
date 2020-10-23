@@ -4,10 +4,10 @@ import androidx.fragment.app.Fragment;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.adapter.HomePageAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityKnighthoodBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.fragment.KnighthoodFragment;

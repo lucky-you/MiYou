@@ -8,7 +8,6 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
@@ -16,6 +15,7 @@ import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityForgetPasswordBinding;
 import com.zhowin.miyou.http.HttpRequest;
 

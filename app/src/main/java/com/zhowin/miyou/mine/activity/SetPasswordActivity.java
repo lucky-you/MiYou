@@ -1,19 +1,17 @@
 package com.zhowin.miyou.mine.activity;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivitySetPasswordBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.login.activity.ForgetPasswordActivity;

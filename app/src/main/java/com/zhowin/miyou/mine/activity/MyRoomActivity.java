@@ -4,8 +4,8 @@ package com.zhowin.miyou.mine.activity;
 import androidx.fragment.app.Fragment;
 
 import com.zhowin.base_library.adapter.HomePageAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityMyRoomBinding;
 import com.zhowin.miyou.mine.fragment.MyRoomFragment;
 

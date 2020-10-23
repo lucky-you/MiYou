@@ -1,4 +1,4 @@
-package com.zhowin.miyou.message.message;
+package com.zhowin.miyou.rongIM.message;
 
 import android.os.Parcel;
 import android.text.TextUtils;
@@ -13,8 +13,10 @@ import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 
 /**
- * 主持人接管通知
- * ObjectName: SM:TakeOverHostMsg
+ * 主持人转让通知
+ * <p>
+ * 主持人转让
+ * ObjectName: SM:TransferHostMsg
  * Content:
  * {
  * "cmd": 0,
@@ -23,12 +25,13 @@ import io.rong.imlib.model.MessageContent;
  * "targetUserId": "xxxx",
  * "targetUserName": "xxxxx"
  * }
- * cmd: 0: 接管 1: 拒绝 2: 同意
+ * <p>
+ * cmd: 0: 转让 1: 拒绝 2: 同意
  */
-@MessageTag(value = "RCMic:takeOverHostMsg", flag = MessageTag.NONE)
-public class TakeOverHostMessage extends MessageContent {
+@MessageTag(value = "RCMic:transferHostMsg", flag = MessageTag.NONE)
+public class HandOverHostMessage extends MessageContent {
 
-    private static final String TAG = TakeOverHostMessage.class.getSimpleName();
+    private static final String TAG = HandOverHostMessage.class.getSimpleName();
 
     /**
      * cmd : 0
@@ -44,143 +47,18 @@ public class TakeOverHostMessage extends MessageContent {
     private String targetUserId;
     private String targetUserName;
 
-    public static final Creator<TakeOverHostMessage> CREATOR = new Creator<TakeOverHostMessage>() {
+    public static final Creator<HandOverHostMessage> CREATOR = new Creator<HandOverHostMessage>() {
         @Override
-        public TakeOverHostMessage createFromParcel(Parcel source) {
-            return new TakeOverHostMessage(source);
+        public HandOverHostMessage createFromParcel(Parcel source) {
+            return new HandOverHostMessage(source);
         }
 
         @Override
-        public TakeOverHostMessage[] newArray(int size) {
-            return new TakeOverHostMessage[size];
+        public HandOverHostMessage[] newArray(int size) {
+            return new HandOverHostMessage[size];
         }
     };
 
-    public TakeOverHostMessage(byte[] data) {
-        if (data == null) {
-            Log.e(TAG, "接管主持人 data is null ");
-            return;
-        }
-
-        String jsonStr = null;
-        try {
-            jsonStr = new String(data, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "接管主持人 UnsupportedEncodingException ", e);
-        }
-
-        if (jsonStr == null) {
-            Log.e(TAG, "接管主持人 jsonStr is null ");
-            return;
-        }
-
-        try {
-            JSONObject jsonObj = new JSONObject(jsonStr);
-
-            // 消息携带用户信息时, 自定义消息需添加下面代码
-            if (jsonObj.has("user")) {
-                setUserInfo(parseJsonToUserInfo(jsonObj.getJSONObject("user")));
-            }
-
-            // 用于群组聊天, 消息携带 @ 人信息时, 自定义消息需添加下面代码
-            if (jsonObj.has("mentionedInfo")) {
-                setMentionedInfo(parseJsonToMentionInfo(jsonObj.getJSONObject("mentionedInfo")));
-            }
-
-            // ...
-            // 自定义消息, 定义的字段
-            // ...
-            if (jsonObj.has("cmd")) {
-                cmd = jsonObj.getInt("cmd");
-            }
-
-            if (jsonObj.has("operatorId")) {
-                operatorId = jsonObj.getString("operatorId");
-            }
-
-            if (jsonObj.has("operatorName")) {
-                operatorName = jsonObj.getString("operatorName");
-            }
-
-            if (jsonObj.has("targetUserId")) {
-                targetUserId = jsonObj.getString("targetUserId");
-            }
-
-            if (jsonObj.has("targetUserName")) {
-                targetUserName = jsonObj.getString("targetUserName");
-            }
-
-        } catch (JSONException e) {
-            Log.e(TAG, "接管主持人 JSONException " + e.getMessage());
-        }
-    }
-
-    @Override
-    public byte[] encode() {
-        JSONObject jsonObj = new JSONObject();
-        try {
-
-            // 消息携带用户信息时, 自定义消息需添加下面代码
-            if (getJSONUserInfo() != null) {
-                jsonObj.putOpt("user", getJSONUserInfo());
-            }
-
-            // 用于群组聊天, 消息携带 @ 人信息时, 自定义消息需添加下面代码
-            if (getJsonMentionInfo() != null) {
-                jsonObj.putOpt("mentionedInfo", getJsonMentionInfo());
-            }
-
-            // ...
-            // 自定义消息, 定义的字段.
-            // ...
-
-            jsonObj.put("cmd", cmd);
-            if (!TextUtils.isEmpty(operatorId)) {
-                jsonObj.put("operatorId", operatorId);
-            }
-            if (!TextUtils.isEmpty(operatorName)) {
-                jsonObj.put("operatorName", operatorName);
-            }
-            if (!TextUtils.isEmpty(targetUserId)) {
-                jsonObj.put("targetUserId", targetUserId);
-            }
-            if (!TextUtils.isEmpty(targetUserName)) {
-                jsonObj.put("targetUserName", targetUserName);
-            }
-
-        } catch (JSONException e) {
-            Log.e(TAG, "接管主持人 JSONException " + e.getMessage());
-        }
-
-        try {
-            return jsonObj.toString().getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "接管主持人 UnsupportedEncodingException ", e);
-        }
-        return null;
-    }
-
-    public TakeOverHostMessage(Parcel in) {
-        setCmd(in.readInt());
-        setOperatorId(in.readString());
-        setOperatorName(in.readString());
-        setTargetUserId(in.readString());
-        setTargetUserName(in.readString());
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(getCmd());
-        dest.writeString(getOperatorId());
-        dest.writeString(getOperatorName());
-        dest.writeString(getTargetUserId());
-        dest.writeString(getTargetUserName());
-    }
 
     public int getCmd() {
         return cmd;
@@ -221,4 +99,132 @@ public class TakeOverHostMessage extends MessageContent {
     public void setTargetUserName(String targetUserName) {
         this.targetUserName = targetUserName;
     }
+
+    public HandOverHostMessage(byte[] data) {
+        if (data == null) {
+            Log.e(TAG, "移交主持人 data is null ");
+            return;
+        }
+
+        String jsonStr = null;
+        try {
+            jsonStr = new String(data, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, "移交主持人 UnsupportedEncodingException ", e);
+        }
+
+        if (jsonStr == null) {
+            Log.e(TAG, "移交主持人 jsonStr is null ");
+            return;
+        }
+
+        try {
+            JSONObject jsonObj = new JSONObject(jsonStr);
+
+            // 消息携带用户信息时, 自定义消息需添加下面代码
+            if (jsonObj.has("user")) {
+                setUserInfo(parseJsonToUserInfo(jsonObj.getJSONObject("user")));
+            }
+
+            // 用于群组聊天, 消息携带 @ 人信息时, 自定义消息需添加下面代码
+            if (jsonObj.has("mentionedInfo")) {
+                setMentionedInfo(parseJsonToMentionInfo(jsonObj.getJSONObject("mentionedInfo")));
+            }
+
+            // ...
+            // 自定义消息, 定义的字段
+            // ...
+            if (jsonObj.has("cmd")) {
+                cmd = jsonObj.getInt("cmd");
+            }
+
+            if (jsonObj.has("operatorId")) {
+                operatorId = jsonObj.getString("operatorId");
+            }
+
+            if (jsonObj.has("operatorName")) {
+                operatorName = jsonObj.getString("operatorName");
+            }
+
+            if (jsonObj.has("targetUserId")) {
+                targetUserId = jsonObj.getString("targetUserId");
+            }
+
+            if (jsonObj.has("targetUserName")) {
+                targetUserName = jsonObj.getString("targetUserName");
+            }
+
+        } catch (JSONException e) {
+            Log.e(TAG, "移交主持人 JSONException " + e.getMessage());
+        }
+    }
+
+    @Override
+    public byte[] encode() {
+        JSONObject jsonObj = new JSONObject();
+        try {
+
+            // 消息携带用户信息时, 自定义消息需添加下面代码
+            if (getJSONUserInfo() != null) {
+                jsonObj.putOpt("user", getJSONUserInfo());
+            }
+
+            // 用于群组聊天, 消息携带 @ 人信息时, 自定义消息需添加下面代码
+            if (getJsonMentionInfo() != null) {
+                jsonObj.putOpt("mentionedInfo", getJsonMentionInfo());
+            }
+
+            // ...
+            // 自定义消息, 定义的字段.
+            // ...
+
+            jsonObj.put("cmd", cmd);
+            if (!TextUtils.isEmpty(operatorId)) {
+                jsonObj.put("operatorId", operatorId);
+            }
+            if (!TextUtils.isEmpty(operatorName)) {
+                jsonObj.put("operatorName", operatorName);
+            }
+            if (!TextUtils.isEmpty(targetUserId)) {
+                jsonObj.put("targetUserId", targetUserId);
+            }
+            if (!TextUtils.isEmpty(targetUserName)) {
+                jsonObj.put("targetUserName", targetUserName);
+            }
+
+        } catch (JSONException e) {
+            Log.e(TAG, "移交主持人 JSONException " + e.getMessage());
+        }
+
+        try {
+            return jsonObj.toString().getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, "移交主持人 UnsupportedEncodingException ", e);
+        }
+        return null;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public HandOverHostMessage(Parcel in) {
+        setCmd(in.readInt());
+        setOperatorId(in.readString());
+        setOperatorName(in.readString());
+        setTargetUserId(in.readString());
+        setTargetUserName(in.readString());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(getCmd());
+        dest.writeString(getOperatorId());
+        dest.writeString(getOperatorName());
+        dest.writeString(getTargetUserId());
+        dest.writeString(getTargetUserName());
+    }
+
+
 }

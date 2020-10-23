@@ -6,9 +6,9 @@ import android.util.Log;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeMasonryDetailsFragmentBinding;
 import com.zhowin.miyou.mine.adapter.MasonryDetailsListAdapter;
 import com.zhowin.miyou.mine.model.MasonryDetailsList;

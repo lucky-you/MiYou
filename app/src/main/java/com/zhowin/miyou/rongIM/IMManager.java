@@ -12,18 +12,25 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.bumptech.glide.load.engine.Resource;
 import com.google.gson.Gson;
+import com.zhowin.base_library.base.BaseApplication;
+import com.zhowin.base_library.model.EventBusNotice;
 import com.zhowin.miyou.BuildConfig;
-import com.zhowin.miyou.message.message.GroupApplyMessage;
-import com.zhowin.miyou.message.message.HandOverHostMessage;
-import com.zhowin.miyou.message.message.KickMemberMessage;
-import com.zhowin.miyou.message.message.RoomMemberChangedMessage;
-import com.zhowin.miyou.message.message.SendGiftMessage;
-import com.zhowin.miyou.message.message.TakeOverHostMessage;
+import com.zhowin.miyou.R;
+import com.zhowin.miyou.rongIM.adapter.SendMessageAdapter;
+import com.zhowin.miyou.rongIM.constant.UserRoleType;
+import com.zhowin.miyou.rongIM.manager.CacheManager;
+import com.zhowin.miyou.rongIM.message.GroupApplyMessage;
+import com.zhowin.miyou.rongIM.message.HandOverHostMessage;
+import com.zhowin.miyou.rongIM.message.KickMemberMessage;
+import com.zhowin.miyou.rongIM.message.RoomMemberChangedMessage;
+import com.zhowin.miyou.rongIM.message.SendGiftMessage;
+import com.zhowin.miyou.rongIM.message.TakeOverHostMessage;
 import com.zhowin.miyou.recommend.activity.HomepageActivity;
 import com.zhowin.miyou.rongIM.message.SealContactNotificationMessage;
 import com.zhowin.miyou.rongIM.model.ChatRoomAction;
 import com.zhowin.miyou.rongIM.model.ContactNotificationMessageData;
 import com.zhowin.miyou.rongIM.model.ConversationRecord;
+import com.zhowin.miyou.rongIM.model.Event;
 import com.zhowin.miyou.rongIM.model.QuietHours;
 import com.zhowin.miyou.rongIM.model.UserCacheInfo;
 import com.zhowin.miyou.rongIM.provider.ContactNotificationMessageProvider;
@@ -33,13 +40,13 @@ import com.zhowin.miyou.rongIM.sp.UserConfigCache;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.rong.eventbus.EventBus;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imkit.manager.SendImageManager;
-import io.rong.imkit.mention.IMentionedInputListener;
 import io.rong.imkit.mention.RongMentionManager;
 import io.rong.imkit.model.GroupNotificationMessageData;
 import io.rong.imkit.model.UIConversation;
@@ -50,6 +57,7 @@ import io.rong.imlib.CustomServiceConfig;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.cs.CustomServiceManager;
+import io.rong.imlib.model.ChatRoomInfo;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Discussion;
 import io.rong.imlib.model.Message;
@@ -59,27 +67,37 @@ import io.rong.imlib.model.UserInfo;
 import io.rong.message.ContactNotificationMessage;
 import io.rong.message.GroupNotificationMessage;
 import io.rong.message.ImageMessage;
+import io.rong.message.TextMessage;
 
 public class IMManager {
     private static volatile IMManager instance;
-
     private MutableLiveData<ChatRoomAction> chatRoomActionLiveData = new MutableLiveData<>();
     private Context context;
-
     private UserConfigCache configCache;
     private UserCache userCache;
-
     private MutableLiveData<Message> messageRouter = new MutableLiveData<>();
     private MutableLiveData<Boolean> kickedOffline = new MutableLiveData<>();
     private ConversationRecord lastConversationRecord;
-
 
     /**
      * 接收消息的监听器列表
      */
     private final List<RongIMClient.OnReceiveMessageListener> onReceiveMessageListeners = new ArrayList<>();
+    /**
+     * 消息撤回的监听器列表
+     */
+    private final List<RongIMClient.OnRecallMessageListener> onRecallMessageListeners = new ArrayList<>();
+
+    /**
+     * -1代表不拉取历史消息
+     */
+    private static final int DEFAULT_MESSAGE_COUNT = -1;
+    private static final int DEF_MEMBER_COUNT = 20;
+
 
     private IMManager() {
+
+
     }
 
     public static IMManager getInstance() {
@@ -405,12 +423,28 @@ public class IMManager {
 
         // 开启高清语音
         RongIM.getInstance().setVoiceMessageType(RongIM.VoiceMessageType.HighQuality);
+        //管理消息监听，由于同一时间只能有一个消息监听加入 融云 的消息监听，所以做一个消息管理来做消息路由
+        RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+            @Override
+            public boolean onReceived(Message message, int left) {
+                Log.e("xy", "onReceived message. tag:" + message.getObjectName());
+                synchronized (onReceiveMessageListeners) {
+                    if (onReceiveMessageListeners.size() > 0) {
+                        for (RongIMClient.OnReceiveMessageListener listener : onReceiveMessageListeners) {
+                            boolean result = listener.onReceived(message, left);
+                            if (result) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+        });
     }
 
     /**
      * 初始化扩展模块
-     *
-     * @param context
      */
     private void initExtensionModules(Context context) {
         /**
@@ -431,9 +465,7 @@ public class IMManager {
                 RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
             }
         }
-
-//        RongExtensionManager.getInstance().registerExtensionModule(new SealExtensionModule(context));
-
+        RongExtensionManager.getInstance().registerExtensionModule(new SealExtensionModule(context));
 
     }
 
@@ -443,20 +475,6 @@ public class IMManager {
      * @param context
      */
     private void initRongIM(Context context) {
-        /*
-         * 如果是连接到私有云需要在此配置服务器地址
-         * 如果是公有云则不需要调用此方法
-         */
-        //RongIM.setServerInfo(BuildConfig.SEALTALK_NAVI_SERVER, BuildConfig.SEALTALK_FILE_SERVER);
-
-        /*
-         * 初始化 SDK，在整个应用程序全局，只需要调用一次。建议在 Application 继承类中调用。
-         */
-
-        /* 若直接调用init方法请在 IMLib 模块中的 AndroidManifest.xml 中, 找到 <meta-data> 中 android:name 为 RONG_CLOUD_APP_KEY的标签，
-         * 将 android:value 替换为融云 IM 申请的APP KEY
-         */
-        //RongIM.init(this);
 
         // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
         RongIM.init(context, BuildConfig.Rong_key, true);
@@ -487,8 +505,11 @@ public class IMManager {
                 if (connectionStatus.equals(ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT)) {
                     //被其他踢出时，需要返回登录界面
                     kickedOffline.postValue(true);
+                    disconnect();
+                    EventBus.getDefault().post(new EventBusNotice(2));
                 } else if (connectionStatus == ConnectionStatus.TOKEN_INCORRECT) {
-                    //TODO token 错误时，重新登录
+                    // token 错误时，重新登录
+                    EventBus.getDefault().post(new EventBusNotice(1));
                 }
             }
         });
@@ -862,6 +883,12 @@ public class IMManager {
         return messageRouter;
     }
 
+    /**
+     * 断开链接
+     */
+    public void disconnect() {
+        RongIMClient.getInstance().disconnect();
+    }
 
     /**
      * 退出
@@ -944,6 +971,153 @@ public class IMManager {
         return lastConversationRecord;
     }
 
+
+    /**
+     * 加入 IM 聊天室
+     */
+    public void joinChatRoom(final String roomId, final RongIMClient.ResultCallback<String> callBack) {
+        RongIMClient.getInstance().joinChatRoom(roomId, DEFAULT_MESSAGE_COUNT, new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                if (callBack != null) {
+                    getChatRoomInfo(roomId, new RongIMClient.ResultCallback<ChatRoomInfo>() {
+                        @Override
+                        public void onSuccess(ChatRoomInfo chatRoomInfo) {
+                            callBack.onSuccess(roomId);
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("xy", "join chat room error, error msg:" + errorCode.getMessage() + " , error code" + errorCode.getValue());
+                if (callBack != null) {
+                    callBack.onError(errorCode);
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取房间信息
+     */
+    public void getChatRoomInfo(String roomId, RongIMClient.ResultCallback<ChatRoomInfo> callback) {
+        RongIMClient.getInstance().getChatRoomInfo(
+                roomId,
+                DEF_MEMBER_COUNT,
+                ChatRoomInfo.ChatRoomMemberOrder.RC_CHAT_ROOM_MEMBER_DESC,
+                callback);
+    }
+
+
+    /**
+     * 离开 IM 聊天室
+     */
+    public void quitChatRoom(final String roomId, final RongIMClient.ResultCallback<String> callBack) {
+        RongIMClient.getInstance().quitChatRoom(roomId, new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+//                SLog.i(SLog.TAG_IM, "quitRoomSuccess");
+                if (callBack != null) {
+                    callBack.onSuccess(roomId);
+                }
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("xy", "quit chat room error, error msg:" + errorCode.getMessage() + " , error code" + errorCode.getValue());
+                if (callBack != null) {
+                    callBack.onError(errorCode);
+                }
+            }
+        });
+    }
+
+    /**
+     * 创建本地显示用户房间消息
+     *
+     * @param userId 进入房间的用户
+     * @param roomId 房间id
+     * @param cmd    1 join, 2 leave, 3 kick
+     * @return im信息
+     */
+    public Message createLocalRoomMessage(String userId, String roomId, int cmd) {
+        RoomMemberChangedMessage memberChangedMessage = new RoomMemberChangedMessage();
+        memberChangedMessage.setTargetUserId(userId);
+        memberChangedMessage.setCmd(cmd);
+        return Message.obtain(roomId, Conversation.ConversationType.CHATROOM, memberChangedMessage);
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param message            发送消息
+     * @param sendMessageAdapter 发送之后的回调
+     */
+    public void sendMessage(Message message, SendMessageAdapter sendMessageAdapter) {
+        RongIMClient.getInstance().sendMessage(message, null, null, sendMessageAdapter);
+    }
+
+    /**
+     * 作为进入房间的一员，都要发送一条消息出去，以便让该房间内的其他成员知道自己进入了房间
+     *
+     * @param roomId   房间ID
+     * @param userName 进来的人的名字
+     */
+    public Message getWelcomeMessage(String roomId, String userId, String userName, String portrait) {
+        boolean isHost = UserRoleType.HOST.isHost(CacheManager.getInstance().getUserRoleType());
+        String welcome = BaseApplication.getInstance().getResources().getString(R.string.welcome_join_room);
+        final TextMessage textMessage = TextMessage.obtain(welcome);
+        UserInfo userInfo = new UserInfo(userId, userName, Uri.parse(portrait));
+        textMessage.setUserInfo(userInfo);
+        Message message = Message.obtain(roomId, Conversation.ConversationType.CHATROOM, textMessage);
+        Log.d("xy", "发送欢迎消息成功:" + (isHost ? "主持人" : "观众") + textMessage.getContent());
+        message.setContent(textMessage);
+        return message;
+    }
+
+    /**
+     * 作为进入房间的一员，都要发送一条消息出去，以便让该房间内的其他成员知道自己进入了房间
+     *
+     * @param roomId         房间ID
+     * @param messageContent 发送的内容
+     */
+    public Message getTextMessage(String roomId, String messageContent) {
+        TextMessage textMessage = TextMessage.obtain(messageContent);
+        textMessage.setUserInfo(new UserInfo(CacheManager.getInstance().getUserId(),
+                CacheManager.getInstance().getUserName(),
+                Uri.parse(CacheManager.getInstance().getUserPortrait())));
+        return Message.obtain(roomId, Conversation.ConversationType.CHATROOM, textMessage);
+    }
+
+    /**
+     * 发送礼物的自定义消息
+     *
+     * @param roomId  房间昵称
+     * @param content 聊天窗口要提示的文本，具体文本的不同就根据送的不同礼物类型拼接就行
+     * @param tag     标记发的是哪个礼物
+     * @return 发送的消息体
+     */
+    public Message getSendGiftMessage(String roomId, String content, String tag) {
+        SendGiftMessage sendGiftMessage = SendGiftMessage.obtain();
+        sendGiftMessage.setContent(content);
+        sendGiftMessage.setUserInfo(new UserInfo(CacheManager.getInstance().getUserId(), CacheManager.getInstance().getUserName(), Uri.parse(CacheManager.getInstance().getUserPortrait())));
+        sendGiftMessage.setTag(tag);
+        return Message.obtain(roomId, Conversation.ConversationType.CHATROOM, sendGiftMessage);
+    }
+
+    /**
+     * 获取房间历史消息
+     */
+    public void getHistoryMessage(String roomId, IRongCallback.IChatRoomHistoryMessageCallback callback) {
+        RongIMClient.getInstance().getChatroomHistoryMessages(roomId, 0, 20, RongIMClient.TimestampOrder.RC_TIMESTAMP_ASC, callback);
+    }
 }
 
 

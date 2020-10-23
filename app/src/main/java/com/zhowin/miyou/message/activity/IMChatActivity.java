@@ -8,10 +8,9 @@ import android.view.View;
 
 import androidx.fragment.app.FragmentTransaction;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityIMChatBinding;
-import com.zhowin.miyou.rongIM.IMManager;
 
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;

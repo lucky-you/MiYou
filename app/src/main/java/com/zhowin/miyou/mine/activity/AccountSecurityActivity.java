@@ -3,10 +3,10 @@ package com.zhowin.miyou.mine.activity;
 
 import android.view.View;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityAccountSecurityBinding;
 
 /**

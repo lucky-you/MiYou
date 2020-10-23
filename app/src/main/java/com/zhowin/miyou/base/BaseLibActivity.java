@@ -1,4 +1,4 @@
-package com.zhowin.base_library.base;
+package com.zhowin.miyou.base;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -16,6 +16,8 @@ import com.zhowin.base_library.R;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.KeyboardUtils;
 import com.zhowin.base_library.view.LoadProgressDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -38,6 +40,7 @@ public abstract class BaseLibActivity extends SupportActivity implements View.On
         initImmersionBar();
         initData();
         initListener();
+//        registerEvent();
     }
 
     public void setContent() {
@@ -51,11 +54,20 @@ public abstract class BaseLibActivity extends SupportActivity implements View.On
     public abstract void initData();
 
     public void initListener() {
+
     }
 
     public <E extends View> E get(int id) {
         return (E) findViewById(id);
     }
+
+
+    public void registerEvent() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
 
     public void startActivity(Class clazz) {
         startActivity(clazz, null);
@@ -86,6 +98,9 @@ public abstract class BaseLibActivity extends SupportActivity implements View.On
         KeyboardUtils.fixAndroidBug5497(mContext);
         KeyboardUtils.fixSoftInputLeaks(mContext);
         mContext = null;
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         ActivityManager.getAppInstance().removeActivity(this);
     }
 

@@ -6,12 +6,12 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.EmptyViewUtils;
 import com.zhowin.base_library.utils.SetDrawableHelper;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeWeekStarFragmentBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.recommend.adapter.WeekStarGiftAdapter;

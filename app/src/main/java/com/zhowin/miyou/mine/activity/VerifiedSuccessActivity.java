@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityVerifiedSuccessBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.model.VerifiedStatus;

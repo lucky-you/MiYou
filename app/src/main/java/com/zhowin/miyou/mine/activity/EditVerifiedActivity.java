@@ -12,7 +12,6 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yanzhenjie.permission.runtime.Permission;
 import com.yanzhenjie.permission.runtime.PermissionDef;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.permission.AndPermissionListener;
 import com.zhowin.base_library.permission.AndPermissionUtils;
@@ -24,6 +23,7 @@ import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityEditVerifiedBinding;
 import com.zhowin.miyou.http.HttpRequest;
 

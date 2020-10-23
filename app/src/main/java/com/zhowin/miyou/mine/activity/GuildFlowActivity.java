@@ -3,8 +3,8 @@ package com.zhowin.miyou.mine.activity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityGuildFlowBinding;
 import com.zhowin.miyou.mine.adapter.GuildFlowAdapter;
 

@@ -2,8 +2,8 @@ package com.zhowin.miyou.main.activity;
 
 
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityGuidePageBinding;
 
 /**

@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityBroadcastDatingBinding;
 import com.zhowin.miyou.recommend.adapter.BroadcastDatingAdapter;
-import com.zhowin.miyou.recommend.adapter.KickOutRoomAdapter;
 import com.zhowin.miyou.recommend.callback.OnHitCenterClickListener;
 import com.zhowin.miyou.recommend.dialog.HitCenterDialog;
 

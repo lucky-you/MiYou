@@ -154,7 +154,6 @@ public class ActivityManager {
                         current.finish();
                     }
                 }
-
             }
         } catch (Exception ex) {
 

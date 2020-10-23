@@ -1,15 +1,10 @@
 package com.zhowin.miyou.main.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.model.UserInfo;
-import com.zhowin.base_library.utils.ConstantValue;
-import com.zhowin.base_library.utils.SPUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivitySplashBinding;
 import com.zhowin.miyou.login.activity.LoginActivity;
 

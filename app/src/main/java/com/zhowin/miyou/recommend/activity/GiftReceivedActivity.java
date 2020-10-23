@@ -4,8 +4,8 @@ package com.zhowin.miyou.recommend.activity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityGiftReceivedBinding;
 import com.zhowin.miyou.recommend.adapter.GiftReceivedAdapter;
 import com.zhowin.miyou.recommend.model.GiftList;

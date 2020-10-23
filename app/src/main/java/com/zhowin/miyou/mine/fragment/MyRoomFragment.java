@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.EmptyViewUtils;
@@ -15,6 +14,7 @@ import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeMyRoomFragmentBinding;
 import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
@@ -24,6 +24,7 @@ import com.zhowin.miyou.mine.adapter.MyRoomListAdapter;
 import com.zhowin.miyou.mine.dialog.UnlockRoomDialog;
 import com.zhowin.miyou.mine.dialog.UserVerifiedDialog;
 import com.zhowin.miyou.mine.model.VerifiedStatus;
+import com.zhowin.miyou.recommend.activity.ChatRoomActivity;
 import com.zhowin.miyou.recommend.model.RecommendList;
 
 import java.util.ArrayList;
@@ -164,7 +165,8 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
         if (roomIsLock) {
             showUnLockRoomDialog();
         } else {
-//            startActivity(ChatRoomActivity.class);
+            int roomId = myRoomListAdapter.getItem(position).getRoomId();
+            ChatRoomActivity.start(mContext, roomId);
         }
     }
 

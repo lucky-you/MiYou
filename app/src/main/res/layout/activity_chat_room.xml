@@ -91,8 +91,8 @@
 
             <ImageView
                 android:id="@+id/ivUserList"
-                android:layout_width="24dp"
-                android:layout_height="26dp"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/room_jiangb_icon"
@@ -102,8 +102,8 @@
 
             <ImageView
                 android:id="@+id/ivRoomSetting"
-                android:layout_width="24dp"
-                android:layout_height="26dp"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/room_more_icon"
                 app:layout_constraintBottom_toBottomOf="parent"

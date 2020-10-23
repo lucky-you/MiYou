@@ -7,9 +7,9 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
 import com.zhowin.base_library.adapter.HomePageAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityMasonryDetailsBinding;
 import com.zhowin.miyou.mine.fragment.MasonryDetailsFragment;
 import com.zhowin.miyou.mine.fragment.MasonryListFragment;

@@ -1,4 +1,4 @@
-package com.zhowin.miyou.message.message;
+package com.zhowin.miyou.rongIM.message;
 
 import android.os.Parcel;
 import android.text.TextUtils;
@@ -13,10 +13,8 @@ import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 
 /**
- * 主持人转让通知
- * <p>
- * 主持人转让
- * ObjectName: SM:TransferHostMsg
+ * 主持人接管通知
+ * ObjectName: SM:TakeOverHostMsg
  * Content:
  * {
  * "cmd": 0,
@@ -25,13 +23,12 @@ import io.rong.imlib.model.MessageContent;
  * "targetUserId": "xxxx",
  * "targetUserName": "xxxxx"
  * }
- * <p>
- * cmd: 0: 转让 1: 拒绝 2: 同意
+ * cmd: 0: 接管 1: 拒绝 2: 同意
  */
-@MessageTag(value = "RCMic:transferHostMsg", flag = MessageTag.NONE)
-public class HandOverHostMessage extends MessageContent {
+@MessageTag(value = "RCMic:takeOverHostMsg", flag = MessageTag.NONE)
+public class TakeOverHostMessage extends MessageContent {
 
-    private static final String TAG = HandOverHostMessage.class.getSimpleName();
+    private static final String TAG = TakeOverHostMessage.class.getSimpleName();
 
     /**
      * cmd : 0
@@ -47,62 +44,21 @@ public class HandOverHostMessage extends MessageContent {
     private String targetUserId;
     private String targetUserName;
 
-    public static final Creator<HandOverHostMessage> CREATOR = new Creator<HandOverHostMessage>() {
+    public static final Creator<TakeOverHostMessage> CREATOR = new Creator<TakeOverHostMessage>() {
         @Override
-        public HandOverHostMessage createFromParcel(Parcel source) {
-            return new HandOverHostMessage(source);
+        public TakeOverHostMessage createFromParcel(Parcel source) {
+            return new TakeOverHostMessage(source);
         }
 
         @Override
-        public HandOverHostMessage[] newArray(int size) {
-            return new HandOverHostMessage[size];
+        public TakeOverHostMessage[] newArray(int size) {
+            return new TakeOverHostMessage[size];
         }
     };
 
-
-    public int getCmd() {
-        return cmd;
-    }
-
-    public void setCmd(int cmd) {
-        this.cmd = cmd;
-    }
-
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
-    }
-
-    public String getOperatorName() {
-        return operatorName;
-    }
-
-    public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
-    }
-
-    public String getTargetUserId() {
-        return targetUserId;
-    }
-
-    public void setTargetUserId(String targetUserId) {
-        this.targetUserId = targetUserId;
-    }
-
-    public String getTargetUserName() {
-        return targetUserName;
-    }
-
-    public void setTargetUserName(String targetUserName) {
-        this.targetUserName = targetUserName;
-    }
-
-    public HandOverHostMessage(byte[] data) {
+    public TakeOverHostMessage(byte[] data) {
         if (data == null) {
-            Log.e(TAG, "移交主持人 data is null ");
+            Log.e(TAG, "接管主持人 data is null ");
             return;
         }
 
@@ -110,11 +66,11 @@ public class HandOverHostMessage extends MessageContent {
         try {
             jsonStr = new String(data, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "移交主持人 UnsupportedEncodingException ", e);
+            Log.e(TAG, "接管主持人 UnsupportedEncodingException ", e);
         }
 
         if (jsonStr == null) {
-            Log.e(TAG, "移交主持人 jsonStr is null ");
+            Log.e(TAG, "接管主持人 jsonStr is null ");
             return;
         }
 
@@ -155,7 +111,7 @@ public class HandOverHostMessage extends MessageContent {
             }
 
         } catch (JSONException e) {
-            Log.e(TAG, "移交主持人 JSONException " + e.getMessage());
+            Log.e(TAG, "接管主持人 JSONException " + e.getMessage());
         }
     }
 
@@ -193,28 +149,28 @@ public class HandOverHostMessage extends MessageContent {
             }
 
         } catch (JSONException e) {
-            Log.e(TAG, "移交主持人 JSONException " + e.getMessage());
+            Log.e(TAG, "接管主持人 JSONException " + e.getMessage());
         }
 
         try {
             return jsonObj.toString().getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "移交主持人 UnsupportedEncodingException ", e);
+            Log.e(TAG, "接管主持人 UnsupportedEncodingException ", e);
         }
         return null;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public HandOverHostMessage(Parcel in) {
+    public TakeOverHostMessage(Parcel in) {
         setCmd(in.readInt());
         setOperatorId(in.readString());
         setOperatorName(in.readString());
         setTargetUserId(in.readString());
         setTargetUserName(in.readString());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -226,5 +182,43 @@ public class HandOverHostMessage extends MessageContent {
         dest.writeString(getTargetUserName());
     }
 
+    public int getCmd() {
+        return cmd;
+    }
 
+    public void setCmd(int cmd) {
+        this.cmd = cmd;
+    }
+
+    public String getOperatorId() {
+        return operatorId;
+    }
+
+    public void setOperatorId(String operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
+
+    public String getTargetUserId() {
+        return targetUserId;
+    }
+
+    public void setTargetUserId(String targetUserId) {
+        this.targetUserId = targetUserId;
+    }
+
+    public String getTargetUserName() {
+        return targetUserName;
+    }
+
+    public void setTargetUserName(String targetUserName) {
+        this.targetUserName = targetUserName;
+    }
 }

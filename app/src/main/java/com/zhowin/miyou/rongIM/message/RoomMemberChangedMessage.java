@@ -1,4 +1,4 @@
-package com.zhowin.miyou.message.message;
+package com.zhowin.miyou.rongIM.message;
 
 import android.os.Parcel;
 import android.util.Log;

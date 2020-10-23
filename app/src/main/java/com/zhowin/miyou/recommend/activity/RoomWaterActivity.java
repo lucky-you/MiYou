@@ -5,15 +5,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.View;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityRoomWaterBinding;
 import com.zhowin.miyou.recommend.adapter.RoomWaterListAdapter;
 
 import java.util.Arrays;
 import java.util.List;
-
-import io.rong.imageloader.utils.L;
 
 /**
  * 房间流水

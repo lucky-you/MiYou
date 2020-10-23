@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
@@ -19,13 +18,11 @@ import com.zhowin.base_library.utils.KeyboardUtils;
 import com.zhowin.base_library.utils.PhoneUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityLoginBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.activity.MainActivity;
 import com.zhowin.miyou.rongIM.IMManager;
-import com.zhowin.miyou.rongIM.common.ResultCallback;
-import com.zhowin.miyou.rongIM.model.UserCacheInfo;
-import com.zhowin.miyou.rongIM.sp.UserCache;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +33,6 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import retrofit2.http.Url;
 
 /**
  * 登录
@@ -49,7 +45,6 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
     public static void start(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -67,6 +62,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
 
     @Override
     public void initData() {
+        ActivityManager.getAppInstance().finishAllButCurrentActivity(LoginActivity.class);
         changeUiOfClickStatus();
     }
 
@@ -220,7 +216,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
         RongIM.getInstance().disconnect();
         String imToken = userInfo.getRongToken();
         if (TextUtils.isEmpty(imToken)) return;
-        RongIM.connect(imToken, 0,new RongIMClient.ConnectCallback() {
+        RongIM.connect(imToken, 0, new RongIMClient.ConnectCallback() {
             @Override
             public void onSuccess(String s) {
                 //保存用户信息

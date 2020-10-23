@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.model.UserLevelInfo;
@@ -14,6 +13,7 @@ import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SetDrawableHelper;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.MineFragmentLayoutBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.utils.GenderHelper;

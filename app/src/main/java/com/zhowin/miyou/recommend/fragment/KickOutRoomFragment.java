@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeKickOutRoomFragmentBinding;
 import com.zhowin.miyou.recommend.adapter.KickOutRoomAdapter;
 import com.zhowin.miyou.recommend.callback.OnHitCenterClickListener;

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.zhowin.base_library.base.BaseLibFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.EmptyViewUtils;
@@ -15,8 +14,10 @@ import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseLibFragment;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.dialog.UnlockRoomDialog;
+import com.zhowin.miyou.recommend.activity.ChatRoomActivity;
 import com.zhowin.miyou.recommend.adapter.RecommendListAdapter;
 import com.zhowin.miyou.recommend.model.RecommendList;
 
@@ -101,7 +102,8 @@ public class RecommendListFragment extends BaseLibFragment implements BaseQuickA
         if (roomIsLock) {
             showUnLockRoomDialog();
         } else {
-//            startActivity(ChatRoomActivity.class);
+            int roomId = recommendListAdapter.getItem(position).getRoomId();
+            ChatRoomActivity.start(mContext, roomId);
         }
     }
 

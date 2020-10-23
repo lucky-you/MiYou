@@ -15,7 +15,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.adapter.HomePageAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.BarUtils;
@@ -24,6 +23,7 @@ import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.base_library.widget.BlurTransformation;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityPersonalizedDressBinding;
 import com.zhowin.miyou.mine.fragment.PropsFragment;
 

@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.KeyboardUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityYouthModeSetPasswordBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.login.activity.ForgetPasswordActivity;

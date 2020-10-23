@@ -7,15 +7,14 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.EmptyViewUtils;
 import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.base_library.utils.ToastUtils;
-import com.zhowin.base_library.view.RefreshLayout;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeProsFragmentLayoutBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.adapter.PropsListAdapter;

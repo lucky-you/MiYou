@@ -7,9 +7,9 @@ import androidx.fragment.app.Fragment;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.adapter.HomePageAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.utils.ActivityManager;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityUserListBinding;
 import com.zhowin.miyou.recommend.fragment.NobleListFragment;
 import com.zhowin.miyou.recommend.fragment.ToadyListFragment;

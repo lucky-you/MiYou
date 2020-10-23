@@ -5,13 +5,12 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.zhowin.miyou.R;
-import com.zhowin.miyou.message.message.GroupApplyMessage;
-import com.zhowin.miyou.message.message.GroupNoticeInfo;
+import com.zhowin.miyou.rongIM.message.GroupApplyMessage;
+import com.zhowin.miyou.rongIM.message.GroupNoticeInfo;
 
 import java.util.List;
 

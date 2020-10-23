@@ -3,24 +3,21 @@ package com.zhowin.miyou.mine.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.zhowin.base_library.adapter.HomePageAdapter;
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserRankInfo;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeKnighthoodFragmentBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.mine.adapter.KnighthoodPrivilegeAdapter;
 import com.zhowin.miyou.mine.model.KnighthoodList;
 import com.zhowin.miyou.mine.model.KnighthoodMessageInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

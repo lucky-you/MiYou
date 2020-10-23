@@ -4,11 +4,10 @@ package com.zhowin.miyou.recommend.activity;
 import androidx.fragment.app.Fragment;
 
 import com.zhowin.base_library.adapter.HomePageAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityRoomListBinding;
 import com.zhowin.miyou.recommend.fragment.CharmListFragment;
-import com.zhowin.miyou.recommend.fragment.KickOutRoomFragment;
 
 import java.util.ArrayList;
 import java.util.List;

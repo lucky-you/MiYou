@@ -8,9 +8,9 @@ import android.view.View;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityMyDiamondBinding;
 import com.zhowin.miyou.mine.adapter.RechargeListAdapter;
 import com.zhowin.miyou.mine.model.RechargeList;

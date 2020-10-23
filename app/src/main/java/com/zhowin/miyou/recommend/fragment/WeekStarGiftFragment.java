@@ -4,15 +4,11 @@ import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeWeekStartGiftFragmentBinding;
 import com.zhowin.miyou.recommend.adapter.WeekStarGiftAdapter;
-import com.zhowin.miyou.recommend.model.ToadyUserList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 周星榜 礼物

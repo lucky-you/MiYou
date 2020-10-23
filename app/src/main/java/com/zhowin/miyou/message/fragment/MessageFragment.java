@@ -1,17 +1,16 @@
 package com.zhowin.miyou.message.fragment;
 
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhowin.base_library.base.BaseApplication;
-import com.zhowin.base_library.base.BaseBindFragment;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.MessageFragmentLayoutBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.message.activity.SystemMessageActivity;

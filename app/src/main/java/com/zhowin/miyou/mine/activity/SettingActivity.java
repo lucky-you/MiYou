@@ -3,7 +3,6 @@ package com.zhowin.miyou.mine.activity;
 import android.app.Dialog;
 import android.view.View;
 
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.callback.OnCenterHitMessageListener;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
@@ -11,6 +10,7 @@ import com.zhowin.base_library.utils.AppUtils;
 import com.zhowin.base_library.utils.CacheDataUtils;
 import com.zhowin.base_library.view.CenterHitMessageDialog;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivitySettingBinding;
 import com.zhowin.miyou.login.activity.LoginActivity;
 import com.zhowin.miyou.main.activity.MainActivity;

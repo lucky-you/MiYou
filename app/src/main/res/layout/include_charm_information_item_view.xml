@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="@color/white">
+    android:background="@color/transparent">
 
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:text="4"
-        android:textColor="#9896F9"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +55,7 @@
         android:ellipsize="end"
         android:maxLength="6"
         android:text="小喵喵小喵小猫"
-        android:textColor="@color/color_333"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/tvUserCharmValue"
         app:layout_constraintLeft_toRightOf="@id/flSexLayout"
         app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +86,7 @@
         android:id="@+id/tvUserCharmValue"
         style="@style/TextViewStyleOf14Sp"
         android:text="贡献值254w"
-        android:textColor="@color/color_666"
+        android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/tvUserNickName"

@@ -15,7 +15,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.yanzhenjie.permission.runtime.Permission;
 import com.yanzhenjie.permission.runtime.PermissionDef;
 import com.zhowin.base_library.adapter.NineGridItemListAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.callback.OnNineGridItemClickListener;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
@@ -36,6 +35,7 @@ import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.utils.ZodiacUtil;
 import com.zhowin.base_library.widget.FullyGridLayoutManager;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityPersonalInfoBinding;
 import com.zhowin.miyou.http.HttpRequest;
 

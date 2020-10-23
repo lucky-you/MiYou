@@ -1,7 +1,6 @@
 package com.zhowin.miyou.recommend.activity;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
@@ -15,7 +14,6 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.zhowin.base_library.adapter.NineGridItemListAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.callback.OnNineGridItemClickListener;
 import com.zhowin.base_library.callback.OnTextChangedListener;
 import com.zhowin.base_library.http.HttpCallBack;
@@ -31,6 +29,7 @@ import com.zhowin.base_library.utils.SplitUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.FullyGridLayoutManager;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityReportRoomBinding;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.main.utils.GenderHelper;
@@ -40,7 +39,6 @@ import com.zhowin.miyou.recommend.model.ReportList;
 import com.zhowin.miyou.recommend.model.ReportUserOrRoom;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

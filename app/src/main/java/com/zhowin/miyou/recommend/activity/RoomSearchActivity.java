@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.zhowin.base_library.base.BaseBindActivity;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
 import com.zhowin.base_library.utils.ActivityManager;
@@ -25,6 +24,7 @@ import com.zhowin.base_library.utils.SizeUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.base_library.widget.GridSpacingItemDecoration;
 import com.zhowin.miyou.R;
+import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityRoomSearchBinding;
 import com.zhowin.miyou.db.manager.DaoManagerUtils;
 import com.zhowin.miyou.db.model.SearchUserHistory;
@@ -38,7 +38,6 @@ import com.zhowin.miyou.recommend.callback.OnHitCenterClickListener;
 import com.zhowin.miyou.recommend.dialog.HitCenterDialog;
 import com.zhowin.miyou.recommend.model.RecommendList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
