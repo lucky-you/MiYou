@@ -21,7 +21,7 @@
     <string name="seal_dialog_clean_group_notice">清空验证消息</string>
     <string name="seal_group_notice_clean_success">清除成功</string>
     <string name="seal_group_notice_add">邀 %1$s 入群</string>
-
+    <string name="join_room_success">加入了房间</string>
     <string name="seal_group_manager_set_manager_toast_set_management_success">设置管理员成功</string>
     <string name="seal_group_manager_set_manager_toast_set_management_failed">设置失败</string>
     <string name="seal_group_action_set_manager">群主将 %1$s 设置为管理员</string>
@@ -31,6 +31,6 @@
     <string name="msg_contact_notification_someone_agree_your_request">已同意你的好友请求</string>
     <string name="msg_contact_notification_agree_your_request">对方已同意你的好友请求</string>
     <string name="msg_dialog_item_message_delete">删除消息</string>
-
+    <string name="object_name">RCMic:gift</string>
 
 </resources>

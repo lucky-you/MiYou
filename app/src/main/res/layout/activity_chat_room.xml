@@ -91,8 +91,8 @@
 
             <ImageView
                 android:id="@+id/ivUserList"
-                android:layout_width="20dp"
-                android:layout_height="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/room_jiangb_icon"
@@ -102,8 +102,8 @@
 
             <ImageView
                 android:id="@+id/ivRoomSetting"
-                android:layout_width="20dp"
-                android:layout_height="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
                 android:src="@drawable/room_more_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -117,6 +117,113 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
+
+            <TextView
+                android:id="@+id/tvRoomNotice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/room_radio1_bg"
+                android:drawableLeft="@drawable/room_radio1_icon"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="小秘密：挖矿机快乐和艰苦环境和家很近很近和"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvRoomPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/room_play_box"
+                android:gravity="center"
+                android:text="房间玩法"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintLeft_toLeftOf="@id/tvRoomNotice"
+                app:layout_constraintTop_toBottomOf="@id/tvRoomNotice" />
+
+            <LinearLayout
+                android:id="@+id/llHostLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRoomPlay">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civHostUserHeadImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_default_hp" />
+
+                <TextView
+                    android:id="@+id/tvHostUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="主持人：张筱雨"
+                    android:textColor="@color/color_white"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toRightOf="@id/llHostLayout"
+                app:layout_constraintTop_toBottomOf="@id/tvRoomPlay">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civGuestImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/room_jab_icon" />
+
+                <TextView
+                    android:id="@+id/tvGuest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="嘉宾位"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/AudienceRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llHostLayout" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatMessageRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginBottom="20dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <LinearLayout
                 android:id="@+id/llReleaseBroadcastLayout"

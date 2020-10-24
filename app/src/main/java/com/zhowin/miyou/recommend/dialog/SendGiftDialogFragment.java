@@ -58,7 +58,6 @@ public class SendGiftDialogFragment extends BaseDialogFragment {
         serveWheatListAdapter = new ServeWheatListAdapter(wheatList);
         wheatRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         wheatRecyclerView.setAdapter(serveWheatListAdapter);
-
         giftListAdapter = new GiftListAdapter();
         vpRecyclerView.setAdapter(giftListAdapter);
         vpRecyclerView.setOnpagerChangeListener(new VpRecyclerView.onPagerChangeListener() {

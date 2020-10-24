@@ -28,6 +28,7 @@ import com.zhowin.miyou.recommend.model.GuardUserList;
 import com.zhowin.miyou.recommend.model.HomeCategory;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
+import com.zhowin.miyou.recommend.model.RoomDataInfo;
 import com.zhowin.miyou.recommend.model.ToadyUserList;
 import com.zhowin.miyou.recommend.model.WeekStarUserList;
 import com.zhowin.miyou.recommend.model.ZABUserList;
@@ -1159,6 +1160,27 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取房间信息
+     */
+    public static void getRoomDataInfo(LifecycleOwner activity, int roomId, final HttpCallBack<RoomDataInfo> callBack) {
+        apiRequest.getRoomDataInfo(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), roomId)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<RoomDataInfo>() {
+
+                    @Override
+                    public void onSuccess(RoomDataInfo demo) {
                         callBack.onSuccess(demo);
                     }
 

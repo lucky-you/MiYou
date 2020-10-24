@@ -220,8 +220,7 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
             @Override
             public void onSuccess(String s) {
                 //保存用户信息
-                IMManager.getInstance().setUserCache(s, imToken, userInfo.getUsername(), userInfo.getProfilePictureKey());
-                IMManager.getInstance().updateUserInfoCache(s, userInfo.getUsername(), Uri.parse(userInfo.getProfilePictureKey()));
+                IMManager.getInstance().setUserCache(s, imToken, userInfo.getAvatar(), userInfo.getProfilePictureKey());
                 ToastUtils.showToast(getString(R.string.login_success));
                 Log.e("xy", "连接IM Success,userId:" + s);
                 startActivity(MainActivity.class);

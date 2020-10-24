@@ -1,5 +1,6 @@
 package com.zhowin.miyou.recommend.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -7,7 +8,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.yanzhenjie.permission.runtime.Permission;
 import com.zhowin.base_library.http.HttpCallBack;
+import com.zhowin.base_library.permission.AndPermissionListener;
+import com.zhowin.base_library.permission.AndPermissionUtils;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.EmptyViewUtils;
 import com.zhowin.base_library.utils.SizeUtils;
@@ -102,8 +106,23 @@ public class RecommendListFragment extends BaseLibFragment implements BaseQuickA
         if (roomIsLock) {
             showUnLockRoomDialog();
         } else {
+            //请求权限
             int roomId = recommendListAdapter.getItem(position).getRoomId();
-            ChatRoomActivity.start(mContext, roomId);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                AndPermissionUtils.requestPermission(mContext, new AndPermissionListener() {
+                    @Override
+                    public void PermissionSuccess(List<String> permissions) {
+                        ChatRoomActivity.start(mContext, roomId);
+                    }
+
+                    @Override
+                    public void PermissionFailure(List<String> permissions) {
+                        ToastUtils.showToast("权限未开启");
+                    }
+                }, Permission.RECORD_AUDIO, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE);
+            } else {
+                ChatRoomActivity.start(mContext, roomId);
+            }
         }
     }
 

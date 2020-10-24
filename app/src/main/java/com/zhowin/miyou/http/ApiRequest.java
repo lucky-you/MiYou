@@ -21,6 +21,7 @@ import com.zhowin.miyou.recommend.model.GuardUserList;
 import com.zhowin.miyou.recommend.model.HomeCategory;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
+import com.zhowin.miyou.recommend.model.RoomDataInfo;
 import com.zhowin.miyou.recommend.model.ToadyUserList;
 import com.zhowin.miyou.recommend.model.WeekStarUserList;
 import com.zhowin.miyou.recommend.model.ZABUserList;
@@ -239,6 +240,12 @@ public interface ApiRequest {
 
     //永久注销当前账号
     String LONG_TIME_OUT_LOGIN_URL = "/user/off";
+
+    //获取直播间的信息
+    String GET_ROOM_DATA_MESSAGE_URL = "/ant/live/liveRoomInfo";
+
+    //获取房间成员信息
+    String GET_ROOM_MEMBER_LIST_URL = "/ant/live/getRoomMembers";
 
 
     /**
@@ -585,5 +592,20 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(LONG_TIME_OUT_LOGIN_URL)
     Observable<ApiResponse<Object>> longTimeOutLogin(@Header(AUTHOR) String token);
+
+    /**
+     * 获取房间信息
+     */
+    @FormUrlEncoded
+    @POST(GET_ROOM_DATA_MESSAGE_URL)
+    Observable<ApiResponse<RoomDataInfo>> getRoomDataInfo(@Header(AUTHOR) String token, @Field("roomId") int roomId);
+
+    /**
+     * 获取房间成员信息
+     */
+    @FormUrlEncoded
+    @POST(GET_ROOM_MEMBER_LIST_URL)
+    Observable<ApiResponse<BaseResponse<UserInfo>>> getRoomMemberList(@Header(AUTHOR) String token, @Field("roomId") int roomId);
+
 
 }

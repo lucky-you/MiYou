@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -17,8 +18,10 @@ import com.zhowin.base_library.model.EventBusNotice;
 import com.zhowin.miyou.BuildConfig;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.rongIM.adapter.SendMessageAdapter;
+import com.zhowin.miyou.rongIM.callback.SealMicResultCallback;
 import com.zhowin.miyou.rongIM.constant.UserRoleType;
 import com.zhowin.miyou.rongIM.manager.CacheManager;
+import com.zhowin.miyou.rongIM.manager.ThreadManager;
 import com.zhowin.miyou.rongIM.message.GroupApplyMessage;
 import com.zhowin.miyou.rongIM.message.HandOverHostMessage;
 import com.zhowin.miyou.rongIM.message.KickMemberMessage;
@@ -30,16 +33,23 @@ import com.zhowin.miyou.rongIM.message.SealContactNotificationMessage;
 import com.zhowin.miyou.rongIM.model.ChatRoomAction;
 import com.zhowin.miyou.rongIM.model.ContactNotificationMessageData;
 import com.zhowin.miyou.rongIM.model.ConversationRecord;
-import com.zhowin.miyou.rongIM.model.Event;
+import com.zhowin.miyou.rongIM.model.MicBean;
 import com.zhowin.miyou.rongIM.model.QuietHours;
 import com.zhowin.miyou.rongIM.model.UserCacheInfo;
 import com.zhowin.miyou.rongIM.provider.ContactNotificationMessageProvider;
+import com.zhowin.miyou.rongIM.rtc.RTCClient;
 import com.zhowin.miyou.rongIM.sp.UserCache;
 import com.zhowin.miyou.rongIM.sp.UserConfigCache;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import cn.rongcloud.rtc.api.callback.IRCRTCResultCallback;
+import cn.rongcloud.rtc.base.RTCErrorCode;
 import io.rong.eventbus.EventBus;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
@@ -67,6 +77,7 @@ import io.rong.imlib.model.UserInfo;
 import io.rong.message.ContactNotificationMessage;
 import io.rong.message.GroupNotificationMessage;
 import io.rong.message.ImageMessage;
+import io.rong.message.RecallNotificationMessage;
 import io.rong.message.TextMessage;
 
 public class IMManager {
@@ -93,7 +104,13 @@ public class IMManager {
      */
     private static final int DEFAULT_MESSAGE_COUNT = -1;
     private static final int DEF_MEMBER_COUNT = 20;
-
+    public static final String LIVE_URL = "liveUrl";
+    /**
+     * KV取出之前的延迟时间，单位为毫秒，延迟取出避免KV取出失败
+     */
+    public static final long DELAY_KV = 1000;
+    public static final String KV_SPEAK = "speaking";
+    public static final String KV_POSITION = "position";
 
     private IMManager() {
 
@@ -268,17 +285,21 @@ public class IMManager {
         userCacheInfo.setUserToken(userToken);
         userCacheInfo.setUserAvatar(userAvatar);
         userCache.saveUserCache(userCacheInfo);
+        CacheManager.getInstance().cacheUserId(userId);
+        CacheManager.getInstance().cacheUserName(userName);
+        CacheManager.getInstance().cacheUserPortrait(userAvatar);
+        CacheManager.getInstance().cacheToken(userToken);
     }
 
-
-    public String getUserIMToken() {
-        String token = null;
+    /**
+     * 获取用户信息
+     */
+    public UserCacheInfo getUserCache() {
+        UserCacheInfo userCacheInfo = null;
         if (userCache != null) {
-            UserCacheInfo userCacheInfo = userCache.getUserCache();
-            if (userCacheInfo != null)
-                token = userCacheInfo.getUserToken();
+            userCacheInfo = userCache.getUserCache();
         }
-        return token;
+        return userCacheInfo;
     }
 
     /**
@@ -408,8 +429,8 @@ public class IMManager {
      * 注册消息及消息模版
      */
     private void initMessageAndTemplate() {
+        //IM聊天
         RongIM.registerMessageType(SealContactNotificationMessage.class);
-
         RongIM.registerMessageTemplate(new ContactNotificationMessageProvider());
         RongIM.registerMessageTemplate(new RealTimeLocationMessageProvider());
         RongIM.registerMessageType(GroupApplyMessage.class);
@@ -420,7 +441,6 @@ public class IMManager {
         RongIM.registerMessageType(KickMemberMessage.class);
         RongIM.registerMessageType(HandOverHostMessage.class);
         RongIM.registerMessageType(TakeOverHostMessage.class);
-
         // 开启高清语音
         RongIM.getInstance().setVoiceMessageType(RongIM.VoiceMessageType.HighQuality);
         //管理消息监听，由于同一时间只能有一个消息监听加入 融云 的消息监听，所以做一个消息管理来做消息路由
@@ -971,6 +991,143 @@ public class IMManager {
         return lastConversationRecord;
     }
 
+    /**
+     * 主播加入房间
+     */
+    public void micJoinRoom(final String roomId, final RongIMClient.ResultCallback<String> imCallBack) {
+        //加入IM
+        joinChatRoom(roomId, imCallBack);
+        //初始化RTC
+        RTCClient.getInstance().init();
+//        加入RTC
+        RTCClient.getInstance().micJoinRoom(roomId);
+    }
+
+    /**
+     * 主播退出房间
+     */
+    public void micQuitRoom(String roomId, final RongIMClient.ResultCallback<String> imCallBack) {
+        //退出IM
+        quitChatRoom(roomId, imCallBack);
+        //退出RTC
+        RTCClient.getInstance().micQuitRoom(roomId);
+//        回收RTC
+        RTCClient.getInstance().unInit();
+    }
+
+    /**
+     * 观众加入聊天室
+     */
+    public void audienceJoinRoom(final String roomId, final SealMicResultCallback<Boolean> callback) {
+        RTCClient.getInstance().init();
+        //加入IM聊天室
+        joinChatRoom(roomId, new RongIMClient.ResultCallback<String>() {
+            @Override
+            public void onSuccess(String s) {
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        getChatRoomEntry(roomId, LIVE_URL, new RongIMClient.ResultCallback<Map<String, String>>() {
+                            @Override
+                            public void onSuccess(Map<String, String> stringStringMap) {
+                                if (stringStringMap.containsKey(LIVE_URL)) {
+                                    String liveUrl = stringStringMap.get(LIVE_URL);
+                                    Log.e("xy", "观众加入聊天室后拿到的KV: " + stringStringMap.toString());
+                                    //订阅直播资源
+                                    if (!TextUtils.isEmpty(liveUrl)) {
+                                        Log.e("xy", "观众加入聊天室拿到的liveUrl: " + liveUrl);
+                                        RTCClient.getInstance().subscribeLiveAVStream(liveUrl);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+
+                            }
+                        });
+                    }
+                }, DELAY_KV);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("xy", "观众加入聊天室失败: " + errorCode.getMessage());
+            }
+        });
+
+    }
+
+    /**
+     * 观众退出房间
+     */
+    public void audienceQuitRoom(final String roomId, final RongIMClient.ResultCallback<String> imCallBack) {
+        //取消订阅
+        getChatRoomEntry(roomId, LIVE_URL, new RongIMClient.ResultCallback<Map<String, String>>() {
+            @Override
+            public void onSuccess(Map<String, String> stringStringMap) {
+                String liveUrl = stringStringMap.get(LIVE_URL);
+                Log.e("xy", "观众退出房间后下发的KV: " + stringStringMap.toString());
+                RTCClient.getInstance().unsubscribeLiveAVStream(liveUrl, new IRCRTCResultCallback() {
+                    @Override
+                    public void onSuccess() {
+                        //退出IM聊天室
+                        quitChatRoom(roomId, imCallBack);
+                    }
+
+                    @Override
+                    public void onFailed(RTCErrorCode rtcErrorCode) {
+                        Log.e("xy", "观众退出RTC房间失败: " + rtcErrorCode.getValue());
+                    }
+                });
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("xy", "观众退出IM房间失败: " + errorCode.getValue());
+            }
+        });
+        RTCClient.getInstance().unInit();
+    }
+
+    /**
+     * 观众端上麦
+     */
+    public void audienceGoMic(final String roomId, final SealMicResultCallback<Map<String, String>> callback) {
+        getChatRoomEntry(roomId, LIVE_URL, new RongIMClient.ResultCallback<Map<String, String>>() {
+            @Override
+            public void onSuccess(final Map<String, String> stringStringMap) {
+                String liveUrl = stringStringMap.get(LIVE_URL);
+                Log.e("xy", "观众上麦之后下发的KV: " + stringStringMap.toString());
+                //1. 应先调用 RongRTCEngine#unsubscribeLiveAVStream 接口取消观看直播。
+                if (!TextUtils.isEmpty(liveUrl)) {
+                    Log.e("xy", "观众上麦之后的liveUrl: " + liveUrl);
+                    RTCClient.getInstance().unsubscribeLiveAVStream(liveUrl, new IRCRTCResultCallback() {
+                        @Override
+                        public void onSuccess() {
+                            //2. 取消观看直播后，调用 RongRTCEngine#joinRoom 接口加入到直播房间升级为主播。
+                            //3. 升级为主播后，调用 RongRTCRoom#publishDefaultLiveAVStream 接口来订阅观看。
+                            RTCClient.getInstance().micJoinRoom(roomId);
+                            Log.e("xy", "观众上麦成功！");
+                            //上麦工程后角色变为连麦者
+//                            CacheManager.getInstance().cacheUserRoleType(UserRoleType.CONNECT_MIC.getValue());
+                            callback.onSuccess(stringStringMap);
+                        }
+
+                        @Override
+                        public void onFailed(RTCErrorCode rtcErrorCode) {
+                            Log.e("xy", "观众上麦失败: " + rtcErrorCode.getValue());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("xy", "获取聊天室liveUrl失败: " + errorCode.getValue());
+            }
+        });
+    }
 
     /**
      * 加入 IM 聊天室
@@ -1005,6 +1162,110 @@ public class IMManager {
     }
 
     /**
+     * 主播下麦
+     */
+    public void micGoDown(final String roomId, final SealMicResultCallback<Map<String, String>> callback) {
+        //调用 RongRTCEngine#quitRoom 接口来退出直播。
+        RTCClient.getInstance().micQuitRoom(roomId);
+        getChatRoomEntry(roomId, LIVE_URL, new RongIMClient.ResultCallback<Map<String, String>>() {
+            @Override
+            public void onSuccess(Map<String, String> stringStringMap) {
+                String liveUrl = stringStringMap.get(LIVE_URL);
+                Log.e("xy", "主播下麦后下发的KV map: " + stringStringMap.toString());
+                if (!TextUtils.isEmpty(liveUrl)) {
+                    Log.e("xy", "主播下麦后获取的liveUrl: " + liveUrl);
+                    //如果取消连麦后，用户还需要继续观看直播，则可以调用 RongRTCEngine#subscribeLiveAVStream 接口开始观看直播。
+                    RTCClient.getInstance().subscribeLiveAVStream(liveUrl);
+                    //主播下麦之后角色变为观众
+//                    CacheManager.getInstance().cacheUserRoleType(UserRoleType.AUDIENCE.getValue());
+                    callback.onSuccess(stringStringMap);
+                }
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("xy", "主播下麦失败: " + errorCode.getValue());
+            }
+        });
+    }
+
+    /**
+     * 获取全部聊天的麦位
+     */
+    public void getAllChatRoomMic(final String roomId, final RongIMClient.ResultCallback<Map<String, String>> callback) {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getAllChatRoomEntries(roomId, new RongIMClient.ResultCallback<Map<String, String>>() {
+                    @Override
+                    public void onSuccess(Map<String, String> StringMap) {
+                        Map<String, String> micmap = new HashMap<>();
+                        for (String key : StringMap.keySet()) {
+                            if (key.contains(KV_POSITION)) {
+                                micmap.put(key, StringMap.get(key));
+                            }
+                        }
+                        callback.onSuccess(micmap);
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+                        callback.onError(errorCode);
+                    }
+                });
+            }
+        }, DELAY_KV);
+    }
+
+    /**
+     * 获取全部说话状态
+     */
+    public void getAllChatRoomSpeaking(final String roomId, final RongIMClient.ResultCallback<Map<String, String>> callback) {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getAllChatRoomEntries(roomId, new RongIMClient.ResultCallback<Map<String, String>>() {
+                    @Override
+                    public void onSuccess(Map<String, String> stringStringMap) {
+                        Map<String, String> micmap = new HashMap<>();
+                        for (String key : stringStringMap.keySet()) {
+                            Log.i("xy" + " 获取全部的的讲话状态", micmap.toString());
+                            if (key.contains(KV_SPEAK)) {
+                                micmap.put(key, stringStringMap.get(key));
+                            }
+                        }
+                        callback.onSuccess(micmap);
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+                        callback.onError(errorCode);
+                    }
+                });
+            }
+        }, DELAY_KV);
+    }
+
+    /**
+     * 将所有的kv对象转为MicBean对象
+     *
+     * @param stringStringMap       从KV中取得的map
+     * @param sealMicResultCallback 结果回调
+     */
+    public void transMicBean(Map<String, String> stringStringMap, @NonNull final SealMicResultCallback<MicBean> sealMicResultCallback) {
+        for (String key : stringStringMap.keySet()) {
+            final MicBean micBean = new Gson().fromJson(stringStringMap.get(key), MicBean.class);
+            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    //当前包括主持人在内共9个麦位，当有1个以上的麦位上有人时，该回调会调用多次
+                    sealMicResultCallback.onSuccess(micBean);
+                }
+            });
+        }
+    }
+
+    /**
      * 获取房间信息
      */
     public void getChatRoomInfo(String roomId, RongIMClient.ResultCallback<ChatRoomInfo> callback) {
@@ -1023,7 +1284,7 @@ public class IMManager {
         RongIMClient.getInstance().quitChatRoom(roomId, new RongIMClient.OperationCallback() {
             @Override
             public void onSuccess() {
-//                SLog.i(SLog.TAG_IM, "quitRoomSuccess");
+                Log.i("xy", "quitRoomSuccess");
                 if (callBack != null) {
                     callBack.onSuccess(roomId);
                 }
@@ -1039,30 +1300,45 @@ public class IMManager {
         });
     }
 
-    /**
-     * 创建本地显示用户房间消息
-     *
-     * @param userId 进入房间的用户
-     * @param roomId 房间id
-     * @param cmd    1 join, 2 leave, 3 kick
-     * @return im信息
-     */
-    public Message createLocalRoomMessage(String userId, String roomId, int cmd) {
-        RoomMemberChangedMessage memberChangedMessage = new RoomMemberChangedMessage();
-        memberChangedMessage.setTargetUserId(userId);
-        memberChangedMessage.setCmd(cmd);
-        return Message.obtain(roomId, Conversation.ConversationType.CHATROOM, memberChangedMessage);
+
+    public void getChatRoomEntry(String chatRoomId, String key, @NonNull final RongIMClient.ResultCallback<Map<String, String>> callback) {
+        RongIMClient.getInstance().getChatRoomEntry(chatRoomId, key, callback);
     }
 
-    /**
-     * 发送消息
-     *
-     * @param message            发送消息
-     * @param sendMessageAdapter 发送之后的回调
-     */
-    public void sendMessage(Message message, SendMessageAdapter sendMessageAdapter) {
-        RongIMClient.getInstance().sendMessage(message, null, null, sendMessageAdapter);
+    public void setChatRoomEntry(String roomId, String key, final String value) {
+        RongIMClient.getInstance().setChatRoomEntry(roomId, key, value, true, false, "", new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                Log.i("xy", "存value" + value);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("xy", "存value" + errorCode);
+            }
+        });
     }
+
+
+    public void getAllChatRoomEntries(String chatRoomId, @NonNull final RongIMClient.ResultCallback<Map<String, String>> callback) {
+        RongIMClient.getInstance().getAllChatRoomEntries(chatRoomId, callback);
+    }
+
+
+    public void setChatRoomSpeakEntry(String roomId, String key, final String value) {
+        RongIMClient.getInstance().setChatRoomEntry(roomId, key, value, true, false, "", new RongIMClient.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                Log.i("TAG", "存speak" + value);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("TAG", "存speak" + errorCode);
+            }
+        });
+    }
+
 
     /**
      * 作为进入房间的一员，都要发送一条消息出去，以便让该房间内的其他成员知道自己进入了房间
@@ -1096,6 +1372,7 @@ public class IMManager {
         return Message.obtain(roomId, Conversation.ConversationType.CHATROOM, textMessage);
     }
 
+
     /**
      * 发送礼物的自定义消息
      *
@@ -1111,6 +1388,36 @@ public class IMManager {
         sendGiftMessage.setTag(tag);
         return Message.obtain(roomId, Conversation.ConversationType.CHATROOM, sendGiftMessage);
     }
+
+
+    /**
+     * 发送消息
+     */
+    public void sendMessage(String roomId, String messageContent, SendMessageAdapter sendMessageAdapter) {
+        sendMessage(getTextMessage(roomId, messageContent), sendMessageAdapter);
+    }
+
+
+    /**
+     * 发送消息
+     *
+     * @param message            发送消息
+     * @param sendMessageAdapter 发送之后的回调
+     */
+    public void sendMessage(Message message, SendMessageAdapter sendMessageAdapter) {
+        RongIMClient.getInstance().sendMessage(message, null, null, sendMessageAdapter);
+    }
+
+    /**
+     * 撤回发送的消息
+     *
+     * @param message
+     * @param callback
+     */
+    public void recallMessage(Message message, String pushMessage, RongIMClient.ResultCallback<RecallNotificationMessage> callback) {
+        RongIMClient.getInstance().recallMessage(message, pushMessage, callback);
+    }
+
 
     /**
      * 获取房间历史消息

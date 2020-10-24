@@ -218,6 +218,10 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
             ToastUtils.showToast("请介绍下您的房间");
             return;
         }
+        if (TextUtils.isEmpty(roomHeadImageUrl)) {
+            ToastUtils.showToast("请选择房间封面");
+            return;
+        }
         showLoadDialog();
         HashMap<String, Object> map = new HashMap<>();
         map.put("title", roomName);
@@ -229,8 +233,11 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
         HttpRequest.createChatRoom(this, map, new HttpCallBack<RecommendList>() {
             @Override
             public void onSuccess(RecommendList recommendList) {
-                if (recommendList != null)
-                    joinLiveRoom(recommendList.getRoomId());
+                if (recommendList != null) {
+//                    joinLiveRoom(recommendList.getRoomId());
+                    ToastUtils.showCustomToast(mContext, "创建成功");
+                    ActivityManager.getAppInstance().finishActivity();
+                }
             }
 
             @Override
@@ -241,6 +248,11 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
         });
     }
 
+    /**
+     * 加入房间
+     *
+     * @param roomId 房间id
+     */
     private void joinLiveRoom(int roomId) {
         HttpRequest.joinLiveRoom(this, roomId, "", new HttpCallBack<RecommendList>() {
             @Override

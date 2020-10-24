@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import io.rong.callkit.AudioPlugin;
-import io.rong.callkit.VideoPlugin;
+//import io.rong.callkit.AudioPlugin;
+//import io.rong.callkit.VideoPlugin;
 import io.rong.common.rlog.RLog;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.RongExtension;
@@ -111,13 +111,13 @@ public class SealExtensionModule extends DefaultExtensionModule {
                 IPluginModule videoPlugin = null;
                 while (iterator.hasNext()) {
                     IPluginModule module = iterator.next();
-                    if (module instanceof AudioPlugin) {
-                        audioPlugin = module;
-                        iterator.remove();
-                    } else if (module instanceof VideoPlugin) {
-                        videoPlugin = module;
-                        iterator.remove();
-                    }
+//                    if (module instanceof AudioPlugin) {
+//                        audioPlugin = module;
+//                        iterator.remove();
+//                    } else if (module instanceof VideoPlugin) {
+//                        videoPlugin = module;
+//                        iterator.remove();
+//                    }
                 }
                 pluginModules.add(1, sightPlugin);
                 if (audioPlugin != null) {
