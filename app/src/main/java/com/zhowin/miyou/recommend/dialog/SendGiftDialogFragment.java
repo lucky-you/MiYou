@@ -3,6 +3,7 @@ package com.zhowin.miyou.recommend.dialog;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +14,6 @@ import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.recommend.adapter.GiftListAdapter;
 import com.zhowin.miyou.recommend.adapter.ServeWheatListAdapter;
 import com.zhowin.miyou.recommend.model.GiftList;
-import com.zhowin.miyou.recommend.widget.VpRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class SendGiftDialogFragment extends BaseDialogFragment {
 
     private ServeWheatListAdapter serveWheatListAdapter;
     private RecyclerView wheatRecyclerView;
-    private VpRecyclerView vpRecyclerView;
+    private RecyclerView vpRecyclerView;
     private GiftListAdapter giftListAdapter;
 
     public static SendGiftDialogFragment newInstance() {
@@ -58,15 +58,11 @@ public class SendGiftDialogFragment extends BaseDialogFragment {
         serveWheatListAdapter = new ServeWheatListAdapter(wheatList);
         wheatRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         wheatRecyclerView.setAdapter(serveWheatListAdapter);
-        giftListAdapter = new GiftListAdapter();
-        vpRecyclerView.setAdapter(giftListAdapter);
-        vpRecyclerView.setOnpagerChangeListener(new VpRecyclerView.onPagerChangeListener() {
-            @Override
-            public void onPagerChange(int position) {
 
-            }
-        });
-        vpRecyclerView.setOnPagerPosition(wheatList.size() - 1);
+        giftListAdapter = new GiftListAdapter();
+        vpRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+        vpRecyclerView.setAdapter(giftListAdapter);
+
     }
 
 

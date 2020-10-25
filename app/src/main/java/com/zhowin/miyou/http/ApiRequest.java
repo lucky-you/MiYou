@@ -89,7 +89,7 @@ public interface ApiRequest {
     String GET_HOME_NOTICE_MESSAGE_URL = "/ant/message/scroll/get";
 
     //获取礼物列表
-    String GET_GIFT_LIST_URL = "/ant/gift/getGifts";
+    String GET_GIFT_LIST_URL = "/ant/live/getGifts";
 
     //设置用户密码
     String SET_USER_PASSWORD_URL = "/user/initializePwd";
@@ -246,6 +246,114 @@ public interface ApiRequest {
 
     //获取房间成员信息
     String GET_ROOM_MEMBER_LIST_URL = "/ant/live/getRoomMembers";
+
+    //获取直播间每日贡献榜
+    String GET_LIVE_ROOM_DAY_GXB_LIST_URL = "/ant/live/daily/ranking/contribute";
+
+    //获取直播间每日魅力榜
+    String GET_LIVE_ROOM_MLB_LIST_URL = "/ant/live/daily/ranking/glamour";
+
+    //获取直播间每周贡献榜
+    String GET_LIVE_ROOM_WEEK_GXB_LIST_URL = "/ant/live/week/ranking/contribute";
+
+    //获取直播间每周魅力榜
+    String GET_LIVE_ROOM_WEEK_MLB_LIST_URL = "/ant/live/week/ranking/glamour";
+
+    //获取每日房间流水
+    String GET_LIVE_ROOM_WATER_URL = "/ant/live/dailyRoomBill";
+
+    //收藏直播间
+    String ADD_COLLECTION_URL = "/ant/live/collection";
+
+    //取消直播间收藏
+    String CANCEL_COLLECTION_ROOM_URL = "/ant/live/cancel";
+
+    //取消管理员身份
+    String CANCEL_MANAGER_URL = "/ant/live/cancelManager";
+
+    //取消排麦申请
+    String CANCEL_ROW_WHEAT_URL = "/ant/live/cancelMicApply";
+
+    //清空排麦列表
+    String CLEAR_ROW_LIST_URL = "/ant/live/cleanMicApplyMembers";
+
+    //禁言、解禁用户
+    String ADD_OR_CANCEL_Mute_URL = "/ant/live/gag";
+
+    //查询禁言用户列表
+    String QUERY_BANNED_LIST_URL = "/ant/live/gag/members";
+
+    //禁麦
+    String PROHIBIT_MICROPHONE_URL = "/ant/live/gagMic";
+
+    //查询禁麦用户列表
+    String QUERY_PROHIBIT_MIC_LIST_URL = "/ant/live/gagMic/members";
+
+    //获取排麦成员
+    String GET_ROW_LIST_URL = "/ant/live/getMicApplyMembers";
+
+    //获取房间管理员
+    String GET_ROOM_ADMINISTRATOR_URL = "/ant/live/getRoomManagers";
+
+    //获取房间普通成员
+    String GET_ROOM_MEMBER_URL = "/ant/live/getRoomMembers";
+
+    //将用户踢出房间
+    String KICK_OUT_USER_FROM_ROOM_URL = "/ant/live/kick";
+
+    //查询踢出用户列表
+    String GET_KICK_OUT_USER_LIST_URL = "/ant/live/kick/members";
+
+    //同意上麦
+    String AGREE_SERVING_WHEAT_URL = "/ant/live/mic/apply/accept";
+
+    //拒绝上麦
+    String REFUSE_SERVING_WHEAT_URL = "/ant/live/mic/apply/reject";
+
+    //踢用户下麦
+    String KICK_OUT_USER_WHEAT_URL = "/ant/live/mic/kick";
+
+    //主动下麦
+    String USER_DOWN_WHEAT_URL = "/ant/live/mic/quit";
+
+    //麦位状态设置
+    String SET_WHEAT_STATUS_URL = "/ant/live/mic/state";
+
+    //接管主持人
+    String TAKE_OVER_THE_HOST_URL = "/ant/live/mic/takeOverHost";
+
+    //同意接管主持人
+    String AGREE_TAKE_OVER_THE_HOST_URL = "/ant/live/mic/takeOverHost/accept";
+
+    //主持人拒绝接管
+    String REFUSE_TAKE_OVER_THE_HOS_TURL = "/ant/live/mic/takeOverHost/reject";
+
+    //转让主持人
+    String TRANSFER_HOST_URL = "/ant/live/mic/transferHost";
+
+    //转让主持人同意
+    String AGREE_TRANSFER_HOST_URL = "/ant/live/mic/transferHost/accept";
+
+    //转让主持人拒绝
+    String REFUSE_TRANSFER_HOST_URL = "/ant/live/mic/transferHost/reject";
+
+    //申请排麦
+    String APPLY_FOR_ROW_WHEAT_URL = "/ant/live/roomMicApply";
+
+    //搜索房间内的用户
+    String SEARCH_USER_OF_ROOM_URL = "/ant/live/searchRoomUser";
+
+    //赠送礼物
+    String SEND_GIFT_URL = "/ant/live/sendGift";
+
+    //设置房间管理员
+    String SET_ROOM_MEMBER_URL = "/ant/live/setManager";
+
+    //设置直播间密码
+    String SET_ROOM_PASSWORD_URL = "/ant/live/setPwd";
+
+    //修改直播间信息
+    String CHANGE_ROOM_MESSAGE_URL = "/ant/live/update";
 
 
     /**
@@ -607,5 +715,21 @@ public interface ApiRequest {
     @POST(GET_ROOM_MEMBER_LIST_URL)
     Observable<ApiResponse<BaseResponse<UserInfo>>> getRoomMemberList(@Header(AUTHOR) String token, @Field("roomId") int roomId);
 
+
+    /**
+     * 获取每日榜
+     */
+    @FormUrlEncoded
+    @POST
+    Observable<ApiResponse<List<ToadyUserList>>> getRoomTodayUserList(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId);
+
+
+
+    /**
+     * 获取周星榜
+     */
+    @FormUrlEncoded
+    @POST
+    Observable<ApiResponse<WeekStarUserList>> getRoomWeekStarUserList(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId);
 
 }

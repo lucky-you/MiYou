@@ -25,13 +25,13 @@ import com.zhowin.base_library.view.LoadProgressDialog;
  * date :2019/11/25 8:47
  * description:BottomSheetDialogFragment 的基类
  */
-public abstract class BaseBottomSheetFragment extends BottomSheetDialogFragment {
+public abstract class BaseBottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener{
     protected Context mContext;
     protected View rootView;
     protected BottomSheetBehavior mBehavior;
     protected Dialog dialog;
     protected LoadProgressDialog progressDialog;
-
+    private long lastClick = 0;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -52,6 +52,7 @@ public abstract class BaseBottomSheetFragment extends BottomSheetDialogFragment 
             initView();
         }
     }
+
 
     @Override
     public void onStart() {
@@ -159,10 +160,12 @@ public abstract class BaseBottomSheetFragment extends BottomSheetDialogFragment 
     public abstract int getLayoutResId();
 
     /**
-     * 初始化View和设置数据等操作的方法
+     * 初始化View 和 设置数据等操作的方法
      */
     public abstract void initView();
 
+
+    public abstract void onViewClick(View view);
     /**
      * 高度是否固定,默认不固定
      */
@@ -214,4 +217,26 @@ public abstract class BaseBottomSheetFragment extends BottomSheetDialogFragment 
             super.show(manager, tag);
         }
     }
+
+
+    @Override
+    public void onClick(View view) {
+        if (!isFastClick())
+            onViewClick(view);
+    }
+
+    /**
+     * 判断是否快速点击
+     *
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    protected boolean isFastClick() {
+        long now = System.currentTimeMillis();
+        if (now - lastClick >= 500) {
+            lastClick = now;
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -6,13 +6,17 @@ import android.util.Log;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.base.BaseBindFragment;
 import com.zhowin.miyou.databinding.IncludeCharmInformationFragmentBinding;
+import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.recommend.adapter.CharmInformationAdapter;
+import com.zhowin.miyou.recommend.model.ToadyUserList;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -54,6 +58,22 @@ public class CharmInformationFragment extends BaseBindFragment<IncludeCharmInfor
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(charmInformationAdapter);
     }
+
+    private void getRoomTodayUserList() {
+        HttpRequest.getRoomTodayUserList(this, true, 34, new HttpCallBack<List<ToadyUserList>>() {
+            @Override
+            public void onSuccess(List<ToadyUserList> toadyUserLists) {
+
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+
+            }
+        });
+
+    }
+
 
     @Override
     public void initListener() {

@@ -1190,4 +1190,50 @@ public class HttpRequest {
                     }
                 });
     }
+
+
+    /**
+     * 获取房间每日魅力和贡献榜单
+     */
+    public static void getRoomTodayUserList(LifecycleOwner activity, boolean is_MLB, int roomId, final HttpCallBack<List<ToadyUserList>> callBack) {
+        String url = is_MLB ? ApiRequest.GET_LIVE_ROOM_MLB_LIST_URL : ApiRequest.GET_LIVE_ROOM_DAY_GXB_LIST_URL;
+        apiRequest.getRoomTodayUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, roomId)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<List<ToadyUserList>>() {
+
+                    @Override
+                    public void onSuccess(List<ToadyUserList> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+
+    /**
+     * 获取房间魅力和贡献榜单
+     */
+    public static void getRoomWeekStarUserList(LifecycleOwner activity, boolean is_MLB, int roomId, final HttpCallBack<WeekStarUserList> callBack) {
+        String url = is_MLB ? ApiRequest.GET_LIVE_ROOM_WEEK_MLB_LIST_URL : ApiRequest.GET_LIVE_ROOM_WEEK_GXB_LIST_URL;
+        apiRequest.getRoomWeekStarUserList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, roomId)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<WeekStarUserList>() {
+
+                    @Override
+                    public void onSuccess(WeekStarUserList demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 }
