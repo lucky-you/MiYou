@@ -1236,4 +1236,25 @@ public class HttpRequest {
                     }
                 });
     }
+
+    /**
+     * 根据id 批量查询用户信息
+     */
+    public static void queryUserMessageList(LifecycleOwner activity, String userIds, final HttpCallBack<BaseResponse<UserInfo>> callBack) {
+        apiRequest.queryUserMessageList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), userIds)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<BaseResponse<UserInfo>>() {
+
+                    @Override
+                    public void onSuccess(BaseResponse<UserInfo> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 }

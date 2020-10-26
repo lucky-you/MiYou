@@ -161,6 +161,7 @@
                     android:id="@+id/civHostUserHeadImage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+
                     android:layout_gravity="center"
                     android:src="@mipmap/ic_default_hp" />
 
@@ -168,9 +169,10 @@
                     android:id="@+id/tvHostUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="6dp"
                     android:gravity="center"
-                    android:text="主持人：张筱雨"
+                    android:text="主持人"
                     android:textColor="@color/color_white"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -179,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 app:layout_constraintLeft_toRightOf="@id/llHostLayout"
                 app:layout_constraintTop_toBottomOf="@id/tvRoomPlay">
@@ -321,6 +323,13 @@
 
         </LinearLayout>
 
+        <io.rong.imkit.RongExtension
+            android:id="@+id/rc_extension"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:RCStyle="CE"
+            tools:ignore="MissingConstraints" />
 
     </LinearLayout>
 

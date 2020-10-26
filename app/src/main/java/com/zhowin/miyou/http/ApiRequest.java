@@ -355,6 +355,9 @@ public interface ApiRequest {
     //修改直播间信息
     String CHANGE_ROOM_MESSAGE_URL = "/ant/live/update";
 
+    //根据id批量查询用户信息
+    String GET_USER_MESSAGE_LIST_OF_ID = "/user/batch";
+
 
     /**
      * 返回的是自己的用户信息
@@ -724,12 +727,18 @@ public interface ApiRequest {
     Observable<ApiResponse<List<ToadyUserList>>> getRoomTodayUserList(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId);
 
 
-
     /**
      * 获取周星榜
      */
     @FormUrlEncoded
     @POST
     Observable<ApiResponse<WeekStarUserList>> getRoomWeekStarUserList(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId);
+
+    /**
+     * 根据id批量查询用户信息
+     */
+    @FormUrlEncoded
+    @POST(GET_USER_MESSAGE_LIST_OF_ID)
+    Observable<ApiResponse<BaseResponse<UserInfo>>> queryUserMessageList(@Header(AUTHOR) String token, @Field("userIds") String userIds);
 
 }

@@ -1,10 +1,15 @@
 package com.zhowin.miyou.recommend.adapter;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zhowin.base_library.utils.GlideUtils;
@@ -36,10 +41,10 @@ public class AudienceListAdapter extends BaseQuickAdapter<RoomMemberRepo.MemberB
 
         if (0 == item.getPosition()) {
             helper.setImageResource(R.id.civAudienceHeadImage, R.drawable.room_boss_icon)
-                    .setGone(R.id.tvHeatNumber, true)
-                    .setGone(R.id.AudienceName, true);
+                    .setGone(R.id.tvHeatNumber, false)
+                    .setText(R.id.AudienceName, "老板位");
         } else {
-            GlideUtils.loadUserPhotoForLogin(mContext, item.getPortrait(), helper.getView(R.id.civAudienceHeadImage));
+            loadLiveRoomMember(mContext, item.getPortrait(), helper.getView(R.id.civAudienceHeadImage));
             helper.setText(R.id.AudienceName, item.getPosition() + "号麦");
         }
 
@@ -52,4 +57,17 @@ public class AudienceListAdapter extends BaseQuickAdapter<RoomMemberRepo.MemberB
             }
         });
     }
+
+
+    public static void loadLiveRoomMember(Context context, Object photoUrl, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.room_put_icon)
+                .error(R.drawable.room_put_icon)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
+        Glide.with(context)
+                .load(photoUrl)
+                .apply(options)
+                .into(imageView);
+    }
+
 }

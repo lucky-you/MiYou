@@ -33,6 +33,13 @@ public class RoomMemberRepo {
         private int position;
         private int charmValue;
 
+        public MemberBean() {
+        }
+
+        public MemberBean(int position) {
+            this.position = position;
+        }
+
         public String getUserId() {
             return userId;
         }

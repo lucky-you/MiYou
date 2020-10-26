@@ -79,12 +79,17 @@ public class LiveRoomSettingDialog extends BaseBottomSheetFragment {
         liveRoomSetList.add(new LiveRoomSet(11, "踢出房间"));
         liveRoomSetList.add(new LiveRoomSet(12, "关注房间"));
         liveRoomSetList.add(new LiveRoomSet(13, "分享房间"));
-        liveRoomSetList.add(new LiveRoomSet(14, "退出房间"));
+        liveRoomSetList.add(new LiveRoomSet(14, "举报房间"));
+        liveRoomSetList.add(new LiveRoomSet(15, "退出房间"));
     }
 
     @Override
     public void onViewClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.tvCancel:
+                dismiss();
+                break;
+        }
     }
 
 }

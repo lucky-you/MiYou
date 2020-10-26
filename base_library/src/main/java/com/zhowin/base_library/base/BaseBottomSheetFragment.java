@@ -22,7 +22,7 @@ import com.zhowin.base_library.view.LoadProgressDialog;
 
 /**
  * author Z_B
- * date :2019/11/25 8:47
+ * date :2018/11/25 8:47
  * description:BottomSheetDialogFragment 的基类
  */
 public abstract class BaseBottomSheetFragment extends BottomSheetDialogFragment implements View.OnClickListener{

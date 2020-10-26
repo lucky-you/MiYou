@@ -13,6 +13,7 @@ import com.zhowin.miyou.R;
 import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.recommend.adapter.GiftListAdapter;
 import com.zhowin.miyou.recommend.adapter.ServeWheatListAdapter;
+import com.zhowin.miyou.recommend.callback.OnSendGiftListener;
 import com.zhowin.miyou.recommend.model.GiftList;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class SendGiftDialogFragment extends BaseDialogFragment {
     private RecyclerView wheatRecyclerView;
     private RecyclerView vpRecyclerView;
     private GiftListAdapter giftListAdapter;
+    private OnSendGiftListener  onSendGiftListener;
 
     public static SendGiftDialogFragment newInstance() {
         SendGiftDialogFragment fragment = new SendGiftDialogFragment();
@@ -42,10 +44,15 @@ public class SendGiftDialogFragment extends BaseDialogFragment {
         return R.layout.include_send_gift_dailog_fragment;
     }
 
+    public void setOnSendGiftListener(OnSendGiftListener onSendGiftListener) {
+        this.onSendGiftListener = onSendGiftListener;
+    }
+
     @Override
     public void initView() {
         wheatRecyclerView = get(R.id.wheatRecyclerView);
         vpRecyclerView = get(R.id.giftRecyclerView);
+        get(R.id.tvSendGift).setOnClickListener(this::onViewClick);
         getGiftList();
     }
 
@@ -84,6 +91,13 @@ public class SendGiftDialogFragment extends BaseDialogFragment {
 
     @Override
     public void onViewClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.tvSendGift:
+                if (onSendGiftListener!=null){
+                    onSendGiftListener.onSendGift(0,1);
+                }
+                dismiss();
+                break;
+        }
     }
 }

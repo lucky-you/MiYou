@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 踢出房间 ，和  禁言共用
  * <p>
- * type   1:踢出  2: 禁言
+ * type   1:踢出  2: 禁言 3:禁麦
  */
 public class KickOutTheRoomActivity extends BaseBindActivity<ActivityKickOutTheRoomBinding> {
 
@@ -48,10 +48,16 @@ public class KickOutTheRoomActivity extends BaseBindActivity<ActivityKickOutTheR
     public void initData() {
         switch (classType) {
             case 1:
+                mBinding.titleView.setTitle("踢出房间");
                 mTitle = new String[]{"踢出房间", "踢出记录",};
                 break;
             case 2:
+                mBinding.titleView.setTitle("禁言");
                 mTitle = new String[]{"禁言", "禁言记录",};
+                break;
+            case 3:
+                mBinding.titleView.setTitle("禁麦");
+                mTitle = new String[]{"禁麦", "禁麦记录",};
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + classType);

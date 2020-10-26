@@ -3,8 +3,11 @@ package com.zhowin.miyou.recommend.activity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
+import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityRoomWaterBinding;
@@ -22,6 +25,12 @@ public class RoomWaterActivity extends BaseBindActivity<ActivityRoomWaterBinding
     private RoomWaterListAdapter roomWaterListAdapter;
     private View headerView;
 
+
+    public static void start(Context context,int roomID){
+        Intent intent=new Intent(context,RoomWaterActivity.class);
+        intent.putExtra(ConstantValue.ID,roomID);
+        context.startActivity(intent);
+    }
 
     @Override
     public int getLayoutId() {

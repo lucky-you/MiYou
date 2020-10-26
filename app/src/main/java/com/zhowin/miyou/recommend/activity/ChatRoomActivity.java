@@ -26,14 +26,23 @@ import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityChatRoomBinding;
+import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
+import com.zhowin.miyou.mine.activity.CreateRoomActivity;
 import com.zhowin.miyou.recommend.adapter.AudienceListAdapter;
 import com.zhowin.miyou.recommend.adapter.ChatRoomMessageListAdapter;
 import com.zhowin.miyou.recommend.callback.OnChatMessageItemClickListener;
 import com.zhowin.miyou.recommend.callback.OnLiveRoomSettingItemListener;
+import com.zhowin.miyou.recommend.callback.OnReportAndAttentionListener;
 import com.zhowin.miyou.recommend.callback.OnRoomMemberItemClickListener;
+import com.zhowin.miyou.recommend.callback.OnSendGiftListener;
+import com.zhowin.miyou.recommend.callback.OnSetRoomPasswordListener;
 import com.zhowin.miyou.recommend.dialog.LiveRoomSettingDialog;
+import com.zhowin.miyou.recommend.dialog.RowWheatListDialog;
 import com.zhowin.miyou.recommend.dialog.SendGiftDialogFragment;
+import com.zhowin.miyou.recommend.dialog.SetRoomPasswordDialog;
+import com.zhowin.miyou.recommend.dialog.ShareItemDialog;
+import com.zhowin.miyou.recommend.model.ReportUserOrRoom;
 import com.zhowin.miyou.recommend.model.RoomDataInfo;
 import com.zhowin.miyou.rongIM.IMManager;
 import com.zhowin.miyou.rongIM.callback.SealMicResultCallback;
@@ -100,7 +109,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         Log.e("xy", "roomId:" + roomId);
         CacheManager.getInstance().cacheRoomId(String.valueOf(roomId));
         setOnClick(R.id.ivBackReturn, R.id.llReleaseBroadcastLayout, R.id.ivUserList,
-                R.id.ivRoomSetting, R.id.ivGiftPhoto);
+                R.id.ivRoomSetting, R.id.ivGiftPhoto, R.id.ivComment);
         getLifecycle().addObserver(new RoomObserver());
     }
 
@@ -108,13 +117,13 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
     public void initData() {
         getRoomDataMessage();
 
-//        initChatMessage();
-
-
         chatRoomMessageListAdapter = new ChatRoomMessageListAdapter(messageList);
         mBinding.chatMessageRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.chatMessageRecyclerView.setAdapter(chatRoomMessageListAdapter);
 
+        for (int i = 0; i < 8; i++) {
+            roomMemberList.add(new RoomMemberRepo.MemberBean(i));
+        }
         audienceListAdapter = new AudienceListAdapter(roomMemberList);
         mBinding.AudienceRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
         mBinding.AudienceRecyclerView.setAdapter(audienceListAdapter);
@@ -230,8 +239,8 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
                     IMManager.getInstance().getChatRoomInfo(String.valueOf(roomId), new RongIMClient.ResultCallback<ChatRoomInfo>() {
                         @Override
                         public void onSuccess(ChatRoomInfo chatRoomInfo) {
-                            int onlineNumber = chatRoomInfo.getTotalMemberCount();
-                            String onlineNumberString = mContext.getResources().getString(R.string.online_number);
+//                            int onlineNumber = chatRoomInfo.getTotalMemberCount();
+//                            String onlineNumberString = mContext.getResources().getString(R.string.online_number);
                         }
 
                         @Override
@@ -303,39 +312,68 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
      * 获取全部麦位的KV
      */
     private void initMic() {
-
         //获取全部麦位的KV
         IMManager.getInstance().getAllChatRoomMic(String.valueOf(roomId), new RongIMClient.ResultCallback<Map<String, String>>() {
             @Override
             public void onSuccess(Map<String, String> stringStringMap) {
                 Log.e("xy", "麦位KV的Map:" + stringStringMap.toString());
                 //根据KV判断，如果对应的麦位上有人，则用对应的信息填充麦位
-                ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                IMManager.getInstance().transMicBean(stringStringMap, new SealMicResultCallback<MicBean>() {
                     @Override
-                    public void run() {
+                    public void onSuccess(MicBean micBean) {
+                        localMicBeanMap.put(micBean.getPosition(), micBean);
                         userIdList = new ArrayList<>();
-                        for (String key : stringStringMap.keySet()) {
-                            final MicBean micBean = new Gson().fromJson(stringStringMap.get(key), MicBean.class);
-                            Log.e("xy", "micBean:" + micBean.toString());
-                            //初始化麦位时本地保存一份麦位map
-                            localMicBeanMap.put(micBean.getPosition(), micBean);
-                            userIdList.add(micBean.getUserId());
-                            RoomMemberRepo.MemberBean roomMember = new RoomMemberRepo.MemberBean();
-                            roomMember.setUserId(micBean.getUserId());
-                            roomMember.setUserName("");
-                            roomMember.setPortrait("");
-                            roomMember.setPosition(micBean.getPosition());
-                            roomMember.setCharmValue(micBean.getCharmValue());
-                            roomMemberList.add(roomMember);
-                        }
-                        audienceListAdapter.setNewData(roomMemberList);
+                        userIdList.add(micBean.getUserId());
+                        queryUserMessageList(GsonUtils.toJson(userIdList));
+                    }
+
+                    @Override
+                    public void onFail(int errorCode) {
+                        Log.e("xy", "获取初始化麦位信息失败: " + errorCode);
                     }
                 });
+
+//                ThreadManager.getInstance().runOnUIThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        userIdList = new ArrayList<>();
+//                        for (String key : stringStringMap.keySet()) {
+//                            final MicBean micBean = new Gson().fromJson(stringStringMap.get(key), MicBean.class);
+//                            Log.e("xy", "micBean:" + micBean.toString());
+//                            //初始化麦位时本地保存一份麦位map
+//                            localMicBeanMap.put(micBean.getPosition(), micBean);
+//                            userIdList.add(micBean.getUserId());
+//                            RoomMemberRepo.MemberBean roomMember = new RoomMemberRepo.MemberBean();
+//                            roomMember.setUserId(micBean.getUserId());
+//                            roomMember.setUserName("");
+//                            roomMember.setPortrait("");
+//                            roomMember.setPosition(micBean.getPosition());
+//                            roomMember.setCharmValue(micBean.getCharmValue());
+//                            roomMemberList.add(roomMember);
+//                        }
+//                        Log.e("xy", "localMicBeanMap:" + localMicBeanMap.size() + "--userIdList:" + userIdList.size());
+//                        audienceListAdapter.setNewData(roomMemberList);
+//                    }
+//                });
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
                 Log.e("xy", "获取全部麦位的KV信息失败，错误码为: " + errorCode);
+            }
+        });
+    }
+
+    private void queryUserMessageList(String userIDs) {
+        HttpRequest.queryUserMessageList(this, userIDs, new HttpCallBack<BaseResponse<UserInfo>>() {
+            @Override
+            public void onSuccess(BaseResponse<UserInfo> userInfoBaseResponse) {
+                Log.e("xy", "查询成功：" + userInfoBaseResponse.toString());
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                Log.e("xy", "查询失败~");
             }
         });
     }
@@ -379,69 +417,44 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
      */
     public void clickMemberMic(final int position) {
         //获取点击的麦位信息
-        MicBean clickMicBean = localMicBeanMap.get(position);
-        if (clickMicBean != null) {
-            if (TextUtils.isEmpty(clickMicBean.getUserId())) {
-                //空麦位
-                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
-                    //主持人
-//                    micAbsentHost(clickMicBean);
-                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
-                    //连麦者
-//                    micAbsentConnect(clickMicBean);
-                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
-                    //观众
-//                    micAbsentAudience(clickMicBean);
-                }
-            } else {
-                //麦位上有人
-                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
-                    //主持人
-//                    micPresentHost(clickMicBean);
-                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
-                    //连麦者
-//                    micPresentConnect(clickMicBean);
-                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
-                    //观众
-//                    micPresentAudience(clickMicBean);
-                }
-            }
-        }
+//        MicBean clickMicBean = localMicBeanMap.get(position);
+//        if (clickMicBean != null) {
+//            if (TextUtils.isEmpty(clickMicBean.getUserId())) {
+//                //空麦位
+//                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
+//                    //主持人
+////                    micAbsentHost(clickMicBean);
+//                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
+//                    //连麦者
+////                    micAbsentConnect(clickMicBean);
+//                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
+//                    //观众
+////                    micAbsentAudience(clickMicBean);
+//                }
+//            } else {
+//                //麦位上有人
+//                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
+//                    //主持人
+////                    micPresentHost(clickMicBean);
+//                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
+//                    //连麦者
+////                    micPresentConnect(clickMicBean);
+//                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
+//                    //观众
+////                    micPresentAudience(clickMicBean);
+//                }
+//            }
+//        }
+
+        RowWheatListDialog rowWheatListDialog = new RowWheatListDialog();
+        rowWheatListDialog.show(getSupportFragmentManager(), "show");
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivBackReturn:
-                //退出房间，依然要判断是主播，还是观众
-                int userId = UserInfo.getUserInfo().getUserId();
-                if (userId == roomOwnerId) {
-                    //主播退出房间
-                    IMManager.getInstance().micQuitRoom(String.valueOf(roomId), new RongIMClient.ResultCallback<String>() {
-                        @Override
-                        public void onSuccess(String s) {
-                            ActivityManager.getAppInstance().finishActivity();
-                        }
-
-                        @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
-                } else {
-                    //观众退出房间
-                    IMManager.getInstance().audienceQuitRoom(String.valueOf(roomId), new RongIMClient.ResultCallback<String>() {
-                        @Override
-                        public void onSuccess(String s) {
-                            ActivityManager.getAppInstance().finishActivity();
-                        }
-
-                        @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
-                }
+                dropOutRoom();
                 break;
             case R.id.llReleaseBroadcastLayout:
                 startActivity(BroadcastDatingActivity.class);
@@ -449,13 +462,51 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
             case R.id.ivUserList:
                 startActivity(RoomListActivity.class);
                 break;
-
             case R.id.ivRoomSetting:
                 showRoomSettingDialog();
                 break;
             case R.id.ivGiftPhoto:
                 showSendGiftDialog();
                 break;
+            case R.id.ivComment:
+                //评论
+                mBinding.rcExtension.setVisibility(View.VISIBLE);
+                mBinding.rcExtension.showSoftInput();
+                break;
+        }
+    }
+
+    /**
+     * 退出房间，依然要判断是主播，还是观众
+     */
+    private void dropOutRoom() {
+        int userId = UserInfo.getUserInfo().getUserId();
+        if (userId == roomOwnerId) {
+            //主播退出房间
+            IMManager.getInstance().micQuitRoom(String.valueOf(roomId), new RongIMClient.ResultCallback<String>() {
+                @Override
+                public void onSuccess(String s) {
+                    ActivityManager.getAppInstance().finishActivity();
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
+        } else {
+            //观众退出房间
+            IMManager.getInstance().audienceQuitRoom(String.valueOf(roomId), new RongIMClient.ResultCallback<String>() {
+                @Override
+                public void onSuccess(String s) {
+                    ActivityManager.getAppInstance().finishActivity();
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
         }
     }
 
@@ -468,6 +519,75 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         roomSettingDialog.setOnLiveRoomSettingItemListener(new OnLiveRoomSettingItemListener() {
             @Override
             public void onLiveRoomItemClick(int itemID, String itemText) {
+                switch (itemID) {
+                    case 1://房间流水
+                        RoomWaterActivity.start(mContext, roomId);
+                        break;
+                    case 2://房间资料
+//                        CreateRoomActivity.start(mContext,2);
+                        break;
+                    case 3://房间加密
+                        showSetRoomPasswordDialog();
+                        break;
+                    case 4://关闭公屏
+                        break;
+                    case 5://清除公屏
+                        break;
+                    case 6://魅力值统计
+                        break;
+                    case 7://魅力值清零
+                        break;
+                    case 8://设置管理员
+                        startActivity(SetUpAdministratorActivity.class);
+                        break;
+                    case 9://禁言管理
+                        KickOutTheRoomActivity.start(mContext, 2);
+                        break;
+                    case 10://禁麦管理
+                        KickOutTheRoomActivity.start(mContext, 3);
+                        break;
+                    case 11://踢出房间
+                        KickOutTheRoomActivity.start(mContext, 1);
+                        break;
+                    case 12://关注房间
+                        break;
+                    case 13://分享房间
+                        showShareRoomDialog();
+                        break;
+                    case 14://举报房间
+                        ReportRoomActivity.start(mContext, 1, new ReportUserOrRoom());
+                        break;
+                    case 15://退出房间
+                        dropOutRoom();
+                        break;
+                }
+            }
+        });
+    }
+
+    /**
+     * 设置密码
+     */
+    private void showSetRoomPasswordDialog() {
+        SetRoomPasswordDialog passwordDialog = new SetRoomPasswordDialog(mContext);
+        passwordDialog.show();
+        passwordDialog.setOnSetRoomPasswordListener(new OnSetRoomPasswordListener() {
+            @Override
+            public void onSetRoomPassword(String password) {
+
+            }
+        });
+    }
+
+    /**
+     * 分享
+     */
+    private void showShareRoomDialog() {
+        ShareItemDialog shareItemDialog = new ShareItemDialog();
+        shareItemDialog.show(getSupportFragmentManager(), "share");
+        shareItemDialog.setOnReportAndAttentionListener(new OnReportAndAttentionListener() {
+            @Override
+            public void onItemClick(int itemType) {
 
             }
         });
@@ -480,6 +600,12 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
     private void showSendGiftDialog() {
         SendGiftDialogFragment sendGiftDialogFragment = new SendGiftDialogFragment();
         sendGiftDialogFragment.show(getSupportFragmentManager(), "gift");
+        sendGiftDialogFragment.setOnSendGiftListener(new OnSendGiftListener() {
+            @Override
+            public void onSendGift(int giftNumber, int giftId) {
+
+            }
+        });
     }
 
 
