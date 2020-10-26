@@ -6,9 +6,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.base.BaseDialogFragment;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.recommend.adapter.RowWheatListAdapter;
+import com.zhowin.miyou.recommend.callback.OnRowWheatClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public class RowWheatListDialog extends BaseDialogFragment {
     private RowWheatListAdapter rowWheatListAdapter;
     private TextView tvMicNumber;
     private RecyclerView micSortRecyclerView;
+    private OnRowWheatClickListener onRowWheatClickListener;
 
     @Override
     public int getLayoutId() {
@@ -38,6 +41,10 @@ public class RowWheatListDialog extends BaseDialogFragment {
         get(R.id.tvClearMicSort).setOnClickListener(this::onViewClick);
     }
 
+    public void setOnRowWheatClickListener(OnRowWheatClickListener onRowWheatClickListener) {
+        this.onRowWheatClickListener = onRowWheatClickListener;
+    }
+
     @Override
     public void initData() {
         List<String> stringList = new ArrayList<>();
@@ -47,6 +54,14 @@ public class RowWheatListDialog extends BaseDialogFragment {
         rowWheatListAdapter = new RowWheatListAdapter(stringList);
         micSortRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         micSortRecyclerView.setAdapter(rowWheatListAdapter);
+        rowWheatListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (onRowWheatClickListener != null) {
+                    onRowWheatClickListener.onRowWheatItemSelect();
+                }
+            }
+        });
     }
 
     @Override
@@ -56,6 +71,10 @@ public class RowWheatListDialog extends BaseDialogFragment {
                 dismiss();
                 break;
             case R.id.tvClearMicSort:
+                if (onRowWheatClickListener != null) {
+                    onRowWheatClickListener.onClearRowWheat();
+                }
+                dismiss();
                 break;
         }
     }

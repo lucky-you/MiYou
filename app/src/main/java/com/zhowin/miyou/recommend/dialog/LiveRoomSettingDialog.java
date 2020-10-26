@@ -36,7 +36,7 @@ public class LiveRoomSettingDialog extends BaseBottomSheetFragment {
 
     @Override
     protected boolean isFixedHeight() {
-        return true;
+        return false;
     }
 
 
@@ -72,15 +72,15 @@ public class LiveRoomSettingDialog extends BaseBottomSheetFragment {
         liveRoomSetList.add(new LiveRoomSet(4, "关闭公屏"));
         liveRoomSetList.add(new LiveRoomSet(5, "清除公屏"));
         liveRoomSetList.add(new LiveRoomSet(6, "魅力值统计"));
-        liveRoomSetList.add(new LiveRoomSet(7, "魅力值清零"));
-        liveRoomSetList.add(new LiveRoomSet(8, "设置管理员"));
-        liveRoomSetList.add(new LiveRoomSet(9, "禁言管理"));
-        liveRoomSetList.add(new LiveRoomSet(10, "禁麦管理"));
-        liveRoomSetList.add(new LiveRoomSet(11, "踢出房间"));
+//        liveRoomSetList.add(new LiveRoomSet(7, "魅力值清零"));
+//        liveRoomSetList.add(new LiveRoomSet(8, "设置管理员"));
+//        liveRoomSetList.add(new LiveRoomSet(9, "禁言管理"));
+//        liveRoomSetList.add(new LiveRoomSet(10, "禁麦管理"));
+//        liveRoomSetList.add(new LiveRoomSet(11, "踢出房间"));
         liveRoomSetList.add(new LiveRoomSet(12, "关注房间"));
         liveRoomSetList.add(new LiveRoomSet(13, "分享房间"));
         liveRoomSetList.add(new LiveRoomSet(14, "举报房间"));
-        liveRoomSetList.add(new LiveRoomSet(15, "退出房间"));
+//        liveRoomSetList.add(new LiveRoomSet(15, "退出房间"));
     }
 
     @Override

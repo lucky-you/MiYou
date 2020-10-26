@@ -4,16 +4,12 @@ package com.zhowin.miyou.recommend.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
@@ -28,13 +24,13 @@ import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityChatRoomBinding;
 import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
-import com.zhowin.miyou.mine.activity.CreateRoomActivity;
 import com.zhowin.miyou.recommend.adapter.AudienceListAdapter;
 import com.zhowin.miyou.recommend.adapter.ChatRoomMessageListAdapter;
 import com.zhowin.miyou.recommend.callback.OnChatMessageItemClickListener;
 import com.zhowin.miyou.recommend.callback.OnLiveRoomSettingItemListener;
 import com.zhowin.miyou.recommend.callback.OnReportAndAttentionListener;
 import com.zhowin.miyou.recommend.callback.OnRoomMemberItemClickListener;
+import com.zhowin.miyou.recommend.callback.OnRowWheatClickListener;
 import com.zhowin.miyou.recommend.callback.OnSendGiftListener;
 import com.zhowin.miyou.recommend.callback.OnSetRoomPasswordListener;
 import com.zhowin.miyou.recommend.dialog.LiveRoomSettingDialog;
@@ -46,19 +42,14 @@ import com.zhowin.miyou.recommend.model.ReportUserOrRoom;
 import com.zhowin.miyou.recommend.model.RoomDataInfo;
 import com.zhowin.miyou.rongIM.IMManager;
 import com.zhowin.miyou.rongIM.callback.SealMicResultCallback;
-import com.zhowin.miyou.rongIM.constant.MicState;
 import com.zhowin.miyou.rongIM.constant.UserRoleType;
 import com.zhowin.miyou.rongIM.lifecycle.RoomObserver;
 import com.zhowin.miyou.rongIM.manager.CacheManager;
 import com.zhowin.miyou.rongIM.manager.ThreadManager;
-import com.zhowin.miyou.rongIM.model.Event;
 import com.zhowin.miyou.rongIM.model.MicBean;
 import com.zhowin.miyou.rongIM.model.SpeakBean;
-import com.zhowin.miyou.rongIM.repo.NetResult;
 import com.zhowin.miyou.rongIM.repo.RoomMemberRepo;
 import com.zhowin.miyou.rongIM.rtc.RTCClient;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -448,6 +439,38 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
 
         RowWheatListDialog rowWheatListDialog = new RowWheatListDialog();
         rowWheatListDialog.show(getSupportFragmentManager(), "show");
+        rowWheatListDialog.setOnRowWheatClickListener(new OnRowWheatClickListener() {
+            @Override
+            public void onRowWheatItemSelect() {
+
+            }
+
+            @Override
+            public void onClearRowWheat() {
+                roomOperating(1);
+            }
+        });
+    }
+
+    /**
+     * 清空麦序
+     */
+    private void roomOperating(int type) {
+        showLoadDialog();
+        HttpRequest.roomItemOperating(this, type, roomId, new HttpCallBack<Object>() {
+            @Override
+            public void onSuccess(Object o) {
+                dismissLoadDialog();
+
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+
+            }
+        });
     }
 
     @Override
@@ -613,7 +636,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
     public void initImmersionBar() {
         ImmersionBar.with(this)
                 .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
-                .statusBarColor(R.color.color_8E9DFD)
+                .statusBarColor(R.color.color_3A37C4)
                 .keyboardEnable(true)
                 .statusBarDarkFont(true, 0f)
                 .init();

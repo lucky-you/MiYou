@@ -22,6 +22,7 @@ import com.zhowin.miyou.recommend.model.HomeCategory;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 import com.zhowin.miyou.recommend.model.RoomDataInfo;
+import com.zhowin.miyou.recommend.model.RoomWaterBean;
 import com.zhowin.miyou.recommend.model.ToadyUserList;
 import com.zhowin.miyou.recommend.model.WeekStarUserList;
 import com.zhowin.miyou.recommend.model.ZABUserList;
@@ -261,6 +262,9 @@ public interface ApiRequest {
 
     //获取每日房间流水
     String GET_LIVE_ROOM_WATER_URL = "/ant/live/dailyRoomBill";
+
+    //获取每周房间流水
+    String GET_LIVE_ROOM_WEEK_WATER_URL = "/ant/live/currentWeekRoomBill";
 
     //收藏直播间
     String ADD_COLLECTION_URL = "/ant/live/collection";
@@ -740,5 +744,22 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(GET_USER_MESSAGE_LIST_OF_ID)
     Observable<ApiResponse<BaseResponse<UserInfo>>> queryUserMessageList(@Header(AUTHOR) String token, @Field("userIds") String userIds);
+
+
+    /**
+     * 房间操作返回object的通用处理
+     */
+    @FormUrlEncoded
+    @POST
+    Observable<ApiResponse<Object>> roomItemOperating(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId);
+
+
+    /**
+     * 获取房间流水
+     */
+    @FormUrlEncoded
+    @POST
+    Observable<ApiResponse<RoomWaterBean>> getRoomWaterList(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId);
+
 
 }

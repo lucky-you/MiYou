@@ -29,6 +29,7 @@ import com.zhowin.miyou.recommend.model.HomeCategory;
 import com.zhowin.miyou.recommend.model.RecommendList;
 import com.zhowin.miyou.recommend.model.RoomCategory;
 import com.zhowin.miyou.recommend.model.RoomDataInfo;
+import com.zhowin.miyou.recommend.model.RoomWaterBean;
 import com.zhowin.miyou.recommend.model.ToadyUserList;
 import com.zhowin.miyou.recommend.model.WeekStarUserList;
 import com.zhowin.miyou.recommend.model.ZABUserList;
@@ -1248,6 +1249,59 @@ public class HttpRequest {
 
                     @Override
                     public void onSuccess(BaseResponse<UserInfo> demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 房间操作返回object的通用处理
+     *
+     * @param type
+     * @param roomId
+     * @param callBack
+     */
+    public static void roomItemOperating(LifecycleOwner activity, int type, int roomId, final HttpCallBack<Object> callBack) {
+        String url = "";
+        switch (type) {
+            case 1: //清空麦序
+                url = ApiRequest.CLEAR_ROW_LIST_URL;
+                break;
+        }
+        apiRequest.roomItemOperating(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, roomId)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 获取房间流水
+     */
+    public static void getRoomWaterList(LifecycleOwner activity, boolean isTodayWater, int roomId, final HttpCallBack<RoomWaterBean> callBack) {
+        String url = isTodayWater ? ApiRequest.GET_LIVE_ROOM_WATER_URL : ApiRequest.GET_LIVE_ROOM_WEEK_WATER_URL;
+        apiRequest.getRoomWaterList(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, roomId)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<RoomWaterBean>() {
+
+                    @Override
+                    public void onSuccess(RoomWaterBean demo) {
                         callBack.onSuccess(demo);
                     }
 

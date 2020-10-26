@@ -44,6 +44,7 @@
             android:text="上周总流水(钻石）"
             android:textColor="@color/color_999"
             android:textSize="15sp"
+            android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@id/tvLeftWaterTitle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -57,18 +58,20 @@
             android:textColor="@color/color_333"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="@id/tvRightWaterTitle"
             app:layout_constraintTop_toBottomOf="@id/tvRightWaterTitle" />
 
         <TextView
+            android:id="@+id/tvThisWeekWater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_live_broadcast_bg"
+            android:background="@drawable/personal_zhibo_bg"
             android:gravity="center"
             android:text="本周流水"
             android:textColor="@color/color_white"
             android:textSize="15sp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
