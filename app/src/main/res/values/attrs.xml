@@ -21,4 +21,8 @@
         <!--密码模式时,圆的半径-->
         <attr name="icv_et_pwd_radius" format="dimension|reference" />
     </declare-styleable>
+    <declare-styleable name="CustomDynamicAvatarMic">
+        <attr name="isMainMic" format="boolean" />
+    </declare-styleable>
+
 </resources>

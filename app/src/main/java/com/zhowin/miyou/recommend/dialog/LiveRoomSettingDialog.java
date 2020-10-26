@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zhowin.base_library.base.BaseBottomSheetFragment;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.recommend.adapter.LiveRoomSetAdapter;
+import com.zhowin.miyou.recommend.callback.OnLiveRoomSettingItemListener;
 import com.zhowin.miyou.recommend.model.LiveRoomSet;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class LiveRoomSettingDialog extends BaseBottomSheetFragment {
 
     private LiveRoomSetAdapter liveRoomSetAdapter;
     private List<LiveRoomSet> liveRoomSetList = new ArrayList<>();
+    private OnLiveRoomSettingItemListener onLiveRoomSettingItemListener;
 
 
     @Override
@@ -35,6 +37,11 @@ public class LiveRoomSettingDialog extends BaseBottomSheetFragment {
     @Override
     protected boolean isFixedHeight() {
         return true;
+    }
+
+
+    public void setOnLiveRoomSettingItemListener(OnLiveRoomSettingItemListener onLiveRoomSettingItemListener) {
+        this.onLiveRoomSettingItemListener = onLiveRoomSettingItemListener;
     }
 
     @Override
@@ -48,7 +55,11 @@ public class LiveRoomSettingDialog extends BaseBottomSheetFragment {
         liveRoomSetAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                int itemID = liveRoomSetAdapter.getItem(position).getItemId();
+                String itemText = liveRoomSetAdapter.getItem(position).getItemTitle();
+                if (onLiveRoomSettingItemListener != null) {
+                    onLiveRoomSettingItemListener.onLiveRoomItemClick(itemID, itemText);
+                }
             }
         });
     }

@@ -108,24 +108,50 @@ public class RecommendListFragment extends BaseLibFragment implements BaseQuickA
         } else {
             //请求权限
             int roomId = recommendListAdapter.getItem(position).getRoomId();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                AndPermissionUtils.requestPermission(mContext, new AndPermissionListener() {
-                    @Override
-                    public void PermissionSuccess(List<String> permissions) {
-                        ChatRoomActivity.start(mContext, roomId);
-                    }
-
-                    @Override
-                    public void PermissionFailure(List<String> permissions) {
-                        ToastUtils.showToast("权限未开启");
-                    }
-                }, Permission.RECORD_AUDIO, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE);
-            } else {
-                ChatRoomActivity.start(mContext, roomId);
-            }
+            joinLiveRoom(roomId);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                AndPermissionUtils.requestPermission(mContext, new AndPermissionListener() {
+//                    @Override
+//                    public void PermissionSuccess(List<String> permissions) {
+//                        ChatRoomActivity.start(mContext, roomId);
+//                    }
+//                    @Override
+//                    public void PermissionFailure(List<String> permissions) {
+//                        ToastUtils.showToast("权限未开启");
+//                    }
+//                }, Permission.RECORD_AUDIO, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE);
+//            } else {
+//                ChatRoomActivity.start(mContext, roomId);
+//            }
         }
     }
 
+    /**
+     * 加入房间
+     *
+     * @param roomId 房间id
+     */
+    private void joinLiveRoom(int roomId) {
+        HttpRequest.joinLiveRoom(this, roomId, "", new HttpCallBack<RecommendList>() {
+            @Override
+            public void onSuccess(RecommendList recommendList) {
+                dismissLoadDialog();
+                if (recommendList != null) {
+                    ChatRoomActivity.start(mContext, roomId);
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+            }
+        });
+    }
+
+    /**
+     * 解锁房间的dialog
+     */
     private void showUnLockRoomDialog() {
         UnlockRoomDialog unlockRoomDialog = new UnlockRoomDialog(mContext);
         unlockRoomDialog.show();

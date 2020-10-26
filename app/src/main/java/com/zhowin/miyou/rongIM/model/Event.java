@@ -3,6 +3,7 @@ package com.zhowin.miyou.rongIM.model;
 import com.zhowin.miyou.rongIM.constant.UserRoleType;
 import com.zhowin.miyou.rongIM.message.HandOverHostMessage;
 import com.zhowin.miyou.rongIM.message.KickMemberMessage;
+import com.zhowin.miyou.rongIM.message.SendBroadcastGiftMessage;
 import com.zhowin.miyou.rongIM.message.SendGiftMessage;
 import com.zhowin.miyou.rongIM.message.TakeOverHostMessage;
 import com.zhowin.miyou.rongIM.repo.RoomMemberRepo;
@@ -119,6 +120,20 @@ public class Event {
 
         public Message getMessage() {
             return message;
+        }
+    }
+    /**
+     * 接收超级礼物广播的事件
+     */
+    public static class EventBroadcastGiftMessage {
+        private SendBroadcastGiftMessage eventBroadcastGiftMessage;
+
+        public EventBroadcastGiftMessage(SendBroadcastGiftMessage eventBroadcastGiftMessage) {
+            this.eventBroadcastGiftMessage = eventBroadcastGiftMessage;
+        }
+
+        public SendBroadcastGiftMessage getEventBroadcastGiftMessage() {
+            return eventBroadcastGiftMessage;
         }
     }
 

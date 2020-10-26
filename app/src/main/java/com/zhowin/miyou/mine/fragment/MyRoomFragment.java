@@ -66,6 +66,7 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
         fragmentIndex = getArguments().getInt(ConstantValue.INDEX);
         mBinding.tvCreateRoom.setVisibility(0 == fragmentIndex ? View.VISIBLE : View.GONE);
         setOnClick(R.id.tvCreateRoom);
+
     }
 
     @Override
@@ -138,7 +139,7 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
             @Override
             public void onSuccess(VerifiedStatus verifiedStatus) {
                 if (verifiedStatus != null) {
-                    startActivity(CreateRoomActivity.class);
+                    CreateRoomActivity.start(mContext,1);
                 } else {
                     showCreateRoomDialog();
                 }
@@ -173,22 +174,48 @@ public class MyRoomFragment extends BaseBindFragment<IncludeMyRoomFragmentBindin
         } else {
             //请求权限
             int roomId = myRoomListAdapter.getItem(position).getRoomId();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                AndPermissionUtils.requestPermission(mContext, new AndPermissionListener() {
-                    @Override
-                    public void PermissionSuccess(List<String> permissions) {
-                        ChatRoomActivity.start(mContext, roomId);
-                    }
-                    @Override
-                    public void PermissionFailure(List<String> permissions) {
-                        ToastUtils.showToast("权限未开启");
-                    }
-                }, Permission.RECORD_AUDIO, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE);
-            } else {
-                ChatRoomActivity.start(mContext, roomId);
-            }
+            joinLiveRoom(roomId);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                AndPermissionUtils.requestPermission(mContext, new AndPermissionListener() {
+//                    @Override
+//                    public void PermissionSuccess(List<String> permissions) {
+//                        ChatRoomActivity.start(mContext, roomId);
+//                    }
+//                    @Override
+//                    public void PermissionFailure(List<String> permissions) {
+//                        ToastUtils.showToast("权限未开启");
+//                    }
+//                }, Permission.RECORD_AUDIO, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE);
+//            } else {
+//                ChatRoomActivity.start(mContext, roomId);
+//            }
         }
     }
+
+
+    /**
+     * 加入房间
+     *
+     * @param roomId 房间id
+     */
+    private void joinLiveRoom(int roomId) {
+        HttpRequest.joinLiveRoom(this, roomId, "", new HttpCallBack<RecommendList>() {
+            @Override
+            public void onSuccess(RecommendList recommendList) {
+                dismissLoadDialog();
+                if (recommendList != null) {
+                    ChatRoomActivity.start(mContext, roomId);
+                }
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
+            }
+        });
+    }
+
 
     /**
      * 显示解锁密码的dialog

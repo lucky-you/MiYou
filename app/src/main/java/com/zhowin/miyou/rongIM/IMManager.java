@@ -26,6 +26,7 @@ import com.zhowin.miyou.rongIM.message.GroupApplyMessage;
 import com.zhowin.miyou.rongIM.message.HandOverHostMessage;
 import com.zhowin.miyou.rongIM.message.KickMemberMessage;
 import com.zhowin.miyou.rongIM.message.RoomMemberChangedMessage;
+import com.zhowin.miyou.rongIM.message.SendBroadcastGiftMessage;
 import com.zhowin.miyou.rongIM.message.SendGiftMessage;
 import com.zhowin.miyou.rongIM.message.TakeOverHostMessage;
 import com.zhowin.miyou.recommend.activity.HomepageActivity;
@@ -441,6 +442,7 @@ public class IMManager {
         RongIM.registerMessageType(KickMemberMessage.class);
         RongIM.registerMessageType(HandOverHostMessage.class);
         RongIM.registerMessageType(TakeOverHostMessage.class);
+        RongIM.registerMessageType(SendBroadcastGiftMessage.class);
         // 开启高清语音
         RongIM.getInstance().setVoiceMessageType(RongIM.VoiceMessageType.HighQuality);
         //管理消息监听，由于同一时间只能有一个消息监听加入 融云 的消息监听，所以做一个消息管理来做消息路由
@@ -1039,11 +1041,12 @@ public class IMManager {
                                         RTCClient.getInstance().subscribeLiveAVStream(liveUrl);
                                     }
                                 }
+                                callback.onSuccess(true);
                             }
 
                             @Override
                             public void onError(RongIMClient.ErrorCode errorCode) {
-
+                                Log.e("xy", "观众加入聊天室失败 " + errorCode);
                             }
                         });
                     }
@@ -1145,7 +1148,7 @@ public class IMManager {
 
                         @Override
                         public void onError(RongIMClient.ErrorCode errorCode) {
-
+                            Log.e("xy", "加入聊天室失败");
                         }
                     });
                 }
@@ -1255,6 +1258,7 @@ public class IMManager {
     public void transMicBean(Map<String, String> stringStringMap, @NonNull final SealMicResultCallback<MicBean> sealMicResultCallback) {
         for (String key : stringStringMap.keySet()) {
             final MicBean micBean = new Gson().fromJson(stringStringMap.get(key), MicBean.class);
+//            if (!TextUtils.isEmpty(micBean.getUserId()))
             ThreadManager.getInstance().runOnUIThread(new Runnable() {
                 @Override
                 public void run() {
@@ -1339,6 +1343,58 @@ public class IMManager {
         });
     }
 
+    /**
+     * 轮询请求房间在线人数，5秒轮询一次
+     */
+    public void onlineNumber(final String roomId, final SealMicResultCallback<Boolean> sealMicResultCallback) {
+        ThreadManager.getInstance().runTimeFixedDelay(new Runnable() {
+            @Override
+            public void run() {
+                sealMicResultCallback.onSuccess(true);
+            }
+        }, 5);
+    }
+
+
+    /**
+     * 加入消息接收监听
+     *
+     * @param listener 监听回调
+     */
+    public void addMessageReceiveListener(RongIMClient.OnReceiveMessageListener listener) {
+        synchronized (onReceiveMessageListeners) {
+            onReceiveMessageListeners.add(listener);
+        }
+    }
+
+    /**
+     * 移除消息接收监听
+     *
+     * @param listener 监听回调
+     */
+    public void removeMessageReceiveListener(RongIMClient.OnReceiveMessageListener listener) {
+        synchronized (onReceiveMessageListeners) {
+            onReceiveMessageListeners.remove(listener);
+        }
+    }
+
+    /**
+     * 添加消息撤回监听
+     */
+    public void addMessageRecallListener(RongIMClient.OnRecallMessageListener listener) {
+        synchronized (onRecallMessageListeners) {
+            onRecallMessageListeners.add(listener);
+        }
+    }
+
+    /**
+     * 移除消息撤回监听
+     */
+    public void removeMessageRecallListener(RongIMClient.OnRecallMessageListener listener) {
+        synchronized (onRecallMessageListeners) {
+            onRecallMessageListeners.remove(listener);
+        }
+    }
 
     /**
      * 作为进入房间的一员，都要发送一条消息出去，以便让该房间内的其他成员知道自己进入了房间
@@ -1348,7 +1404,7 @@ public class IMManager {
      */
     public Message getWelcomeMessage(String roomId, String userId, String userName, String portrait) {
         boolean isHost = UserRoleType.HOST.isHost(CacheManager.getInstance().getUserRoleType());
-        String welcome = BaseApplication.getInstance().getResources().getString(R.string.welcome_join_room);
+        String welcome = BaseApplication.getInstance().getResources().getString(R.string.join_room_success);
         final TextMessage textMessage = TextMessage.obtain(welcome);
         UserInfo userInfo = new UserInfo(userId, userName, Uri.parse(portrait));
         textMessage.setUserInfo(userInfo);

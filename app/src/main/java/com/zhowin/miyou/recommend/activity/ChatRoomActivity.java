@@ -4,6 +4,7 @@ package com.zhowin.miyou.recommend.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -11,6 +12,8 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
@@ -27,12 +30,16 @@ import com.zhowin.miyou.http.HttpRequest;
 import com.zhowin.miyou.recommend.adapter.AudienceListAdapter;
 import com.zhowin.miyou.recommend.adapter.ChatRoomMessageListAdapter;
 import com.zhowin.miyou.recommend.callback.OnChatMessageItemClickListener;
+import com.zhowin.miyou.recommend.callback.OnLiveRoomSettingItemListener;
+import com.zhowin.miyou.recommend.callback.OnRoomMemberItemClickListener;
+import com.zhowin.miyou.recommend.dialog.LiveRoomSettingDialog;
 import com.zhowin.miyou.recommend.dialog.SendGiftDialogFragment;
 import com.zhowin.miyou.recommend.model.RoomDataInfo;
 import com.zhowin.miyou.rongIM.IMManager;
 import com.zhowin.miyou.rongIM.callback.SealMicResultCallback;
 import com.zhowin.miyou.rongIM.constant.MicState;
 import com.zhowin.miyou.rongIM.constant.UserRoleType;
+import com.zhowin.miyou.rongIM.lifecycle.RoomObserver;
 import com.zhowin.miyou.rongIM.manager.CacheManager;
 import com.zhowin.miyou.rongIM.manager.ThreadManager;
 import com.zhowin.miyou.rongIM.model.Event;
@@ -51,6 +58,7 @@ import java.util.Map;
 
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.ChatRoomInfo;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.TextMessage;
@@ -73,7 +81,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
 
     //排麦的adapter
     private AudienceListAdapter audienceListAdapter;
-
+    private List<RoomMemberRepo.MemberBean> roomMemberList = new ArrayList<>();
 
     public static void start(Context context, int roomId) {
         Intent intent = new Intent(context, ChatRoomActivity.class);
@@ -92,20 +100,22 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         Log.e("xy", "roomId:" + roomId);
         CacheManager.getInstance().cacheRoomId(String.valueOf(roomId));
         setOnClick(R.id.ivBackReturn, R.id.llReleaseBroadcastLayout, R.id.ivUserList,
-                R.id.ivGiftPhoto);
+                R.id.ivRoomSetting, R.id.ivGiftPhoto);
+        getLifecycle().addObserver(new RoomObserver());
     }
 
     @Override
     public void initData() {
         getRoomDataMessage();
 
-        initChatMessage();
+//        initChatMessage();
 
-        List<String> audienceList = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            audienceList.add("");
-        }
-        audienceListAdapter = new AudienceListAdapter(audienceList);
+
+        chatRoomMessageListAdapter = new ChatRoomMessageListAdapter(messageList);
+        mBinding.chatMessageRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mBinding.chatMessageRecyclerView.setAdapter(chatRoomMessageListAdapter);
+
+        audienceListAdapter = new AudienceListAdapter(roomMemberList);
         mBinding.AudienceRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
         mBinding.AudienceRecyclerView.setAdapter(audienceListAdapter);
     }
@@ -119,6 +129,12 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
                 int userRoleType = CacheManager.getInstance().getUserRoleType();
             }
         });
+        audienceListAdapter.setOnRoomMemberItemClickListener(new OnRoomMemberItemClickListener() {
+            @Override
+            public void onMemberItemClick(int position, String userId, String userName) {
+                clickMemberMic(position);
+            }
+        });
     }
 
     /**
@@ -130,13 +146,8 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         boolean isSpeakerphoneOn = RTCClient.getInstance().isSpeakerphoneOn(mContext);
         Log.e("xy", "扬声器是否打开: " + isSpeakerphoneOn);
         RTCClient.getInstance().setLocalMicEnable(true);
-
-
-        chatRoomMessageListAdapter = new ChatRoomMessageListAdapter(messageList);
-        mBinding.chatMessageRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.chatMessageRecyclerView.setAdapter(chatRoomMessageListAdapter);
         //加入房间后给集合里面添加一条默认消息
-        TextMessage currentUserTextMessage = new TextMessage(getResources().getString(R.string.welcome_join_room));
+        TextMessage currentUserTextMessage = new TextMessage(getResources().getString(R.string.join_room_success));
         currentUserTextMessage.setUserInfo(new io.rong.imlib.model.UserInfo(CacheManager.getInstance().getUserId(),
                 CacheManager.getInstance().getUserName(),
                 Uri.parse(CacheManager.getInstance().getUserPortrait())));
@@ -172,24 +183,26 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
                 if (roomDataInfo != null) {
                     setDataToViews(roomDataInfo);
                 }
-
             }
 
             @Override
             public void onFail(int errorCode, String errorMsg) {
                 dismissLoadDialog();
+                ToastUtils.showToast(errorMsg);
             }
         });
     }
 
     private void setDataToViews(RoomDataInfo roomDataInfo) {
-        roomOwnerId = roomDataInfo.getOwner();
+        roomOwnerId = roomDataInfo.getOwner().getUserId();
+        RoomDataInfo.RoomBean roomInfo = roomDataInfo.getRoom();
+        if (roomInfo != null) {
+            GlideUtils.loadObjectImage(mContext, roomInfo.getCoverPictureKey(), mBinding.civUserHeadPhoto);
+            mBinding.tvFounderNickName.setText("[" + roomInfo.getTypeName() + "] " + roomInfo.getTitle());
+            mBinding.tvRoomNumber.setText("房间ID: " + roomInfo.getRoomId());
+            mBinding.tvPopularityValue.setText("人气: " + roomInfo.getHeatValue());
+        }
 
-
-        GlideUtils.loadObjectImage(mContext, roomDataInfo.getCoverPictureKey(), mBinding.civUserHeadPhoto);
-        mBinding.tvFounderNickName.setText("[" + roomDataInfo.getTypeName() + "] " + roomDataInfo.getTitle());
-        mBinding.tvRoomNumber.setText("房间ID: " + roomDataInfo.getRoomId());
-        mBinding.tvPopularityValue.setText("人气: " + roomDataInfo.getHeatValue());
 
         /**
          * 融云默认创建房间者为主持人，
@@ -205,6 +218,36 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
             //不是自己创建的
             AudienceJsonChatRoom();
         }
+
+        //加入成功发一条默认消息
+        initChatMessage();
+
+        //轮询请求房间在线人数
+        IMManager.getInstance().onlineNumber(String.valueOf(roomId), new SealMicResultCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                if (aBoolean) {
+                    IMManager.getInstance().getChatRoomInfo(String.valueOf(roomId), new RongIMClient.ResultCallback<ChatRoomInfo>() {
+                        @Override
+                        public void onSuccess(ChatRoomInfo chatRoomInfo) {
+                            int onlineNumber = chatRoomInfo.getTotalMemberCount();
+                            String onlineNumberString = mContext.getResources().getString(R.string.online_number);
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onFail(int errorCode) {
+
+            }
+        });
     }
 
     /**
@@ -240,12 +283,17 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         IMManager.getInstance().audienceJoinRoom(String.valueOf(roomId), new SealMicResultCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
-
+                Log.e("xy", "以观众的身份加入房间 Success");
+                initMic();
+                initSpeak();
+                //房间加入成功，初始化音频
+                boolean speakerphoneOn = RTCClient.getInstance().isSpeakerphoneOn(mContext);
+                RTCClient.getInstance().setSpeakerEnable(speakerphoneOn);
             }
 
             @Override
             public void onFail(int errorCode) {
-
+                Log.e("xy", "以观众的身份加入房间 Error :" + errorCode);
             }
         });
     }
@@ -255,28 +303,32 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
      * 获取全部麦位的KV
      */
     private void initMic() {
+
         //获取全部麦位的KV
         IMManager.getInstance().getAllChatRoomMic(String.valueOf(roomId), new RongIMClient.ResultCallback<Map<String, String>>() {
             @Override
             public void onSuccess(Map<String, String> stringStringMap) {
+                Log.e("xy", "麦位KV的Map:" + stringStringMap.toString());
                 //根据KV判断，如果对应的麦位上有人，则用对应的信息填充麦位
-                IMManager.getInstance().transMicBean(stringStringMap, new SealMicResultCallback<MicBean>() {
+                ThreadManager.getInstance().runOnUIThread(new Runnable() {
                     @Override
-                    public void onSuccess(final MicBean micBean) {
-                        Log.e("xy", "麦位信息:" + micBean.toString());
-                        //初始化麦位时本地保存一份麦位map
-                        localMicBeanMap.put(micBean.getPosition(), micBean);
+                    public void run() {
                         userIdList = new ArrayList<>();
-                        userIdList.add(micBean.getUserId());
-                        //请求完后更新V层
-                        //Can't access the Fragment View's LifecycleOwner when getView() is null i.e., before onCreateView() or after onDestroyView()
-
-//                        EventBus.getDefault().postSticky(new Event.EventMicBean(micBean));
-                    }
-
-                    @Override
-                    public void onFail(int errorCode) {
-                        Log.e("xy", "获取初始化麦位信息失败: " + errorCode);
+                        for (String key : stringStringMap.keySet()) {
+                            final MicBean micBean = new Gson().fromJson(stringStringMap.get(key), MicBean.class);
+                            Log.e("xy", "micBean:" + micBean.toString());
+                            //初始化麦位时本地保存一份麦位map
+                            localMicBeanMap.put(micBean.getPosition(), micBean);
+                            userIdList.add(micBean.getUserId());
+                            RoomMemberRepo.MemberBean roomMember = new RoomMemberRepo.MemberBean();
+                            roomMember.setUserId(micBean.getUserId());
+                            roomMember.setUserName("");
+                            roomMember.setPortrait("");
+                            roomMember.setPosition(micBean.getPosition());
+                            roomMember.setCharmValue(micBean.getCharmValue());
+                            roomMemberList.add(roomMember);
+                        }
+                        audienceListAdapter.setNewData(roomMemberList);
                     }
                 });
             }
@@ -296,6 +348,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         IMManager.getInstance().getAllChatRoomSpeaking(String.valueOf(roomId), new RongIMClient.ResultCallback<Map<String, String>>() {
             @Override
             public void onSuccess(Map<String, String> stringStringMap) {
+                Log.e("xy", "获取说话的map:" + stringStringMap.size());
                 for (String key : stringStringMap.keySet()) {
                     final SpeakBean speakBean = GsonUtils.fromJson(stringStringMap.get(key), SpeakBean.class);
                     ThreadManager.getInstance().runOnUIThread(new Runnable() {
@@ -314,9 +367,46 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
                 Log.e("xy", "获取正在讲话的KV信息失败，错误码为: " + errorCode);
-                ToastUtils.showToast("获取正在讲话的KV信息失败，错误码为: " + errorCode);
             }
         });
+
+    }
+
+    /**
+     * 点击麦位的操作
+     *
+     * @param position
+     */
+    public void clickMemberMic(final int position) {
+        //获取点击的麦位信息
+        MicBean clickMicBean = localMicBeanMap.get(position);
+        if (clickMicBean != null) {
+            if (TextUtils.isEmpty(clickMicBean.getUserId())) {
+                //空麦位
+                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //主持人
+//                    micAbsentHost(clickMicBean);
+                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //连麦者
+//                    micAbsentConnect(clickMicBean);
+                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //观众
+//                    micAbsentAudience(clickMicBean);
+                }
+            } else {
+                //麦位上有人
+                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //主持人
+//                    micPresentHost(clickMicBean);
+                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //连麦者
+//                    micPresentConnect(clickMicBean);
+                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //观众
+//                    micPresentAudience(clickMicBean);
+                }
+            }
+        }
     }
 
     @Override
@@ -359,12 +449,34 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
             case R.id.ivUserList:
                 startActivity(RoomListActivity.class);
                 break;
+
+            case R.id.ivRoomSetting:
+                showRoomSettingDialog();
+                break;
             case R.id.ivGiftPhoto:
                 showSendGiftDialog();
                 break;
         }
     }
 
+    /**
+     * 房价设置
+     */
+    private void showRoomSettingDialog() {
+        LiveRoomSettingDialog roomSettingDialog = new LiveRoomSettingDialog();
+        roomSettingDialog.show(getSupportFragmentManager(), "setting");
+        roomSettingDialog.setOnLiveRoomSettingItemListener(new OnLiveRoomSettingItemListener() {
+            @Override
+            public void onLiveRoomItemClick(int itemID, String itemText) {
+
+            }
+        });
+    }
+
+
+    /**
+     * 送礼物
+     */
     private void showSendGiftDialog() {
         SendGiftDialogFragment sendGiftDialogFragment = new SendGiftDialogFragment();
         sendGiftDialogFragment.show(getSupportFragmentManager(), "gift");

@@ -57,7 +57,7 @@ public class ChatRoomMessageListAdapter extends BaseQuickAdapter<Message, BaseVi
             name = textMessage.getUserInfo().getName();
             contentTv = textMessage.getContent();
             if (contentTv.equals(mContext.getResources().getString(R.string.join_room_success))) {
-                isShowBackground = false;
+                isShowBackground = true;
             } else {
                 isShowBackground = true;
             }

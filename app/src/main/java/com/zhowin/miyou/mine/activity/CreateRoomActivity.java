@@ -1,6 +1,7 @@
 package com.zhowin.miyou.mine.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import com.zhowin.base_library.qiniu.QiNiuYunBean;
 import com.zhowin.base_library.qiniu.QinIuUpLoadListener;
 import com.zhowin.base_library.qiniu.QinIuUtils;
 import com.zhowin.base_library.utils.ActivityManager;
+import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.base_library.utils.ToastUtils;
 import com.zhowin.miyou.R;
@@ -43,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 创建房间
+ * 创建房间  和 修改房间资料共用
  */
 public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBinding> {
 
@@ -53,6 +55,16 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
     private int roomCategoryId, backgroundPictureId, roomCategoryPosition = 0;
     private String qiNiuToken, qiNiuCdnUrl, roomHeadImageUrl, roomName, roomDesc;
     private int MAX_NUMBER = 200;
+    private int classType;
+
+    /**
+     * @param type 1:创建房间 2：修改房间资料
+     */
+    public static void start(Context context, int type) {
+        Intent intent = new Intent(context, CreateRoomActivity.class);
+        intent.putExtra(ConstantValue.TYPE, type);
+        context.startActivity(intent);
+    }
 
     @Override
     public int getLayoutId() {
@@ -61,8 +73,11 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
 
     @Override
     public void initView() {
+        classType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
         setOnClick(R.id.tvRoomCategory, R.id.rvRoomBackground, R.id.ivRefreshRoomID, R.id.tvCreateRoom);
         mBinding.tvTextDescNumber.setText("0/" + MAX_NUMBER);
+        mBinding.clWheatUpOrDownLayout.setVisibility(2 == classType ? View.VISIBLE : View.GONE);
+        mBinding.ivRefreshRoomID.setVisibility(1 == classType ? View.VISIBLE : View.GONE);
         getRoomBackgroundList();
         getRoomCategory();
         getRoomID();
@@ -248,29 +263,6 @@ public class CreateRoomActivity extends BaseBindActivity<ActivityCreateRoomBindi
         });
     }
 
-    /**
-     * 加入房间
-     *
-     * @param roomId 房间id
-     */
-    private void joinLiveRoom(int roomId) {
-        HttpRequest.joinLiveRoom(this, roomId, "", new HttpCallBack<RecommendList>() {
-            @Override
-            public void onSuccess(RecommendList recommendList) {
-                dismissLoadDialog();
-                if (recommendList != null) {
-                    ToastUtils.showCustomToast(mContext, "创建成功");
-                    ActivityManager.getAppInstance().finishActivity();
-                }
-            }
-
-            @Override
-            public void onFail(int errorCode, String errorMsg) {
-                dismissLoadDialog();
-                ToastUtils.showToast(errorMsg);
-            }
-        });
-    }
 
     /**
      * 显示选择类型的dialog

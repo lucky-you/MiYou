@@ -30,6 +30,8 @@ public class RoomMemberRepo {
         private String userId;
         private String userName;
         private String portrait;
+        private int position;
+        private int charmValue;
 
         public String getUserId() {
             return userId;
@@ -53,6 +55,22 @@ public class RoomMemberRepo {
 
         public void setPortrait(String portrait) {
             this.portrait = portrait;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
+        public int getCharmValue() {
+            return charmValue;
+        }
+
+        public void setCharmValue(int charmValue) {
+            this.charmValue = charmValue;
         }
     }
 
