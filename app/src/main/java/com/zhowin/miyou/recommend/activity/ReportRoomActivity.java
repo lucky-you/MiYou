@@ -65,6 +65,7 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
     private String reportTypeText, reportReason;
     private ReportUserOrRoom reportInfo;
     private int MAX_NUMBER = 10;
+    private int roomId;//房间id
 
 
     @Override
@@ -91,7 +92,8 @@ public class ReportRoomActivity extends BaseBindActivity<ActivityReportRoomBindi
                 int drawable = GenderHelper.getSexDrawable(reportInfo.getUserGender());
                 SetDrawableHelper.setLeftDrawable(mContext, mBinding.tvUserSex, true, 2, drawable, drawable);
             } else {
-
+                roomId = reportInfo.getRoomId();
+                mBinding.tvRoomTypeAndTitle.setText("[" + reportInfo.getRoomType() + "] " + reportInfo.getRoomTitle());
             }
     }
 

@@ -28,6 +28,7 @@ import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivityChatRoomBinding;
 import com.zhowin.miyou.http.BaseResponse;
 import com.zhowin.miyou.http.HttpRequest;
+import com.zhowin.miyou.mine.activity.CreateRoomActivity;
 import com.zhowin.miyou.recommend.adapter.AudienceListAdapter;
 import com.zhowin.miyou.recommend.adapter.ChatRoomMessageListAdapter;
 import com.zhowin.miyou.recommend.callback.OnChatMessageItemClickListener;
@@ -85,7 +86,7 @@ import io.rong.message.TextMessage;
 public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> {
 
     private int roomId, roomOwnerId;//房间id / 拥有者 id
-    private String roomTitle; //房间title
+    private String roomTitle, roomType; //房间title
     /**
      * 本地维护一个kv列表
      */
@@ -214,9 +215,10 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         roomOwnerId = roomDataInfo.getOwner().getUserId();
         RoomDataInfo.RoomBean roomInfo = roomDataInfo.getRoom();
         if (roomInfo != null) {
+            roomType = roomInfo.getTypeName();
             roomTitle = roomInfo.getTitle();
             GlideUtils.loadObjectImage(mContext, roomInfo.getCoverPictureKey(), mBinding.civUserHeadPhoto);
-            mBinding.tvFounderNickName.setText("[" + roomInfo.getTypeName() + "] " + roomTitle);
+            mBinding.tvFounderNickName.setText("[" + roomType + "] " + roomTitle);
             mBinding.tvRoomNumber.setText("房间ID: " + roomInfo.getRoomId());
             mBinding.tvPopularityValue.setText("人气: " + roomInfo.getHeatValue());
             mBinding.tvAttention.setText(roomDataInfo.isCollection() ? "已关注" : "关注");
@@ -942,7 +944,11 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
                         showShareRoomDialog();
                         break;
                     case 14://举报房间
-                        ReportRoomActivity.start(mContext, 1, new ReportUserOrRoom());
+                        ReportUserOrRoom reportUserOrRoom = new ReportUserOrRoom();
+                        reportUserOrRoom.setRoomId(roomId);
+                        reportUserOrRoom.setRoomTitle(roomTitle);
+                        reportUserOrRoom.setRoomType(roomType);
+                        ReportRoomActivity.start(mContext, 1, reportUserOrRoom);
                         break;
                     case 15://退出房间
                         dropOutRoom();

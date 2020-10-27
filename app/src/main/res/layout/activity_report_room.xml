@@ -33,6 +33,7 @@
                 android:text="您将举报" />
 
             <TextView
+                android:id="@+id/tvRoomTypeAndTitle"
                 style="@style/TextViewStyleOf14Sp"
                 android:layout_marginTop="8dp"
                 android:text="[娱乐] 娱乐提报巴拉巴拉"
