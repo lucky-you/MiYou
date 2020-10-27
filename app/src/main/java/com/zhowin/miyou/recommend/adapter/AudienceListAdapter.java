@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.recommend.callback.OnRoomMemberItemClickListener;
+import com.zhowin.miyou.recommend.model.AudienceList;
 import com.zhowin.miyou.rongIM.repo.RoomMemberRepo;
 
 import java.util.List;
@@ -24,8 +25,8 @@ import java.util.List;
  * date  ：2020/10/24
  * desc ： 聊天室排麦列表的adapter
  */
-public class AudienceListAdapter extends BaseQuickAdapter<RoomMemberRepo.MemberBean, BaseViewHolder> {
-    public AudienceListAdapter(@Nullable List<RoomMemberRepo.MemberBean> data) {
+public class AudienceListAdapter extends BaseQuickAdapter<AudienceList, BaseViewHolder> {
+    public AudienceListAdapter(@Nullable List<AudienceList> data) {
         super(R.layout.include_room_audience_item_view, data);
     }
 
@@ -37,22 +38,22 @@ public class AudienceListAdapter extends BaseQuickAdapter<RoomMemberRepo.MemberB
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, RoomMemberRepo.MemberBean item) {
-
+    protected void convert(@NonNull BaseViewHolder helper, AudienceList item) {
         if (0 == item.getPosition()) {
             helper.setImageResource(R.id.civAudienceHeadImage, R.drawable.room_boss_icon)
                     .setGone(R.id.tvHeatNumber, false)
                     .setText(R.id.AudienceName, "老板位");
         } else {
             loadLiveRoomMember(mContext, item.getPortrait(), helper.getView(R.id.civAudienceHeadImage));
-            helper.setText(R.id.AudienceName, item.getPosition() + "号麦");
+            helper.setText(R.id.AudienceName, item.getPosition() + "号麦")
+                    .setGone(R.id.tvHeatNumber, item.isWheat())
+                    .setText(R.id.tvHeatNumber, item.getCharmValue() + "");
         }
-
         helper.getView(R.id.llRoomMemberItemLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onRoomMemberItemClickListener != null) {
-                    onRoomMemberItemClickListener.onMemberItemClick(item.getPosition(), item.getUserId(), item.getUserName());
+                    onRoomMemberItemClickListener.onMemberItemClick(item.getPosition(), item);
                 }
             }
         });
@@ -69,5 +70,4 @@ public class AudienceListAdapter extends BaseQuickAdapter<RoomMemberRepo.MemberB
                 .apply(options)
                 .into(imageView);
     }
-
 }

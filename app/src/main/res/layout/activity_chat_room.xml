@@ -161,9 +161,8 @@
                     android:id="@+id/civHostUserHeadImage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-
                     android:layout_gravity="center"
-                    android:src="@mipmap/ic_default_hp" />
+                    android:src="@drawable/room_put_icon" />
 
                 <TextView
                     android:id="@+id/tvHostUserName"
@@ -322,7 +321,6 @@
                 android:src="@drawable/room_smile_icon" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>

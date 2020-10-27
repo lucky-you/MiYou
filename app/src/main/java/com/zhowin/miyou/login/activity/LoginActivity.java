@@ -110,7 +110,6 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
                 startActivity(BindPhoneActivity.class);
                 break;
             case R.id.ivQQLogin:
-                startActivity(MainActivity.class);
                 break;
         }
     }
@@ -155,10 +154,8 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
             public void onFail(int errorCode, String errorMsg) {
                 dismissLoadDialog();
                 ToastUtils.showToast(errorMsg);
-
             }
         });
-
     }
 
 
@@ -292,7 +289,6 @@ public class LoginActivity extends BaseBindActivity<ActivityLoginBinding> {
             mBinding.llPhoneLayout.setVisibility(View.GONE);
             mBinding.llPasswordLayout.setVisibility(View.VISIBLE);
             mBinding.tvForgetPassword.setVisibility(View.VISIBLE);
-
         }
     }
 

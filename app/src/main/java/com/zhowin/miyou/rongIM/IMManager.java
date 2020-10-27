@@ -1233,7 +1233,7 @@ public class IMManager {
                     public void onSuccess(Map<String, String> stringStringMap) {
                         Map<String, String> micmap = new HashMap<>();
                         for (String key : stringStringMap.keySet()) {
-                            Log.i("xy" + " 获取全部的的讲话状态", micmap.toString());
+                            Log.d("xy" + " 获取全部的讲话状态", micmap.toString());
                             if (key.contains(KV_SPEAK)) {
                                 micmap.put(key, stringStringMap.get(key));
                             }

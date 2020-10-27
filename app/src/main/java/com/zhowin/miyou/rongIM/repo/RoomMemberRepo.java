@@ -32,6 +32,7 @@ public class RoomMemberRepo {
         private String portrait;
         private int position;
         private int charmValue;
+        private boolean isWheat;//是否上麦
 
         public MemberBean() {
         }
@@ -78,6 +79,14 @@ public class RoomMemberRepo {
 
         public void setCharmValue(int charmValue) {
             this.charmValue = charmValue;
+        }
+
+        public boolean isWheat() {
+            return isWheat;
+        }
+
+        public void setWheat(boolean wheat) {
+            isWheat = wheat;
         }
     }
 

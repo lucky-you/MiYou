@@ -1,5 +1,7 @@
 package com.zhowin.miyou.recommend.callback;
 
+import com.zhowin.miyou.recommend.model.AudienceList;
+
 /**
  * author : zho
  * date  ：2020/10/26
@@ -8,5 +10,5 @@ package com.zhowin.miyou.recommend.callback;
 public interface OnRoomMemberItemClickListener {
 
 
-    void onMemberItemClick(int position, String userId,String userName);
+    void onMemberItemClick(int position, AudienceList audienceList);
 }

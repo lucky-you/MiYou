@@ -9,6 +9,7 @@ import com.zhowin.base_library.base.BaseApplication;
 import com.zhowin.miyou.db.manager.DBManager;
 import com.zhowin.miyou.main.activity.MainActivity;
 import com.zhowin.miyou.rongIM.IMManager;
+import com.zhowin.miyou.rongIM.manager.ThreadManager;
 
 /**
  * author : zho
@@ -34,6 +35,8 @@ public class MiApplication extends BaseApplication {
         }
         DBManager.initDao();
         IMManager.getInstance().init(this);
+        //初始化线程管理
+        ThreadManager.getInstance().init();
         // 监听 App 前后台变化
         observeAppInBackground();
     }
