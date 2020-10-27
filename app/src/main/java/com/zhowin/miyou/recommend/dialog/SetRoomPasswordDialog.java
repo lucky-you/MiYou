@@ -73,7 +73,6 @@ public class SetRoomPasswordDialog extends BaseDialogView {
             case R.id.tvCancel:
                 dismiss();
                 break;
-
             case R.id.tvDetermine:
                 if (TextUtils.isEmpty(passwordText)) {
                     ToastUtils.showToast("请输入房间密码");

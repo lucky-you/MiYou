@@ -1311,4 +1311,25 @@ public class HttpRequest {
                     }
                 });
     }
+
+    /**
+     * 设置房间密码
+     */
+    public static void setRoomPassword(LifecycleOwner activity, String password, int roomId, final HttpCallBack<Object> callBack) {
+        apiRequest.setRoomPassword(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), password, roomId)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 }

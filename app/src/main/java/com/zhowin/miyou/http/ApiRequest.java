@@ -762,4 +762,11 @@ public interface ApiRequest {
     Observable<ApiResponse<RoomWaterBean>> getRoomWaterList(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId);
 
 
+    /**
+     * 设置房间密码
+     */
+    @FormUrlEncoded
+    @POST(SET_ROOM_PASSWORD_URL)
+    Observable<ApiResponse<Object>> setRoomPassword(@Header(AUTHOR) String token, @Field("pwd") String pwd, @Field("roomId") int roomId);
+
 }

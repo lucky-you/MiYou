@@ -15,6 +15,8 @@ public class RoomDataInfo {
 
     private RoomBean room;
     private OwnerBean owner;
+    private boolean collection;
+
 
     public RoomBean getRoom() {
         return room;
@@ -30,6 +32,14 @@ public class RoomDataInfo {
 
     public void setOwner(OwnerBean owner) {
         this.owner = owner;
+    }
+
+    public boolean isCollection() {
+        return collection;
+    }
+
+    public void setCollection(boolean collection) {
+        this.collection = collection;
     }
 
     public static class RoomBean {

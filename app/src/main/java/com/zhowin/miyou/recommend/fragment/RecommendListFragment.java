@@ -103,11 +103,12 @@ public class RecommendListFragment extends BaseLibFragment implements BaseQuickA
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         boolean roomIsLock = recommendListAdapter.getItem(position).isExistPwd();
+        int roomId = recommendListAdapter.getItem(position).getRoomId();
         if (roomIsLock) {
-            showUnLockRoomDialog();
+            showUnLockRoomDialog(roomId);
         } else {
             //请求权限
-            int roomId = recommendListAdapter.getItem(position).getRoomId();
+
             joinLiveRoom(roomId);
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //                AndPermissionUtils.requestPermission(mContext, new AndPermissionListener() {
@@ -152,7 +153,7 @@ public class RecommendListFragment extends BaseLibFragment implements BaseQuickA
     /**
      * 解锁房间的dialog
      */
-    private void showUnLockRoomDialog() {
+    private void showUnLockRoomDialog(int roomId) {
         UnlockRoomDialog unlockRoomDialog = new UnlockRoomDialog(mContext);
         unlockRoomDialog.show();
         unlockRoomDialog.setOnUnLockRoomListener(new UnlockRoomDialog.OnUnLockRoomListener() {

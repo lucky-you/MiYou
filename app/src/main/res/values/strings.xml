@@ -31,5 +31,76 @@
     <string name="object_name">RCMic:gift</string>
     <string name="online_number">在线 %s </string>
     <string name="delay_ms">%s ms</string>
+    <string name="remove_this_room"> 移出房间 </string>
+    <string name="remove_this_message">删除此条消息</string>
 
+
+    <string name="invite_mic">邀请连麦</string>
+    <string name="lock_mic">锁定</string>
+    <string name="unlock_all_mic">解除锁定</string>
+
+    <string name="enqueue_mic">排麦</string>
+    <string name="enqueue_mic_item_name_normal">%s号麦</string>
+    <string name="enqueue_mic_item_name_lock">%s号麦(锁定)</string>
+    <string name="position_mic">号麦位</string>
+
+    <string name="mic_out">下麦</string>
+
+    <string name="close_mic">闭麦</string>
+    <string name="open_mic">开麦</string>
+    <string name="down_mic">下麦</string>
+    <string name="hand_over_host">转让主持人</string>
+    <string name="go_out_room">移出房间</string>
+    <string name="send_message">发消息</string>
+    <string name="send_gift_item">送礼</string>
+    <string name="mic_apply">申请排麦</string>
+    <string name="take_over_host">接管主持</string>
+    <string name="delete_message">删除此条消息</string>
+    <string name="host_location">主持人麦位</string>
+    <string name="allowe_audience_join_mic">允许观众自由上麦</string>
+    <string name="allowe_audience_join_room">允许观众加入</string>
+
+
+    <string-array name="dialog_micmanage">
+        <item>邀请连麦</item>
+        <item>锁定</item>
+    </string-array>
+    <string-array name="dialog_micmanage_unlock">
+        <item>邀请连麦</item>
+        <item>解除锁定</item>
+    </string-array>
+    <string-array name="dialog_mic_enqueue">
+        <item>排麦</item>
+    </string-array>
+    <string-array name="dialog_mic_out">
+        <item>下麦</item>
+    </string-array>
+    <string-array name="dialog_mic_take_over">
+        <item>发消息</item>
+        <item>接管主持</item>
+    </string-array>
+    <string-array name="dialog_hostsetting">
+        <item>闭麦</item>
+        <item>下麦</item>
+        <item>转让主持人</item>
+        <item>发消息</item>
+        <item>送礼</item>
+        <item>移出房间</item>
+    </string-array>
+    <string-array name="dialog_hostsetting_no">
+        <item>开麦</item>
+        <item>下麦</item>
+        <item>转让主持人</item>
+        <item>发消息</item>
+        <item>送礼</item>
+        <item>移出房间</item>
+    </string-array>
+    <string-array name="dialog_audience_setting">
+        <item>送礼</item>
+        <item>发消息</item>
+        <!--        <item>排麦</item>-->
+    </string-array>
+    <string-array name="dialog_mic_take_over_without_message">
+        <item>接管主持</item>
+    </string-array>
 </resources>

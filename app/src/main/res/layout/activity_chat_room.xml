@@ -323,13 +323,7 @@
 
         </LinearLayout>
 
-        <io.rong.imkit.RongExtension
-            android:id="@+id/rc_extension"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:RCStyle="CE"
-            tools:ignore="MissingConstraints" />
+
 
     </LinearLayout>
 

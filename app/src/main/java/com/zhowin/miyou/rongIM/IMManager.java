@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.Resource;
 import com.google.gson.Gson;
 import com.zhowin.base_library.base.BaseApplication;
 import com.zhowin.base_library.model.EventBusNotice;
+import com.zhowin.base_library.utils.GsonUtils;
 import com.zhowin.miyou.BuildConfig;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.rongIM.adapter.SendMessageAdapter;
@@ -1257,7 +1258,7 @@ public class IMManager {
      */
     public void transMicBean(Map<String, String> stringStringMap, @NonNull final SealMicResultCallback<MicBean> sealMicResultCallback) {
         for (String key : stringStringMap.keySet()) {
-            final MicBean micBean = new Gson().fromJson(stringStringMap.get(key), MicBean.class);
+            final MicBean micBean = GsonUtils.fromJson(stringStringMap.get(key), MicBean.class);
 //            if (!TextUtils.isEmpty(micBean.getUserId()))
             ThreadManager.getInstance().runOnUIThread(new Runnable() {
                 @Override
@@ -1313,12 +1314,12 @@ public class IMManager {
         RongIMClient.getInstance().setChatRoomEntry(roomId, key, value, true, false, "", new RongIMClient.OperationCallback() {
             @Override
             public void onSuccess() {
-                Log.i("xy", "存value" + value);
+                Log.i("xy", "存valueSuccess:" + value);
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.i("xy", "存value" + errorCode);
+                Log.i("xy", "存value Error:" + errorCode);
             }
         });
     }
@@ -1333,12 +1334,12 @@ public class IMManager {
         RongIMClient.getInstance().setChatRoomEntry(roomId, key, value, true, false, "", new RongIMClient.OperationCallback() {
             @Override
             public void onSuccess() {
-                Log.i("TAG", "存speak" + value);
+                Log.i("TAG", "存speak Success" + value);
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.i("TAG", "存speak" + errorCode);
+                Log.i("TAG", "存speak Error" + errorCode);
             }
         });
     }
@@ -1346,7 +1347,7 @@ public class IMManager {
     /**
      * 轮询请求房间在线人数，5秒轮询一次
      */
-    public void onlineNumber(final String roomId, final SealMicResultCallback<Boolean> sealMicResultCallback) {
+    public void onlineNumber(final SealMicResultCallback<Boolean> sealMicResultCallback) {
         ThreadManager.getInstance().runTimeFixedDelay(new Runnable() {
             @Override
             public void run() {

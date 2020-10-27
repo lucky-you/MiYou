@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.adapter.HomePageAdapter;
 import com.zhowin.base_library.utils.ConstantValue;
 import com.zhowin.miyou.R;
@@ -24,11 +25,12 @@ public class CharmListFragment extends BaseBindFragment<IncludeCharmListFragment
 
     private String[] titles = {"贡献榜", "魅力榜"};
     private List<Fragment> mFragments = new ArrayList<>();
-    private int fragmentIndex;
+    private int roomID,fragmentIndex;
 
-    public static CharmListFragment newInstance(int index) {
+    public static CharmListFragment newInstance(int roomId,int index) {
         CharmListFragment fragment = new CharmListFragment();
         Bundle bundle = new Bundle();
+        bundle.putInt(ConstantValue.ID, index);
         bundle.putInt(ConstantValue.INDEX, index);
         fragment.setArguments(bundle);
         return fragment;
@@ -42,6 +44,7 @@ public class CharmListFragment extends BaseBindFragment<IncludeCharmListFragment
 
     @Override
     public void initView() {
+        roomID = getArguments().getInt(ConstantValue.ID);
         fragmentIndex = getArguments().getInt(ConstantValue.INDEX);
         Log.e("xy", "fragmentIndex:" + fragmentIndex);
     }
@@ -49,11 +52,22 @@ public class CharmListFragment extends BaseBindFragment<IncludeCharmListFragment
     @Override
     public void initData() {
         for (int i = 0; i < titles.length; i++) {
-            mFragments.add(CharmInformationFragment.newInstance(fragmentIndex, i));
+            mFragments.add(CharmInformationFragment.newInstance(roomID,fragmentIndex, i));
         }
         HomePageAdapter homePageAdapter = new HomePageAdapter(getChildFragmentManager(), mFragments, titles);
         mBinding.noScrollViewPager.setAdapter(homePageAdapter);
         mBinding.noScrollViewPager.setScroll(true);
         mBinding.segmentTabLayout.setTabData(titles);
+    }
+
+
+    @Override
+    public void initImmersionBar() {
+        ImmersionBar.with(this)
+                .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                .statusBarColor(R.color.color_8234FC)
+                .keyboardEnable(true)
+                .statusBarDarkFont(true, 0f)
+                .init();
     }
 }

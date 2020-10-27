@@ -1,15 +1,19 @@
 package com.zhowin.miyou.recommend.activity;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.gson.Gson;
 import com.gyf.immersionbar.ImmersionBar;
 import com.zhowin.base_library.http.HttpCallBack;
 import com.zhowin.base_library.model.UserInfo;
@@ -34,6 +38,7 @@ import com.zhowin.miyou.recommend.callback.OnRowWheatClickListener;
 import com.zhowin.miyou.recommend.callback.OnSendGiftListener;
 import com.zhowin.miyou.recommend.callback.OnSetRoomPasswordListener;
 import com.zhowin.miyou.recommend.dialog.LiveRoomSettingDialog;
+import com.zhowin.miyou.recommend.dialog.RoomUserCommentDialog;
 import com.zhowin.miyou.recommend.dialog.RowWheatListDialog;
 import com.zhowin.miyou.recommend.dialog.SendGiftDialogFragment;
 import com.zhowin.miyou.recommend.dialog.SetRoomPasswordDialog;
@@ -41,15 +46,26 @@ import com.zhowin.miyou.recommend.dialog.ShareItemDialog;
 import com.zhowin.miyou.recommend.model.ReportUserOrRoom;
 import com.zhowin.miyou.recommend.model.RoomDataInfo;
 import com.zhowin.miyou.rongIM.IMManager;
+import com.zhowin.miyou.rongIM.callback.OnDialogButtonListClickListener;
 import com.zhowin.miyou.rongIM.callback.SealMicResultCallback;
+import com.zhowin.miyou.rongIM.constant.MicState;
+import com.zhowin.miyou.rongIM.constant.RoomMemberStatus;
 import com.zhowin.miyou.rongIM.constant.UserRoleType;
+import com.zhowin.miyou.rongIM.dialog.MicAudienceFactory;
+import com.zhowin.miyou.rongIM.dialog.MicConnectDialogFactory;
+import com.zhowin.miyou.rongIM.dialog.MicConnectTakeOverDialogFactory;
+import com.zhowin.miyou.rongIM.dialog.MicDialogFactory;
+import com.zhowin.miyou.rongIM.dialog.MicEnqueueDialogFactory;
+import com.zhowin.miyou.rongIM.dialog.MicSettingDialogFactory;
 import com.zhowin.miyou.rongIM.lifecycle.RoomObserver;
 import com.zhowin.miyou.rongIM.manager.CacheManager;
 import com.zhowin.miyou.rongIM.manager.ThreadManager;
 import com.zhowin.miyou.rongIM.model.MicBean;
 import com.zhowin.miyou.rongIM.model.SpeakBean;
+import com.zhowin.miyou.rongIM.repo.NetResult;
 import com.zhowin.miyou.rongIM.repo.RoomMemberRepo;
 import com.zhowin.miyou.rongIM.rtc.RTCClient;
+import com.zhowin.miyou.rongIM.util.ButtonDelayUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +85,7 @@ import io.rong.message.TextMessage;
 public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> {
 
     private int roomId, roomOwnerId;//房间id / 拥有者 id
+    private String roomTitle; //房间title
     /**
      * 本地维护一个kv列表
      */
@@ -197,12 +214,13 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         roomOwnerId = roomDataInfo.getOwner().getUserId();
         RoomDataInfo.RoomBean roomInfo = roomDataInfo.getRoom();
         if (roomInfo != null) {
+            roomTitle = roomInfo.getTitle();
             GlideUtils.loadObjectImage(mContext, roomInfo.getCoverPictureKey(), mBinding.civUserHeadPhoto);
-            mBinding.tvFounderNickName.setText("[" + roomInfo.getTypeName() + "] " + roomInfo.getTitle());
+            mBinding.tvFounderNickName.setText("[" + roomInfo.getTypeName() + "] " + roomTitle);
             mBinding.tvRoomNumber.setText("房间ID: " + roomInfo.getRoomId());
             mBinding.tvPopularityValue.setText("人气: " + roomInfo.getHeatValue());
+            mBinding.tvAttention.setText(roomDataInfo.isCollection() ? "已关注" : "关注");
         }
-
 
         /**
          * 融云默认创建房间者为主持人，
@@ -223,7 +241,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         initChatMessage();
 
         //轮询请求房间在线人数
-        IMManager.getInstance().onlineNumber(String.valueOf(roomId), new SealMicResultCallback<Boolean>() {
+        IMManager.getInstance().onlineNumber(new SealMicResultCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
                 if (aBoolean) {
@@ -236,11 +254,11 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
 
                         @Override
                         public void onError(RongIMClient.ErrorCode errorCode) {
+                            Log.e("xy", "轮询人数失败：" + errorCode);
 
                         }
                     });
                 }
-
             }
 
             @Override
@@ -309,13 +327,12 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
             public void onSuccess(Map<String, String> stringStringMap) {
                 Log.e("xy", "麦位KV的Map:" + stringStringMap.toString());
                 //根据KV判断，如果对应的麦位上有人，则用对应的信息填充麦位
+                userIdList = new ArrayList<>();
                 IMManager.getInstance().transMicBean(stringStringMap, new SealMicResultCallback<MicBean>() {
                     @Override
                     public void onSuccess(MicBean micBean) {
                         localMicBeanMap.put(micBean.getPosition(), micBean);
-                        userIdList = new ArrayList<>();
                         userIdList.add(micBean.getUserId());
-                        queryUserMessageList(GsonUtils.toJson(userIdList));
                     }
 
                     @Override
@@ -323,29 +340,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
                         Log.e("xy", "获取初始化麦位信息失败: " + errorCode);
                     }
                 });
-
-//                ThreadManager.getInstance().runOnUIThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        userIdList = new ArrayList<>();
-//                        for (String key : stringStringMap.keySet()) {
-//                            final MicBean micBean = new Gson().fromJson(stringStringMap.get(key), MicBean.class);
-//                            Log.e("xy", "micBean:" + micBean.toString());
-//                            //初始化麦位时本地保存一份麦位map
-//                            localMicBeanMap.put(micBean.getPosition(), micBean);
-//                            userIdList.add(micBean.getUserId());
-//                            RoomMemberRepo.MemberBean roomMember = new RoomMemberRepo.MemberBean();
-//                            roomMember.setUserId(micBean.getUserId());
-//                            roomMember.setUserName("");
-//                            roomMember.setPortrait("");
-//                            roomMember.setPosition(micBean.getPosition());
-//                            roomMember.setCharmValue(micBean.getCharmValue());
-//                            roomMemberList.add(roomMember);
-//                        }
-//                        Log.e("xy", "localMicBeanMap:" + localMicBeanMap.size() + "--userIdList:" + userIdList.size());
-//                        audienceListAdapter.setNewData(roomMemberList);
-//                    }
-//                });
+                queryUserMessageList(GsonUtils.toJson(userIdList));
             }
 
             @Override
@@ -355,6 +350,11 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         });
     }
 
+    /**
+     * 根据id批量查询用户信息
+     *
+     * @param userIDs
+     */
     private void queryUserMessageList(String userIDs) {
         HttpRequest.queryUserMessageList(this, userIDs, new HttpCallBack<BaseResponse<UserInfo>>() {
             @Override
@@ -368,7 +368,6 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
             }
         });
     }
-
 
     /**
      * 获取全部说话状态
@@ -401,6 +400,11 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
 
     }
 
+
+    private void roomMemberRow() {
+
+    }
+
     /**
      * 点击麦位的操作
      *
@@ -408,35 +412,388 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
      */
     public void clickMemberMic(final int position) {
         //获取点击的麦位信息
-//        MicBean clickMicBean = localMicBeanMap.get(position);
-//        if (clickMicBean != null) {
-//            if (TextUtils.isEmpty(clickMicBean.getUserId())) {
-//                //空麦位
-//                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
-//                    //主持人
-////                    micAbsentHost(clickMicBean);
-//                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
-//                    //连麦者
-////                    micAbsentConnect(clickMicBean);
-//                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
-//                    //观众
-////                    micAbsentAudience(clickMicBean);
-//                }
-//            } else {
-//                //麦位上有人
-//                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
-//                    //主持人
-////                    micPresentHost(clickMicBean);
-//                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
-//                    //连麦者
-////                    micPresentConnect(clickMicBean);
-//                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
-//                    //观众
-////                    micPresentAudience(clickMicBean);
-//                }
-//            }
-//        }
+        MicBean clickMicBean = localMicBeanMap.get(position);
+        if (clickMicBean != null) {
+            if (TextUtils.isEmpty(clickMicBean.getUserId())) {
+                //空麦位
+                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //主持人
+                    micAbsentHost(clickMicBean);
+                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //连麦者
+                    micAbsentConnect(clickMicBean);
+                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //观众
+                    micAbsentAudience(clickMicBean);
+                }
+            } else {
+                //麦位上有人
+                if (UserRoleType.HOST.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //主持人
+                    micPresentHost(clickMicBean);
+                } else if (UserRoleType.CONNECT_MIC.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //连麦者
+                    micPresentConnect(clickMicBean);
+                } else if (UserRoleType.AUDIENCE.getValue() == CacheManager.getInstance().getUserRoleType()) {
+                    //观众
+                    micPresentAudience(clickMicBean);
+                }
+            }
+        }
+    }
 
+    /**
+     * 用户角色为主持人时，空麦位时对应的操作
+     */
+    public void micAbsentHost(final MicBean micBean) {
+        //麦位上没人
+        ThreadManager.getInstance().runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                MicSettingDialogFactory micSettingDialogFactory = new MicSettingDialogFactory();
+                final Dialog dialog = micSettingDialogFactory.buildDialog(mContext, micBean);
+                micSettingDialogFactory.setOnDialogButtonListClickListener(new OnDialogButtonListClickListener() {
+                    @Override
+                    public void onClick(String content) {
+                        if (getResources().getString(R.string.invite_mic).equals(content)) {
+                            //判断状态是否为锁定状态
+                            if (micBean.getState() == MicState.LOCK.getState()) {
+                                ToastUtils.showToast("麦位已锁定");
+                                dialog.cancel();
+                                return;
+                            }
+                            //点击邀请连麦
+                            dialog.cancel();
+                        }
+                        if (getResources().getString(R.string.lock_mic).equals(content)) {
+                            //点击麦位状态操作
+                            if (micBean.getState() == MicState.NORMAL.getState()) {
+                                //如果麦位为正常，则锁定
+                            }
+                        }
+                        if (getResources().getString(R.string.unlock_all_mic).equals(content)) {
+                            if (micBean.getState() == MicState.LOCK.getState()) {
+                                //如果麦位为锁定，则解锁
+
+                            }
+                        }
+                    }
+                });
+                dialog.show();
+                micSettingDialogFactory.setWheetContent("麦位管理-" + micBean.getPosition() + "号麦");
+            }
+        });
+    }
+
+    /**
+     * 用户角色为主持人时，麦位上有人对应的操作
+     */
+    public void micPresentHost(final MicBean micBean) {
+
+        //麦位上有人
+        //主持人自己点自己
+        if (micBean.getPosition() == 0 && CacheManager.getInstance().getUserId().equals(micBean.getUserId())) {
+            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    final MicConnectDialogFactory micConnectFactory = new MicConnectDialogFactory();
+                    final Dialog dialog = micConnectFactory.buildDialog(mContext);
+                    micConnectFactory.setCurrentUser(true);
+                    micConnectFactory.setOnDialogButtonListClickListener(new OnDialogButtonListClickListener() {
+                        @Override
+                        public void onClick(String content) {
+                            //连麦者下麦
+
+                        }
+                    });
+                    List<String> ids = new ArrayList<>();
+                    ids.add(micBean.getUserId());
+
+                    micConnectFactory.setMicPosition("主持人");
+                    dialog.show();
+                }
+            });
+        }
+
+        //主持人点击别的主播
+        if (micBean.getPosition() != 0 && !"".equals(micBean.getUserId())) {
+//            micUserName = "";
+            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    final MicDialogFactory micDialogFactory = new MicDialogFactory();
+                    final Dialog micDialog = micDialogFactory.buildDialog(mContext, micBean);
+                    List<String> ids = new ArrayList<>();
+                    ids.add(micBean.getUserId());
+                    // 获取点击目标的name,
+
+                    micDialogFactory.setMicPosition(String.valueOf(micBean.getPosition()) + "号麦");
+                    micDialogFactory.setOnDialogButtonListClickListener(new OnDialogButtonListClickListener() {
+                        @Override
+                        public void onClick(String content) {
+                            if (getResources().getString(R.string.close_mic).equals(content)) {
+                                //点击闭麦
+
+                            }
+                            if (getResources().getString(R.string.open_mic).equals(content)) {
+                                //点击开麦
+
+                            }
+                            if (getResources().getString(R.string.down_mic).equals(content)) {
+                                //点击下麦
+
+                            }
+                            if (getResources().getString(R.string.hand_over_host).equals(content)) {
+                                //点击转让主持人
+
+                            }
+                            if (getResources().getString(R.string.send_message).equals(content)) {
+                                //点击发送消息，此处弹出键盘发消息
+                            }
+                            if (getResources().getString(R.string.send_gift_item).equals(content)) {
+                                //点击送礼，此处弹出送礼的弹窗
+
+                            }
+                            if (getResources().getString(R.string.go_out_room).equals(content)) {
+                                //点击移除房间
+
+                            }
+                        }
+                    });
+                    micDialog.show();
+                }
+            });
+        }
+
+    }
+
+    /**
+     * 用户角色为观众时，空麦位时对应的操作
+     */
+    public void micAbsentAudience(final MicBean micBean) {
+        if (micBean.getPosition() == 0) {
+            //作为观众，面对主持人空麦位的情况下，弹出接管主持人的弹窗
+            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    final MicConnectTakeOverDialogFactory micConnectTakeOverDialogFactory = new MicConnectTakeOverDialogFactory();
+                    micConnectTakeOverDialogFactory.setShowMessageButton(false);
+                    final Dialog dialog = micConnectTakeOverDialogFactory.buildDialog(mContext);
+                    micConnectTakeOverDialogFactory.setCurrentType(false);
+                    micConnectTakeOverDialogFactory.setUserName(getResources().getString(R.string.host_location));
+                    micConnectTakeOverDialogFactory.setOnDialogButtonListClickListener(new OnDialogButtonListClickListener() {
+                        @Override
+                        public void onClick(String content) {
+                            if (getResources().getString(R.string.send_message).equals(content)) {
+                                //点击发消息
+                                //此处弹窗不显示发送消息按钮，自然不用处理
+                            }
+                            if (getResources().getString(R.string.take_over_host).equals(content)) {
+                                //接管主持
+
+                            }
+                        }
+                    });
+                    dialog.show();
+                }
+            });
+        } else {
+            //作为观众，面对其他主播空麦位的情况下，弹出排麦的弹窗
+            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    MicEnqueueDialogFactory micEnqueueDialogFactory = new MicEnqueueDialogFactory();
+                    final Dialog dialog = micEnqueueDialogFactory.buildDialog(mContext, micBean);
+                    micEnqueueDialogFactory.setCallClick(new MicEnqueueDialogFactory.CallClick() {
+                        @Override
+                        public void onClick(String content) {
+                            if (ButtonDelayUtil.isNormalClick()) {
+//                                SLog.i("asdff", content);
+                                if (getResources().getString(R.string.enqueue_mic).equals(content)) {
+                                    //麦位状态如果为正常，请求排麦
+                                    if (micBean.getState() == MicState.NORMAL.getState() || micBean.getState() == MicState.CLOSE.getState()) {
+                                        //判断当前是否在排麦列表
+                                        for (int i = 0; i < localMicBeanMap.size(); i++) {
+                                            if (localMicBeanMap.get(i).getUserId().equals(CacheManager.getInstance().getUserId())) {
+//                                                ToastUtil.showToast(getResources().getString(R.string.already_at_miclilst));
+                                                dialog.cancel();
+                                                return;
+                                            }
+                                        }
+                                        //调用请求排麦接口
+                                    } else {
+                                        ToastUtils.showToast("麦位已锁定");
+                                        dialog.cancel();
+                                    }
+                                }
+                            }
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
+                }
+            });
+        }
+    }
+
+    /**
+     * 用户角色为观众时，麦位上有人对应的操作
+     */
+    public void micPresentAudience(final MicBean micBean) {
+        ThreadManager.getInstance().runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                final MicAudienceFactory micAudienceFactory = new MicAudienceFactory();
+                final Dialog dialog = micAudienceFactory.buildDialog(mContext);
+                if (micBean.getPosition() == 0) {
+                    micAudienceFactory.setMicPosition("主持人");
+                } else {
+                    micAudienceFactory.setMicPosition(micBean.getPosition() + "号麦");
+                }
+                List<String> ids = new ArrayList<>();
+                ids.add(micBean.getUserId());
+                //
+
+                micAudienceFactory.setOnDialogButtonListClickListener(new OnDialogButtonListClickListener() {
+                    @Override
+                    public void onClick(String content) {
+                        if (getResources().getString(R.string.send_message).equals(content)) {
+                            //发消息
+                        }
+
+                        if (getResources().getString(R.string.send_gift_item).equals(content)) {
+                            //送礼
+                            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                }
+                            });
+                        }
+//                        if (getResources().getString(R.string.mic_apply).equals(content)) {
+//                            //申请排麦
+//                            if (micBean.getState() == MicState.NORMAL.getState() || micBean.getState() == MicState.LOCK.getState()) {
+//                                final NetStateLiveData<NetResult<Void>> result = roomMemberViewModel.micApply();
+//                                result.getNetStateMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+//                                    @Override
+//                                    public void onChanged(Integer integer) {
+//                                        if (result.isSuccess()) {
+//                                            ToastUtil.showToast("观众申请排麦");
+//                                            dialog.cancel();
+//                                        }
+//                                    }
+//                                });
+//                            }
+//                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
+    }
+
+
+    /**
+     * 用户角色为连麦者时，麦位上有人对应的操作
+     */
+    public void micPresentConnect(final MicBean micBean) {
+        if (micBean.getPosition() == 0 && !"".equals(micBean.getUserId())) {
+            //当点击的是主持人时，弹出接管主持人dialog
+            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    final MicConnectTakeOverDialogFactory micConnectTakeOverDialogFactory = new MicConnectTakeOverDialogFactory();
+                    final Dialog dialog = micConnectTakeOverDialogFactory.buildDialog(mContext);
+                    micConnectTakeOverDialogFactory.setCurrentType(true);
+                    micConnectTakeOverDialogFactory.setOnDialogButtonListClickListener(new OnDialogButtonListClickListener() {
+                        @Override
+                        public void onClick(String content) {
+                            if (getResources().getString(R.string.send_message).equals(content)) {
+                                //点击发消息
+                            }
+                            if (getResources().getString(R.string.take_over_host).equals(content)) {
+                                //接管主持
+
+                            }
+                        }
+                    });
+                    List<String> ids = new ArrayList<>();
+                    ids.add(micBean.getUserId());
+
+                    micConnectTakeOverDialogFactory.setUserName("主持人麦位");
+                    dialog.show();
+
+                }
+            });
+        }
+        if (micBean.getPosition() != 0 && micBean.getUserId().equals(CacheManager.getInstance().getUserId())) {
+            //当连麦者点击的是自己时，弹出下麦的dialog
+            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    final MicConnectDialogFactory micConnectFactory = new MicConnectDialogFactory();
+                    final Dialog dialog = micConnectFactory.buildDialog(mContext);
+                    micConnectFactory.setCurrentUser(false);
+                    micConnectFactory.setMicPosition(micBean.getPosition() + "号麦");
+                    micConnectFactory.setOnDialogButtonListClickListener(new OnDialogButtonListClickListener() {
+                        @Override
+                        public void onClick(String content) {
+                            //连麦者下麦
+
+                        }
+                    });
+                    List<String> ids = new ArrayList<>();
+                    ids.add(micBean.getUserId());
+                    //TODO:
+                    dialog.show();
+                }
+            });
+        }
+        if (micBean.getPosition() != 0 && !micBean.getUserId().equals(CacheManager.getInstance().getUserId())) {
+            //当点击的不是自己而是别人时，弹出对应的人的用户资料卡
+            micPresentAudience(micBean);
+        }
+    }
+
+    /**
+     * 连麦
+     *
+     * @param micBean
+     */
+    public void micAbsentConnect(final MicBean micBean) {
+        //当其他连麦者面对主持人麦位为空的情况下，弹出接管主持的弹窗
+        if (micBean.getPosition() == 0) {
+            ThreadManager.getInstance().runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    final MicConnectTakeOverDialogFactory micConnectTakeOverDialogFactory = new MicConnectTakeOverDialogFactory();
+                    micConnectTakeOverDialogFactory.setShowMessageButton(false);
+                    final Dialog dialog = micConnectTakeOverDialogFactory.buildDialog(mContext);
+                    micConnectTakeOverDialogFactory.setCurrentType(false);
+                    micConnectTakeOverDialogFactory.setOnDialogButtonListClickListener(new OnDialogButtonListClickListener() {
+                        @Override
+                        public void onClick(String content) {
+                            if (getResources().getString(R.string.send_message).equals(content)) {
+                                //点击发消息
+                                //此处弹窗不显示发送消息按钮，自然不用处理
+                            }
+                            if (getResources().getString(R.string.take_over_host).equals(content)) {
+                                //接管主持
+
+                            }
+                        }
+                    });
+                    micConnectTakeOverDialogFactory.setUserName("主持人麦位");
+                    dialog.show();
+                }
+            });
+        }
+    }
+
+    /**
+     * 链接麦序
+     */
+    private void connectRowList() {
         RowWheatListDialog rowWheatListDialog = new RowWheatListDialog();
         rowWheatListDialog.show(getSupportFragmentManager(), "show");
         rowWheatListDialog.setOnRowWheatClickListener(new OnRowWheatClickListener() {
@@ -483,7 +840,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
                 startActivity(BroadcastDatingActivity.class);
                 break;
             case R.id.ivUserList:
-                startActivity(RoomListActivity.class);
+                RoomListActivity.start(mContext, roomId);
                 break;
             case R.id.ivRoomSetting:
                 showRoomSettingDialog();
@@ -493,10 +850,17 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
                 break;
             case R.id.ivComment:
                 //评论
-                mBinding.rcExtension.setVisibility(View.VISIBLE);
-                mBinding.rcExtension.showSoftInput();
+                showRoomUserCommentDialog();
                 break;
         }
+    }
+
+    /**
+     * 聊天对话
+     */
+    private void showRoomUserCommentDialog() {
+        RoomUserCommentDialog roomUserCommentDialog = RoomUserCommentDialog.newInstance(roomId, roomTitle);
+        roomUserCommentDialog.show(getSupportFragmentManager(), "comment");
     }
 
     /**
@@ -597,7 +961,18 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         passwordDialog.setOnSetRoomPasswordListener(new OnSetRoomPasswordListener() {
             @Override
             public void onSetRoomPassword(String password) {
+                HttpRequest.setRoomPassword(mContext, password, roomId, new HttpCallBack<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        ToastUtils.showCustomToast(mContext, "设置成功");
+                    }
 
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        ToastUtils.showToast(errorMsg);
+
+                    }
+                });
             }
         });
     }

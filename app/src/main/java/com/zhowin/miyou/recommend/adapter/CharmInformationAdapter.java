@@ -15,6 +15,8 @@ import java.util.List;
  * desc ： 贡献榜单 / 魅力榜单  的 信息
  */
 public class CharmInformationAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+
+
     public CharmInformationAdapter(@Nullable List<String> data) {
         super( R.layout.include_charm_information_item_view, data);
     }
