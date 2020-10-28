@@ -1354,4 +1354,25 @@ public class HttpRequest {
                     }
                 });
     }
+
+    /**
+     * 设置麦位状态
+     */
+    public static void setMicroStatus(LifecycleOwner activity, int position, int roomId, int state, final HttpCallBack<Object> callBack) {
+        apiRequest.setMicroStatus(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), position, roomId, state)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 }

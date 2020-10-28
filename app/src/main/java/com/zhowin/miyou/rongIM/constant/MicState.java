@@ -10,7 +10,7 @@ public enum MicState {
      */
     NORMAL(0),
     /**
-     * 麦位锁定
+     * 锁麦
      */
     LOCK(1),
     /**

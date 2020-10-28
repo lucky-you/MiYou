@@ -442,8 +442,9 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
             if (micBean != null) {
                 switch (itemIMPosition) {
                     case 1: //主持人
+                        LockOrUnLockMicro(itemUiPosition,itemIMPosition, micBean);
                     case 2: //嘉宾位
-                        LockOrUnLockMicro(micBean);
+
                         break;
 
                     case 3://老板位
@@ -470,32 +471,32 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
      *
      * @param micBean
      */
-    private void LockOrUnLockMicro(MicBean micBean) {
+    private void LockOrUnLockMicro(int itemUiPosition,int itemIMPosition, MicBean micBean) {
         if (userId == roomOwnerId) {
             //自己是房主
             if (micBean.getState() == MicState.LOCK.getState()) {
-                showLockMicroDialog(false);
-            } else if (micBean.getState() == MicState.NORMAL.getState()) {
-                showLockMicroDialog(true);
+                showLockMicroDialog(false, micBean, itemUiPosition,itemIMPosition);
+            }  else if (micBean.getState() == MicState.CLOSE.getState()) {
+                showLockMicroDialog(true, micBean, itemUiPosition,itemIMPosition);
             }
         } else {
             //不是房主,还要判断是否是主持人，是否是接待管理，是否是普通管理，最后才是观众
-
 
 //            ToastUtils.showCustomToast(mContext, "您没有权限哦");
         }
     }
 
     /**
-     * 锁麦/解锁
+     * 锁麦/解锁的dialog
      */
-    private void showLockMicroDialog(boolean isLockMicro) {
+    private void showLockMicroDialog(boolean isLockMicro, MicBean micBean, int itemUiPosition,int itemIMPosition) {
         LiveRoomBottomSetDialog liveRoomBottomSetDialog = LiveRoomBottomSetDialog.newInstance(true, isLockMicro ? "锁麦" : "解麦", "取消");
         liveRoomBottomSetDialog.show(getSupportFragmentManager(), "lock");
         liveRoomBottomSetDialog.setOnLiveRoomBottomSetListener(new OnLiveRoomBottomSetListener() {
             @Override
             public void onTitleOneClick(int typeOne) {
-                lockOrUnLockMicro(isLockMicro);
+                setMicroStatus(isLockMicro, micBean, itemUiPosition,itemIMPosition);
+
             }
 
             @Override
@@ -505,6 +506,35 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
         });
     }
 
+    /**
+     * 设置麦位状态
+     */
+    private void setMicroStatus(boolean isLockMicro, MicBean micBean, int itemUiPosition,int itemIMPosition) {
+        showLoadDialog();
+        HttpRequest.setMicroStatus(this, micBean.getPosition(), roomId, isLockMicro ? 1 : 2, new HttpCallBack<Object>() {
+            @Override
+            public void onSuccess(Object o) {
+                dismissLoadDialog();
+                micBean.setState(isLockMicro ? MicState.CLOSE.getState() : MicState.LOCK.getState());
+                localMicBeanMap.put(itemIMPosition,micBean);
+                //根据UiPosition 改变界面UI
+            }
+
+            @Override
+            public void onFail(int errorCode, String errorMsg) {
+                ToastUtils.showToast(errorMsg);
+                dismissLoadDialog();
+
+            }
+        });
+    }
+
+
+    /**
+     * 锁麦/解锁的接口
+     *
+     * @param isLockMicro
+     */
     private void lockOrUnLockMicro(boolean isLockMicro) {
         HttpRequest.lockOrUnLockMicro(this, isLockMicro, roomId, 34, new HttpCallBack<Object>() {
             @Override

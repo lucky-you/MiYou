@@ -780,4 +780,11 @@ public interface ApiRequest {
     @POST
     Observable<ApiResponse<Object>> lockOrUnLockMicro(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId, @Field("target") int target);
 
+    /**
+     * 设置麦位状态
+     */
+    @FormUrlEncoded
+    @POST(SET_WHEAT_STATUS_URL)
+    Observable<ApiResponse<Object>> setMicroStatus(@Header(AUTHOR) String token, @Field("position") int position, @Field("roomId") int roomId, @Field("state") int state);
+
 }
