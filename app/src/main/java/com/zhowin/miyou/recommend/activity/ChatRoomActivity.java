@@ -327,6 +327,7 @@ public class ChatRoomActivity extends BaseBindActivity<ActivityChatRoomBinding> 
                             if (roomMemberMicroList.size() >= 10) {
                                 List<MicBean> newAudienceList = roomMemberMicroList.subList(3, 11);//所以这里截取3-10
                                 Log.e("xy", "newAudienceList:" + newAudienceList);
+                                //TODO:在这里还需要判断麦位是否有人，如果有人还需要根据id反查用户图像等信息成功之后再更新界面UI
                                 audienceListAdapter.setNewData(newAudienceList);
                             }
                         }
