@@ -1,6 +1,6 @@
 package com.zhowin.miyou.recommend.callback;
 
-import com.zhowin.miyou.recommend.model.AudienceList;
+import com.zhowin.miyou.rongIM.model.MicBean;
 
 /**
  * author : zho
@@ -10,5 +10,5 @@ import com.zhowin.miyou.recommend.model.AudienceList;
 public interface OnRoomMemberItemClickListener {
 
 
-    void onMemberItemClick(int position, AudienceList audienceList);
+    void onMemberItemClick(int itemUiPosition, int itemIMPosition, MicBean audienceList);
 }

@@ -40,6 +40,7 @@ public interface ConstantValue {
     String YEAE = "year";
     String PERIOD = "period";
     String NAME = "name";
+    String HIDE = "hide";
     String MAIN = "main";
     String COUPON_ID = "coupon_id";
     String ARRAY_LIST = "array_list";

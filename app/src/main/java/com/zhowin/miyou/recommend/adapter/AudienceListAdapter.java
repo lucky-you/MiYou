@@ -1,6 +1,7 @@
 package com.zhowin.miyou.recommend.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,11 +13,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.zhowin.base_library.utils.GlideUtils;
 import com.zhowin.miyou.R;
 import com.zhowin.miyou.recommend.callback.OnRoomMemberItemClickListener;
-import com.zhowin.miyou.recommend.model.AudienceList;
-import com.zhowin.miyou.rongIM.repo.RoomMemberRepo;
+import com.zhowin.miyou.rongIM.constant.MicState;
+import com.zhowin.miyou.rongIM.model.MicBean;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ import java.util.List;
  * date  ：2020/10/24
  * desc ： 聊天室排麦列表的adapter
  */
-public class AudienceListAdapter extends BaseQuickAdapter<AudienceList, BaseViewHolder> {
-    public AudienceListAdapter(@Nullable List<AudienceList> data) {
+public class AudienceListAdapter extends BaseQuickAdapter<MicBean, BaseViewHolder> {
+    public AudienceListAdapter(@Nullable List<MicBean> data) {
         super(R.layout.include_room_audience_item_view, data);
     }
 
@@ -38,22 +38,23 @@ public class AudienceListAdapter extends BaseQuickAdapter<AudienceList, BaseView
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, AudienceList item) {
-        if (0 == item.getPosition()) {
+    protected void convert(@NonNull BaseViewHolder helper, MicBean item) {
+        if (0 == helper.getAdapterPosition()) {
             helper.setImageResource(R.id.civAudienceHeadImage, R.drawable.room_boss_icon)
                     .setGone(R.id.tvHeatNumber, false)
                     .setText(R.id.AudienceName, "老板位");
         } else {
             loadLiveRoomMember(mContext, item.getPortrait(), helper.getView(R.id.civAudienceHeadImage));
-            helper.setText(R.id.AudienceName, item.getPosition() + "号麦")
-                    .setGone(R.id.tvHeatNumber, item.isWheat())
+            helper.setText(R.id.AudienceName, helper.getAdapterPosition() + "号麦")
+                    .setGone(R.id.tvHeatNumber, !TextUtils.isEmpty(item.getUserId()))
                     .setText(R.id.tvHeatNumber, item.getCharmValue() + "");
         }
         helper.getView(R.id.llRoomMemberItemLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onRoomMemberItemClickListener != null) {
-                    onRoomMemberItemClickListener.onMemberItemClick(item.getPosition(), item);
+                    //第一个是在界面中的position，第二个是融云返回的position
+                    onRoomMemberItemClickListener.onMemberItemClick(helper.getAdapterPosition(), item.getPosition(), item);
                 }
             }
         });

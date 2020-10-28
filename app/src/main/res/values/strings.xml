@@ -60,47 +60,4 @@
     <string name="allowe_audience_join_mic">允许观众自由上麦</string>
     <string name="allowe_audience_join_room">允许观众加入</string>
 
-
-    <string-array name="dialog_micmanage">
-        <item>邀请连麦</item>
-        <item>锁定</item>
-    </string-array>
-    <string-array name="dialog_micmanage_unlock">
-        <item>邀请连麦</item>
-        <item>解除锁定</item>
-    </string-array>
-    <string-array name="dialog_mic_enqueue">
-        <item>排麦</item>
-    </string-array>
-    <string-array name="dialog_mic_out">
-        <item>下麦</item>
-    </string-array>
-    <string-array name="dialog_mic_take_over">
-        <item>发消息</item>
-        <item>接管主持</item>
-    </string-array>
-    <string-array name="dialog_hostsetting">
-        <item>闭麦</item>
-        <item>下麦</item>
-        <item>转让主持人</item>
-        <item>发消息</item>
-        <item>送礼</item>
-        <item>移出房间</item>
-    </string-array>
-    <string-array name="dialog_hostsetting_no">
-        <item>开麦</item>
-        <item>下麦</item>
-        <item>转让主持人</item>
-        <item>发消息</item>
-        <item>送礼</item>
-        <item>移出房间</item>
-    </string-array>
-    <string-array name="dialog_audience_setting">
-        <item>送礼</item>
-        <item>发消息</item>
-        <!--        <item>排麦</item>-->
-    </string-array>
-    <string-array name="dialog_mic_take_over_without_message">
-        <item>接管主持</item>
-    </string-array>
 </resources>

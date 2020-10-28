@@ -1332,4 +1332,26 @@ public class HttpRequest {
                     }
                 });
     }
+
+    /**
+     * 禁麦 解麦
+     */
+    public static void lockOrUnLockMicro(LifecycleOwner activity, boolean isLockMicro, int roomId, int target, final HttpCallBack<Object> callBack) {
+        String url = isLockMicro ? ApiRequest.PROHIBIT_MICROPHONE_URL : ApiRequest.PROHIBIT_UNLOCK_MICROPHONE_URL;
+        apiRequest.lockOrUnLockMicro(ApiRequest.TOKEN_VALUE + UserInfo.getUserToken(), url, roomId, target)
+                .compose(RxSchedulers.io_main())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(activity)))
+                .subscribe(new ApiObserver<Object>() {
+
+                    @Override
+                    public void onSuccess(Object demo) {
+                        callBack.onSuccess(demo);
+                    }
+
+                    @Override
+                    public void onFail(int errorCode, String errorMsg) {
+                        callBack.onFail(errorCode, errorMsg);
+                    }
+                });
+    }
 }

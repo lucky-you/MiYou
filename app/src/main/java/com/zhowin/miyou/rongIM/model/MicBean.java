@@ -2,11 +2,18 @@ package com.zhowin.miyou.rongIM.model;
 
 import java.io.Serializable;
 
-public class MicBean implements Serializable {
+/**
+ * 麦位信息
+ */
+public class MicBean implements Serializable, Comparable<MicBean> {
+
+
     private String userId;
-    private int state;
-    private int position;
-    private int charmValue;
+    private int state;//状态
+    private int position;//麦位
+    private int charmValue;//魅力值
+    private String userName;
+    private String portrait;
 
     public String getUserId() {
         return userId;
@@ -40,6 +47,22 @@ public class MicBean implements Serializable {
         this.charmValue = charmValue;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
+    }
+
     @Override
     public String toString() {
         return "MicBean{" +
@@ -47,6 +70,13 @@ public class MicBean implements Serializable {
                 ", state=" + state +
                 ", position=" + position +
                 ", charmValue=" + charmValue +
+                ", userName='" + userName + '\'' +
+                ", portrait='" + portrait + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(MicBean o) {
+        return getPosition() - o.getPosition();
     }
 }

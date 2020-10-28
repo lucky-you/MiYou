@@ -9,7 +9,8 @@ import com.zhowin.miyou.base.BaseBindActivity;
 import com.zhowin.miyou.databinding.ActivitySetUpAdministratorBinding;
 import com.zhowin.miyou.recommend.adapter.SetUpAdministratorAdapter;
 import com.zhowin.miyou.recommend.callback.OnAdminItemClickListener;
-import com.zhowin.miyou.recommend.dialog.SetUpAdminDialog;
+import com.zhowin.miyou.recommend.callback.OnLiveRoomBottomSetListener;
+import com.zhowin.miyou.recommend.dialog.LiveRoomBottomSetDialog;
 import com.zhowin.miyou.recommend.model.AdminInfoList;
 
 import java.util.ArrayList;
@@ -69,8 +70,22 @@ public class SetUpAdministratorActivity extends BaseBindActivity<ActivitySetUpAd
         showSetUpAdminDialog();
     }
 
+    /**
+     * 设置管理
+     */
     private void showSetUpAdminDialog() {
-        SetUpAdminDialog setUpAdminDialog = new SetUpAdminDialog();
-        setUpAdminDialog.show(getSupportFragmentManager(), "admin");
+        LiveRoomBottomSetDialog liveRoomBottomSetDialog = LiveRoomBottomSetDialog.newInstance(false, "设置为接待管理", "取消管理");
+        liveRoomBottomSetDialog.show(getSupportFragmentManager(), "admin");
+        liveRoomBottomSetDialog.setOnLiveRoomBottomSetListener(new OnLiveRoomBottomSetListener() {
+            @Override
+            public void onTitleOneClick(int typeOne) {
+
+            }
+
+            @Override
+            public void onTitleTwoClick(int typeTwo) {
+
+            }
+        });
     }
 }

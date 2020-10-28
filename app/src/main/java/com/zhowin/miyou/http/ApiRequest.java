@@ -290,6 +290,10 @@ public interface ApiRequest {
     //禁麦
     String PROHIBIT_MICROPHONE_URL = "/ant/live/gagMic";
 
+    //解麦
+    String PROHIBIT_UNLOCK_MICROPHONE_URL = "/ant/live/unGagMic";
+
+
     //查询禁麦用户列表
     String QUERY_PROHIBIT_MIC_LIST_URL = "/ant/live/gagMic/members";
 
@@ -768,5 +772,12 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST(SET_ROOM_PASSWORD_URL)
     Observable<ApiResponse<Object>> setRoomPassword(@Header(AUTHOR) String token, @Field("pwd") String pwd, @Field("roomId") int roomId);
+
+    /**
+     * 禁麦 解麦
+     */
+    @FormUrlEncoded
+    @POST
+    Observable<ApiResponse<Object>> lockOrUnLockMicro(@Header(AUTHOR) String token, @Url String url, @Field("roomId") int roomId, @Field("target") int target);
 
 }
